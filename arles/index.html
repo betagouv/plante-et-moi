@@ -93,16 +93,17 @@
 		.main__title {
 			color: #003057;
 		}
-		.main__map__button {
-  			color: white;
-		}
 		.main__map__leaflet {
 			width: 100%;
 			height: 100%;
 		}
 		.footer {
-			height: 120px;
+			padding: 33px;
 			text-align: center;
+			background-color: #f1c400;
+		}
+		.footer_button {
+  			color: white;
 		}
 	</style>
 </head>
@@ -122,7 +123,12 @@
 
 		<p>Les Arlésiens sont nombreux à exprimer leur envie de développer et renforcer la place de la nature dans la ville. Si vous rêvez de devenir le jardinier ou la jardinière de votre quartier, le permis de végétaliser est fait pour vous ! Il vous permet de disposer d’un site de votre choix, et surtout, de vous occuper vous-même de ce petit bout de jardin inédit.</p>
 
-		<h2 class="main__title">Quels espaces peut-on végétaliser?</h2>
+		<h2 class="main__title">Quels espaces peut-on végétaliser ?</h2>
+
+		<div class="main__map">
+			<div class="main__map__leaflet" id="map"></div>
+		</div>
+	
 
 		<h3 class="main__title">Toutes les idées sont les bienvenues</h3>
 
@@ -134,18 +140,11 @@
 		<p>Lorsque ces projets sont situés sur la voie publique, ils nécessitent une autorisation préalable de la Ville d'Arles : c'est le principe du permis de végétaliser.
 
 		Le permis de végétaliser n'est pas destiné aux projets dé végétalisation d'un espace privé: si votre projet se situe dans votre cour d'immeuble, vous n'avez pas besoin de ce permis. Et si votre projet concerne un autre espace privé, il faut d'abord contacter le propriétaire.</p>
-
-		<h2 class="main__title">Cherchez des endroits à végétaliser dans Arles</h2>
-	</div>
-	<div class="main__map">
-		<div class="main__map__leaflet" id="map"></div>
 	</div>
 	
 </div>
 <div class="footer">
-	<div class="main__text">
-		<a class="main__map__button header__button" href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_arles" target="_blank">Demander mon permis de végétaliser</a>
-	</div>
+		<a class="footer_button header__button " href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_arles" target="_blank">Demander mon permis de végétaliser</a>
 </div>
 <script>
 	var map = L.map('map', {
