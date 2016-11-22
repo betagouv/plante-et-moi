@@ -189,8 +189,9 @@
 	    // Success!
 	    var data = JSON.parse(requestArea.responseText);
 	    data["features"].map(function(feature){
+	    	var name = feature["properties"]["name"]
 	    	var polygon = L.geoJson(feature["geometry"])
-	    					.bindPopup('Parcelle '+Math.floor(Math.random()*1000+1)+' <br /><a href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_arles" target="_blank">Végétaliser cette espace</a>')
+	    					.bindPopup(name+' (Parcelle '+Math.floor(Math.random()*1000+1)+') <br /><a href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_arles" target="_blank">Végétaliser cette espace</a>')
 	    					.addTo(map)
 	    })
 	    
