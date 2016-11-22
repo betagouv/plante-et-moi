@@ -1,0 +1,226 @@
+ <!DOCTYPE html>
+ <html>
+ <head>
+	<title>Permis de végétaliser - Ville de Paris</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+
+	<style type="text/css">
+		body {
+  			font-family: "Helvetica", "Arial", sans-serif;
+  			line-height: 1.5;
+			margin: 0px;  			
+		}
+		.header__logo {
+			background-color: #DF225A; 
+			height: 100px;
+			width: 100%;
+			padding: 0;
+			position: relative;
+			top: 20px;
+		}
+		.header__logo__img {
+			position: relative;
+			top: 10px;
+			left: 100px;
+			height: 80px;
+			max-width: 80%;
+		}
+		.header {
+			background-image: url("https://beta.gouv.fr/img/startup/biodiversite.jpg");
+		  	background-position: center top;
+		  	background-repeat: no-repeat;
+		  	background-size: cover;
+		  	height: 300px;
+		  	line-height: 1.2;
+		  	padding: 0px;
+		  	margin: 0 auto;
+		  	display: block;
+		  	position:relative;
+		  	overflow: hidden;
+		}
+		.header__text {
+  		  	text-align: center;
+  		  	color: white;
+  		  	padding: 30px 10px;
+  		  	line-height: 1.5;
+		}
+		.header__text__title {
+			display: inline-block;
+			color: white;
+			font-size: 20px;
+			font-weight: 300;
+			text-shadow: 2px 2px #000000;
+		}
+		.header__button {
+			border: 1px solid #003057;
+		  	border-radius: 290486px;
+		  	background-color:rgba(0, 0, 0, 0.5);
+		  	text-transform: uppercase;
+		  	text-decoration: none;
+		  	transition: none 200ms ease-out;
+		  	transition-property: color, background;
+		  	padding: 16px 32px;
+  			color: white;
+  			letter-spacing: 0.2px;
+		}
+		.header__ribbon {
+			text-align: center;
+		    text-transform: uppercase;
+		    position: absolute;
+		    top: 26px;
+		    right: -35px;
+		    -webkit-transform: rotate(45deg);
+		    transform: rotate(45deg);
+		    width: 150px;
+		    background-color: #008cba;
+		    color: #fff;
+		    padding: 5px;
+		    font-size: 15px;
+		    font-weight: 700;
+		    z-index: 10;
+		}
+		.header__button:hover {
+			background-color: #003057;
+		}	
+		.main {
+			margin: 0 auto;
+			display: block;
+			position:relative;
+		}
+		.main__text {
+			margin: 0 auto;
+			padding: 1px 5%;
+  			max-width: 800px;
+  			color: #555;
+  		  	background-color: #F3F3F3;
+		}
+		.main__map {
+			width: 100%;
+			height: 600px;
+			margin: 0 auto;
+			padding: 0%;
+  		  	text-align: center;
+		}
+		.main__title {
+			color: #003057;
+		}
+		.main__map__leaflet {
+			width: 100%;
+			height: 100%;
+		}
+		.footer {
+			padding: 33px;
+			text-align: center;
+			background-color: #DF225A;
+		}
+		.footer_button {
+  			color: white;
+		}
+	</style>
+</head>
+<body>
+<div class="header">
+	<div class="header__logo">
+		<img class="header__logo__img" src="img/paris-logo.png"></img>
+	</div>
+	<div class="header__text">
+		<h1 class="header__title">Permis de végétaliser</h1>
+		<a class="header__button" href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_paris" target="_blank">Faire ma demande</a>
+	</div>
+	<div class="header__ribbon">
+		Test
+	</div>
+</div>
+<div class="main">
+	<div class="main__text">
+		<h2 class="main__title">Jardiner dans les rues de Paris, c'est permis !</h2>
+
+		<p>Les Parisiens sont nombreux à exprimer leur envie de développer et renforcer la place de la nature dans la ville. Si vous rêvez de devenir le jardinier ou la jardinière de votre quartier, le permis de végétaliser est fait pour vous ! Il vous permet de disposer d’un site de votre choix, et surtout, de vous occuper vous-même de ce petit bout de jardin inédit.</p>
+
+		<h2 class="main__title">Quels espaces peut-on végétaliser ?</h2>
+
+		<div class="main__map">
+			<div class="main__map__leaflet" id="map"></div>
+		</div>
+	
+
+		<h3 class="main__title">Toutes les idées sont les bienvenues</h3>
+
+		<p>Installer une jardinière au coin de sa rue pour y faire pousser des tomates, investir un pied d’arbre pour y semer des fleurs, faire courir des plantes grimpantes sur un mur, transformer un potelet en installation végétale… Toutes ces interventions participent au projet global de végétalisation de la ville, et fleurissent ici et là dans Paris. </p>
+
+
+		<h3 class="main__title">La notion d'espace public</h3>
+
+		<p>Lorsque ces projets sont situés sur la voie publique, ils nécessitent une autorisation préalable de la Ville de Paris : c'est le principe du permis de végétaliser.
+
+		Le permis de végétaliser n'est pas destiné aux projets dé végétalisation d'un espace privé: si votre projet se situe dans votre cour d'immeuble, vous n'avez pas besoin de ce permis. Et si votre projet concerne un autre espace privé, il faut d'abord contacter le propriétaire.</p>
+	</div>
+	
+</div>
+<div class="footer">
+		<a class="footer_button header__button" href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_paris" target="_blank">Demander mon permis de végétaliser</a>
+</div>
+<script>
+	var map = L.map('map', {
+    	center: [48.878387, 2.354907],
+    	zoom: 14,
+    	minZoom: 10
+	});
+
+	L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
+    	attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
+    	minZoom: 1,
+    	maxZoom: 20
+	}).addTo(map);
+
+
+	var request = new XMLHttpRequest();
+	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom=paris', true);
+
+	request.onload = function() {
+	  if (request.status >= 200 && request.status < 400) {
+	    // Success!
+	    var data = JSON.parse(request.responseText);
+	    var polygon = L.geoJson(data[0]["contour"],{
+		    color: '#003057',
+		    fill: false
+		}).addTo(map)
+		var bounds = polygon.getBounds();
+	    map.setMaxBounds(bounds.pad(0.05));
+	    //var centre = L.geoJson(data[0]["centre"]).addTo(map);
+	  } else {
+	    // We reached our target server, but it returned an error
+
+	  }
+	};
+	request.send();
+
+	var requestArea = new XMLHttpRequest();
+	requestArea.open('GET', 'data/area.geojson', true);
+
+	requestArea.onload = function() {
+	  if (requestArea.status >= 200 && requestArea.status < 400) {
+	    // Success!
+	    var data = JSON.parse(requestArea.responseText);
+	    data["features"].map(function(feature){
+	    	var name = feature["properties"]["name"]
+	    	var polygon = L.geoJson(feature["geometry"])
+	    					.bindPopup(name+' (Parcelle '+Math.floor(Math.random()*1000+1)+') <br /><a href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_paris" target="_blank">Végétaliser cette espace</a>')
+	    					.addTo(map)
+	    })
+	    
+	  } else {
+	    // We reached our target server, but it returned an error
+
+	  }
+	};
+	requestArea.send();
+
+</script>
+</body>
+</html>
