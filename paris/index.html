@@ -192,7 +192,7 @@
 
 		<div class="main__map">
 			<div class="main__map__leaflet" id="map">
-				<input type="text" id="address-search" name="address-search" placeholder="Rechercher une addresse" class="main__map__input leaflet-bar leaflet-control">
+				<input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="main__map__input leaflet-bar leaflet-control">
 			</div>
 		</div>
 
@@ -288,6 +288,37 @@
 	  }
 	};
 	requestArea.send();
+
+
+	var requestVerts = new XMLHttpRequest();
+	requestVerts.open('GET', 'https://opendata.paris.fr/api/records/1.0/search/?dataset=du-vert-pres-de-chez-moi&rows=1000&facet=etat_de_la_proposition', true);
+
+	var plantMarker = L.AwesomeMarkers.icon({
+    	icon: 'leaf',
+    	markerColor: 'green',
+    	prefix: 'fa'
+  	});
+
+	requestVerts.onload = function() {
+	  if (requestVerts.status >= 200 && requestVerts.status < 400) {
+	    // Success!
+	    var data = JSON.parse(requestVerts.responseText);
+
+	    data["records"].map(function(feature){
+	    		var layer = L.geoJson(feature["geometry"], {
+							    pointToLayer: function(geoJsonPoint, latlng) {
+    								return L.marker(latlng, {icon: plantMarker}).bindPopup(feature["fields"]["type_veget"]);
+								}
+							})
+	    					.addTo(map)
+	    })
+	    
+	  } else {
+	    // We reached our target server, but it returned an error
+
+	  }
+	};
+	requestVerts.send();
 
 	function renderFeature(item, search){
     	var coord = item["geometry"]["coordinates"]
