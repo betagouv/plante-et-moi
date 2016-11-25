@@ -304,7 +304,7 @@
 	function addressesDataSource(term, response){
     		try { requestAddresses.abort(); } catch(e){}
 			requestAddresses = new XMLHttpRequest();
-			requestAddresses.open('GET', 'http://api-adresse.data.gouv.fr/search/?q='+term+'&limit=30&lon='+center[0]+'&lat='+center[1], true);
+			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?q='+term+'&limit=30&lon='+center[0]+'&lat='+center[1], true);
     		requestAddresses.onload = function() {
 			  if (requestAddresses.status >= 200 && requestAddresses.status < 400) {
 			    // Success!
