@@ -8,6 +8,12 @@
 
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+	<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.css">
+
+	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
+	<script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
+	<script src="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.js"></script>
 
 	<style type="text/css">
 		body {
@@ -91,13 +97,28 @@
 			margin: 0 auto;
 			display: block;
 			position:relative;
+  			max-width: 950px;
 		}
 		.main__text {
 			margin: 0 auto;
-			padding: 1px 5%;
-  			max-width: 800px;
+			padding: 1px 5% 30px 5%;
   			color: #555;
   		  	background-color: #F3F3F3;
+		}
+		.main__form {
+			padding: 1px 0px;
+  		  	background-color: #F3F3F3;
+		}
+		.main__form--invisible {
+			display: none;
+		}
+		.main__form__title {
+			padding: 1px 5%;
+			color: #003057;
+		}
+		.main__form__typeform {
+			width:100%;
+			height:600px;
 		}
 		.main__map {
 			width: 100%;
@@ -121,6 +142,21 @@
 		.footer_button {
   			color: white;
 		}
+		.footer--invisible {
+			display: none;			
+		}
+		.main__map__input {
+			position: absolute;
+			width: 400px;
+			max-width: 80%;
+			padding: 4px 10px;
+			margin: 10px;
+			font-size: 25px;
+		}
+		#address-search {
+			top: 5px;
+			left: 50px;
+		}
 	</style>
 </head>
 <body>
@@ -130,7 +166,7 @@
 	</div>
 	<div class="header__text">
 		<h1 class="header__title">Permis de végétaliser</h1>
-		<a class="header__button" href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_paris" target="_blank">Faire ma demande</a>
+		<a class="header__button" href="javascript:launchForm();" target="_blank">Faire ma demande</a>
 	</div>
 	<div class="header__ribbon">
 		Test
@@ -140,33 +176,43 @@
 	<div class="main__text">
 		<h2 class="main__title">Jardiner dans les rues de Paris, c'est permis !</h2>
 
-		<p>Les Parisiens sont nombreux à exprimer leur envie de développer et renforcer la place de la nature dans la ville. Si vous rêvez de devenir le jardinier ou la jardinière de votre quartier, le permis de végétaliser est fait pour vous ! Il vous permet de disposer d’un site de votre choix, et surtout, de vous occuper vous-même de ce petit bout de jardin inédit.</p>
+		<ul>
+  			<li>Les parisiens sont nombreux à exprimer leur envie de jardinage et leur besoin de nature en ville</li>
+  			<li>Mais difficile sans jardin ni balcon… </li>
+  			<li>La solution ? Jardiner dans l’espace public !</li>
+  			<li>Le Permis de végétaliser vous permet de disposer du site de votre choix, et de devenir le jardinier de votre quartier</li>
+  		</ul>
 
 		<h2 class="main__title">Quels espaces peut-on végétaliser ?</h2>
 
+		<ul>
+  			<li>Depuis 2015, c’est plus de 800 sites qui ont été plantés ! Il ne vous reste qu’à trouver le vôtre !</li>
+  		</ul>
+
+
 		<div class="main__map">
-			<div class="main__map__leaflet" id="map"></div>
+			<div class="main__map__leaflet" id="map">
+				<input type="text" id="address-search" name="address-search" placeholder="Rechercher une addresse" class="main__map__input leaflet-bar leaflet-control">
+			</div>
 		</div>
 
-		<h3 class="main__title">Toutes les idées sont les bienvenues</h3>
-
-		<p>Installer une jardinière au coin de sa rue pour y faire pousser des tomates, investir un pied d’arbre pour y semer des fleurs, faire courir des plantes grimpantes sur un mur, transformer un potelet en installation végétale… Toutes ces interventions participent au projet global de végétalisation de la ville, et fleurissent ici et là dans Paris. </p>
-
-		<h3 class="main__title">La notion d'espace public</h3>
-
-		<p>Lorsque ces projets sont situés sur la voie publique, ils nécessitent une autorisation préalable de la Ville de Paris : c'est le principe du permis de végétaliser.
-
-		Le permis de végétaliser n'est pas destiné aux projets dé végétalisation d'un espace privé: si votre projet se situe dans votre cour d'immeuble, vous n'avez pas besoin de ce permis. Et si votre projet concerne un autre espace privé, il faut d'abord contacter le propriétaire.</p>
 	</div>
-	
-</div>
-<div class="footer">
-		<a class="footer_button header__button" href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_paris" target="_blank">Demander mon permis de végétaliser</a>
+	<div class="main__form main__form--invisible" id="permit__form">
+		<h2 class="main__form__title">Demande de Permis de végétaliser</h2>
+			<div class="main__form__typeform typeform-widget" data-url="https://amazingcontent.typeform.com/to/FHwHBi" data-text="Plante et Moi Paris"></div>
+			<script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'widget.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}})()</script>
+		</div>
+	</div>
+<div class="footer" id="footer">
+		<a class="footer_button header__button" href="javascript:launchForm();" target="_blank">Demander mon permis de végétaliser</a>
 </div>
 <script>
+	var center = [48.854923, 2.346763];
+	var selectedPoint;
+	var codePostaux = [];
 	var map = L.map('map', {
-    	center: [48.878387, 2.354907],
-    	zoom: 14,
+    	center: center,
+    	zoom: 12,
     	minZoom: 10
 	});
 
@@ -175,6 +221,27 @@
     	minZoom: 1,
     	maxZoom: 20
 	}).addTo(map);
+
+	var moveMarker = L.AwesomeMarkers.icon({
+    	icon: 'arrows',
+    	markerColor: 'blue',
+    	prefix: 'fa'
+  	});
+
+	function selectPoint(latlng) {
+    	try { map.removeLayer(selectedPoint); } catch(e){}
+
+		selectedPoint = L.marker(latlng, {
+			draggable: true,
+			clickable: false,
+			icon: moveMarker
+		}).addTo(map);
+	}
+
+
+	map.on('click', function(e) {
+		selectPoint(e.latlng);
+	});
 
 
 	var request = new XMLHttpRequest();
@@ -190,6 +257,7 @@
 		}).addTo(map)
 		var bounds = polygon.getBounds();
 	    map.setMaxBounds(bounds.pad(0.05));
+	    codePostaux = data[0]["codesPostaux"];
 	    //var centre = L.geoJson(data[0]["centre"]).addTo(map);
 	  } else {
 	    // We reached our target server, but it returned an error
@@ -205,12 +273,14 @@
 	  if (requestArea.status >= 200 && requestArea.status < 400) {
 	    // Success!
 	    var data = JSON.parse(requestArea.responseText);
-	    data["features"].map(function(feature){
-	    	var name = feature["properties"]["name"]
-	    	var polygon = L.geoJson(feature["geometry"])
-	    					.bindPopup(name+' (Parcelle '+Math.floor(Math.random()*1000+1)+') <br /><a href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_paris" target="_blank">Végétaliser cette espace</a>')
+	    var layer = L.geoJson(data["features"], {
+							    style: function (feature) {
+							        return {color: feature.properties._storage_options.color,
+							        	opacity: feature.properties._storage_options.opacity,
+							        		clickable: false};
+							    }
+							})
 	    					.addTo(map)
-	    })
 	    
 	  } else {
 	    // We reached our target server, but it returned an error
@@ -218,6 +288,57 @@
 	  }
 	};
 	requestArea.send();
+
+	function renderFeature(item, search){
+    	var coord = item["geometry"]["coordinates"]
+		return '<div class="autocomplete-suggestion" data-val="' + item["properties"]["label"] + '" data-lat="'+coord[1]+'" data-lng="'+coord[0]+'">' + item["properties"]["label"] + '</div>';
+	}
+
+	function onSelectAddress(event, term, item){
+		//input.placeholder = item.getAttribute("data-val");
+		var coord = [item.getAttribute("data-lat"),item.getAttribute("data-lng")];
+		selectPoint(coord);
+		map.flyTo(coord, 17);
+	}
+
+	function addressesDataSource(term, response){
+    		try { requestAddresses.abort(); } catch(e){}
+			requestAddresses = new XMLHttpRequest();
+			requestAddresses.open('GET', 'http://api-adresse.data.gouv.fr/search/?q='+term+'&limit=30&lon='+center[0]+'&lat='+center[1], true);
+    		requestAddresses.onload = function() {
+			  if (requestAddresses.status >= 200 && requestAddresses.status < 400) {
+			    // Success!
+			    var data = JSON.parse(requestAddresses.responseText);
+			    var features = data["features"].filter(function(feature){
+			    	if(codePostaux.indexOf(feature["properties"]["postcode"]) == -1) {
+			    		return false;
+			    	}
+			    	return true;
+			    });
+			    response(features);
+			  } else {
+			    response([]);
+			  }
+			};
+			requestAddresses.send();
+    	}
+
+	var requestAddresses;
+	new autoComplete({
+    	selector: 'input[name=address-search]',
+    	minChars: 2,
+    	source: addressesDataSource,
+    	renderItem: renderFeature,
+		onSelect: onSelectAddress,
+		cache: false,
+	});
+
+	function launchForm() {
+		document.getElementById('footer').classList.add('footer--invisible');
+		var permitForm = document.getElementById('permit__form');
+		permitForm.classList.remove('main__form--invisible');
+		permitForm.scrollIntoView();
+	}
 
 </script>
 </body>
