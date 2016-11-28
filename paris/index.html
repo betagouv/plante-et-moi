@@ -10,8 +10,8 @@
 	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 	<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.css">
-
 	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
+
 	<script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
 	<script src="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.js"></script>
 
@@ -65,13 +65,13 @@
 		.header__button {
 			border: 1px solid #003057;
 		  	border-radius: 290486px;
-		  	background-color:rgba(0, 0, 0, 0.5);
+		  	background-color:rgba(0, 0, 0, 0.7);
 		  	text-transform: uppercase;
 		  	text-decoration: none;
 		  	transition: none 200ms ease-out;
 		  	transition-property: color, background;
 		  	padding: 16px 32px;
-  			color: white;
+  			color: white !important;
   			letter-spacing: 0.2px;
 		}
 		.header__ribbon {
@@ -157,6 +157,12 @@
 			top: 5px;
 			left: 50px;
 		}
+		.popup--red .leaflet-popup-content-wrapper {
+			background-color: #DF225A; 
+		}
+		.popup--red .leaflet-popup-tip {
+			background-color: #DF225A; 
+		}
 	</style>
 </head>
 <body>
@@ -166,7 +172,7 @@
 	</div>
 	<div class="header__text">
 		<h1 class="header__title">Permis de végétaliser</h1>
-		<a class="header__button" href="javascript:launchForm();" target="_blank">Faire ma demande</a>
+		<a class="header__button" href="javascript:launchForm();">Faire ma demande</a>
 	</div>
 	<div class="header__ribbon">
 		Test
@@ -204,11 +210,12 @@
 		</div>
 	</div>
 <div class="footer" id="footer">
-		<a class="footer_button header__button" href="javascript:launchForm();" target="_blank">Demander mon permis de végétaliser</a>
+		<a class="footer_button header__button" href="javascript:launchForm();">Demander mon permis de végétaliser</a>
 </div>
 <script>
 	var center = [48.854923, 2.346763];
 	var selectedPoint;
+	var selectedPointPopup;
 	var codePostaux = [];
 	var map = L.map('map', {
     	center: center,
@@ -220,7 +227,7 @@
     	attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
     	minZoom: 1,
     	maxZoom: 20
-	}).addTo(map);
+	}).addTo(map); 
 
 	var moveMarker = L.AwesomeMarkers.icon({
     	icon: 'arrows',
@@ -232,10 +239,17 @@
     	try { map.removeLayer(selectedPoint); } catch(e){}
 
 		selectedPoint = L.marker(latlng, {
-			draggable: true,
-			clickable: false,
-			icon: moveMarker
-		}).addTo(map);
+							draggable: true,
+							clickable: false,
+							icon: moveMarker
+						}).bindPopup('<div style="height: 30px; padding: 12px 0px 0px 0px;"><a href="javascript:launchForm();" class="header__button">Végétaliser cette espace</a></div>',
+						       {autoClose:false, closeButton: false, className: 'popup--red'})
+						  .addTo(map)
+						  .openPopup()
+						  .on('dragend', function(e) { 
+						    	marker.openPopup();
+						  })
+						  
 	}
 
 
@@ -319,6 +333,14 @@
 	  }
 	};
 	requestVerts.send();
+
+
+// Autocomplete
+	var addressSearch = document.getElementById('address-search');
+	L.DomEvent.disableClickPropagation(addressSearch);
+	addressSearch.onmouseover = map.dragging.disable();
+	addressSearch.onmouseout = map.dragging.enable();
+
 
 	function renderFeature(item, search){
     	var coord = item["geometry"]["coordinates"]
