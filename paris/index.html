@@ -73,6 +73,7 @@
 		  	padding: 16px 32px;
   			color: white !important;
   			letter-spacing: 0.2px;
+  			font-weight: bold;
 		}
 		.header__ribbon {
 			text-align: center;
@@ -157,11 +158,17 @@
 			top: 5px;
 			left: 50px;
 		}
+		.header__button--green {
+			background-color: green;
+		}
+		.header__button--green:hover {
+			background-color: green;
+		}
 		.popup--red .leaflet-popup-content-wrapper {
-			background-color: #DF225A; 
+			background-color: rgba(114, 175, 38, 0.8); 
 		}
 		.popup--red .leaflet-popup-tip {
-			background-color: #DF225A; 
+			background-color: rgba(114, 175, 38, 0.8); 
 		}
 	</style>
 </head>
@@ -192,7 +199,7 @@
 		<h2 class="main__title">Quels espaces peut-on végétaliser ?</h2>
 
 		<ul>
-  			<li>Depuis 2015, c’est plus de 800 sites qui ont été plantés ! Il ne vous reste qu’à trouver le vôtre !</li>
+  			<li>Depuis 2015, c’est plus de 800 sites <div style="background-color: #72af26; width: 26px; height: 26px; text-align: center; display: inline-block; border-radius: 50%;"><i class="fa fa-leaf" style="color: #fff; margin-top: 4px; display: inline-block; font-size: 12px;"></i></div> qui ont été plantés ! Il ne vous reste qu’à selectionner le vôtre <div style="background-color: #38aadd; width: 26px; height: 26px; text-align: center; display: inline-block; border-radius: 50%;"><i class="fa fa-arrow-down" style="color: #fff; margin-top: 4px; display: inline-block; font-size: 12px;"></i></div> !</li>
   		</ul>
 
 
@@ -230,7 +237,7 @@
 	}).addTo(map); 
 
 	var moveMarker = L.AwesomeMarkers.icon({
-    	icon: 'arrows',
+    	icon: 'arrow-down',
     	markerColor: 'blue',
     	prefix: 'fa'
   	});
@@ -242,7 +249,7 @@
 							draggable: true,
 							clickable: false,
 							icon: moveMarker
-						}).bindPopup('<div style="height: 30px; padding: 12px 0px 0px 0px;"><a href="javascript:launchForm();" class="header__button">Végétaliser cette espace</a></div>',
+						}).bindPopup('<div style="height: 30px; padding: 12px 0px 0px 0px;"><a href="javascript:launchForm();" class="header__button header__button--green">Végétaliser cet espace</a></div>',
 						       {autoClose:false, closeButton: false, className: 'popup--red'})
 						  .addTo(map)
 						  .openPopup()
