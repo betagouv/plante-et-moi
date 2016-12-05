@@ -426,7 +426,7 @@
     function sendReverseGeocodeRequest(latlng, response){
     		try { requestReverseGeocode.abort(); } catch(e){}
 			requestReverseGeocode = new XMLHttpRequest();
-			requestReverseGeocode.open('GET', 'http://api-adresse.data.gouv.fr/reverse/?type=housenumber&lon='+latlng.lng+'&lat='+latlng.lat, true);
+			requestReverseGeocode.open('GET', 'https://api-adresse.data.gouv.fr/reverse/?type=housenumber&lon='+latlng.lng+'&lat='+latlng.lat, true);
     		requestReverseGeocode.onload = function() {
 			  if (requestReverseGeocode.status >= 200 && requestReverseGeocode.status < 400) {
 			    // Success!
