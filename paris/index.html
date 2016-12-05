@@ -451,7 +451,7 @@
 	function selectPoint(latlng, address) {
     	try { map.removeLayer(selectedPoint); } catch(e){}
 		if(address == undefined) {
-			selectedAddress = 'addresse introuvable';
+			selectedAddress = 'adresse introuvable';
 			reverseGeocodeAdress(latlng) 
 		} else {
 			selectedAddress = address;
