@@ -96,43 +96,76 @@
 		.main {
 			margin: 0 auto;
 			display: block;
-			position:relative;
+			position: relative;
   			max-width: 950px;
 		}
 		.main__text {
 			margin: 0 auto;
-			padding: 1px 5% 30px 5%;
+			padding: 1px 5% 1px 5%;
   			color: #555;
 		}
-		.main__form {
+		.form {
 			padding: 1px 0px;
   		  	background-color: #F3F3F3;
 		}
-		.main__form--invisible {
+		.form--invisible {
 			display: none;
 		}
-		.main__form__title {
+		.form__title {
 			padding: 1px 5%;
 			color: #003057;
 		}
-		.main__form__typeform {
+		.form__typeform {
 			width:100%;
 			height:600px;
 		}
-		.main__map {
+
+		.main__title {
+			color: #003057;
+		}
+
+		.main__title--invisible {
+			display: none;
+		}
+
+		.map {
 			width: 100%;
 			height: 600px;
 			margin: 0 auto;
 			padding: 0%;
   		  	text-align: center;
 		}
-		.main__title {
-			color: #003057;
-		}
-		.main__map__leaflet {
+		
+		.map__leaflet {
 			width: 100%;
 			height: 100%;
 		}
+
+		.map__protip {
+			position: absolute;
+			bottom: 20px;
+			left: 50%;
+		}
+		.map__protip__title {
+			position: relative;
+			padding: 0px 8px 0px 8px;
+			left: -50%;
+			display: block;
+			font-size: 25px;
+			border-radius: 25px;
+			color: white;
+			background: rgba(0, 0, 0, 0.7);
+		}
+
+		.map__input {
+			position: absolute;
+			width: 400px;
+			max-width: 75%;
+			padding: 4px 10px;
+			margin: 10px;
+			font-size: 25px;
+		}
+
 		.footer {
 			padding: 33px;
 			text-align: center;
@@ -144,17 +177,9 @@
 		.footer--invisible {
 			display: none;			
 		}
-		.main__map__input {
-			position: absolute;
-			width: 400px;
-			max-width: 80%;
-			padding: 4px 10px;
-			margin: 10px;
-			font-size: 25px;
-		}
 		#address-search {
 			top: 5px;
-			left: 50px;
+			left: 40px;
 		}
 		.header__button--green {
 			background-color: green;
@@ -167,6 +192,91 @@
 		}
 		.popup--red .leaflet-popup-tip {
 			background-color: rgba(114, 175, 38, 0.8); 
+		}
+
+		.galery {
+			margin: 0 auto;
+			display: block;
+			min-height: 100%;
+			width: 100%;
+  		  	background-color: #F3F3F3;
+  			position:relative;
+			text-align:center;
+		}
+
+		.galery--invisible {
+			display: none;
+		}
+
+		.galery__card {
+			margin: 10px;
+			padding: 0px;
+			max-width: 90%;
+			width: 350px;
+			height: 520px;
+			border-radius: 2px;
+			display: inline-block;
+    		vertical-align:top;
+			background-color: white;
+			position: relative;
+			box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+		}
+		.galery__card:hover {
+			opacity: 0.8;
+		}
+
+		.galery__card__image {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			height: 300px;
+			border-radius: 2px 2px 0px 0px;
+		}
+		.galery__card__title {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			top: -42px; 
+			margin: 0px;
+			text-align: center;
+			font-style: bold;
+		    color: white;
+			background: rgba(0,255,0,0.2);
+		}
+		.galery__card__description {
+			position: relative;
+			display: inline-block;
+			margin: 20px 10px 10px 10px;
+			padding: 0px;
+			text-align: left;
+			top: -50px; 
+			color: #555;
+		}
+		.galery__card__bottom {
+			position: absolute;
+			bottom: 0px;
+			margin: 0px;
+			width: 100%;
+			font-style: bold;
+			border-radius: 0px 0px 2px 2px;
+			left: 0px;
+			display: block;
+		}
+
+		.galery__card__bottom--button {
+  			letter-spacing: 0.2px;
+  			font-weight: bold;
+			background-color: seagreen;
+		  	text-decoration: none;
+		  	transition: none 200ms ease-out;
+		  	transition-property: color, background;
+		  	padding: 16px 0px;
+			color: white;
+			border-color: black;
+		}
+
+		.galery__card__bottom--button:hover {
+			background-color: green;
 		}
 	</style>
 </head>
@@ -201,26 +311,76 @@
   		</ul>
 
 
-		<div class="main__map">
-			<div class="main__map__leaflet" id="map">
-				<input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="main__map__input leaflet-bar leaflet-control">
+		<div class="map">
+			<div class="map__leaflet" id="map">
+				<input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="map__input leaflet-bar leaflet-control">
+				<div class="map__protip leaflet-control">
+					<h1 id="selectAddressProTip" class="map__protip__title" >Sélectionnez un lieu sur la carte</h1>
+				</div>
 			</div>
 		</div>
 
+		<h2 class="main__title main__title--invisible" id="projectListTitle">Choisissez le type projet que vous souhaitez faire: </h2>
 	</div>
-	<div class="main__form main__form--invisible" id="permit__form">
-		<h2 class="main__form__title">Demande de Permis de végétaliser</h2>
-			<div class="main__form__typeform typeform-widget" data-url="https://amazingcontent.typeform.com/to/FHwHBi" data-text="Plante et Moi Paris"></div>
+</div>
+<div class="galery galery--invisible" id="projectList">
+	<div class="galery__card">
+		<img class="galery__card__image" src="http://parcjardin.mairie-albi.fr/wp-content/gallery/photos/dscn0152.jpg" />
+		<h2 class="galery__card__title">Pied d'arbre fleuris</h2>
+		<p class="galery__card__description">Retournez la terre et plantez des graminés. Ça pousse tout seul avec peu d'eau et ça résiste très bien au froid. On m'a dit que certain y plantait des légumes :)
+			<br><br>2 pieds aménagé la semaine dernière 
+		</p>
+		<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm();">On essaye ? Demander mon permis </a>
+	</div>
+	<div class="galery__card">
+		<img class="galery__card__image" src="http://www.emeraude-creation.fr/page_attachments/0000/0908/diapo-mobilier-jardini_re-2.web.jpg" />
+		<h2 class="galery__card__title">Jardinière</h2>
+		<p class="galery__card__description">Vous pouvez la construire vous même! Disséminez quelques graines de fleurs sur la terre retournée : une micro-prairie sans effort. Les abeilles vont vous remercier.
+			<br><br>Déjà 23 Jardinières (et combien de jardinier ?)
+		</p>
+		<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm();">On essaye ? Demander mon permis </a>
+	</div>
+	<div class="galery__card">
+		<img class="galery__card__image" src="http://monjardindansmarue.fr/wp-content/uploads/2015/04/3-GreenPods1.jpg" />
+		<h2 class="galery__card__title">Poteau végétalisé</h2>
+		<p class="galery__card__description">Les poteaux de stationnement près de chez vous font grise mine ? Passez les au vert en les coiffant d’un pot ! Choisissez une plante, et c’est tout.
+			<br><br>111 poteau déjà aménagé
+		</p>
+		<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm();">On essaye ? Demander mon permis </a>
+	</div>
+	<div class="galery__card">
+		<img class="galery__card__image" src="http://www.ambius.com/blog/wp-content/uploads/2013/06/Rittenhouse-1.jpg" />
+		<h2 class="galery__card__title">Mur végétal</h2>
+		<p class="galery__card__description">Allons un mur non végétalisé, ce n'est plus la mode. Un peu de jasmin sur ce mur lui fera le plus grand bien
+			<br><br>Déjà 12 murs
+		</p>
+		<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm();">On essaye ? Demander mon permis </a>
+	</div>
+	<div class="galery__card">
+		<img class="galery__card__image" src="https://www.tours.fr/uploads/Image/55/8504_151_fleur-de-trottoir-premiere-plantation.jpg" />
+		<h2 class="galery__card__title">Fosse</h2>
+		<p class="galery__card__description">Et si on faisait un trou devant chez vous ? La mairie peut casser un peu de trottoir pour construire une fosse végétalisable. Un peu de terre, des graines et c’est parti !
+			<br><br>On a déjà fait 61 fosses !
+		</p>
+		<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm();">On essaye ? Demander mon permis </a>
+	</div>
+</div>
+<div class="form form--invisible" id="permit__form">
+		<h2 class="form__title">Demande de Permis de végétaliser</h2>
+			<div class="form__typeform typeform-widget" data-url="https://amazingcontent.typeform.com/to/WNwIJx?type=xxxxx" data-text="Plante et Moi Paris"></div>
 			<script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'widget.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}})()</script>
 		</div>
-	</div>
+</div>
+<!--
 <div class="footer" id="footer">
 		<a class="footer_button header__button" href="javascript:launchForm();">Demander mon permis de végétaliser</a>
 </div>
+-->
 <script>
 	var center = [48.854923, 2.346763];
 	var selectedPoint;
 	var selectedPointPopup;
+	var selectedAddress;
 	var codePostaux = [];
 	var map = L.map('map', {
     	center: center,
@@ -242,12 +402,12 @@
 
 	function selectPoint(latlng) {
     	try { map.removeLayer(selectedPoint); } catch(e){}
-
+		document.getElementById('selectAddressProTip').classList.add('footer--invisible');
 		selectedPoint = L.marker(latlng, {
 							draggable: true,
 							clickable: false,
 							icon: moveMarker
-						}).bindPopup('<div style="height: 30px; padding: 12px 0px 0px 0px;"><a href="javascript:launchForm();" class="header__button header__button--green">Végétaliser cet espace</a></div>',
+						}).bindPopup('<div style="height: 30px; padding: 12px 0px 0px 0px;"><a href="javascript:chooseProject();" class="header__button header__button--green">Végétaliser cet espace</a></div>',
 						       {autoClose:false, closeButton: false, className: 'popup--red'})
 						  .addTo(map)
 						  .openPopup()
@@ -323,12 +483,12 @@
 	    var data = JSON.parse(requestVerts.responseText);
 
 	    data["records"].map(function(feature){
-	    		var layer = L.geoJson(feature["geometry"], {
-							    pointToLayer: function(geoJsonPoint, latlng) {
-    								return L.marker(latlng, {icon: plantMarker}).bindPopup(feature["fields"]["type_veget"]);
-								}
-							})
-	    					.addTo(map)
+	    	var layer = L.geoJson(feature["geometry"], {
+							pointToLayer: function(geoJsonPoint, latlng) {
+								return L.marker(latlng, {icon: plantMarker}).bindPopup(feature["fields"]["type_veget"]);
+							}
+						})
+						.addTo(map)
 	    })
 	    
 	  } else {
@@ -390,10 +550,17 @@
 		cache: false,
 	});
 
+	function chooseProject() {
+		document.getElementById('projectList').classList.remove('galery--invisible');
+		var title = document.getElementById('projectListTitle');
+		title.classList.remove('main__title--invisible')
+		title.scrollIntoView();
+	}
+
 	function launchForm() {
-		document.getElementById('footer').classList.add('footer--invisible');
+		//document.getElementById('footer').classList.add('footer--invisible');
 		var permitForm = document.getElementById('permit__form');
-		permitForm.classList.remove('main__form--invisible');
+		permitForm.classList.remove('form--invisible');
 		permitForm.scrollIntoView();
 	}
 
