@@ -123,16 +123,18 @@
 		
 		.form__title {
 			padding: 1px 5%;
-			color: #003057;
+			color: #0C518A;
 		}
 		
 		.form__typeform {
 			width: 100%;
 			height: 600px;
+			display: inline-block;
+			border-width: 0px;
 		}
 		
 		.main__title {
-			color: #003057;
+			color: #0C518A;
 		}
 		
 		.main__title--invisible {
@@ -142,6 +144,7 @@
 		.map {
 			width: 100%;
 			height: 600px;
+			max-height: 90%;
 			margin: 0 auto;
 			padding: 0%;
 			text-align: center;
@@ -287,6 +290,34 @@
 		.galery__card__bottom--button:hover {
 			background-color: green;
 		}
+		.icon {
+			position: relative;
+			width: 26px; 
+			height: 26px; 
+			text-align: center; 
+			display: inline-block; 
+			margin: 0;
+		}
+		.icon--circle {
+			border-radius: 50%;
+		}
+		.icon--green {
+			background-color: #72af26;
+		}
+		.icon--blue {
+			background-color: #38aadd;
+		}
+		.icon__symbol {
+			color: #fff;
+			margin-top: 4px; 
+			display: inline-block; 
+			font-size: 12px;
+			position: absolute;
+			top: 7px;
+    		left: 0px;
+    		right: 0px;
+    		margin: auto;
+		}
 	</style>
 </head>
 
@@ -316,23 +347,24 @@
 			<h2 class="main__title">Quels espaces peut-on végétaliser ?</h2>
 
 			<ul>
-				<li>Depuis 2015, c’est plus de <b>800 sites</b>
-					<div style="background-color: #72af26; width: 26px; height: 26px; text-align: center; display: inline-block; border-radius: 50%;"><i class="fa fa-leaf" style="color: #fff; margin-top: 4px; display: inline-block; font-size: 12px;"></i></div> qui ont
-					été plantés !<br/> Il ne vous reste qu’à selectionner le vôtre
-					<div style="background-color: #38aadd; width: 26px; height: 26px; text-align: center; display: inline-block; border-radius: 50%;"><i class="fa fa-arrow-down" style="color: #fff; margin-top: 4px; display: inline-block; font-size: 12px;"></i></div>
-					!</li>
+				<li><b>800 sites</b>
+					<div class="icon icon--green icon--circle"><i class="icon__symbol fa fa-leaf"></i></div> ont
+					été plantés depuis 2015 !</li>
 			</ul>
+			 <h2 class="main__title"> Il ne vous reste qu’à selectionner le votre
+					<div class="icon icon--blue icon--circle"><i class="icon__symbol fa fa-arrow-down"></i></div>
+					!</h2>
+	 </div>
 
-
-			<div class="map">
-				<div class="map__leaflet" id="map">
-					<input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="map__input leaflet-bar leaflet-control">
-					<div class="map__protip leaflet-control">
-						<h1 id="selectAddressProTip" class="map__protip__title">Sélectionnez un nouveau lieu</h1>
-					</div>
-				</div>
+	<div class="map">
+		<div class="map__leaflet" id="map">
+			<input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="map__input leaflet-bar leaflet-control">
+			<div class="map__protip leaflet-control">
+				<h1 id="selectAddressProTip" class="map__protip__title">Sélectionnez votre lieu</h1>
 			</div>
-
+		</div>
+	</div>
+	<div class="centered">
 			<h1 class="main__title main__title--invisible" id="projectListTitle">Choisissez le type projet que vous souhaitez faire</h1>
 	</div>
 	<div class="galery galery--invisible" id="projectList">
@@ -395,8 +427,7 @@
 		<div class="centered">
 			<h1 class="form__title">Demande de Permis de végétaliser</h1>
 		</div>
-		<div id="typeform" class="form__typeform typeform-widget" data-url="https://amazingcontent.typeform.com/to/WNwIJx?type=xxxxx" data-text="Plante et Moi Paris"></div>
-	</div>
+		<iframe id="typeform" class="form__typeform" src="https://amazingcontent.typeform.com/to/WNwIJx?type=xxxxx&address=xxxxx"></iframe>
 	</div>
 
 	<script>
@@ -486,7 +517,7 @@
 	    // Success!
 	    var data = JSON.parse(request.responseText);
 	    var polygon = L.geoJson(data[0]["contour"],{
-		    color: '#003057',
+		    color: '#0C518A',
 		    fill: false
 		}).addTo(map)
 		var bounds = polygon.getBounds();
@@ -522,7 +553,6 @@
 	};
 	requestArea.send();
 
-
 	var requestVerts = new XMLHttpRequest();
 	requestVerts.open('GET', 'https://opendata.paris.fr/api/records/1.0/search/?dataset=du-vert-pres-de-chez-moi&rows=1000&facet=etat_de_la_proposition&refine.etat_de_la_proposition=proposition+r%C3%A9alisable+et+retenue+dans+les+200+points+de+v%C3%A9g%C3%A9talisation', true);
 
@@ -552,7 +582,6 @@
 	  }
 	};
 	requestVerts.send();
-
 
 // Autocomplete
 	var addressSearch = document.getElementById('address-search');
@@ -617,8 +646,7 @@
 	function launchForm(type) {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
-		typeform.setAttribute('data-url','https://amazingcontent.typeform.com/to/WNwIJx?type='+projectType+'&address='+selectedAddress);
-		(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'widget.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}})()
+		typeform.src = 'https://amazingcontent.typeform.com/to/WNwIJx?type='+projectType+'&address='+selectedAddress;
 		var permitForm = document.getElementById('permit__form');
 		permitForm.classList.remove('form--invisible');
 		permitForm.scrollIntoView();
