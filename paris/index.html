@@ -181,6 +181,11 @@
 			margin: 10px;
 			font-size: 25px;
 		}
+
+		.map__legend {
+			font-size: 18px;
+			font-weight: bold;
+		}
 		
 		#address-search {
 			top: 5px;
@@ -250,7 +255,7 @@
 			top: -42px;
 			margin: 0px;
 			text-align: center;
-			font-style: bold;
+			font-weight: bold;
 			color: white;
 			background: rgba(0, 255, 0, 0.2);
 		}
@@ -270,7 +275,7 @@
 			bottom: 0px;
 			margin: 0px;
 			width: 100%;
-			font-style: bold;
+			font-weight: bold;
 			border-radius: 0px 0px 2px 2px;
 			left: 0px;
 			display: block;
@@ -558,6 +563,7 @@
 	requestArea.send();
 
 
+// Add projects on the map
 	var existingProjects = new L.LayerGroup();
 	var requestVerts = new XMLHttpRequest();
 	requestVerts.open('GET', 'https://opendata.paris.fr/api/records/1.0/search/?dataset=du-vert-pres-de-chez-moi&rows=1000&facet=etat_de_la_proposition&refine.etat_de_la_proposition=proposition+r%C3%A9alisable+et+retenue+dans+les+200+points+de+v%C3%A9g%C3%A9talisation', true);
@@ -581,7 +587,7 @@
 						})
 						.addTo(existingProjects);
 	    })
-		L.control.layers(null, { "Afficher les projets existants": existingProjects },({collapsed: false })).addTo(map);
+		L.control.layers(null, { '<span class="map__legend">Afficher les projets existants <div class="icon icon--green icon--circle"><i class="icon__symbol fa fa-leaf"></i></div></span>': existingProjects },({collapsed: false })).addTo(map);
 	  } else {
 
 	  }
