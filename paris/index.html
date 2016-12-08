@@ -46,42 +46,21 @@
 			height: 100%;
 			max-width: 80%;
 		}
-
-		.header__headline {
-			background-color: #0C518A;
-			width: 100%;
-			padding: 0;
-			position: absolute;
-			bottom: 0px;
-			color: white;
-			font-weight: bold;
-			font-size: 20px;
-			height: 50px;
-			display: table;
-		}
-
-		.header__headline__text {
-			display: table-cell;
-			vertical-align: middle;
-		}
 		
 		.header {
-			background-image: url("http://media.paperblog.fr/i/748/7484553/creation-dune-rue-jardin-exemple-bordeaux-L-yNfX3N.png");
-			background-position: right 40%;
-			background-repeat: no-repeat;
-			background-size: 160%;
-			height: 250px;
-			line-height: 1.2;
+			height: 130px;
+			line-height: 1;
 			padding: 0px;
 			margin: 0 auto;
 			display: block;
 			position: relative;
 			overflow: hidden;
 			text-align: center;
+			background-color: #DF225A;
 		}
 
 		.header__title {
-			color: white;
+			color: #F8E273;
 			font-size: 80px;
 			font-weight: bold; 
 			margin-top: 20px;
@@ -91,20 +70,6 @@
 			.header__title {
 				font-size: 55px;
 			}
-		}
-		
-		.header__button {
-			border: 1px solid #003057;
-			border-radius: 290486px;
-			background-color: rgba(0, 0, 0, 0.7);
-			text-transform: uppercase;
-			text-decoration: none;
-			transition: none 200ms ease-out;
-			transition-property: color, background;
-			padding: 16px 32px;
-			color: white !important;
-			letter-spacing: 0.2px;
-			font-weight: bold;
 		}
 		
 		.header__ribbon {
@@ -119,13 +84,29 @@
 			background-color: #008cba;
 			color: #fff;
 			padding: 5px;
-			font-size: 10px;
+			font-size: 20px;
 			font-weight: 700;
 			z-index: 10;
 		}
 		
-		.header__button:hover {
-			background-color: #003057;
+		.important {
+			width: 100%;
+			font-weight: bold;
+			font-size: 30px;
+			display: table;
+			padding:20px;
+			text-align: center;
+			color: white;
+
+			background-image: url("http://www.montmartre-addict.com/sites/default/files/square_jehan_rictus.jpg");
+			background-position: right center;
+			background-repeat: no-repeat;
+			background-size: cover;
+		}
+
+		.important__text {
+			display: table-cell;
+			vertical-align: middle;
 		}
 		
 		.centered {
@@ -392,15 +373,12 @@
 <body>
 	<div class="header">
 		<div class="header__ribbon">
-			Test Non affilié <br/>à la ville de Paris
-		</div>
-		<div class="header__logo">
-			<img class="header__logo__img" src="img/paris-logo.png"></img>	 
+			Beta
 		</div>
 		<h1 class="header__title">Végétalisez votre ville</h1> 
-		<div class="header__headline">
-			<span class="header__headline__text">Un peu de nature en bas de chez moi pour embellir ma rue et favoriser la biodiversité.</span>
-		</div>
+	</div>
+	<div class="important">
+		<h1 class="important_text">Un peu de nature en bas de chez moi <br />pour embellir ma rue et favoriser la biodiversité</h1>
 	</div>
 
 	<div class="centered" style="margin-top: 10px; display: block; position: relative; text-align: center;">
