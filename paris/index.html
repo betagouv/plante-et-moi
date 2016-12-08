@@ -30,23 +30,6 @@
 			background-color: #F3F3F3;
 		}
 		
-		.header__logo {
-			background-color: #DF225A;
-			height: 50px;
-			width: 100%;
-			padding: 0;
-			position: relative;
-			top: 0px;
-		}
-		
-		.header__logo__img {
-			position: absolute;
-			top: 0px;
-			left: 60px;
-			height: 100%;
-			max-width: 80%;
-		}
-		
 		.header {
 			height: 130px;
 			line-height: 1;
@@ -197,12 +180,26 @@
 			top: 5px;
 			left: 40px;
 		}
+
+		.button {
+			border: 1px solid #003057;
+			border-radius: 290486px;
+			background-color: rgba(0, 0, 0, 0.7);
+			text-transform: uppercase;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			padding: 16px 32px;
+			color: white !important;
+			letter-spacing: 0.2px;
+			font-weight: bold;
+		}
 		
-		.header__button--green {
+		.button--green {
 			background-color: green;
 		}
 		
-		.header__button--green:hover {
+		.button--green:hover {
 			background-color: green;
 		}
 		
@@ -555,7 +552,7 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
 							draggable: true,
 							clickable: false,
 							icon: moveMarker
-						}).bindPopup('<div style="height: 30px; padding: 12px 0px 0px 0px;"><a href="javascript:chooseProject();" class="header__button header__button--green">Végétaliser cet espace</a></div>',
+						}).bindPopup('<div style="height: 30px; padding: 12px 0px 0px 0px;"><a href="javascript:chooseProject();" class="button button--green">Végétaliser cet espace</a></div>',
 						       {autoClose:false, closeButton: false, className: 'popup--red'})
 						  .addTo(map)
 						  .openPopup()
