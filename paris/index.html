@@ -18,55 +18,61 @@
 	<script src="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.js"></script>
 
 	<style type="text/css">
+		html, body { 
+			margin: 0; 
+			padding: 0; 
+			width: 100%; 
+			height: 100%;
+		}	
 		body {
 			font-family: "Helvetica", "Arial", sans-serif;
 			line-height: 1.5;
-			margin: 0px;
 			background-color: #F3F3F3;
 		}
 		
 		.header__logo {
 			background-color: #DF225A;
-			height: 60px;
+			height: 50px;
 			width: 100%;
 			padding: 0;
 			position: relative;
-			top: 20px;
+			top: 0px;
 		}
 		
 		.header__logo__img {
-			position: relative;
-			left: 100px;
-			height: 60px;
+			position: absolute;
+			top: 0px;
+			left: 60px;
+			height: 100%;
 			max-width: 80%;
 		}
 		
 		.header {
-			background-image: url("https://beta.gouv.fr/img/startup/biodiversite.jpg");
-			background-position: center top;
+			background-image: url("http://media.paperblog.fr/i/748/7484553/creation-dune-rue-jardin-exemple-bordeaux-L-yNfX3N.png");
+			background-position: right 40%;
 			background-repeat: no-repeat;
-			background-size: cover;
-			height: 220px;
+			background-size: 160%;
+			height: 200px;
 			line-height: 1.2;
 			padding: 0px;
 			margin: 0 auto;
 			display: block;
 			position: relative;
 			overflow: hidden;
-		}
-		
-		.header__text {
 			text-align: center;
-			color: white;
-			padding: 30px 10px;
-			line-height: 1.5;
 		}
-		
-		.header__text__title {
+
+		.header__title {
 			color: white;
-			font-size: 40px;
-			font-weight: 300;
-			text-shadow: 2px 2px #000000;
+			font-size: 80px;
+			font-weight: bold; 
+			margin-top: 20px;
+		}
+
+		@media (max-width: 900px) {
+			.header__title {
+				font-size: 55px;
+			}
 		}
 		
 		.header__button {
@@ -109,6 +115,7 @@
 			display: block;
 			position: relative;
 			max-width: 950px;
+			min-width: 400px;
 			padding: 1px 5% 1px 5%;
 		}
 		
@@ -144,8 +151,8 @@
 		
 		.map {
 			width: 100%;
-			height: 600px;
-			max-height: 90%;
+			min-height: 500px;
+			height: 90%;
 			margin: 0 auto;
 			padding: 0%;
 			text-align: center;
@@ -328,43 +335,89 @@
 		.leaflet-grab {
 			cursor: pointer;
 		}
+		.cube {
+			display: inline-block;
+			height: 160px;
+			min-width: 400px; 
+			width:40%; 
+			text-align: center;
+			box-sizing:border-box;
+			margin: 30px;
+			vertical-align: top;
+		}
+
+		.cta {
+			text-align: center; 
+			width: 100%; 
+			background-color: #F8E273;
+			min-height: 60px;
+		}
+		.cta__link {
+			display: block;
+			font-size: 40px;
+			max-width: 950px;
+    		margin: auto;;
+			background-color: #F8E273;
+			color: #DF225A;
+		}
+		.cta__link:hover {
+			background-color: #DF225A;
+			color: #F8E273;
+		}
+		.cta__link:link {
+			text-decoration:none; 
+		}
 	</style>
 </head>
 
 <body>
-	<div class="header">
-		<div class="header__logo">
-			<img class="header__logo__img" src="img/paris-logo.png"></img>
-		</div>
-		<div class="header__text">
-			<h1 class="header__text__title">Permis de végétaliser</h1>
-			<!-- <a class="header__button" href="javascript:launchForm();">Faire ma demande</a> -->
-		</div>
-		<div class="header__ribbon">
+	<div class="header__ribbon">
 			Test
 		</div>
+	<div class="header">
+		<div class="header__logo">
+			<img class="header__logo__img" src="img/paris-logo.png"></img>	 
+		</div>
+		<h1 class="header__title">Végétalisez votre ville</h1> 
+		
 	</div>
-	<div class="centered">
-			<h2 class="main__title">Jardiner dans les rues de Paris, c'est permis !</h2>
 
-			<ul>
-				<li>Les parisiens sont nombreux à exprimer leur envie de jardinage et leur besoin de nature en ville</li>
-				<li>Mais difficile sans jardin ni balcon… </li>
-				<li>La solution ? Jardiner dans l’espace public !</li>
-				<li>Le Permis de végétaliser vous permet de disposer du site de votre choix, et de devenir le jardinier de votre quartier</li>
-			</ul>
+	<div class="centered" style="margin-top: 10px; display: block; position: relative; text-align: center;">
+		<div class="cube" style="background-image: 
+url(http://media.paperblog.fr/i/748/7484553/creation-dune-rue-jardin-exemple-bordeaux-L-yNfX3N.png); background-repeat: no-repeat;
+			background-size: cover; border-radius: 2px; 
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
 
-			<h2 class="main__title">Quels espaces peut-on végétaliser ?</h2>
+		</div>
+		<div class="cube">
+			<h2 class="main__title">Envie de jardinage ? <br/>Besoin de nature en ville ?</h2>
+			Ça tombe bien : jardiner dans les rues de Paris, c’est permis !
+		</div>
+		<div class="cube">
+			<h2 class="main__title">Pas la main verte ?</h2>
+			On vous conseille sur les plantes et leur entretien, même en hiver !
+		</div>
+		<div class="cube" style="background-image: 
+url(http://www.citizenkid.com/application/views/images/media/59/450x350/Enfant-qui-jardine-290229.jpg); background-repeat: no-repeat;
+			background-size: cover; background-position: center 60%; border-radius: 2px; 
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
+		</div>
+		<div class="cube" style="background-image: 
+url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-repeat: no-repeat;
+			background-size: cover; background-position: center center; border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); ">
+		</div>
+		<div class="cube">
+			<h2 class="main__title">Pas le temps ?</h2>
+			Vous pouvez végétaliser en 3 minutes par semaine seulement !
+		</div>
+	</div>
 
-			<ul>
-				<li><b>800 sites</b>
-					<div class="icon icon--green icon--circle"><i class="icon__symbol fa fa-leaf"></i></div> ont
-					été plantés depuis 2015 !</li>
-			</ul>
-			 <h2 class="main__title"> Il ne vous reste qu’à selectionner le votre
+	<div class="cta" id="cta">
+		 <a class="cta__link" href="javascript:scrollToMap()">Sélectionnez votre emplacement
 					<div class="icon icon--blue icon--circle"><i class="icon__symbol fa fa-arrow-down"></i></div>
-					!</h2>
-	 </div>
+					!</a>
+	</div>
 
 	<div class="map">
 		<div class="map__leaflet" id="map">
@@ -588,7 +641,7 @@
 						})
 						.addTo(existingProjects);
 	    })
-		L.control.layers(null, { '<span class="map__legend">Afficher les projets existants <div class="icon icon--green icon--circle"><i class="icon__symbol fa fa-leaf"></i></div></span>': existingProjects },({collapsed: false })).addTo(map);
+		L.control.layers(null, { '<span class="map__legend">Afficher les 800 projets existants <div class="icon icon--green icon--circle"><i class="icon__symbol fa fa-leaf"></i></div></span>': existingProjects },({collapsed: false })).addTo(map);
 	  } else {
 
 	  }
@@ -647,6 +700,11 @@
 	});
 
 	var projectType = '';
+
+	function scrollToMap() {
+		var cta = document.getElementById('cta');
+		cta.scrollIntoView();
+	}
 
 	function chooseProject() {
 		document.getElementById('projectList').classList.remove('galery--invisible');
