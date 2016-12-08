@@ -46,13 +46,31 @@
 			height: 100%;
 			max-width: 80%;
 		}
+
+		.header__headline {
+			background-color: #0C518A;
+			width: 100%;
+			padding: 0;
+			position: absolute;
+			bottom: 0px;
+			color: white;
+			font-weight: bold;
+			font-size: 20px;
+			height: 50px;
+			display: table;
+		}
+
+		.header__headline__text {
+			display: table-cell;
+			vertical-align: middle;
+		}
 		
 		.header {
 			background-image: url("http://media.paperblog.fr/i/748/7484553/creation-dune-rue-jardin-exemple-bordeaux-L-yNfX3N.png");
 			background-position: right 40%;
 			background-repeat: no-repeat;
 			background-size: 160%;
-			height: 200px;
+			height: 250px;
 			line-height: 1.2;
 			padding: 0px;
 			margin: 0 auto;
@@ -335,11 +353,12 @@
 		.leaflet-grab {
 			cursor: pointer;
 		}
+
 		.cube {
 			display: inline-block;
 			height: 160px;
-			min-width: 400px; 
-			width:40%; 
+			min-width: 300px; 
+			width:42%; 
 			text-align: center;
 			box-sizing:border-box;
 			margin: 30px;
@@ -379,7 +398,9 @@
 			<img class="header__logo__img" src="img/paris-logo.png"></img>	 
 		</div>
 		<h1 class="header__title">Végétalisez votre ville</h1> 
-		
+		<div class="header__headline">
+			<span class="header__headline__text">Un peu de nature en bas de chez moi pour embellir ma rue et favoriser la biodiversité.</span>
+		</div>
 	</div>
 
 	<div class="centered" style="margin-top: 10px; display: block; position: relative; text-align: center;">
@@ -414,7 +435,7 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
 	</div>
 
 	<div class="cta" id="cta">
-		 <a class="cta__link" href="javascript:scrollToMap()">Sélectionnez votre emplacement
+		 <a class="cta__link" href="javascript:scrollToMap()">Sélectionnez votre lieu
 					<div class="icon icon--blue icon--circle"><i class="icon__symbol fa fa-arrow-down"></i></div>
 					!</a>
 	</div>
