@@ -133,8 +133,8 @@
 		
 		.map-container {
 			position: relative;
-			width: 100%;
-			min-height: 500px;
+			width: 90%;
+			min-height: 90%;
 			height: 90%;
 			margin: 0 auto;
 			padding: 0%;
@@ -379,11 +379,11 @@
 		.search__input {
 			margin: 0px;
 			padding: 10px;
-			width: 500px;
+			width: 400px;
 			height: 50px;
 			font-size: 25px;
 			border-width: 0px;
-			border-radius: 2px 2px 2px 2px;
+			border-radius: 2px 2px 0px 2px;
 			float: left;
 			box-sizing:border-box;
 		}
@@ -418,53 +418,8 @@
 		</div>
 		<h1 class="header__title"><i class="fa fa-leaf"></i> Plante et Moi</h1> 
 	</div>
-	<div class="important">
-		<h1 class="important__text">Un peu de nature dans ma rue<br>pour l'embellir et favoriser la biodiversité</h1>
-	</div>
 
-	<div class="centered" style="
-			color: #0C518A;">
-		<h1 class="main__title">Cherchez une rue à végétaliser dans Paris</h1>
-		 <div class="search">
-			 <input type="text" id="address-search" name="address-search" placeholder="10 rue de la paix" class="search__input">
-	     </div>
-	</div>
-
-	<div class="centered">
-		<div class="cube" style="background-image: 
-url(http://media.paperblog.fr/i/748/7484553/creation-dune-rue-jardin-exemple-bordeaux-L-yNfX3N.png); background-repeat: no-repeat;
-			background-size: cover; border-radius: 2px; 
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-			">
-
-		</div>
-		<div class="cube">
-			<h2 class="main__title">Envie de jardinage ? <br/>Besoin de nature en ville ?</h2>
-			Ça tombe bien : jardiner dans les rues de Paris, c’est permis !
-		</div>
-	</div>
-
-	<div class="centered">
-				<div class="cube">
-			<h2 class="main__title">Pas la main verte ?</h2>
-			On vous conseille sur les plantes et leur entretien, même en hiver !
-		</div>
-		<div class="cube" style="background-image: 
-url(http://www.citizenkid.com/application/views/images/media/59/450x350/Enfant-qui-jardine-290229.jpg); background-repeat: no-repeat;
-			background-size: cover; background-position: center 60%; border-radius: 2px; 
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
-		</div>
-		<div class="cube" style="background-image: 
-url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-repeat: no-repeat;
-			background-size: cover; background-position: center center; border-radius: 2px;
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); ">
-		</div>
-		<div class="cube">
-			<h2 class="main__title">Pas le temps ?</h2>
-			Vous pouvez végétaliser en 3 minutes par semaine seulement !
-		</div>
-	</div>
-	<div class="centered map-container map-container--invisible" id="map-container">
+	<div class="map-container" id="map-container">
 		<div class="map__leaflet" id="map">
 			<!-- <input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="address-search map__input leaflet-bar leaflet-control">
 			-->
@@ -473,7 +428,71 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
 			</div>
 		</div>
 	</div>
-
+	<div class="centered">
+			<h1 class="main__title main__title--invisible" id="projectListTitle">Choisissez le type projet que vous souhaitez faire</h1>
+	</div>
+	<div class="galery galery--invisible" id="projectList">
+		<div class="galery__card">
+			<img class="galery__card__image" src="http://parcjardin.mairie-albi.fr/wp-content/gallery/photos/dscn0152.jpg" />
+			<h2 class="galery__card__title">Pied d'arbre fleuris</h2>
+			<p class="galery__card__description">Retournez la terre et plantez des graminés. Ça pousse tout seul avec peu d'eau et ça résiste très bien au froid. On m'a
+				dit que certain y plantait des légumes :)
+				<br><br>2 pieds aménagé la semaine dernière
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm('projet de pied d\'arbre fleuris');">Je demande mon permis</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="http://www.emeraude-creation.fr/page_attachments/0000/0908/diapo-mobilier-jardini_re-2.web.jpg"
+			/>
+			<h2 class="galery__card__title">Jardinière</h2>
+			<p class="galery__card__description">Vous pouvez la construire vous même! Disséminez quelques graines de fleurs sur la terre retournée : une micro-prairie
+				sans effort. Les abeilles vont vous remercier.
+				<br><br>Déjà 23 Jardinières (et combien de jardinier ?)
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm('projet de jardinière');">Je demande mon permis</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="http://monjardindansmarue.fr/wp-content/uploads/2015/04/3-GreenPods1.jpg" />
+			<h2 class="galery__card__title">Poteau végétalisé</h2>
+			<p class="galery__card__description">Les poteaux de stationnement près de chez vous font grise mine ? Passez les au vert en les coiffant d’un pot ! Choisissez
+				une plante, et c’est tout.
+				<br><br>111 poteau déjà aménagé
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm('projet de poteau végétalisé');">Je demande mon permis</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="http://www.ambius.com/blog/wp-content/uploads/2013/06/Rittenhouse-1.jpg" />
+			<h2 class="galery__card__title">Mur végétal</h2>
+			<p class="galery__card__description">Allons un mur non végétalisé, ce n'est plus la mode. Un peu de jasmin sur ce mur lui fera le plus grand bien
+				<br><br>Déjà 12 murs
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm('projet de mur végétal');">Je demande mon permis</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="https://www.tours.fr/uploads/Image/55/8504_151_fleur-de-trottoir-premiere-plantation.jpg"
+			/>
+			<h2 class="galery__card__title">Fosse</h2>
+			<p class="galery__card__description">Et si on faisait un trou devant chez vous ? La mairie peut casser un peu de trottoir pour construire une fosse végétalisable.
+				Un peu de terre, des graines et c’est parti !
+				<br><br>On a déjà fait 61 fosses !
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm('projet de fosse');">Je demande mon permis</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="img/autre-projet.jpg" />
+			<h2 class="galery__card__title">Autre projet</h2>
+			<p class="galery__card__description">Une autre idée ? Je vois que vous n'êtes pas le genre de personne à faire comme tout le monde.
+				Laisser parler votre imagination
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" href="javascript:launchForm('projet de végétalisation');">Je demande mon permis</a>
+		</div>
+	</div>
+	<div class="form form--invisible" id="permit__form">
+		<div class="centered">
+			<h1 class="form__title">Demande de Permis de végétaliser</h1>
+		</div>
+		<iframe id="typeform" class="form__typeform" src="https://amazingcontent.typeform.com/to/WNwIJx?type=xxxxx&address=xxxxx"></iframe>
+	</div>
 
 	<script>
 	var center = [48.854923, 2.346763];
@@ -637,10 +656,10 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
 	requestVerts.send();
 
 // Autocomplete
-	var addressSearch = document.getElementById('address-search');
+	/*var addressSearch = document.getElementById('address-search');
 	L.DomEvent.disableClickPropagation(addressSearch);
 	addressSearch.onmouseover = map.dragging.disable();
-	addressSearch.onmouseout = map.dragging.enable();
+	addressSearch.onmouseout = map.dragging.enable();*/
 
 
 	function renderFeature(item, search){
@@ -651,9 +670,9 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
 	function onSelectAddress(event, term, item){
 		var coord = [item.getAttribute("data-lat"),item.getAttribute("data-lng")];
 		var address = item.getAttribute("data-val");
-		document.location = "demande.html?address="+address+"&lat="+item.getAttribute("data-lat")+"&lng="+item.getAttribute("data-lng")
-		/*selectPoint(coord, address);
-		map.flyTo(coord, 17);*/
+		show('map-container');
+		selectPoint(coord, address);
+		map.flyTo(coord, 17);
 	}
 
 	function addressesDataSource(term, response){
@@ -711,6 +730,22 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
 		permitForm.scrollIntoView();
 	}
 
+	function getParameterByName(name) {
+      	var url = window.location.href;
+    
+    	name = name.replace(/[\[\]]/g, "\\$&");
+    	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    	if (!results) return null;
+    	if (!results[2]) return '';
+    	return decodeURIComponent(results[2].replace(/\+/g, " "));
+	}
+	var lng = getParameterByName('lng');
+	var lat = getParameterByName('lat');
+	selectedAddress = getParameterByName('address');
+	var coord = [lat,lng];
+	selectPoint(coord, selectedAddress);
+	map.flyTo(coord, 17);
 </script>
 </body>
 
