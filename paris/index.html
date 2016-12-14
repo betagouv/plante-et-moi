@@ -31,65 +31,64 @@
 		}
 		
 		.header {
-			height: 130px;
+			height: 50px;
 			line-height: 1;
 			padding: 0px;
 			margin: 0 auto;
 			display: block;
 			position: relative;
 			overflow: hidden;
-			text-align: center;
-			background-color: #DF225A;
+			background-color: seagreen;
 		}
 
 		.header__title {
 			color: #F8E273;
-			font-size: 80px;
+			font-size: 30px;
 			font-weight: bold; 
-			margin-top: 20px;
-		}
-
-		@media (max-width: 900px) {
-			.header__title {
-				font-size: 55px;
-			}
+			margin: 10px;
 		}
 		
 		.header__ribbon {
 			text-align: center;
 			text-transform: uppercase;
 			position: absolute;
-			top: 30px;
-			right: -40px;
+			top: 10px;
+			right: -15px;
 			-webkit-transform: rotate(45deg);
 			transform: rotate(45deg);
-			width: 160px;
+			width: 80px;
 			background-color: #008cba;
 			color: #fff;
 			padding: 5px;
-			font-size: 20px;
+			font-size: 10px;
 			font-weight: 700;
 			z-index: 10;
 		}
 		
 		.important {
 			width: 100%;
-			font-weight: bold;
-			font-size: 30px;
+			font-size:22px;
 			display: table;
-			padding:20px;
-			text-align: center;
-			color: white;
-
-			background-image: url("http://www.montmartre-addict.com/sites/default/files/square_jehan_rictus.jpg");
+			padding: 4%;
+			box-sizing:border-box;
+			background-image: url("img/square_jehan_rictus.jpg");
 			background-position: right center;
 			background-repeat: no-repeat;
 			background-size: cover;
+			text-align: center;
+			color: white;
+		}
+
+		@media (max-width: 900px) {
+			.important {
+				font-size: 15px;
+			}
 		}
 
 		.important__text {
 			display: table-cell;
 			vertical-align: middle;
+			line-height: 1.2;
 		}
 		
 		.centered {
@@ -99,6 +98,7 @@
 			max-width: 950px;
 			min-width: 400px;
 			padding: 1px 5% 1px 5%;
+			text-align: center;
 		}
 		
 		.form {
@@ -131,7 +131,8 @@
 			display: none !important;
 		}
 		
-		.map {
+		.map-container {
+			position: relative;
 			width: 100%;
 			min-height: 500px;
 			height: 90%;
@@ -139,8 +140,13 @@
 			padding: 0%;
 			text-align: center;
 		}
+
+		.map-container--invisible {
+			display: none;
+		}
 		
 		.map__leaflet {
+			position: absolute;
 			width: 100%;
 			height: 100%;
 		}
@@ -176,7 +182,7 @@
 			font-weight: bold;
 		}
 		
-		#address-search {
+		.address-search {
 			top: 5px;
 			left: 40px;
 		}
@@ -364,32 +370,83 @@
 		.cta__link:link {
 			text-decoration:none; 
 		}
+		.search {
+			display: inline-block;
+			vertical-align: middle;
+			border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+		}
+		.search__input {
+			margin: 0px;
+			padding: 10px;
+			width: 400px;
+			height: 50px;
+			font-size: 25px;
+			border-width: 0px;
+			border-radius: 2px 2px 0px 2px;
+			float: left;
+			box-sizing:border-box;
+		}
+		.search__button {
+			margin: 0px;
+			letter-spacing: 0.2px;
+			font-weight: bold;
+			background-color: green;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			padding: 16px 0px;
+			color: white;
+			font-weight: bold;
+			border-radius: 0px 2px 2px 0px;
+			width: 100px;
+			height: 50px;
+			border-width: 0px;
+			float: left;
+		}
+		.search__button:hover {
+			background-color: seagreen;
+		}
 	</style>
 </head>
 
 <body>
+	
 	<div class="header">
 		<div class="header__ribbon">
 			Beta
 		</div>
-		<h1 class="header__title">Végétalisez votre ville</h1> 
+		<h1 class="header__title"><i class="fa fa-leaf"></i> Plante et Moi</h1> 
 	</div>
 	<div class="important">
-		<h1 class="important_text">Un peu de nature en bas de chez moi <br />pour embellir ma rue et favoriser la biodiversité</h1>
+		<h1 class="important__text">Un peu de nature dans ma rue<br>pour l'embellir et favoriser la biodiversité</h1>
 	</div>
 
-	<div class="centered" style="margin-top: 10px; display: block; position: relative; text-align: center;">
+	<div class="centered" style="
+			color: #0C518A;">
+		<h1 class="main__title">Chercher une rue à végétaliser dans Paris</h1>
+		 <div class="search">
+			 <input type="text" id="address-search" name="address-search" placeholder="10 rue de la paix" class="search__input">
+			 <button type="button" class="search__button" onclick="show('map-container');">Rechercher</button>
+	     </div>
+	</div>
+
+	<div class="centered">
 		<div class="cube" style="background-image: 
 url(http://media.paperblog.fr/i/748/7484553/creation-dune-rue-jardin-exemple-bordeaux-L-yNfX3N.png); background-repeat: no-repeat;
 			background-size: cover; border-radius: 2px; 
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			">
 
 		</div>
 		<div class="cube">
 			<h2 class="main__title">Envie de jardinage ? <br/>Besoin de nature en ville ?</h2>
 			Ça tombe bien : jardiner dans les rues de Paris, c’est permis !
 		</div>
-		<div class="cube">
+	</div>
+
+	<div class="centered">
+				<div class="cube">
 			<h2 class="main__title">Pas la main verte ?</h2>
 			On vous conseille sur les plantes et leur entretien, même en hiver !
 		</div>
@@ -408,16 +465,10 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
 			Vous pouvez végétaliser en 3 minutes par semaine seulement !
 		</div>
 	</div>
-
-	<div class="cta" id="cta">
-		 <a class="cta__link" href="javascript:scrollToMap()">Sélectionnez votre lieu
-					<div class="icon icon--blue icon--circle"><i class="icon__symbol fa fa-arrow-down"></i></div>
-					!</a>
-	</div>
-
-	<div class="map">
+	<div class="centered map-container map-container--invisible" id="map-container">
 		<div class="map__leaflet" id="map">
-			<input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="map__input leaflet-bar leaflet-control">
+			<!-- <input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="address-search map__input leaflet-bar leaflet-control">
+			-->
 			<div class="map__protip leaflet-control">
 				<h1 id="selectAddressProTip" class="map__protip__title">Sélectionnez votre lieu</h1>
 			</div>
@@ -513,6 +564,13 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
     	prefix: 'fa'
   	});
 
+
+	function show(itemID) {
+		var itemDom = document.getElementById(itemID);
+		itemDom.classList.remove(itemID+'--invisible');
+		itemDom.scrollIntoView();
+	}
+
     function sendReverseGeocodeRequest(latlng, response){
     		try { requestReverseGeocode.abort(); } catch(e){}
 			requestReverseGeocode = new XMLHttpRequest();
@@ -558,8 +616,7 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
 						  .openPopup()
 						  .on('dragend', function(e) { 
 						    	selectedPoint.openPopup();
-						  })
-						  
+						  })			  
 	}
 
 
@@ -659,6 +716,7 @@ url(http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg); background-
 	function onSelectAddress(event, term, item){
 		var coord = [item.getAttribute("data-lat"),item.getAttribute("data-lng")];
 		var address = item.getAttribute("data-val");
+		show('map-container');
 		selectPoint(coord, address);
 		map.flyTo(coord, 17);
 	}
