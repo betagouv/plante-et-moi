@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Permis de végétaliser - Ville de Paris</title>
+	<title>Permis de végétaliser</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +13,7 @@
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.css">
 	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
+	<link rel="stylesheet" href="css/main.css" />
 
 	<script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
 	<script src="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.js"></script>
@@ -24,47 +25,7 @@
 			width: 100%; 
 			height: 100%;
 		}	
-		body {
-			font-family: "Helvetica", "Arial", sans-serif;
-			line-height: 1.5;
-			background-color: #F3F3F3;
-		}
-		
-		.header {
-			height: 50px;
-			line-height: 1;
-			padding: 0px;
-			margin: 0 auto;
-			display: block;
-			position: relative;
-			overflow: hidden;
-			background-color: seagreen;
-		}
 
-		.header__title {
-			color: #F8E273;
-			font-size: 30px;
-			font-weight: bold; 
-			margin: 10px;
-		}
-		
-		.header__ribbon {
-			text-align: center;
-			text-transform: uppercase;
-			position: absolute;
-			top: 10px;
-			right: -15px;
-			-webkit-transform: rotate(45deg);
-			transform: rotate(45deg);
-			width: 80px;
-			background-color: #008cba;
-			color: #fff;
-			padding: 5px;
-			font-size: 10px;
-			font-weight: 700;
-			z-index: 10;
-		}
-		
 		.important {
 			width: 100%;
 			font-size:22px;
@@ -416,7 +377,7 @@
 		<div class="header__ribbon">
 			Beta
 		</div>
-		<h1 class="header__title"><i class="fa fa-leaf"></i> Plante et Moi</h1> 
+		<h1 class="header__title" id="header-title"><i class="fa fa-leaf"></i></h1> 
 	</div>
 
 	<div class="map-container" id="map-container">
@@ -494,17 +455,28 @@
 		<iframe id="typeform" class="form__typeform" ></iframe>
 	</div>
 
+	<script src="js/utils.js"></script>
+	<script src="js/main.js"></script>
 	<script>
-	var center = [48.854923, 2.346763];
+
 	var selectedPoint;
 	var selectedPointPopup;
 	var selectedAddress;
 	var codePostaux = [];
 	var map = L.map('map', {
-    	center: center,
     	zoom: 13,
     	minZoom: 11
 	});
+
+	function onCityGeoDataLoaded(){
+		 var polygon = L.geoJson(contour,{
+		    color: '#0C518A',
+		    fill: false
+		}).addTo(map)
+		var bounds = polygon.getBounds();
+	    map.setMaxBounds(bounds.pad(0.05));
+		//map.flyTo(center, 12);
+	}
 
 	L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
     	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
@@ -580,7 +552,7 @@
 
 
 	var request = new XMLHttpRequest();
-	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom=paris', true);
+	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom='+city, true);
 
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
@@ -601,7 +573,7 @@
 	request.send();
 
 	var requestArea = new XMLHttpRequest();
-	requestArea.open('GET', 'data/area.geojson', true); // https://umap.openstreetmap.fr/fr/datalayer/276529/
+	requestArea.open('GET', 'data/area/'+city+'.geojson', true); // https://umap.openstreetmap.fr/fr/datalayer/276529/
 
 	requestArea.onload = function() {
 	  if (requestArea.status >= 200 && requestArea.status < 400) {
@@ -627,7 +599,7 @@
 // Add projects on the map
 	var existingProjects = new L.LayerGroup();
 	var requestVerts = new XMLHttpRequest();
-	requestVerts.open('GET', 'https://opendata.paris.fr/api/records/1.0/search/?dataset=du-vert-pres-de-chez-moi&rows=1000&facet=etat_de_la_proposition&refine.etat_de_la_proposition=proposition+r%C3%A9alisable+et+retenue+dans+les+200+points+de+v%C3%A9g%C3%A9talisation', true);
+	requestVerts.open('GET', 'data/projects/'+city+'.geojson', true);
 
 	var plantMarker = L.AwesomeMarkers.icon({
     	icon: 'leaf',
@@ -640,7 +612,7 @@
 	    // Success!
 	    var data = JSON.parse(requestVerts.responseText);
 
-	    data["records"].map(function(feature){
+	    data["features"].map(function(feature){
 	    	L.geoJson(feature["geometry"], {
 							pointToLayer: function(geoJsonPoint, latlng) {
 								return L.marker(latlng, {icon: plantMarker}).bindPopup(feature["fields"]["type_veget"]);
@@ -648,71 +620,20 @@
 						})
 						.addTo(existingProjects);
 	    })
-		L.control.layers(null, { '<span class="map__legend">Afficher les 800 projets existants <div class="icon icon--green icon--circle"><i class="icon__symbol fa fa-leaf"></i></div></span>': existingProjects },({collapsed: false })).addTo(map);
+		existingProjects.addTo(map)
+
+		var title = '<span class="map__legend"><div class="icon icon--green icon--circle"><i class="icon__symbol fa fa-leaf"></i></div> '+data["features"].length+' projets existants</span>';
+		var layers = { }
+		layers[title] = existingProjects;
+
+		L.control.layers(null, layers,({collapsed: false })).addTo(map);
 	  } else {
 
 	  }
 	};
 	requestVerts.send();
 
-// Autocomplete
-	/*var addressSearch = document.getElementById('address-search');
-	L.DomEvent.disableClickPropagation(addressSearch);
-	addressSearch.onmouseover = map.dragging.disable();
-	addressSearch.onmouseout = map.dragging.enable();*/
-
-
-	function renderFeature(item, search){
-    	var coord = item["geometry"]["coordinates"]
-		return '<div class="autocomplete-suggestion" data-val="' + item["properties"]["label"] + '" data-lat="'+coord[1]+'" data-lng="'+coord[0]+'">' + item["properties"]["label"] + '</div>';
-	}
-
-	function onSelectAddress(event, term, item){
-		var coord = [item.getAttribute("data-lat"),item.getAttribute("data-lng")];
-		var address = item.getAttribute("data-val");
-		show('map-container');
-		selectPoint(coord, address);
-		map.flyTo(coord, 17);
-	}
-
-	function addressesDataSource(term, response){
-    		try { requestAddresses.abort(); } catch(e){}
-			requestAddresses = new XMLHttpRequest();
-			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?type=housenumber&q='+term+'&limit=30&lon='+center[0]+'&lat='+center[1], true);
-    		requestAddresses.onload = function() {
-			  if (requestAddresses.status >= 200 && requestAddresses.status < 400) {
-			    // Success!
-			    var data = JSON.parse(requestAddresses.responseText);
-			    var features = data["features"].filter(function(feature){
-			    	if(codePostaux.indexOf(feature["properties"]["postcode"]) == -1) {
-			    		return false;
-			    	}
-			    	return true;
-			    });
-			    response(features);
-			  } else {
-			    response([]);
-			  }
-			};
-			requestAddresses.send();
-    	}
-
-	var requestAddresses;
-	new autoComplete({
-    	selector: 'input[name=address-search]',
-    	minChars: 2,
-    	source: addressesDataSource,
-    	renderItem: renderFeature,
-		onSelect: onSelectAddress,
-		cache: false,
-	});
-
 	var projectType = '';
-
-	function scrollToMap() {
-		var cta = document.getElementById('cta');
-		cta.scrollIntoView();
-	}
 
 	function chooseProject() {
 		document.getElementById('projectList').classList.remove('galery--invisible');
@@ -730,22 +651,12 @@
 		permitForm.scrollIntoView();
 	}
 
-	function getParameterByName(name) {
-      	var url = window.location.href;
-    
-    	name = name.replace(/[\[\]]/g, "\\$&");
-    	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    	if (!results) return null;
-    	if (!results[2]) return '';
-    	return decodeURIComponent(results[2].replace(/\+/g, " "));
-	}
 	var lng = getParameterByName('lng');
 	var lat = getParameterByName('lat');
 	selectedAddress = getParameterByName('address');
 	var coord = [lat,lng];
+	map.setView(coord, 17);
 	selectPoint(coord, selectedAddress);
-	map.flyTo(coord, 17);
 </script>
 </body>
 
