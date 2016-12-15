@@ -385,7 +385,7 @@
 			<!-- <input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="address-search map__input leaflet-bar leaflet-control">
 			-->
 			<div class="map__protip leaflet-control">
-				<h1 id="selectAddressProTip" class="map__protip__title">Sélectionnez votre lieu</h1>
+				<h1 id="selectAddressProTip" class="map__protip__title">Vous pouvez déplacer le repére</h1>
 			</div>
 		</div>
 	</div>
@@ -530,8 +530,6 @@
 		} else {
 			selectedAddress = address;
 		}
-
-		document.getElementById('selectAddressProTip').classList.add('main__title--invisible');
 		selectedPoint = L.marker(latlng, {
 							draggable: true,
 							clickable: false,
@@ -657,6 +655,17 @@
 	var coord = [lat,lng];
 	map.setView(coord, 17);
 	selectPoint(coord, selectedAddress);
+
+	var doc = document.getElementById('typeform').contentWindow.document;
+	doc.open();
+	doc.write('<style>body {  \
+ 				heigth: 100%; \
+  				weight: 100%; \
+  				text-align: center; \
+			 }</style> \
+				<img src="https://sgmap.github.io/plante-et-moi/vegetalisez/img/spin.gif"">');
+	doc.close();
+	
 </script>
 </body>
 
