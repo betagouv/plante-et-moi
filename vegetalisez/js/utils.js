@@ -30,3 +30,11 @@ function show(itemID) {
 	itemDom.classList.remove(itemID+'--invisible');
 	itemDom.scrollIntoView();
 }
+
+/*
+  Array UTILS
+*/
+
+Array.prototype.random = function () {
+  return this[Math.floor((Math.random()*this.length))];
+}

@@ -613,7 +613,13 @@
 	    data["features"].map(function(feature){
 	    	L.geoJson(feature["geometry"], {
 							pointToLayer: function(geoJsonPoint, latlng) {
-								return L.marker(latlng, {icon: plantMarker}).bindPopup(feature["fields"]["type_veget"]);
+								var marker = L.marker(latlng, {icon: plantMarker});
+								try { 
+									marker.bindPopup(feature["fields"]["type_veget"]+" par "+["Pierre", "Paul","Jeanne", "Sophie","Jean"].random()); 
+								} catch(e){
+									marker.bindPopup(feature["properties"]["name"]+" par "+["Pierre", "Paul","Jeanne", "Sophie","Jean"].random());
+								}
+								return marker;
 							}
 						})
 						.addTo(existingProjects);
