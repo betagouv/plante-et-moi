@@ -651,7 +651,7 @@
 	function launchForm(type) {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
-		typeform.src = 'https://amazingcontent.typeform.com/to/WNwIJx?type='+projectType+'&address='+selectedAddress;
+		typeform.src = 'https://amazingcontent.typeform.com/to/WNwIJx?type='+projectType+'&address='+selectedAddress+'&city='+city;
 		var permitForm = document.getElementById('permit__form');
 		permitForm.classList.remove('form--invisible');
 		permitForm.scrollIntoView();
@@ -671,7 +671,7 @@
   				weight: 100%; \
   				text-align: center; \
 			 }</style> \
-				<img src="https://sgmap.github.io/plante-et-moi/vegetalisez/img/spin.gif"">');
+				<img src="img/spin.gif">');
 	doc.close();
 	
 </script>

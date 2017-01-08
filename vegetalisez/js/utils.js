@@ -18,7 +18,7 @@ function getParameterByName(name) {
 */
 
 function isVowelOrH(c) {
-    return ['a', 'e', 'i', 'o', 'u', 'h'].indexOf(c.toLowerCase()) !== -1
+    return ['a', 'e', 'i', 'o', 'u', 'h'].indexOf(c.toLowerCase()) !== -1;
 }
 
 /*
