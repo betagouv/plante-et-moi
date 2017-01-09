@@ -1,0 +1,24 @@
+@(applications: List[models.Application])
+
+@main("Mes demandes (en attente de mon avis)")  {
+
+}{
+<table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col ">
+    <thead>
+    <tr>
+        <th class="mdl-data-table__cell--non-numeric">Adresse</th>
+        <th class="mdl-data-table__cell--non-numeric">Type</th>
+        <th class="mdl-data-table__cell--non-numeric">Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    @for(application <- applications) {
+    <tr onclick="window.document.location='@routes.ApplicationController.show(application.id)';">
+        <td class="mdl-data-table__cell--non-numeric">@application.address</td>
+        <td class="mdl-data-table__cell--non-numeric">@application._type</td>
+        <td class="mdl-data-table__cell--non-numeric">@application.date</td>
+    </tr>
+    }
+    </tbody>
+</table>
+}

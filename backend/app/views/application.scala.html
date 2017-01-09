@@ -1,0 +1,150 @@
+@(application: models.Application)
+
+@main(s"Demande ${application.id.substring(0,2)}")  {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
+
+<style>
+.demo-list-item {
+    width: 600px;
+}
+.mdl-list__item-primary-content {
+    font-weight: bold;
+}
+.map__leaflet {
+    width: 300px;
+    height: 300px;
+}
+</style>
+}{
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <div style="width: 300px; height: 300px; text-align: center;">
+        <img src='@routes.Assets.versioned("images/examples/arbre_arles.jpg")' style="max-width: 300px; max-height: 300px;">
+    </div>
+    <ul class="demo-list-item mdl-list">
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              Date de dépot
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                @application.date
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              Nom
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                @application.name
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              Courriel
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                @application.email
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              Téléphone
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                @application.phone
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              Status
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                @application.status
+            </span>
+        </li>
+        <li class="mdl-list__item">
+    <span class="mdl-list__item-primary-content">
+      Type
+    </span>
+            <span class="mdl-list__item-secondary-action">
+                @application._type
+            </span>
+        </li>
+        <li class="mdl-list__item">
+    <span class="mdl-list__item-primary-content">
+      Adresse
+    </span>
+            <span class="mdl-list__item-secondary-action">
+                @application.address
+            </span>
+        </li>
+    </ul>
+
+    <div class="map__leaflet" id="map">
+    </div>
+
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <form action="#">
+        <h3>Mon avis</h3>
+        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+            <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
+            <span class="mdl-radio__label">Favorable</span>
+        </label>
+        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+            <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2">
+            <span class="mdl-radio__label">Défavorable</span>
+        </label><br>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label " style="width: 600px;">
+            <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" ></textarea>
+            <label class="mdl-textfield__label" for="sample5">Saisir mon commentaire...</label>
+        </div><br/>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            Ajouter mon avis
+        </button>
+    </form>
+</div>
+<script>
+	var map = L.map('map', {
+    	zoom: 13,
+    	center: [0,0],
+    	minZoom: 11,
+    	layers: [
+             L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
+                attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+                minZoom: 10,
+                maxZoom: 20
+            })
+	    ]
+	});
+
+	function addressesDataSource(term, response){
+    		try { requestAddresses.abort(); } catch(e){}
+			requestAddresses = new XMLHttpRequest();
+			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?type=housenumber&q='+term+'&limit=30', true);
+    		requestAddresses.onload = function() {
+			  if (requestAddresses.status >= 200 && requestAddresses.status < 400) {
+			    // Success!
+			    var data = JSON.parse(requestAddresses.responseText);
+			    response(data["features"]);
+			  } else {
+			    response([]);
+			  }
+			};
+			requestAddresses.send();
+    	}
+
+	var requestAddresses;
+
+
+    addressesDataSource("@application.address", function(responses) {
+            var coord = responses[0]["geometry"]["coordinates"];
+            var latlng = [coord[1],coord[0]]
+            map.setView(latlng, 17);
+	        L.marker(latlng, {
+							draggable: false,
+							clickable: false
+						}).addTo(map)
+	});
+</script>
+}
