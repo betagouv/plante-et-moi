@@ -18,8 +18,13 @@
 </style>
 }{
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <div style="width: 300px; height: 300px; text-align: center;">
-        <img src='@routes.Assets.versioned("images/examples/arbre_arles.jpg")' style="max-width: 300px; max-height: 300px;">
+    <div style="min-width: 300px; height: 600px; ">
+        <div style="width: 300px; height: 300px; text-align: center;">
+            <img src='@routes.Assets.versioned("images/examples/arbre_arles.jpg")' style="max-width: 300px; max-height: 300px;">
+        </div>
+
+        <div class="map__leaflet" id="map">
+        </div>
     </div>
     <ul class="demo-list-item mdl-list">
         <li class="mdl-list__item">
@@ -56,7 +61,7 @@
         </li>
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
-              Status
+              Statut
             </span>
             <span class="mdl-list__item-secondary-action">
                 @application.status
@@ -80,8 +85,6 @@
         </li>
     </ul>
 
-    <div class="map__leaflet" id="map">
-    </div>
 
 </div>
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">

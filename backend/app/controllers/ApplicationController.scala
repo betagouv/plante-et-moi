@@ -28,7 +28,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         (answer \ "hidden" \ "city").get == Json.toJson(city)
       }.map { answer =>
         val address = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue non renseigné")
-        val typ = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").capitalize).getOrElse("Inconnu")
+        val typ = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
         val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("non_renseigné@example.com")
         val date = (answer \ "metadata" \ "date_submit").as[String]
         val firstname = (answer \ "answers" \ "textfield_38072796").asOpt[String].getOrElse("John")
@@ -40,7 +40,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
       }
       val defaults = List(
         models.Application("23", "Yves Laurent", "yves.laurent@example.com", "Demande d'avis", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", "2017-01-04 11:30:14"),
-        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardiniére", s"3 Rue Vauban, $city", "2017-01-02 16:30:14")
+        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardinière", s"3 Rue Vauban, $city", "2017-01-02 16:30:14")
       )
       responses ++ defaults
     }
@@ -70,6 +70,6 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
   }
 
   def change(newCity: String) = Action {
-      Ok("City changed").withSession("city" -> newCity)
+    Redirect(routes.ApplicationController.all()).withSession("city" -> newCity)
   }
 }
