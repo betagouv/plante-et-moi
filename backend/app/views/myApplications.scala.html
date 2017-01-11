@@ -1,4 +1,5 @@
 @(applications: List[models.Application])
+@import java.util.Locale
 
 @main("Mes demandes (en attente de mon avis)")  {
 
@@ -16,7 +17,7 @@
     <tr onclick="window.document.location='@routes.ApplicationController.show(application.id)';">
         <td class="mdl-data-table__cell--non-numeric">@application.address</td>
         <td class="mdl-data-table__cell--non-numeric">@application._type</td>
-        <td class="mdl-data-table__cell--non-numeric">@application.date</td>
+        <td class="mdl-data-table__cell--non-numeric">@application.date.toString("dd MMM YYYY", new Locale("fr"))</td>
     </tr>
     }
     </tbody>

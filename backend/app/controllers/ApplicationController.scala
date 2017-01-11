@@ -1,5 +1,7 @@
 package controllers
 
+import java.time.format.DateTimeFormatter
+import java.util.Date
 import javax.inject._
 
 import play.api._
@@ -8,15 +10,24 @@ import play.api.libs.ws._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
 import models._
+import org.joda.time.DateTime
+import play.api.data.format.Formats
+
 
 @Singleton
 class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration) extends Controller {
   private def getCity(request: RequestHeader) =
     request.session.get("city").getOrElse("Arles")
 
+  private def getService(request: RequestHeader) =
+    request.session.get("service").getOrElse("Arles")
+
+  private lazy val typeformId = configuration.underlying.getString("typeform.id")
+  private lazy val typeformKey = configuration.underlying.getString("typeform.key")
+
   def projects(city: String) =
-    ws.url("https://api.typeform.com/v1/form/WNwIJx")
-      .withQueryString("key" -> configuration.underlying.getString("typeform.key"),
+    ws.url(s"https://api.typeform.com/v1/form/$typeformId")
+      .withQueryString("key" -> typeformKey,
         "completed" -> "true",
         "order_by" -> "date_submit,desc",
         "limit" -> "20").get().map { response =>
@@ -30,17 +41,19 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         val address = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue non renseigné")
         val typ = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
         val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("non_renseigné@example.com")
-        val date = (answer \ "metadata" \ "date_submit").as[String]
+        implicit val dateReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
+        val date = (answer \ "metadata" \ "date_submit").as[DateTime]
         val firstname = (answer \ "answers" \ "textfield_38072796").asOpt[String].getOrElse("John")
         val lastname = (answer \ "answers" \ "textfield_38072795").asOpt[String].getOrElse("Doe")
         val name = s"$firstname $lastname"
         val id = (answer \ "token").as[String]
         val phone = (answer \ "answers" \ "textfield_38072797").asOpt[String]
+        //date.format(DateTimeFormatter.)
         models.Application(id, name, email, "Nouvelle", "0/6", typ, address, date, phone)
       }
       val defaults = List(
-        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "Demande d'avis", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", "2017-01-04 11:30:14"),
-        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardinière", s"3 Rue Vauban, $city", "2017-01-02 16:30:14")
+        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "Demande d'avis", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04")),
+        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"))
       )
       responses ++ defaults
     }

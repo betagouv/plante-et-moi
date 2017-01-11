@@ -1,30 +1,31 @@
 @(applications: List[models.Application])
+@import java.util.Locale
 
 @main("Toutes les demandes") {
 
 }{
-<table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col ">
+<table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col">
     <thead>
     <tr>
         <th class="mdl-data-table__cell--non-numeric">Adresse</th>
-        <th>Dossier</th>
-        <th class="mdl-data-table__cell--non-numeric">Date</th>
-        <th class="mdl-data-table__cell--non-numeric">Statut</th>
-        <th class="mdl-data-table__cell--non-numeric">Nom</th>
+        <th class="mdl-data-table__cell--non-numeric">Nom du demandeur</th>
+        <th class="mdl-data-table__cell--non-numeric">Date de la demande</th>
+        <th class="mdl-data-table__cell--non-numeric">Avancement</th>
         <th class="mdl-data-table__cell--non-numeric">Avis</th>
         <th class="mdl-data-table__cell--non-numeric">Type</th>
+        <th>Dossier</th>
     </tr>
     </thead>
     <tbody>
     @for(application <- applications) {
     <tr onclick="window.document.location='@routes.ApplicationController.show(application.id)';">
         <td class="mdl-data-table__cell--non-numeric">@application.address</td>
-        <td>@application.id.substring(0,2)</td>
-        <td class="mdl-data-table__cell--non-numeric">@application.date</td>
-        <td class="mdl-data-table__cell--non-numeric">@application.status</td>
         <td class="mdl-data-table__cell--non-numeric">@application.name</td>
+        <td class="mdl-data-table__cell--non-numeric">@application.date.toString("dd MMM YYYY", new Locale("fr"))</td>
+        <td class="mdl-data-table__cell--non-numeric">@application.status</td>
         <th class="mdl-data-table__cell--non-numeric">@application.reviews</th>
         <td class="mdl-data-table__cell--non-numeric">@application._type</td>
+        <td>@application.id.substring(0,2)</td>
     </tr>
     }
     </tbody>

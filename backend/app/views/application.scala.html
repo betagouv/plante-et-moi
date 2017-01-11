@@ -1,4 +1,5 @@
 @(application: models.Application)
+@import java.util.Locale
 
 @main(s"Demande ${application.id.substring(0,2)}")  {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
@@ -6,38 +7,38 @@
 
 <style>
 .demo-list-item {
-    width: 600px;
+    width: 550px;
 }
 .mdl-list__item-primary-content {
     font-weight: bold;
 }
 .map__leaflet {
-    width: 300px;
-    height: 300px;
+    height: 250px;
 }
 </style>
 }{
-<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <div style="min-width: 300px; height: 600px; ">
-        <div style="width: 300px; height: 300px; text-align: center;">
-            <img src='@routes.Assets.versioned("images/examples/arbre_arles.jpg")' style="max-width: 300px; max-height: 300px;">
-        </div>
-
-        <div class="map__leaflet" id="map">
-        </div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
+    <div class="map__leaflet mdl-cell mdl-cell--12-col" id="map">
     </div>
-    <ul class="demo-list-item mdl-list">
+</div>
+
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
+    <div class="mdl-cell mdl-cell--4-col">
+        <img src='@routes.Assets.versioned("images/examples/arbre_arles.jpg")' style="max-height: 300px;">
+    </div>
+
+    <ul class="demo-list-item mdl-list mdl-cell mdl-cell--8-col">
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
               Date de dépot
             </span>
             <span class="mdl-list__item-secondary-action">
-                @application.date
+                @application.date.toString("dd MMM YYYY", new Locale("fr"))
             </span>
         </li>
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
-              Nom
+              Nom du demandeur
             </span>
             <span class="mdl-list__item-secondary-action">
                 @application.name
@@ -61,7 +62,7 @@
         </li>
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
-              Statut
+              Avancement
             </span>
             <span class="mdl-list__item-secondary-action">
                 @application.status
@@ -88,24 +89,45 @@
 
 </div>
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <form action="#">
-        <h3>Mon avis</h3>
-        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+    <div class="mdl-cell mdl-cell--12-col mdl-grid">
+        <h3 class="mdl-cell mdl-cell--12-col">Récapitulatif des avis</h3>
+        <ul class="demo-list-three mdl-list mdl-cell mdl-cell--8-col mdl-cell--9-col-phone mdl-cell--2-offset-desktop">
+            <li class="mdl-list__item mdl-list__item--three-line">
+        <span class="mdl-list__item-primary-content">
+          <i class="material-icons mdl-list__item-avatar">person</i>
+          <span>Service de la voirie (Jean Paul Dupont)</span>
+          <span class="mdl-list__item-text-body">
+            Il n'y a aucune trap, ni conduite à ce niveau de la rue.
+          </span>
+        </span>
+                <span class="mdl-list__item-secondary-content">
+                    <i class="material-icons md-48">check</i>
+        </span>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <div class="mdl-cell mdl-cell--12-col mdl-grid">
+    <form action="#" class="mdl-grid">
+        <h3 class="mdl-cell mdl-cell--12-col">Mon avis d'agent de la voirie</h3>
+        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-1">
             <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
             <span class="mdl-radio__label">Favorable</span>
         </label>
-        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-2">
             <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2">
             <span class="mdl-radio__label">Défavorable</span>
-        </label><br>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label " style="width: 600px;">
-            <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" ></textarea>
+        </label>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+            <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" style="width: 100%;"></textarea>
             <label class="mdl-textfield__label" for="sample5">Saisir mon commentaire...</label>
-        </div><br/>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--10-col mdl-cell--1-offset">
             Ajouter mon avis
         </button>
     </form>
+    </div>
 </div>
 <script>
 	var map = L.map('map', {
