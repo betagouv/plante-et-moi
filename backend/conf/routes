@@ -7,6 +7,7 @@
 GET     /                           controllers.HomeController.index
 GET     /toutes-les-demandes        controllers.ApplicationController.all
 GET     /mes-demandes               controllers.ApplicationController.my
+GET     /carte-des-projets         controllers.ApplicationController.map
 GET     /toutes-les-demandes/:id    controllers.ApplicationController.show(id: String)
 GET     /villes/:newCity              controllers.ApplicationController.change(newCity: String)
 

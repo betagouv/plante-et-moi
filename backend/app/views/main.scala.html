@@ -50,13 +50,13 @@
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800">
             <a class="mdl-navigation__link" href="@routes.ApplicationController.my()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">folder_open</i>Mes demandes en cours</a>
             <a class="mdl-navigation__link" href="@routes.ApplicationController.all()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">folder</i>Toutes les demandes</a>
-           <!--  <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Agents</a>
-            <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">place</i>Projets</a> -->
+           <!--  <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Agents</a> -->
+            <a class="mdl-navigation__link" href="@routes.ApplicationController.map()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">place</i>Carte des projets</a>
             <div class="mdl-layout-spacer"></div>
             <a class="mdl-navigation__link" href="mailto:biodiversite&commat;beta.gouv.fr?subject=Aide%20Plante%20Et%20Moi%20Administration"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">help_outline</i><span>Aide</span></a>
         </nav>
     </div>
-    <main class="mdl-layout__content mdl-color--grey-100">
+    <main class="mdl-layout__content mdl-color--grey-100" style="height: calc(100% - 16px)">
         @content
     </main>
 </div>

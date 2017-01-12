@@ -49,10 +49,10 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         val id = (answer \ "token").as[String]
         val phone = (answer \ "answers" \ "textfield_38072797").asOpt[String]
         //date.format(DateTimeFormatter.)
-        models.Application(id, name, email, "Nouvelle", "0/6", typ, address, date, phone)
+        models.Application(id, name, email, "En cours", "0/6", typ, address, date, phone)
       }
       val defaults = List(
-        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "Demande d'avis", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04")),
+        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "En cours", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04")),
         models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"))
       )
       responses ++ defaults
@@ -64,9 +64,16 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     }
   }
 
+  def map = Action.async { implicit request =>
+    val city = getCity(request)
+    projects(city).map { responses =>
+      Ok(views.html.mapApplications(city, responses))
+    }
+  }
+
   def my = Action.async { implicit request =>
     projects(getCity(request)).map { responses =>
-      val afterFilter = responses.filter { _.status == "Nouvelle" }
+      val afterFilter = responses.filter { _.status == "En cours" }
       Ok(views.html.myApplications(afterFilter))
     }
   }
