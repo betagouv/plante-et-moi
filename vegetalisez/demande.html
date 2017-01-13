@@ -517,6 +517,7 @@
 	var requestReverseGeocode;
 
 	function reverseGeocodeAdress(latlng) {
+		coord = latlng;
 		sendReverseGeocodeRequest(latlng, function(features) {
 			selectedAddress = features[0]["properties"]["label"];
 		})
@@ -538,7 +539,8 @@
 						       {autoClose:false, closeButton: false, className: 'popup--red'})
 						  .addTo(map)
 						  .openPopup()
-						  .on('dragend', function(e) { 
+						  .on('move', function(e) {
+							    reverseGeocodeAdress(e.latlng) 
 						    	selectedPoint.openPopup();
 						  })			  
 	}
@@ -651,7 +653,7 @@
 	function launchForm(type) {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
-		typeform.src = 'https://amazingcontent.typeform.com/to/WNwIJx?type='+projectType+'&address='+selectedAddress+'&city='+city;
+		typeform.src = 'https://amazingcontent.typeform.com/to/WNwIJx?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng;
 		var permitForm = document.getElementById('permit__form');
 		permitForm.classList.remove('form--invisible');
 		permitForm.scrollIntoView();
@@ -660,7 +662,7 @@
 	var lng = getParameterByName('lng');
 	var lat = getParameterByName('lat');
 	selectedAddress = getParameterByName('address');
-	var coord = [lat,lng];
+	var coord = { lat: lat, lng: lng};
 	map.setView(coord, 17);
 	selectPoint(coord, selectedAddress);
 
