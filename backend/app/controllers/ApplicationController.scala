@@ -36,7 +36,9 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
       val totalCompleted = (json \ "stats" \ "responses" \ "showing").as[Int]
 
       val responses = (json \ "responses").as[List[JsValue]].filter { answer =>
-        (answer \ "hidden" \ "city").get == Json.toJson(city)
+        (answer \ "hidden" \ "city").get == Json.toJson(city) &&
+          (answer \ "hidden" \ "lat").get != JsNull &&
+          (answer \ "hidden" \ "lon").get != JsNull
       }.map { answer =>
         val address = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue non renseigné")
         val typ = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
@@ -48,12 +50,16 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         val name = s"$firstname $lastname"
         val id = (answer \ "token").as[String]
         val phone = (answer \ "answers" \ "textfield_38072797").asOpt[String]
+        val lat = (answer \ "hidden" \ "lat").as[String].toDouble
+        val lon = (answer \ "hidden" \ "lon").as[String].toDouble
+        val coordinates = Coordinates(lat, lon)
+
         //date.format(DateTimeFormatter.)
-        models.Application(id, name, email, "En cours", "0/6", typ, address, date, phone)
+        models.Application(id, name, email, "En cours", "0/6", typ, address, date, coordinates, phone)
       }
       val defaults = List(
-        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "En cours", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04")),
-        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"))
+        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "En cours", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04"), Coordinates(0,0)),
+        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"), Coordinates(0,0))
       )
       responses ++ defaults
     }

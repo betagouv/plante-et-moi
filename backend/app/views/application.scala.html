@@ -4,7 +4,7 @@
 @main(s"Demande ${application.id.substring(0,2)}")  {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
-
+    <script src='@routes.Assets.versioned("javascripts/Leaflet+Data.js")'></script>
 <style>
 .demo-list-item {
     width: 550px;
@@ -130,18 +130,13 @@
     </div>
 </div>
 <script>
-	var map = L.map('map', {
-    	zoom: 13,
-    	center: [0,0],
-    	minZoom: 11,
-    	layers: [
-             L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
-                attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-                minZoom: 10,
-                maxZoom: 20
-            })
-	    ]
-	});
+    var map = L.map('map', {
+        zoom: 13,
+        center: [0,0],
+        minZoom: 11,
+        layers: [photoLayer]
+    });
+    L.control.layers(baseMaps, {}).addTo(map);
 
 	function addressesDataSource(term, response){
     		try { requestAddresses.abort(); } catch(e){}
@@ -161,15 +156,26 @@
 
 	var requestAddresses;
 
+    var address = "@application.address";
+    var coordinates = { lat: @application.coordinates.latitude,
+                  lng: @application.coordinates.longitude };
 
-    addressesDataSource("@application.address", function(responses) {
-            var coord = responses[0]["geometry"]["coordinates"];
-            var latlng = [coord[1],coord[0]]
-            map.setView(latlng, 17);
-	        L.marker(latlng, {
-							draggable: false,
-							clickable: false
-						}).addTo(map)
-	});
+    if (coordinates.lat == 0 && coordinates.lng == 0) {
+        addressesDataSource("@application.address", function(responses) {
+                var coord = responses[0]["geometry"]["coordinates"];
+                coordinates = { lat: coord[1], lng: coord[0] };
+                setCoordinates(coordinates);
+        });
+    } else {
+        setCoordinates(coordinates);
+    }
+
+	function setCoordinates(coordinates) {
+	    map.setView(coordinates, 17);
+	    L.marker(coordinates, {
+			draggable: false,
+			clickable: false
+		}).addTo(map)
+	}
 </script>
 }

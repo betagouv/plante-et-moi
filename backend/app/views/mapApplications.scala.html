@@ -2,53 +2,71 @@
 @import java.util.Locale
 
 @main("Carte des projects") {
-<link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
+    <script src='@routes.Assets.versioned("javascripts/Leaflet+Data.js")'></script>
 
-<style>
-.map__leaflet {
-    height: calc(100% - 16px);
-}
-</style>
+    <style>
+    .map__leaflet {
+        height: calc(100% - 16px);
+    }
+    </style>
 }{
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="height: calc(100% - 16px)">
     <div class="map__leaflet mdl-cell mdl-cell--12-col" id="map">
     </div>
 </div>
 <script>
-	var map = L.map('map', {
-    	zoom: 13,
-    	center: [0,0],
-    	minZoom: 10,
-    	layers: [
-             L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
-                attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-                minZoom: 10,
-                maxZoom: 20
-            })
-	    ]
-	});
 	var city = "@city";
+	var map;
 	var request = new XMLHttpRequest();
+    var projectsLayer = new L.LayerGroup();
+	var projects = [
+	@for(application <- applications) {
+        { latlng: { lat: @application.coordinates.latitude, lng: @application.coordinates.longitude },
+          name: "@application.name",
+          address: "@application.address",
+          status: "@application.status",
+          type: "@application._type"
+        },
+	}
+	];
 	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom='+city, true);
 
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
 	    // Success!
+	    map = L.map('map', {
+            zoom: 13,
+            minZoom: 10,
+            layers: [photoLayer]
+	    });
+	    L.control.layers(baseMaps, {}).addTo(map);
+
 	    var data = JSON.parse(request.responseText);
 	    var polygon = L.geoJson(data[0]["contour"],{
 		    color: '#0C518A',
 		    fill: false
 		}).addTo(map)
-		var bounds = polygon.getBounds().pad(0.05);
+		var bounds = polygon.getBounds().pad(0.02);
 	    map.setMaxBounds(bounds);
 	    map.fitBounds(bounds);
-	    map.invalidateSize();
+        addProjects();
 	  } else {
 	    // We reached our target server, but it returned an error
 
 	  }
 	};
 	request.send();
+
+
+	function addProjects() {
+        projects.map(function(project){
+            L.marker(project.latlng)
+               .bindPopup(project.type+" au "+project.address+" par "+project.name+" ( "+project.status+" )")
+			   .addTo(projectsLayer);
+	    })
+		projectsLayer.addTo(map);
+	}
 </script>
 }

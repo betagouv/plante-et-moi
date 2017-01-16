@@ -23,15 +23,15 @@
         </thead>
         <tbody>
         @for(application <- applications) {
-        <tr onclick="window.document.location='@routes.ApplicationController.show(application.id)';">
-            <td class="mdl-data-table__cell--non-numeric">@application.address</td>
-            <td class="mdl-data-table__cell--non-numeric">@application.name</td>
-            <td class="mdl-data-table__cell--non-numeric">@application.date.toString("dd MMM YYYY", new Locale("fr"))</td>
-            <td class="mdl-data-table__cell--non-numeric">@application.status</td>
-            <td class="mdl-data-table__cell--non-numeric">@application.reviews</td>
-            <td class="mdl-data-table__cell--non-numeric">@application._type</td>
-            <td class="mdl-data-table__cell--non-numeric">@application.id.substring(0,2)</td>
-        </tr>
+            <tr onclick="window.document.location='@routes.ApplicationController.show(application.id)';">
+                <td class="mdl-data-table__cell--non-numeric">@application.address</td>
+                <td class="mdl-data-table__cell--non-numeric">@application.name</td>
+                <td class="mdl-data-table__cell--non-numeric">@application.date.toString("dd MMM YYYY", new Locale("fr"))</td>
+                <td class="mdl-data-table__cell--non-numeric">@application.status</td>
+                <td class="mdl-data-table__cell--non-numeric">@application.reviews</td>
+                <td class="mdl-data-table__cell--non-numeric">@application._type</td>
+                <td class="mdl-data-table__cell--non-numeric">@application.id.substring(0,2)</td>
+            </tr>
         }
         </tbody>
     </table>
