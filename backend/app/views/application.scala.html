@@ -1,7 +1,7 @@
-@(application: models.Application)
+@(application: models.Application, agent: Agent)
 @import java.util.Locale
 
-@main(s"Demande ${application.id.substring(0,2)}")  {
+@main(agent)(s"Demande ${application.id.substring(0,2)}")  {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
     <script src='@routes.Assets.versioned("javascripts/Leaflet+Data.js")'></script>
@@ -33,7 +33,7 @@
               Date de dépot
             </span>
             <span class="mdl-list__item-secondary-action">
-                @application.date.toString("dd MMM YYYY", new Locale("fr"))
+                @application.creationDate.toString("dd MMM YYYY", new Locale("fr"))
             </span>
         </li>
         <li class="mdl-list__item">
@@ -101,7 +101,11 @@
           </span>
             </span>
                 <span class="mdl-list__item-secondary-content">
-                        Favorable <i class="material-icons md-48">check</i>
+                    <span>
+                    Favorable <i class="material-icons" style="vertical-align: middle;
+    display: inline-block;
+    font-size: 40px;">check</i>
+                        </span>
             </span>
             </li>
         </ul>
@@ -110,7 +114,7 @@
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-grid">
     <form action="#" class="mdl-grid">
-        <h3 class="mdl-cell mdl-cell--12-col">Mon avis d'agent de la voirie</h3>
+        <h3 class="mdl-cell mdl-cell--12-col">Mon avis en tant @if("aeiou".contains(agent.qualite.charAt(0).toLower)){ qu'} else { que }@agent.qualite</h3>
         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-1">
             <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
             <span class="mdl-radio__label">Favorable</span>

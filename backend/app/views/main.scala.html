@@ -1,4 +1,4 @@
-@(title: String)(header: Html)(content: Html)
+@(agent: Agent)(title: String)(header: Html)(content: Html)
 
 <!doctype html>
 <html lang="fr">
@@ -26,17 +26,23 @@
                 </label>
                 <div class="mdl-textfield__expandable-holder">
                     <input class="mdl-textfield__input" type="text" id="search">
-                    <label class="mdl-textfield__label" for="search">Rechercher un dossier...</label>
+                    <label class="mdl-textfield__label" for="search">Rechercher une demande...</label>
                 </div>
             </div>
             -->
         </div>
     </header>
     <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
-        <header class="demo-drawer-header">
+        <header class="demo-drawer-header" style="display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;">
+            <p style="line-height: 1.2;">
             <img src='@routes.Assets.versioned("images/logo-plante-et-moi-white-small.png")' class="logo">
+            <span style="font-weight: bold;">@agent.name</span><br/>
+            @agent.qualite.capitalize
+            </p>
             <div class="demo-avatar-dropdown">
-                <span>jean.dupont&commat;beta.gouv.fr</span>
+                <span>@agent.email</span>
                 <div class="mdl-layout-spacer"></div>
                 <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                     <i class="material-icons" role="presentation">arrow_drop_down</i>

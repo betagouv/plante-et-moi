@@ -1,7 +1,5 @@
 package controllers
 
-import java.time.format.DateTimeFormatter
-import java.util.Date
 import javax.inject._
 
 import play.api._
@@ -11,16 +9,24 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
 import models._
 import org.joda.time.DateTime
-import play.api.data.format.Formats
 
+import scala.concurrent.Future
 
 @Singleton
 class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration) extends Controller {
   private def getCity(request: RequestHeader) =
     request.session.get("city").getOrElse("Arles")
 
-  private def getService(request: RequestHeader) =
-    request.session.get("service").getOrElse("Arles")
+  private def currentAgent(request: RequestHeader): Agent = {
+    val id = request.session.get("agentId").getOrElse("admin")
+    agents.find(_.id == id).get
+  }
+
+  private val agents = List(
+    Agent("admin", "Jean Paul", "service développement durable", "jean.paul@durable.example.com", true),
+    Agent("voirie", "Jeanne D'arc", "service de la voirie", "jeanne.d-arc@voirie.example.com", false),
+    Agent("elu", "Richard Dupont", "adjoint au maire, Transition écologique et énergétique, Parcs et jardins", "jdupont@elu.example.com", false)
+  )
 
   private lazy val typeformId = configuration.underlying.getString("typeform.id")
   private lazy val typeformKey = configuration.underlying.getString("typeform.key")
@@ -66,21 +72,21 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
 
   def all = Action.async { implicit request =>
     projects(getCity(request)).map { responses =>
-      Ok(views.html.allApplications(responses))
+      Ok(views.html.allApplications(responses, currentAgent(request)))
     }
   }
 
   def map = Action.async { implicit request =>
     val city = getCity(request)
     projects(city).map { responses =>
-      Ok(views.html.mapApplications(city, responses))
+      Ok(views.html.mapApplications(city, responses, currentAgent(request)))
     }
   }
 
   def my = Action.async { implicit request =>
     projects(getCity(request)).map { responses =>
       val afterFilter = responses.filter { _.status == "En cours" }
-      Ok(views.html.myApplications(afterFilter))
+      Ok(views.html.myApplications(afterFilter, currentAgent(request)))
     }
   }
 
@@ -88,14 +94,24 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     projects(getCity(request)).map { responses =>
       responses.filter {_.id == id } match {
         case x :: _ =>
-          Ok(views.html.application(x))
+          Ok(views.html.application(x, currentAgent(request)))
         case _ =>
           NotFound("")
       }
     }
   }
 
-  def change(newCity: String) = Action {
+  def changeCity(newCity: String) = Action {
     Redirect(routes.ApplicationController.all()).withSession("city" -> newCity)
+  }
+
+  def changeAgent(newAgentId: String) = Action {
+    Redirect(routes.ApplicationController.all()).withSession("agentId" -> newAgentId)
+  }
+
+  def addReview() = Action.async { implicit request =>
+    val city = getCity(request)
+    val agent = currentAgent(request)
+    Future.successful(Ok(""))
   }
 }

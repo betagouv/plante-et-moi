@@ -1,7 +1,7 @@
-@(applications: List[models.Application])
+@(applications: List[models.Application], agent: Agent)
 @import java.util.Locale
 
-@main("Mes demandes (en attente de mon avis)")  {
+@main(agent)("Mes demandes (en attente de mon avis)")  {
 
 }{
 <table class="mdl-data-table mdl-js-data-table mdl-cell mdl-cell--12-col ">
@@ -17,7 +17,7 @@
     <tr onclick="window.document.location='@routes.ApplicationController.show(application.id)';">
         <td class="mdl-data-table__cell--non-numeric">@application.address</td>
         <td class="mdl-data-table__cell--non-numeric">@application._type</td>
-        <td class="mdl-data-table__cell--non-numeric">@application.date.toString("dd MMM YYYY", new Locale("fr"))</td>
+        <td class="mdl-data-table__cell--non-numeric">@application.creationDate.toString("dd MMM YYYY", new Locale("fr"))</td>
     </tr>
     }
     </tbody>

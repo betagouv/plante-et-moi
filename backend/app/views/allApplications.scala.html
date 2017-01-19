@@ -1,7 +1,7 @@
-@(applications: List[models.Application])
+@(applications: List[models.Application], agent: Agent)
 @import java.util.Locale
 
-@main("Toutes les demandes") {
+@main(agent)("Toutes les demandes") {
 <style>
     .pem-table {
         width: 100%;
@@ -26,7 +26,7 @@
             <tr onclick="window.document.location='@routes.ApplicationController.show(application.id)';">
                 <td class="mdl-data-table__cell--non-numeric">@application.address</td>
                 <td class="mdl-data-table__cell--non-numeric">@application.name</td>
-                <td class="mdl-data-table__cell--non-numeric">@application.date.toString("dd MMM YYYY", new Locale("fr"))</td>
+                <td class="mdl-data-table__cell--non-numeric">@application.creationDate.toString("dd MMM YYYY", new Locale("fr"))</td>
                 <td class="mdl-data-table__cell--non-numeric">@application.status</td>
                 <td class="mdl-data-table__cell--non-numeric">@application.reviews</td>
                 <td class="mdl-data-table__cell--non-numeric">@application._type</td>

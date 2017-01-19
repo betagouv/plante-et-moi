@@ -7,9 +7,10 @@
 GET     /                           controllers.HomeController.index
 GET     /toutes-les-demandes        controllers.ApplicationController.all
 GET     /mes-demandes               controllers.ApplicationController.my
-GET     /carte-des-projets         controllers.ApplicationController.map
+GET     /carte-des-projets          controllers.ApplicationController.map
 GET     /toutes-les-demandes/:id    controllers.ApplicationController.show(id: String)
-GET     /villes/:newCity              controllers.ApplicationController.change(newCity: String)
+GET     /villes/:newCity            controllers.ApplicationController.changeCity(newCity: String)
+GET     /agents/:newAgentId         controllers.ApplicationController.changeAgent(newAgentId: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

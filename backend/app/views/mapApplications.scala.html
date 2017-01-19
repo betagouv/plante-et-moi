@@ -1,7 +1,7 @@
-@(city: String, applications: List[models.Application])
+@(city: String, applications: List[models.Application], agent: Agent)
 @import java.util.Locale
 
-@main("Carte des projects") {
+@main(agent)("Carte des projects") {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
     <script src='@routes.Assets.versioned("javascripts/Leaflet+Data.js")'></script>
