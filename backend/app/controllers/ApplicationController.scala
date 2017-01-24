@@ -9,11 +9,13 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.json._
 import models._
 import org.joda.time.DateTime
+import play.api.data._
+import play.api.data.Forms._
 
 import scala.concurrent.Future
 
 @Singleton
-class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration) extends Controller {
+class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration, reviewService: ReviewService) extends Controller {
   private def getCity(request: RequestHeader) =
     request.session.get("city").getOrElse("Arles")
 
@@ -109,9 +111,27 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     Redirect(routes.ApplicationController.all()).withSession("agentId" -> newAgentId)
   }
 
-  def addReview() = Action.async { implicit request =>
-    val city = getCity(request)
-    val agent = currentAgent(request)
-    Future.successful(Ok(""))
+  case class ReviewData(favorable: Boolean, comment: String)
+  val reviewForm = Form(
+    mapping(
+      "favorable" -> boolean,
+      "comment" -> text
+    )(ReviewData.apply)(ReviewData.unapply)
+  )
+
+  def addReview(applicationId: String) = Action.async { implicit request =>
+    reviewForm.bindFromRequest.fold(
+      formWithErrors => {
+        Future.successful(BadRequest(""))
+      },
+      reviewData => {
+        val city = getCity(request)
+        val agent = currentAgent(request)
+        val review = Review(applicationId, agent.id, DateTime.now(), reviewData.favorable, reviewData.comment)
+        Future(reviewService.insert(review)).map { _ =>
+          Redirect(routes.ApplicationController.show(applicationId))
+        }
+      }
+    )
   }
 }

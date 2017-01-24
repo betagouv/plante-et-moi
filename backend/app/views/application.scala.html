@@ -69,17 +69,17 @@
             </span>
         </li>
         <li class="mdl-list__item">
-    <span class="mdl-list__item-primary-content">
-      Type
-    </span>
-            <span class="mdl-list__item-secondary-action">
-                @application._type
+            <span class="mdl-list__item-primary-content">
+              Type
             </span>
-        </li>
-        <li class="mdl-list__item">
-    <span class="mdl-list__item-primary-content">
-      Adresse
-    </span>
+                    <span class="mdl-list__item-secondary-action">
+                        @application._type
+                    </span>
+                </li>
+                <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              Adresse
+            </span>
             <span class="mdl-list__item-secondary-action">
                 @application.address
             </span>
@@ -113,18 +113,18 @@
 </div>
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-grid">
-    <form action="#" class="mdl-grid">
+    <form action="@routes.ApplicationController.addReview(application.id)" class="mdl-grid" method="post">
         <h3 class="mdl-cell mdl-cell--12-col">Mon avis en tant @if("aeiou".contains(agent.qualite.charAt(0).toLower)){ qu'} else { que }@agent.qualite</h3>
         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-1">
-            <input type="radio" id="option-1" class="mdl-radio__button" name="options" value="1" checked>
+            <input type="radio" id="option-1" class="mdl-radio__button" name="favorable" value="true" checked>
             <span class="mdl-radio__label">Favorable</span>
         </label>
         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-2">
-            <input type="radio" id="option-2" class="mdl-radio__button" name="options" value="2">
+            <input type="radio" id="option-2" class="mdl-radio__button" name="favorable" value="false">
             <span class="mdl-radio__label">Défavorable</span>
         </label>
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-            <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" style="width: 100%;"></textarea>
+            <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" style="width: 100%;" name="comment"></textarea>
             <label class="mdl-textfield__label" for="sample5">Saisir mon commentaire...</label>
         </div>
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--10-col mdl-cell--1-offset">
