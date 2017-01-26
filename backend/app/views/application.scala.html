@@ -97,8 +97,8 @@
         <ul class="demo-list-three mdl-list mdl-cell mdl-cell--8-col mdl-cell--9-col-phone mdl-cell--2-offset-desktop">
             @for(review <- reviews) {
                 <li class="mdl-list__item mdl-list__item--three-line">
-                    <span class="mdl-list__item-primary-content">
-                      <!-- <i class="material-icons mdl-list__item-avatar">person</i> -->
+                    <span class="mdl-list__item-primary-content ">
+                      <i class="material-icons mdl-list__item-icon">@if(review.favorable) {check}else{block}</i>
                       <span>@defining(agents.filter(_.id == review.agentId).head){ reviewAgent =>
                           @reviewAgent.qualite.capitalize (@reviewAgent.name)
                       }</span>
@@ -107,11 +107,7 @@
                       </span>
                     </span>
                     <span class="mdl-list__item-secondary-content">
-                        @if(review.favorable) {
-                        <span>Favorable</span><span><i class="material-icons">check</i></span>
-                            } else {
-                        <span>Défavorable</span><span><i class="material-icons">block</i></span>
-                            }
+                        <span>@if(review.favorable) {Favorable}else{Défavorable}</span>
                     </span>
                 </li>
             }

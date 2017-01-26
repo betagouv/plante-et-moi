@@ -24,9 +24,18 @@ class ReviewService @Inject()(dbapi: DBApi) {
   }
 
   def insertOrUpdate(review: Review) = db.withConnection { implicit connection =>
+    SQL(   // Update on and Merge not support on H2 and postgresql
+      """
+          DELETE FROM review WHERE application_id =
+            {application_id} AND agent_id = {agent_id}
+        """
+    ).on(
+      'application_id -> review.applicationId,
+      'agent_id -> review.agentId
+    ).executeUpdate()
     SQL(
         """
-          MERGE INTO review VALUES (
+          INSERT INTO review VALUES (
             {application_id}, {agent_id}, {creation_date}, {favorable}, {comment}
           )
         """
