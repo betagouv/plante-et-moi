@@ -17,17 +17,16 @@ case class Review(applicationId: String, agentId: String, creationDate: DateTime
 @javax.inject.Singleton
 class ReviewService @Inject()(dbapi: DBApi) {
   private val db = dbapi.database("default")
-  val simple: RowParser[Review] = Macro.namedParser[Review]
+  val simple: RowParser[Review] = Macro.parser[Review]("application_id", "agent_id", "creation_date", "favorable", "comment")
 
   def findByApplicationId(applicationId: String) = db.withConnection { implicit connection =>
-    SQL("SELECT * FROM review WHERE applicationId = {application_id}").on('application_id -> applicationId).as(simple.*)
-
+    SQL("SELECT * FROM review WHERE application_id = {application_id}").on('application_id -> applicationId).as(simple.*)
   }
 
-  def insert(review: Review) = db.withConnection { implicit connection =>
+  def insertOrUpdate(review: Review) = db.withConnection { implicit connection =>
     SQL(
         """
-          INSERT INTO review VALUES (
+          MERGE INTO review VALUES (
             {application_id}, {agent_id}, {creation_date}, {favorable}, {comment}
           )
         """
@@ -37,6 +36,6 @@ class ReviewService @Inject()(dbapi: DBApi) {
         'creation_date -> review.creationDate,
         'favorable -> review.favorable,
         'comment -> review.comment
-    ).executeInsert()
+    ).executeUpdate()
   }
 }

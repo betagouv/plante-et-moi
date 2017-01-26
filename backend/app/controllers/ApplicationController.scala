@@ -93,10 +93,12 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
   }
 
   def show(id: String) = Action.async { implicit request =>
+    val agent = currentAgent(request)
     projects(getCity(request)).map { responses =>
       responses.filter {_.id == id } match {
         case x :: _ =>
-          Ok(views.html.application(x, currentAgent(request)))
+          val reviews = reviewService.findByApplicationId(id)
+          Ok(views.html.application(x, currentAgent(request), reviews, agents))
         case _ =>
           NotFound("")
       }
@@ -128,7 +130,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         val city = getCity(request)
         val agent = currentAgent(request)
         val review = Review(applicationId, agent.id, DateTime.now(), reviewData.favorable, reviewData.comment)
-        Future(reviewService.insert(review)).map { _ =>
+        Future(reviewService.insertOrUpdate(review)).map { _ =>
           Redirect(routes.ApplicationController.show(applicationId))
         }
       }

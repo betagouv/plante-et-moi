@@ -1,4 +1,4 @@
-@(application: models.Application, agent: Agent)
+@(application: models.Application, agent: Agent, reviews: List[Review], agents: List[Agent])
 @import java.util.Locale
 
 @main(agent)(s"Demande ${application.id.substring(0,2)}")  {
@@ -91,45 +91,55 @@
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-grid">
         <h3 class="mdl-cell mdl-cell--12-col">Récapitulatif des avis</h3>
+        @if(reviews.isEmpty) {
+            <p>Pas encore d'avis</p>
+        } else {
         <ul class="demo-list-three mdl-list mdl-cell mdl-cell--8-col mdl-cell--9-col-phone mdl-cell--2-offset-desktop">
-            <li class="mdl-list__item mdl-list__item--three-line">
-        <span class="mdl-list__item-primary-content">
-          <i class="material-icons mdl-list__item-avatar">person</i>
-          <span>Service de la voirie (Jean Paul Dupont)</span>
-          <span class="mdl-list__item-text-body">
-            Il n'y a aucune trappe, ni conduite à ce niveau de la rue.
-          </span>
-            </span>
-                <span class="mdl-list__item-secondary-content">
-                    <span>
-                    Favorable <i class="material-icons" style="vertical-align: middle;
-    display: inline-block;
-    font-size: 40px;">check</i>
-                        </span>
-            </span>
-            </li>
+            @for(review <- reviews) {
+                <li class="mdl-list__item mdl-list__item--three-line">
+                    <span class="mdl-list__item-primary-content">
+                      <!-- <i class="material-icons mdl-list__item-avatar">person</i> -->
+                      <span>@defining(agents.filter(_.id == review.agentId).head){ reviewAgent =>
+                          @reviewAgent.qualite.capitalize (@reviewAgent.name)
+                      }</span>
+                      <span class="mdl-list__item-text-body">
+                        @review.comment
+                      </span>
+                    </span>
+                    <span class="mdl-list__item-secondary-content">
+                        @if(review.favorable) {
+                        <span>Favorable</span><span><i class="material-icons">check</i></span>
+                            } else {
+                        <span>Défavorable</span><span><i class="material-icons">block</i></span>
+                            }
+                    </span>
+                </li>
+            }
         </ul>
+        }
     </div>
 </div>
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-grid">
     <form action="@routes.ApplicationController.addReview(application.id)" class="mdl-grid" method="post">
-        <h3 class="mdl-cell mdl-cell--12-col">Mon avis en tant @if("aeiou".contains(agent.qualite.charAt(0).toLower)){ qu'} else { que }@agent.qualite</h3>
-        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-1">
-            <input type="radio" id="option-1" class="mdl-radio__button" name="favorable" value="true" checked>
-            <span class="mdl-radio__label">Favorable</span>
-        </label>
-        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-2">
-            <input type="radio" id="option-2" class="mdl-radio__button" name="favorable" value="false">
-            <span class="mdl-radio__label">Défavorable</span>
-        </label>
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-            <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" style="width: 100%;" name="comment"></textarea>
-            <label class="mdl-textfield__label" for="sample5">Saisir mon commentaire...</label>
-        </div>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--10-col mdl-cell--1-offset">
-            Ajouter mon avis
-        </button>
+        @defining(reviews.find(_.agentId == agent.id)) { currentReview =>
+            <h3 class="mdl-cell mdl-cell--12-col">@if(currentReview.isEmpty) { Ajouter } else { Modifier } mon avis en tant @if("aeiou".contains(agent.qualite.charAt(0).toLower)){ qu'} else { que }@agent.qualite</h3>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-1">
+                <input type="radio" id="option-1" class="mdl-radio__button" name="favorable" value="true" @if(currentReview.map(_.favorable).getOrElse(false)){checked}>
+                <span class="mdl-radio__label">Favorable</span>
+            </label>
+            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-2">
+                <input type="radio" id="option-2" class="mdl-radio__button" name="favorable" value="false" @if(currentReview.map(!_.favorable).getOrElse(false)){checked}>
+                <span class="mdl-radio__label">Défavorable</span>
+            </label>
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+                <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" style="width: 100%;" name="comment">@currentReview.map(_.comment).getOrElse("")</textarea>
+                <label class="mdl-textfield__label" for="sample5">Saisir mon commentaire...</label>
+            </div>
+            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--10-col mdl-cell--1-offset">
+                @if(currentReview.isEmpty) { Ajouter } else { Modifier } mon avis
+            </button>
+        }
     </form>
     </div>
 </div>
