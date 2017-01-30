@@ -1,7 +1,7 @@
 @(application: models.Application, agent: Agent, reviews: List[Review], agents: List[Agent])
 @import java.util.Locale
 
-@main(agent)(s"Demande ${application.id.substring(0,2)}")  {
+@main(agent)(s"Demande de ${application._type}: ${application.address} (${application.id.substring(0,2)})")  {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
     <script src='@routes.Assets.versioned("javascripts/Leaflet+Data.js")'></script>
@@ -28,6 +28,22 @@
     </div>
 
     <ul class="demo-list-item mdl-list mdl-cell mdl-cell--8-col">
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              Adresse
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                @application.address
+            </span>
+        </li>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              Type
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                        @application._type
+                    </span>
+        </li>
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
               Date de dépot
@@ -66,22 +82,6 @@
             </span>
             <span class="mdl-list__item-secondary-action">
                 @application.status
-            </span>
-        </li>
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Type
-            </span>
-                    <span class="mdl-list__item-secondary-action">
-                        @application._type
-                    </span>
-                </li>
-                <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Adresse
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                @application.address
             </span>
         </li>
     </ul>
