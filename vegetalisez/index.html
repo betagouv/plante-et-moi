@@ -90,7 +90,7 @@
 
 		.cube {
 			display: inline-block;
-			height: 160px;
+			height: 300px;
 			min-width: 300px; 
 			width:42%; 
 			text-align: center;
@@ -176,7 +176,7 @@
 		<h1 class="main__title" id="search-street-title">Cherchez une rue à végétaliser</h1>
 		 <div class="search">
 			 <input type="text" id="address-search" name="address-search" placeholder="Saisissez une rue ici..." class="search__input">
-			 <button class="search__button" type="button" onclick="manualSearch();" id="search-button">Rechercher</button>
+			 <button class="search__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
 	     </div>
 	</div>
 
@@ -214,6 +214,16 @@ url('http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg'); backgroun
 			Vous pouvez végétaliser en 3 minutes par semaine seulement !
 		</div>
 	</div>
+
+	<div class="centered" style="
+			color: #0C518A; margin: 20px auto;">
+		<h1 class="main__title" id="search-street-title">Cherchez une rue à végétaliser</h1>
+		 <div class="search">
+			 <input type="text" id="address-search-bottom" name="address-search-bottom" placeholder="Saisissez une rue ici..." class="search__input">
+			 <button class="search__button" type="button" onclick="manualSearch('address-search-bottom');" id="search-button">Rechercher</button>
+	     </div>
+	</div>
+
 	<div class="footer">
 		<a class="footer__link" href="mailto:biodiversite&commat;beta.gouv.fr?subject=Aide%20Plante%20Et%20Moi%20Demande%20permis">Contact</a>
 	</div>
@@ -297,17 +307,31 @@ url('http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg'); backgroun
 		onSelect: onSelectAddress,
 		cache: false,
 	});
+	new autoComplete({
+    	selector: 'input[name=address-search-bottom]',
+    	minChars: 2,
+    	source: addressesDataSource,
+    	renderItem: renderFeature,
+		onSelect: onSelectAddress,
+		cache: false,
+	});
 
-	function manualSearch(){
-		document.getElementById('search-button').innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
-		var term = document.getElementById('address-search').value;
+
+	function manualSearch(fieldId){
+		Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+			button.innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
+		})
+		
+		var term = document.getElementById(fieldId).value;
 		addressesDataSource(term, function(results){
 			var result = results[0];
 			if(result) {
 				var coord = result["geometry"]["coordinates"]
 				document.location = 'demande.html?c='+city+'&address='+result["properties"]["label"] +"&lat="+coord[1]+"&lng="+coord[0];
 			} else {
-				document.getElementById('search-button').innerHTML = 'Rechercher';
+				Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+					button.innerHTML = 'Rechercher';
+				})
 				alert('Nous n\'avons pas trouver votre adresse :(');
 			}
 		})
