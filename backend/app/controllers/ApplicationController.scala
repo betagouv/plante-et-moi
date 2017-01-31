@@ -113,7 +113,8 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     }
     request.get().map { fileResult =>
       val contentType = fileResult.header("Content-Type").getOrElse("text/plain")
-      Ok(fileResult.bodyAsBytes).as(contentType)
+      val filename = url.split('/').last
+      Ok(fileResult.bodyAsBytes).withHeaders("Content-Disposition" -> s"attachment; filename=$filename").as(contentType)
     }
   }
 

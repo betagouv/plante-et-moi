@@ -24,8 +24,11 @@
 
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
     <div class="mdl-cell mdl-cell--4-col">
-        @for(file <- application.files) {
+        @application.files.filter(_.endsWith("jpg")).map { file =>
             <img src='@routes.ApplicationController.getImage(file)' style="max-height: 300px; max-width: 300px;">
+        }
+        @application.files.filter(!_.endsWith("jpg")).map { file =>
+            Fichier: <a href='@routes.ApplicationController.getImage(file)'>@file.split('/').last</a>
         }
     </div>
 
