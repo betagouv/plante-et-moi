@@ -1,4 +1,4 @@
-@(application: models.Application, agent: Agent, reviews: List[Review], agents: List[Agent])
+@(application: models.Application, agent: Agent, reviews: List[Review], agents: List[Agent], applicationExtra: models.ApplicationExtra)
 @import java.util.Locale
 
 @main(agent)(s"${application.address} (${application._type}) - #${application.id.substring(0,2)}")  {
@@ -86,7 +86,7 @@
               Avancement
             </span>
             <span class="mdl-list__item-secondary-action">
-                @application.status
+                @applicationExtra.status
             </span>
         </li>
         @for((key,value) <- application.fields) {
@@ -103,6 +103,15 @@
 
 
 </div>
+@if(applicationExtra.status == "Nouvelle") {
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+        <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--12-col mdl-grid" method="post">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--6-col">Demande complète (Demander les avis)</button>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-buttonn--accent mdl-cell mdl-cell--6-col">Demande incomplète</button>
+        </form>
+</div>
+
+} else {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-grid">
         <h3 class="mdl-cell mdl-cell--12-col">Récapitulatif des avis</h3>
@@ -154,6 +163,7 @@
     </form>
     </div>
 </div>
+}
 <script>
     var map = L.map('map', {
         zoom: 13,

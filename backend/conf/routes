@@ -13,6 +13,7 @@ GET     /villes/:newCity                                controllers.ApplicationC
 GET     /agents/:newAgentId                             controllers.ApplicationController.changeAgent(newAgentId: String)
 POST    /toutes-les-demandes/:applicationId/reviews     controllers.ApplicationController.addReview(applicationId: String)
 GET     /image                                          controllers.ApplicationController.getImage(url: String)
+POST     /toutes-les-demandes/:id                        controllers.ApplicationController.updateStatus(id: String, status: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

@@ -16,7 +16,7 @@ import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
 
 @Singleton
-class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration, reviewService: ReviewService) extends Controller {
+class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration, reviewService: ReviewService, applicationExtraService: ApplicationExtraService) extends Controller {
   private def getCity(request: RequestHeader) =
     request.session.get("city").getOrElse("Arles")
 
@@ -96,14 +96,15 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
           files.append(image.split('?')(0))
         }
 
-        //date.format(DateTimeFormatter.)
-        models.Application(id, name, email, "En cours", "0/6", typ, address, date, coordinates, phone, fields, files.toList)
+        models.Application(id, name, email, "0/6", typ, address, date, coordinates, phone, fields, files.toList)
       }
       val defaults = List(
-        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "En cours", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04"), Coordinates(0,0), None, Map(), List("http://parcjardin.mairie-albi.fr/wp-content/gallery/photos/dscn0152.jpg")),
-        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"), Coordinates(0,0), None, Map(), List("http://www.airdemidi.org/wp-content/uploads/2016/10/potager-dans-la-rue.jpg"))
+        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04"), Coordinates(0,0), None, Map(), List("http://parcjardin.mairie-albi.fr/wp-content/gallery/photos/dscn0152.jpg")),
+        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "5/5", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"), Coordinates(0,0), None, Map(), List("http://www.airdemidi.org/wp-content/uploads/2016/10/potager-dans-la-rue.jpg"))
       )
-      responses ++ defaults
+      (responses ++ defaults).map { application =>
+          application -> applicationExtraService.findByApplicationId(application.id)
+      }
     }
 
   def getImage(url: String) = Action.async { implicit request =>
@@ -133,7 +134,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
 
   def my = Action.async { implicit request =>
     projects(getCity(request)).map { responses =>
-      val afterFilter = responses.filter { _.status == "En cours" }
+      val afterFilter = responses.filter { _._2.status == "En cours" }
       Ok(views.html.myApplications(afterFilter, currentAgent(request)))
     }
   }
@@ -141,10 +142,10 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
   def show(id: String) = Action.async { implicit request =>
     val agent = currentAgent(request)
     projects(getCity(request)).map { responses =>
-      responses.filter {_.id == id } match {
+      responses.filter {_._1.id == id } match {
         case x :: _ =>
           val reviews = reviewService.findByApplicationId(id)
-          Ok(views.html.application(x, currentAgent(request), reviews, agents))
+          Ok(views.html.application(x._1, currentAgent(request), reviews, agents, x._2))
         case _ =>
           NotFound("")
       }
@@ -181,5 +182,10 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         }
       }
     )
+  }
+
+  def updateStatus(id: String, status: String) = Action { implicit request =>
+    applicationExtraService.insertOrUpdate(applicationExtraService.findByApplicationId(id).copy(status = status))
+    Redirect(routes.ApplicationController.show(id))
   }
 }

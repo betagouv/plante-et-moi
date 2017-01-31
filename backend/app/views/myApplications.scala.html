@@ -1,4 +1,4 @@
-@(applications: List[models.Application], agent: Agent)
+@(applications: List[(models.Application,models.ApplicationExtra)], agent: Agent)
 @import java.util.Locale
 
 @main(agent)("Mes demandes (en attente de mon avis)")  {
@@ -13,7 +13,7 @@
     </tr>
     </thead>
     <tbody>
-    @for(application <- applications) {
+    @for((application, applicationExtra) <- applications) {
     <tr onclick="window.document.location='@routes.ApplicationController.show(application.id)';">
         <td class="mdl-data-table__cell--non-numeric">@application.address</td>
         <td class="mdl-data-table__cell--non-numeric">@application._type</td>
