@@ -105,12 +105,13 @@
 </div>
 @if(applicationExtra.status == "Nouvelle") {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-        <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--12-col mdl-grid" method="post">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--6-col">Demande complète (Demander les avis)</button>
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-buttonn--accent mdl-cell mdl-cell--6-col">Demande incomplète</button>
+        <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--6-col mdl-grid" method="post">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis)</button>
         </form>
+    <div class="mdl-cell mdl-cell--6-col mdl-grid">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-buttonn--accent mdl-cell mdl-cell--12-col">Demande incomplète</button>
+    </div>
 </div>
-
 } else {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-grid">
