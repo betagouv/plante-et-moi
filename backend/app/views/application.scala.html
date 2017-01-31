@@ -1,7 +1,7 @@
 @(application: models.Application, agent: Agent, reviews: List[Review], agents: List[Agent])
 @import java.util.Locale
 
-@main(agent)(s"Demande de ${application._type}: ${application.address} (${application.id.substring(0,2)})")  {
+@main(agent)(s"${application.address} (${application._type}) - #${application.id.substring(0,2)}")  {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
     <script src='@routes.Assets.versioned("javascripts/Leaflet+Data.js")'></script>
@@ -24,13 +24,15 @@
 
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
     <div class="mdl-cell mdl-cell--4-col">
-        <img src='@routes.Assets.versioned("images/examples/arbre_arles.jpg")' style="max-height: 300px;">
+        @for(file <- application.files) {
+            <img src='@routes.ApplicationController.getImage(file)' style="max-height: 300px; max-width: 300px;">
+        }
     </div>
 
     <ul class="demo-list-item mdl-list mdl-cell mdl-cell--8-col">
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
-              Adresse
+              Adresse du projet
             </span>
             <span class="mdl-list__item-secondary-action">
                 @application.address
@@ -41,8 +43,8 @@
               Type
             </span>
             <span class="mdl-list__item-secondary-action">
-                        @application._type
-                    </span>
+                @application._type
+            </span>
         </li>
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
@@ -84,6 +86,16 @@
                 @application.status
             </span>
         </li>
+        @for((key,value) <- application.fields) {
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              @key
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                @value
+            </span>
+        </li>
+        }
     </ul>
 
 

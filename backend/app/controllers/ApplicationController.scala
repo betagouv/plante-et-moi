@@ -12,6 +12,7 @@ import org.joda.time.DateTime
 import play.api.data._
 import play.api.data.Forms._
 
+import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
 
 @Singleton
@@ -48,7 +49,8 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
           (answer \ "hidden" \ "lat").get != JsNull &&
           (answer \ "hidden" \ "lon").get != JsNull
       }.map { answer =>
-        val address = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue non renseigné")
+        val selectedAddress = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue de la demo")
+        val address = (answer \ "answers" \ "textfield_38117960").asOpt[String].getOrElse(selectedAddress)
         val typ = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
         val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("non_renseigné@example.com")
         implicit val dateReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
@@ -61,16 +63,59 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         val lat = (answer \ "hidden" \ "lat").as[String].toDouble
         val lon = (answer \ "hidden" \ "lon").as[String].toDouble
         val coordinates = Coordinates(lat, lon)
+        var fields = Map[String,String]()
+        (answer \ "answers" \ "textfield_41115782").asOpt[String].map { answer =>
+          fields += "Espéces de plante grimpante" -> answer
+        }
+        (answer \ "answers" \ "textfield_41934708").asOpt[String].map { answer =>
+          fields += "Forme" -> answer
+        }
+        (answer \ "answers" \ "list_42010898_choice").asOpt[String].map { answer =>
+          fields += "Couleur" -> answer
+        }
+        (answer \ "answers" \ "list_42010898_other").asOpt[String].map { answer =>
+          fields += "Couleur" -> answer
+        }
+        (answer \ "answers" \ "textfield_41934830").asOpt[String].map { answer =>
+          fields += "Matériaux" -> answer
+        }
+        (answer \ "answers" \ "list_41934920_choice").asOpt[String].map { answer =>
+          fields += "Position" -> answer
+        }
+        (answer \ "answers" \ "list_40487664_choice").asOpt[String].map { answer =>
+          fields += "Collectif" -> "Oui"
+        }
+        (answer \ "answers" \ "textfield_40930276").asOpt[String].map { answer =>
+          fields += "Nom du collectif" -> answer
+        }
+        var files = ListBuffer[String]()
+        (answer \ "answers" \ "fileupload_40488503").asOpt[String].map { croquis =>
+          files.append(croquis.split('?')(0))
+        }
+        (answer \ "answers" \ "fileupload_40489342").asOpt[String].map { image =>
+          files.append(image.split('?')(0))
+        }
 
         //date.format(DateTimeFormatter.)
-        models.Application(id, name, email, "En cours", "0/6", typ, address, date, coordinates, phone)
+        models.Application(id, name, email, "En cours", "0/6", typ, address, date, coordinates, phone, fields, files.toList)
       }
       val defaults = List(
-        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "En cours", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04"), Coordinates(0,0)),
-        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"), Coordinates(0,0))
+        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "En cours", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04"), Coordinates(0,0), None, Map(), List("http://parcjardin.mairie-albi.fr/wp-content/gallery/photos/dscn0152.jpg")),
+        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Accepté", "5/5", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"), Coordinates(0,0), None, Map(), List("http://www.airdemidi.org/wp-content/uploads/2016/10/potager-dans-la-rue.jpg"))
       )
       responses ++ defaults
     }
+
+  def getImage(url: String) = Action.async { implicit request =>
+    var request = ws.url(url)
+    if(url.contains("api.typeform.com")) {
+      request = request.withQueryString("key" -> typeformKey)
+    }
+    request.get().map { fileResult =>
+      val contentType = fileResult.header("Content-Type").getOrElse("text/plain")
+      Ok(fileResult.bodyAsBytes).as(contentType)
+    }
+  }
 
   def all = Action.async { implicit request =>
     projects(getCity(request)).map { responses =>
