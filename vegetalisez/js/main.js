@@ -17,7 +17,7 @@ if(city == "Arles") {
     headerTitle = "Cadre de vie";
 }
 
-document.getElementById('header-title').innerHTML += headerTitle;
+document.getElementById('header-title').innerHTML += ' '+headerTitle;
 document.title += ' - Ville '+cityWithParticle;
 	
 var center;
