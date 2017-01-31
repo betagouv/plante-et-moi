@@ -9,7 +9,15 @@ if(isVowelOrH(city[0])) {
 } else {
 	cityWithParticle = 'de '+city;
 }
-document.getElementById('header-title').innerHTML += ' Végétalisez '+city;
+
+var headerTitle =  ' Végétalisez '+city;
+if(city == "Arles") {
+    headerTitle = "Biodiversité citoyenne";
+} else if(city == "Romainville") {
+    headerTitle = "Cadre de vie";
+}
+
+document.getElementById('header-title').innerHTML += headerTitle;
 document.title += ' - Ville '+cityWithParticle;
 	
 var center;
