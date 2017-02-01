@@ -41,7 +41,7 @@
             minZoom: 10,
             layers: [photoLayer]
 	    });
-	    L.control.layers(baseMaps, {}).addTo(map);
+	    L.control.layers(baseMaps, {},({collapsed: false })).addTo(map);
 
 	    var data = JSON.parse(request.responseText);
 	    var polygon = L.geoJson(data[0]["contour"],{

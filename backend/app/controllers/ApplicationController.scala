@@ -27,7 +27,10 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
 
   private val agents = List(
     Agent("admin", "Jean Paul", "service développement durable", "jean.paul@durable.example.com", true),
-    Agent("voirie", "Jeanne D'arc", "service de la voirie", "jeanne.d-arc@voirie.example.com", false),
+    Agent("verts", "Jeanne D'arc", "direction des espaces verts-propreté", "jeanne.d-arc@verts.example.com", false),
+    Agent("voirie", "Jeanne D'arc", "direction de la voirie", "jeanne.d-arc@voirie.example.com", false),
+    Agent("public", "Jeanne D'arc", "direction occupation du domaine public", "jeanne.d-arc@public.example.com", false),
+    Agent("patrimoine", "Jeanne D'arc", "direction du patrimoine", "jeanne.d-arc@patrimoine.example.com", false),
     Agent("elu", "Richard Dupont", "adjoint au maire, Transition écologique et énergétique, Parcs et jardins", "jdupont@elu.example.com", false)
   )
 
@@ -134,7 +137,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
 
   def my = Action.async { implicit request =>
     projects(getCity(request)).map { responses =>
-      val afterFilter = responses.filter { _._2.status == "En cours" }
+      val afterFilter = responses.filter { _._2.status.contains("En cours") }
       Ok(views.html.myApplications(afterFilter, currentAgent(request)))
     }
   }

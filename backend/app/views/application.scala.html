@@ -174,7 +174,7 @@
         minZoom: 11,
         layers: [photoLayer]
     });
-    L.control.layers(baseMaps, {}).addTo(map);
+    L.control.layers(baseMaps, {}, ({collapsed: false })).addTo(map);
 
 	function addressesDataSource(term, response){
     		try { requestAddresses.abort(); } catch(e){}
