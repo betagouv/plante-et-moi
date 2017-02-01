@@ -103,7 +103,7 @@
 
 
 </div>
-@if(applicationExtra.status == "Nouvelle") {
+@if(applicationExtra.status.contains("Nouvelle")) {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
         <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--6-col mdl-grid" method="post">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis)</button>
