@@ -148,7 +148,8 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
       responses.filter {_._1.id == id } match {
         case x :: _ =>
           val reviews = reviewService.findByApplicationId(id)
-          Ok(views.html.application(x._1, currentAgent(request), reviews, agents, x._2))
+              .map { review => review -> agents.find(_.id == review.agentId).get }
+          Ok(views.html.application(x._1, currentAgent(request), reviews, x._2))
         case _ =>
           NotFound("")
       }

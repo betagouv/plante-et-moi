@@ -1,4 +1,4 @@
-@(application: models.Application, agent: Agent, reviews: List[Review], agents: List[Agent], applicationExtra: models.ApplicationExtra)
+@(application: models.Application, agent: Agent, reviews: List[(Review, Agent)], applicationExtra: models.ApplicationExtra)
 @import java.util.Locale
 
 @main(agent)(s"${application.address} (${application._type}) - #${application.id.substring(0,2)}")  {
@@ -122,13 +122,11 @@
             <p>Pas encore d'avis</p>
         } else {
         <ul class="demo-list-three mdl-list mdl-cell mdl-cell--8-col mdl-cell--9-col-phone mdl-cell--2-offset-desktop">
-            @for(review <- reviews) {
+            @for((review,reviewAgent) <- reviews) {
                 <li class="mdl-list__item mdl-list__item--three-line">
                     <span class="mdl-list__item-primary-content ">
                       <i class="material-icons mdl-list__item-icon">@if(review.favorable) {check}else{block}</i>
-                      <span>@defining(agents.filter(_.id.contains(review.agentId)).head){ reviewAgent =>
-                          @reviewAgent.qualite.capitalize (@reviewAgent.name)
-                      }</span>
+                      <span>@reviewAgent.qualite.capitalize (@reviewAgent.name)</span>
                       <span class="mdl-list__item-text-body">
                         @review.comment
                       </span>
@@ -145,7 +143,7 @@
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-grid">
     <form action="@routes.ApplicationController.addReview(application.id)" class="mdl-grid" method="post" onsubmit="return checkForm()">
-        @defining(reviews.find(_.agentId == agent.id)) { currentReview =>
+        @defining(reviews.find(_._1.agentId == agent.id).map(_._1)) { currentReview =>
             <h3 class="mdl-cell mdl-cell--12-col">@if(currentReview.isEmpty) { Ajouter } else { Modifier } mon avis en tant @if("aeiou".contains(agent.qualite.charAt(0).toLower)){ qu'} else { que }@agent.qualite</h3>
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-1">
                 <input type="radio" id="option-1" class="mdl-radio__button" name="favorable" value="true" @if(currentReview.map(_.favorable).getOrElse(false)){checked}>
