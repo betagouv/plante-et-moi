@@ -126,7 +126,7 @@
                 <li class="mdl-list__item mdl-list__item--three-line">
                     <span class="mdl-list__item-primary-content ">
                       <i class="material-icons mdl-list__item-icon">@if(review.favorable) {check}else{block}</i>
-                      <span>@defining(agents.filter(_.id == review.agentId).head){ reviewAgent =>
+                      <span>@defining(agents.filter(_.id.contains(review.agentId)).head){ reviewAgent =>
                           @reviewAgent.qualite.capitalize (@reviewAgent.name)
                       }</span>
                       <span class="mdl-list__item-text-body">
@@ -134,7 +134,7 @@
                       </span>
                     </span>
                     <span class="mdl-list__item-secondary-content">
-                        <span>@if(review.favorable) {Favorable}else{Défavorable}</span>
+                        <span>@if(review.favorable){Favorable}else{Défavorable}</span>
                     </span>
                 </li>
             }
