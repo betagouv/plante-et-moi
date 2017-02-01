@@ -49,7 +49,7 @@
                     <span class="visuallyhidden">Accounts</span>
                 </button>
                 <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="accbtn">
-                    <li class="mdl-menu__item"><i class="material-icons">power_settings_new</i>Déconnexion</li>
+                    <span onclick="document.location='@routes.ApplicationController.disconnectAgent()';"><li class="mdl-menu__item"><i class="material-icons">power_settings_new</i>Déconnexion</li></span>
                 </ul>
             </div>
         </header>

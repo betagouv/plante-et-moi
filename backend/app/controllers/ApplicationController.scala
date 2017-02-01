@@ -152,12 +152,25 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     }
   }
 
-  def changeCity(newCity: String) = Action {
-    Redirect(routes.ApplicationController.all()).withSession("city" -> newCity)
+  def changeCity(newCity: String) = Action { implicit request =>
+    Redirect(routes.ApplicationController.login()).withSession("city" -> newCity)
   }
 
-  def changeAgent(newAgentId: String) = Action {
-    Redirect(routes.ApplicationController.all()).withSession("agentId" -> newAgentId)
+  def changeAgent(newAgentId: String) = Action { implicit request =>
+    val agent = agents.find(_.id == newAgentId).get
+    if(agent.admin) {
+      Redirect(routes.ApplicationController.all()).withSession(request.session - "agentId" + ("agentId" -> newAgentId))
+    } else {
+      Redirect(routes.ApplicationController.my()).withSession(request.session - "agentId" + ("agentId" -> newAgentId))
+    }
+  }
+
+  def disconnectAgent() = Action { implicit request =>
+    Redirect(routes.ApplicationController.login()).withSession(request.session - "agentId")
+  }
+
+  def login() = Action { implicit request =>
+    Ok(views.html.login(agents, getCity(request)))
   }
 
   case class ReviewData(favorable: Boolean, comment: String)
