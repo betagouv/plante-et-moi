@@ -144,7 +144,7 @@
 </div>
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     <div class="mdl-cell mdl-cell--12-col mdl-grid">
-    <form action="@routes.ApplicationController.addReview(application.id)" class="mdl-grid" method="post">
+    <form action="@routes.ApplicationController.addReview(application.id)" class="mdl-grid" method="post" onsubmit="return checkForm()">
         @defining(reviews.find(_.agentId == agent.id)) { currentReview =>
             <h3 class="mdl-cell mdl-cell--12-col">@if(currentReview.isEmpty) { Ajouter } else { Modifier } mon avis en tant @if("aeiou".contains(agent.qualite.charAt(0).toLower)){ qu'} else { que }@agent.qualite</h3>
             <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-1">
@@ -214,6 +214,21 @@
 			draggable: false,
 			clickable: false
 		}).addTo(map)
+	}
+
+	function checkForm() {
+	    var favorable = document.getElementById("option-1").checked;
+	    var unfavorable = document.getElementById("option-2").checked;
+	    var comment = document.getElementById("sample5").value;
+	    if(!favorable && !unfavorable) {
+	        alert("Vous devez donner votre avis en sélectionnant un des choix");
+	        return false;
+	    }
+	    if(unfavorable && comment == "") {
+	        alert("Vous devez laisser un commentaire sur un avis défavorable");
+	        return false;
+	    }
+	    return true;
 	}
 </script>
 }
