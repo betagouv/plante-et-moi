@@ -103,7 +103,7 @@
 
 
 </div>
-@if(applicationExtra.status.contains("Nouvelle")) {
+@if(applicationExtra.status == "Nouvelle") {
     @if(agent.admin) {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
         <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--6-col mdl-grid" method="post">

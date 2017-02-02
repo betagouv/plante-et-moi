@@ -137,7 +137,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
 
   def my = Action.async { implicit request =>
     projects(getCity(request)).map { responses =>
-      val afterFilter = responses.filter { _._2.status.contains("En cours") }
+      val afterFilter = responses.filter { _._2.status == "En cours" }
       Ok(views.html.myApplications(afterFilter, currentAgent(request)))
     }
   }
@@ -151,7 +151,6 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         case Some(application) =>
           val reviews = reviewService.findByApplicationId(id)
               .map { review =>
-                Logger.info(s"Review agentId = '${review.agentId}'")
                 review -> agents.find(_.id == review.agentId).get
               }
           Ok(views.html.application(application._1, agent, reviews, application._2))
