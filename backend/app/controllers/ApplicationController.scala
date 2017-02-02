@@ -151,7 +151,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         case Some(application) =>
           val reviews = reviewService.findByApplicationId(id)
               .map { review =>
-                Logger.info(s"Review agentId = 'review.agentId'")
+                Logger.info(s"Review agentId = '${review.agentId}'")
                 review -> agents.find(_.id == review.agentId).get
               }
           Ok(views.html.application(application._1, agent, reviews, application._2))
