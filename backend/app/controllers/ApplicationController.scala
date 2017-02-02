@@ -145,13 +145,16 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
   def show(id: String) = Action.async { implicit request =>
     val agent = currentAgent(request)
     projects(getCity(request)).map { responses =>
-      responses.filter {_._1.id == id } match {
-        case x :: _ =>
-          val reviews = reviewService.findByApplicationId(id)
-              .map { review => review -> agents.find(_.id.contains(review.agentId)).get }
-          Ok(views.html.application(x._1, currentAgent(request), reviews, x._2))
-        case _ =>
+      responses.find {_._1.id == id } match {
+        case None =>
           NotFound("")
+        case Some(application) =>
+          val reviews = reviewService.findByApplicationId(id)
+              .map { review =>
+                Logger.info(s"Review agentId = 'review.agentId'")
+                review -> agents.find(_.id == review.agentId).get
+              }
+          Ok(views.html.application(application._1, agent, reviews, application._2))
       }
     }
   }
