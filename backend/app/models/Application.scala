@@ -5,7 +5,6 @@ import org.joda.time.DateTime
 case class Application(id: String,
                        name: String,
                        email: String,
-                       reviews: String,
                        _type: String,
                        address: String,
                        creationDate: DateTime,

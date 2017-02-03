@@ -106,12 +106,9 @@
 @if(applicationExtra.status == "Nouvelle") {
     @if(agent.admin) {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-        <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--6-col mdl-grid" method="post">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis)</button>
-        </form>
-    <div class="mdl-cell mdl-cell--6-col mdl-grid">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-buttonn--accent mdl-cell mdl-cell--12-col">Demande incomplète</button>
-    </div>
+    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1-col--offset mdl-grid" method="post">
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis aux agents)</button>
+    </form>
 </div>
     }
 } else {
@@ -128,6 +125,7 @@
                       <i class="material-icons mdl-list__item-icon">@if(review.favorable) {check}else{block}</i>
                       <span>@reviewAgent.qualite.capitalize (@reviewAgent.name)</span>
                       <span class="mdl-list__item-text-body">
+                          @application.creationDate.toString("dd MMM YYYY", new Locale("fr"))<br>
                         @review.comment
                       </span>
                     </span>

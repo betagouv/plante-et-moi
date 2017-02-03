@@ -1,4 +1,5 @@
-@(city: String, applications: List[(models.Application,models.ApplicationExtra)], agent: Agent)
+@import models._
+@(city: String, applications: List[(Application, ApplicationExtra, List[Review])], agent: Agent)
 @import java.util.Locale
 
 @main(agent)("Carte des projects") {
@@ -22,7 +23,7 @@
 	var request = new XMLHttpRequest();
     var projectsLayer = new L.LayerGroup();
 	var projects = [
-	@for((application, applicationExtra) <- applications) {
+	@for((application, applicationExtra, reviews) <- applications) {
         { latlng: { lat: @application.coordinates.latitude, lng: @application.coordinates.longitude },
           name: "@application.name",
           address: "@application.address",
