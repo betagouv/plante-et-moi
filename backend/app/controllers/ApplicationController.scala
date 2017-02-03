@@ -37,6 +37,58 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
   private lazy val typeformId = configuration.underlying.getString("typeform.id")
   private lazy val typeformKey = configuration.underlying.getString("typeform.key")
 
+  def mapArlesTypeformJsonToApplication(answer: JsValue): models.Application = {
+    val selectedAddress = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue de la demo")
+    val address = (answer \ "answers" \ "textfield_38117960").asOpt[String].getOrElse(selectedAddress)
+    val typ = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
+    val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("non_renseigné@example.com")
+    implicit val dateReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
+    val date = (answer \ "metadata" \ "date_submit").as[DateTime]
+    val firstname = (answer \ "answers" \ "textfield_38072796").asOpt[String].getOrElse("John")
+    val lastname = (answer \ "answers" \ "textfield_38072795").asOpt[String].getOrElse("Doe")
+    val name = s"$firstname $lastname"
+    val id = (answer \ "token").as[String]
+    val phone = (answer \ "answers" \ "textfield_38072797").asOpt[String]
+    val lat = (answer \ "hidden" \ "lat").as[String].toDouble
+    val lon = (answer \ "hidden" \ "lon").as[String].toDouble
+    val coordinates = Coordinates(lat, lon)
+    var fields = Map[String,String]()
+    (answer \ "answers" \ "textfield_41115782").asOpt[String].map { answer =>
+      fields += "Espéces de plante grimpante" -> answer
+    }
+    (answer \ "answers" \ "textfield_41934708").asOpt[String].map { answer =>
+      fields += "Forme" -> answer
+    }
+    (answer \ "answers" \ "list_42010898_choice").asOpt[String].map { answer =>
+      fields += "Couleur" -> answer
+    }
+    (answer \ "answers" \ "list_42010898_other").asOpt[String].map { answer =>
+      fields += "Couleur" -> answer
+    }
+    (answer \ "answers" \ "textfield_41934830").asOpt[String].map { answer =>
+      fields += "Matériaux" -> answer
+    }
+    (answer \ "answers" \ "list_41934920_choice").asOpt[String].map { answer =>
+      fields += "Position" -> answer
+    }
+    (answer \ "answers" \ "list_40487664_choice").asOpt[String].map { answer =>
+      fields += "Collectif" -> "Oui"
+    }
+    (answer \ "answers" \ "textfield_40930276").asOpt[String].map { answer =>
+      fields += "Nom du collectif" -> answer
+    }
+    var files = ListBuffer[String]()
+    (answer \ "answers" \ "fileupload_40488503").asOpt[String].map { croquis =>
+      files.append(croquis.split('?')(0))
+    }
+    (answer \ "answers" \ "fileupload_40489342").asOpt[String].map { image =>
+      files.append(image.split('?')(0))
+    }
+
+    models.Application(id, name, email, "0/6", typ, address, date, coordinates, phone, fields, files.toList)
+  }
+
+
   def projects(city: String) =
     ws.url(s"https://api.typeform.com/v1/form/$typeformId")
       .withQueryString("key" -> typeformKey,
@@ -51,56 +103,8 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         (answer \ "hidden" \ "city").get == Json.toJson(city) &&
           (answer \ "hidden" \ "lat").get != JsNull &&
           (answer \ "hidden" \ "lon").get != JsNull
-      }.map { answer =>
-        val selectedAddress = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue de la demo")
-        val address = (answer \ "answers" \ "textfield_38117960").asOpt[String].getOrElse(selectedAddress)
-        val typ = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
-        val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("non_renseigné@example.com")
-        implicit val dateReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
-        val date = (answer \ "metadata" \ "date_submit").as[DateTime]
-        val firstname = (answer \ "answers" \ "textfield_38072796").asOpt[String].getOrElse("John")
-        val lastname = (answer \ "answers" \ "textfield_38072795").asOpt[String].getOrElse("Doe")
-        val name = s"$firstname $lastname"
-        val id = (answer \ "token").as[String]
-        val phone = (answer \ "answers" \ "textfield_38072797").asOpt[String]
-        val lat = (answer \ "hidden" \ "lat").as[String].toDouble
-        val lon = (answer \ "hidden" \ "lon").as[String].toDouble
-        val coordinates = Coordinates(lat, lon)
-        var fields = Map[String,String]()
-        (answer \ "answers" \ "textfield_41115782").asOpt[String].map { answer =>
-          fields += "Espéces de plante grimpante" -> answer
-        }
-        (answer \ "answers" \ "textfield_41934708").asOpt[String].map { answer =>
-          fields += "Forme" -> answer
-        }
-        (answer \ "answers" \ "list_42010898_choice").asOpt[String].map { answer =>
-          fields += "Couleur" -> answer
-        }
-        (answer \ "answers" \ "list_42010898_other").asOpt[String].map { answer =>
-          fields += "Couleur" -> answer
-        }
-        (answer \ "answers" \ "textfield_41934830").asOpt[String].map { answer =>
-          fields += "Matériaux" -> answer
-        }
-        (answer \ "answers" \ "list_41934920_choice").asOpt[String].map { answer =>
-          fields += "Position" -> answer
-        }
-        (answer \ "answers" \ "list_40487664_choice").asOpt[String].map { answer =>
-          fields += "Collectif" -> "Oui"
-        }
-        (answer \ "answers" \ "textfield_40930276").asOpt[String].map { answer =>
-          fields += "Nom du collectif" -> answer
-        }
-        var files = ListBuffer[String]()
-        (answer \ "answers" \ "fileupload_40488503").asOpt[String].map { croquis =>
-          files.append(croquis.split('?')(0))
-        }
-        (answer \ "answers" \ "fileupload_40489342").asOpt[String].map { image =>
-          files.append(image.split('?')(0))
-        }
+      }.map(mapArlesTypeformJsonToApplication)
 
-        models.Application(id, name, email, "0/6", typ, address, date, coordinates, phone, fields, files.toList)
-      }
       val defaults = List(
         models.Application("23", "Yves Laurent", "yves.laurent@example.com", "1/5", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04"), Coordinates(0,0), None, Map(), List("http://parcjardin.mairie-albi.fr/wp-content/gallery/photos/dscn0152.jpg")),
         models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "5/5", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"), Coordinates(0,0), None, Map(), List("http://www.airdemidi.org/wp-content/uploads/2016/10/potager-dans-la-rue.jpg"))
