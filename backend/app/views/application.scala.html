@@ -106,7 +106,7 @@
 @if(applicationExtra.status == "Nouvelle") {
     @if(agent.admin) {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1-col--offset mdl-grid" method="post">
+    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1--offset mdl-grid" method="post">
     <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis aux agents)</button>
     </form>
 </div>
