@@ -114,7 +114,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     }
 
   def getImage(url: String) = Action.async { implicit request =>
-    var request = ws.url(url)
+    var request = ws.url(url.replaceFirst(":443", ""))
     if(url.contains("api.typeform.com")) {
       request = request.withQueryString("key" -> typeformKey)
     }
