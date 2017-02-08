@@ -149,25 +149,33 @@
 		}
 
 		.button {
-			border: 1px solid #003057;
-			border-radius: 290486px;
-			background-color: rgba(0, 0, 0, 0.7);
-			text-transform: uppercase;
-			text-decoration: none;
-			transition: none 200ms ease-out;
-			transition-property: color, background;
-			padding: 16px 32px;
+			background-color:#44c767;
+			border-radius:28px;
+			border:1px solid #18ab29;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-family:Arial;
+			font-size:17px;
+			padding:16px 31px;
+			text-decoration:none;
+			text-shadow:0px 1px 0px #2f6627;
 			color: white !important;
 			letter-spacing: 0.2px;
 			font-weight: bold;
+			text-align: center;
+		}
+		.button {
+			position:relative;
+			top:1px;
 		}
 		
 		.button--green {
-			background-color: green;
+			background-color: #44c767;
 		}
 		
 		.button--green:hover {
-			background-color: green;
+			background-color: #5cbf2a;
 		}
 		
 		.popup--red .leaflet-popup-content-wrapper {
@@ -499,7 +507,7 @@
 	layerControl.addTo(map);
 
 	var moveMarker = L.AwesomeMarkers.icon({
-    	icon: 'arrow-down',
+    	icon: 'circle',
     	markerColor: 'blue',
     	prefix: 'fa'
   	});
@@ -530,33 +538,40 @@
 
 	var requestReverseGeocode;
 
-	function reverseGeocodeAdress(latlng) {
+	function reverseGeocodeAdress(latlng, onCompleted) {
 		coord = latlng;
 		sendReverseGeocodeRequest(latlng, function(features) {
-			selectedAddress = features[0]["properties"]["label"];
+			onCompleted(features[0]["properties"]["label"]);
 		})
 	}
 
 	function selectPoint(latlng, address) {
     	try { map.removeLayer(selectedPoint); } catch(e){}
-		if(address == undefined) {
-			selectedAddress = 'adresse introuvable';
-			reverseGeocodeAdress(latlng) 
-		} else {
-			selectedAddress = address;
-		}
 		selectedPoint = L.marker(latlng, {
 							draggable: true,
 							clickable: false,
 							icon: moveMarker
-						}).bindPopup('<div style="height: 30px; padding: 12px 0px 0px 0px;"><a href="javascript:chooseProject();" class="button button--green">Végétaliser cet espace</a></div>',
-						       {autoClose:false, closeButton: false, className: 'popup--red'})
+						})
 						  .addTo(map)
-						  .openPopup()
-						  .on('move', function(e) {
-							    reverseGeocodeAdress(e.latlng) 
-						    	selectedPoint.openPopup();
-						  })			  
+		function manageResult(address) {
+				selectedAddress = address;
+				selectedPoint.bindPopup('<div style="text-align: center; font-size: 14px; font-weight: bold;">'+selectedAddress+'<a href="javascript:chooseProject();" class="button button--green">Choisir mon projet</a></div>',
+						       {autoClose:false, closeButton: false, className: 'popup--red'})
+						  .openPopup();
+		}
+		selectedPoint.on('move', function(e) {
+								selectedPoint.closePopup();
+							    reverseGeocodeAdress(e.latlng, manageResult);
+						  })
+
+		if(address == undefined) {
+			selectedAddress = 'adresse introuvable';
+			reverseGeocodeAdress(latlng, manageResult);
+		} else {
+			selectedAddress = address;
+			manageResult(address);
+		}
+					  
 	}
 
 

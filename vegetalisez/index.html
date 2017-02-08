@@ -279,17 +279,17 @@ url('http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg'); backgroun
 	function addressesDataSource(term, response){
     		try { requestAddresses.abort(); } catch(e){}
 			requestAddresses = new XMLHttpRequest();
-			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?type=housenumber&q='+term+'&limit=30&lon='+center[0]+'&lat='+center[1], true);
+			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?type=housenumber&q='+term+'&limit=30&citycode='+codeInsee+'&lon='+center[0]+'&lat='+center[1], true);
     		requestAddresses.onload = function() {
 			  if (requestAddresses.status >= 200 && requestAddresses.status < 400) {
 			    // Success!
 			    var data = JSON.parse(requestAddresses.responseText);
-			    var features = data["features"].filter(function(feature){
+			    var features = data["features"]/*.filter(function(feature){
 			    	if(codePostaux.indexOf(feature["properties"]["postcode"]) == -1) {
 			    		return false;
 			    	}
 			    	return true;
-			    });
+			    })*/;
 			    response(features);
 			  } else {
 			    response([]);
