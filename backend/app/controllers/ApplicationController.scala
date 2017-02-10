@@ -102,13 +102,8 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
         (answer \ "hidden" \ "city").get == Json.toJson(city) &&
           (answer \ "hidden" \ "lat").get != JsNull &&
           (answer \ "hidden" \ "lon").get != JsNull
-      }.map(mapArlesTypeformJsonToApplication)
-
-      val defaults = List(
-        models.Application("23", "Yves Laurent", "yves.laurent@example.com", "Pied d'arbre", s"9 Avenue de Provence, $city", new DateTime("2017-01-04"), Coordinates(0,0), None, Map(), List("http://parcjardin.mairie-albi.fr/wp-content/gallery/photos/dscn0152.jpg")),
-        models.Application("02", "Jean-Paul Dupont", "jean-paul.dupont@example.com", "Jardinière", s"3 Rue Vauban, $city", new DateTime("2017-01-02"), Coordinates(0,0), None, Map(), List("http://www.airdemidi.org/wp-content/uploads/2016/10/potager-dans-la-rue.jpg"))
-      )
-      (responses ++ defaults).map { application =>
+      } .map(mapArlesTypeformJsonToApplication)
+        .map { application =>
         (application, applicationExtraService.findByApplicationId(application.id), reviewService.findByApplicationId(application.id))
       }
     }
