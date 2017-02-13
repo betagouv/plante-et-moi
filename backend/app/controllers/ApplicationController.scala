@@ -31,11 +31,11 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
 
   private val agents = List(
     Agent("admin", "Jean Paul", "service développement durable", "jean.paul.durable@example.com", true, true, false),
-    Agent("verts", "Jeanne D'arc", "direction des espaces verts-propreté", "jeanne.d-arc.verts@yopmail.com", false, false, false),
-    Agent("voirie", "Jeanne D'arc", "direction de la voirie", "jeanne.d-arc.voirie@yopmail.com", false, false, false),
-    Agent("public", "Jeanne D'arc", "direction occupation du domaine public", "jeanne.d-arc.public@yopmail.com", false, false, false),
-    Agent("patrimoine", "Jeanne D'arc", "direction du patrimoine", "jeanne.d-arc.patrimoine@yopmail.com", false, false, false),
-    Agent("elu", "Richard Dupont", "adjoint au maire, Transition écologique et énergétique, Parcs et jardins", "jdupont.elu@yopmail.com", true, false, true)
+    Agent("verts", "Jeanne D'arc", "direction des espaces verts-propreté", "jeanne.d-arc.verts@example.com", false, false, false),
+    Agent("voirie", "Jeanne D'arc", "direction de la voirie", "jeanne.d-arc.voirie@example.com", false, false, false),
+    Agent("public", "Jeanne D'arc", "direction occupation du domaine public", "jeanne.d-arc.public@example.com", false, false, false),
+    Agent("patrimoine", "Jeanne D'arc", "direction du patrimoine", "jeanne.d-arc.patrimoine@example.com", false, false, false),
+    Agent("elu", "Richard Dupont", "adjoint au maire, Transition écologique et énergétique, Parcs et jardins", "jdupont.elu@example.com", true, false, true)
   )
 
   private lazy val typeformId = configuration.underlying.getString("typeform.id")
@@ -233,7 +233,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
            |<h1>Nouvelle demande de permis de végétalisation</h1>
            |<ul>
            |  <li>Addresse : ${application.address}</li>
-           |  <li>Type: ${application.`type`}</li>
+           |  <li>Type: ${application._type}</li>
            |</ul>
            |<a href="${url}">Voir la demande et laisser mon avis</a>
            |</body>
