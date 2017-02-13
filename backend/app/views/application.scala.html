@@ -126,7 +126,11 @@
                       <span>@reviewAgent.qualite.capitalize (@reviewAgent.name)</span>
                       <span class="mdl-list__item-text-body">
                           @application.creationDate.toString("dd MMM YYYY", new Locale("fr"))<br>
-                        @review.comment
+                          @if(!review.comment.isEmpty()) {
+                                Commentaire de l'agent: `<i>@review.comment</i>`
+                          } else {
+                                L'agent n'a pas laissé de commentaire.
+                          }
                       </span>
                     </span>
                     <span class="mdl-list__item-secondary-content">
