@@ -23,7 +23,8 @@ libraryDependencies ++= Seq(
   "org.webjars.bower" % "material-design-icons" % "3.0.1",
   "org.webjars.npm" % "leaflet" % "1.0.2",
   "org.postgresql" % "postgresql" % "9.4.1210",
-  "com.typesafe.play" %% "anorm" % "2.5.2"
+  "com.typesafe.play" %% "anorm" % "2.5.2",
+  "com.typesafe.play" %% "play-mailer" % "5.0.0"
 )
 
 // Adds additional packages into Twirl

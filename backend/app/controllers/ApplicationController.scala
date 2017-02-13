@@ -11,12 +11,16 @@ import models._
 import org.joda.time.DateTime
 import play.api.data._
 import play.api.data.Forms._
+import play.api.libs.mailer.MailerClient
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
 
+import play.api.libs.mailer._
+import org.apache.commons.mail.EmailAttachment
+
 @Singleton
-class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration, reviewService: ReviewService, applicationExtraService: ApplicationExtraService) extends Controller {
+class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration, reviewService: ReviewService, applicationExtraService: ApplicationExtraService, mailerClient: MailerClient) extends Controller {
   private def getCity(request: RequestHeader) =
     request.session.get("city").getOrElse("Arles")
 
@@ -26,12 +30,12 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
   }
 
   private val agents = List(
-    Agent("admin", "Jean Paul", "service développement durable", "jean.paul@durable.example.com", true),
-    Agent("verts", "Jeanne D'arc", "direction des espaces verts-propreté", "jeanne.d-arc@verts.example.com", false),
-    Agent("voirie", "Jeanne D'arc", "direction de la voirie", "jeanne.d-arc@voirie.example.com", false),
-    Agent("public", "Jeanne D'arc", "direction occupation du domaine public", "jeanne.d-arc@public.example.com", false),
-    Agent("patrimoine", "Jeanne D'arc", "direction du patrimoine", "jeanne.d-arc@patrimoine.example.com", false),
-    Agent("elu", "Richard Dupont", "adjoint au maire, Transition écologique et énergétique, Parcs et jardins", "jdupont@elu.example.com", false)
+    Agent("admin", "Jean Paul", "service développement durable", "jean.paul.durable@example.com", true, true, false),
+    Agent("verts", "Jeanne D'arc", "direction des espaces verts-propreté", "jeanne.d-arc.verts@yopmail.com", false, false, false),
+    Agent("voirie", "Jeanne D'arc", "direction de la voirie", "jeanne.d-arc.voirie@yopmail.com", false, false, false),
+    Agent("public", "Jeanne D'arc", "direction occupation du domaine public", "jeanne.d-arc.public@yopmail.com", false, false, false),
+    Agent("patrimoine", "Jeanne D'arc", "direction du patrimoine", "jeanne.d-arc.patrimoine@yopmail.com", false, false, false),
+    Agent("elu", "Richard Dupont", "adjoint au maire, Transition écologique et énergétique, Parcs et jardins", "jdupont.elu@yopmail.com", true, false, true)
   )
 
   private lazy val typeformId = configuration.underlying.getString("typeform.id")
@@ -40,7 +44,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
   def mapArlesTypeformJsonToApplication(answer: JsValue): models.Application = {
     val selectedAddress = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue de la demo")
     val address = (answer \ "answers" \ "textfield_38117960").asOpt[String].getOrElse(selectedAddress)
-    val typ = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
+    val `type` = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
     val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("non_renseigné@example.com")
     implicit val dateReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
     val date = (answer \ "metadata" \ "date_submit").as[DateTime]
@@ -85,7 +89,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
       files.append(image.split('?')(0))
     }
 
-    models.Application(id, name, email, typ, address, date, coordinates, phone, fields, files.toList)
+    models.Application(id, name, email, `type`, address, date, coordinates, phone, fields, files.toList)
   }
 
   def projects(city: String) =
@@ -103,7 +107,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
           (answer \ "hidden" \ "lat").get != JsNull &&
           (answer \ "hidden" \ "lon").get != JsNull
       } .map(mapArlesTypeformJsonToApplication)
-        .map { application =>
+      responses.map { application =>
         (application, applicationExtraService.findByApplicationId(application.id), reviewService.findByApplicationId(application.id))
       }
     }
@@ -142,8 +146,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
 
   def show(id: String) = Action.async { implicit request =>
     val agent = currentAgent(request)
-    projects(getCity(request)).map { responses =>
-      responses.find {_._1.id == id } match {
+    applicationById(id, getCity(request)).map {
         case None =>
           NotFound("")
         case Some(application) =>
@@ -152,9 +155,12 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
                 review -> agents.find(_.id == review.agentId).get
               }
           Ok(views.html.application(application._1, agent, reviews, application._2))
-      }
     }
   }
+
+  private def applicationById(id: String, city: String) =
+    projects(city).map { _.find { _._1.id == id } }
+
 
   def changeCity(newCity: String) = Action { implicit request =>
     Redirect(routes.ApplicationController.login()).withSession("city" -> newCity)
@@ -201,8 +207,38 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     )
   }
 
-  def updateStatus(id: String, status: String) = Action { implicit request =>
-    applicationExtraService.insertOrUpdate(applicationExtraService.findByApplicationId(id).copy(status = status))
-    Redirect(routes.ApplicationController.show(id))
+  def updateStatus(id: String, status: String) = Action.async { implicit request =>
+    applicationById(id, getCity(request)).map {
+      case None =>
+        NotFound("")
+      case Some((application, applicationExtra, _)) =>
+        if(status == "En cours" && applicationExtra.status != "En cours") {
+          agents.filter { agent => !agent.instructor && !agent.finalReview }.foreach(sendNewApplicationEmailToAgent(application, request))
+        }
+        applicationExtraService.insertOrUpdate(applicationExtra.copy(status = status))
+        Redirect(routes.ApplicationController.show(id))
+    }
+  }
+
+  private def sendNewApplicationEmailToAgent(application: models.Application, request: RequestHeader)(agent: Agent) = {
+    var url = routes.ApplicationController.show(application.id).absoluteURL()(request)
+    val email = Email(
+      s"Nouvelle demande de permis de végétalisation: ${application.address}",
+      "Robot Plante et Moi <administration@plante-et-moi.fr>",
+      Seq(s"${agent.name} <${agent.email}>"),
+      bodyText = Some("Nouvelle demande de permis de végétalisation à l'adresse ${application.address}. Voir la demande et laisser mon avis: ${url}"),
+      bodyHtml = Some(
+        s"""<html>
+           |<body>
+           |<h1>Nouvelle demande de permis de végétalisation</h1>
+           |<ul>
+           |  <li>Addresse : ${application.address}</li>
+           |  <li>Type: ${application.`type`}</li>
+           |</ul>
+           |<a href="${url}">Voir la demande et laisser mon avis</a>
+           |</body>
+           |</html>""".stripMargin)
+    )
+    mailerClient.send(email)
   }
 }
