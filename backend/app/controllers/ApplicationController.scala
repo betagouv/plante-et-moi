@@ -126,7 +126,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
 
   def all = Action.async { implicit request =>
     projects(getCity(request)).map { responses =>
-      Ok(views.html.allApplications(responses, currentAgent(request)))
+      Ok(views.html.allApplications(responses, currentAgent(request), agents.filter { agent => !agent.instructor }.length))
     }
   }
 
@@ -138,8 +138,12 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
   }
 
   def my = Action.async { implicit request =>
+    val agent = currentAgent(request)
     projects(getCity(request)).map { responses =>
-      val afterFilter = responses.filter { _._2.status == "En cours" }
+      val afterFilter = responses.filter { response =>
+        response._2.status == "En cours" &&
+          !response._3.exists { _.agentId == agent.id }
+      }
       Ok(views.html.myApplications(afterFilter, currentAgent(request)))
     }
   }
@@ -226,7 +230,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
       s"Nouvelle demande de permis de végétalisation: ${application.address}",
       "Robot Plante et Moi <administration@plante-et-moi.fr>",
       Seq(s"${agent.name} <${agent.email}>"),
-      bodyText = Some("Nouvelle demande de permis de végétalisation à l'adresse ${application.address}. Voir la demande et laisser mon avis: ${url}"),
+      bodyText = Some(s"Nouvelle demande de permis de végétalisation à l'adresse ${application.address}. Voir la demande et laisser mon avis: ${url}"),
       bodyHtml = Some(
         s"""<html>
            |<body>
