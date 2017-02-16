@@ -118,14 +118,14 @@
         @if(reviews.isEmpty) {
             <p>Pas encore d'avis</p>
         } else {
-        <ul class="demo-list-three mdl-list mdl-cell mdl-cell--8-col mdl-cell--9-col-phone mdl-cell--2-offset-desktop">
+        <ul class="demo-list-three mdl-list mdl-cell mdl-cell--12-col">
             @for((review,reviewAgent) <- reviews) {
                 <li class="mdl-list__item mdl-list__item--three-line">
                     <span class="mdl-list__item-primary-content ">
                       <i class="material-icons mdl-list__item-icon">@if(review.favorable) {check}else{block}</i>
                       <span>@reviewAgent.qualite.capitalize (@reviewAgent.name)</span>
                       <span class="mdl-list__item-text-body">
-                          @application.creationDate.toString("dd MMM YYYY", new Locale("fr"))<br>
+                          @application.creationDate.toString("dd MMM YYYY", new Locale("fr")) -
                           @if(!review.comment.isEmpty()) {
                                 Commentaire de l'agent: `<i>@review.comment</i>`
                           } else {
