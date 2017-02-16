@@ -61,7 +61,7 @@
 <script>
     var agents = {
         @for(agent <- agents) {
-             "@agent.id": "@routes.ApplicationController.changeAgent(agent.id)",
+             "@agent.id": "@{routes.ApplicationController.all()}?key=@agent.key",
         }
     }
 

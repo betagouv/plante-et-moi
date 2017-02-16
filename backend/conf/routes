@@ -10,7 +10,6 @@ GET     /mes-demandes                                   controllers.ApplicationC
 GET     /carte-des-projets                              controllers.ApplicationController.map
 GET     /toutes-les-demandes/:id                        controllers.ApplicationController.show(id: String)
 GET     /villes/:newCity                                controllers.ApplicationController.changeCity(newCity: String)
-GET     /agents/:newAgentId                             controllers.ApplicationController.changeAgent(newAgentId: String)
 POST    /toutes-les-demandes/:applicationId/reviews     controllers.ApplicationController.addReview(applicationId: String)
 GET     /image                                          controllers.ApplicationController.getImage(url: String)
 POST     /toutes-les-demandes/:id                       controllers.ApplicationController.updateStatus(id: String, status: String)

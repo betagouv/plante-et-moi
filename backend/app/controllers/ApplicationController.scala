@@ -12,6 +12,7 @@ import org.joda.time.DateTime
 import play.api.data._
 import play.api.data.Forms._
 import play.api.libs.mailer.MailerClient
+import actions.LoginAction
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
@@ -20,7 +21,8 @@ import play.api.libs.mailer._
 import org.apache.commons.mail.EmailAttachment
 
 @Singleton
-class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration, reviewService: ReviewService, applicationExtraService: ApplicationExtraService, mailerClient: MailerClient) extends Controller {
+class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration, reviewService: ReviewService, applicationExtraService: ApplicationExtraService, mailerClient: MailerClient, agentService: AgentService, loginAction: LoginAction) extends Controller {
+
   private def getCity(request: RequestHeader) =
     request.session.get("city").getOrElse("Arles")
 
@@ -29,14 +31,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     agents.find(_.id == id).get
   }
 
-  private val agents = List(
-    Agent("admin", "Jean Paul", "service développement durable", "jean.paul.durable@example.com", true, true, false),
-    Agent("verts", "Jeanne D'arc", "direction des espaces verts-propreté", "jeanne.d-arc.verts@example.com", false, false, false),
-    Agent("voirie", "Jeanne D'arc", "direction de la voirie", "jeanne.d-arc.voirie@example.com", false, false, false),
-    Agent("public", "Jeanne D'arc", "direction occupation du domaine public", "jeanne.d-arc.public@example.com", false, false, false),
-    Agent("patrimoine", "Jeanne D'arc", "direction du patrimoine", "jeanne.d-arc.patrimoine@example.com", false, false, false),
-    Agent("elu", "Richard Dupont", "adjoint au maire, Transition écologique et énergétique, Parcs et jardins", "jdupont.elu@example.com", true, false, true)
-  )
+  private lazy val agents = agentService.all()
 
   private lazy val typeformId = configuration.underlying.getString("typeform.id")
   private lazy val typeformKey = configuration.underlying.getString("typeform.key")
@@ -112,7 +107,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
       }
     }
 
-  def getImage(url: String) = Action.async { implicit request =>
+  def getImage(url: String) = loginAction.async { implicit request =>
     var request = ws.url(url.replaceFirst(":443", ""))
     if(url.contains("api.typeform.com")) {
       request = request.withQueryString("key" -> typeformKey)
@@ -124,20 +119,20 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     }
   }
 
-  def all = Action.async { implicit request =>
+  def all = loginAction.async { implicit request =>
     projects(getCity(request)).map { responses =>
       Ok(views.html.allApplications(responses, currentAgent(request), agents.filter { agent => !agent.instructor }.length))
     }
   }
 
-  def map = Action.async { implicit request =>
+  def map = loginAction.async { implicit request =>
     val city = getCity(request)
     projects(city).map { responses =>
       Ok(views.html.mapApplications(city, responses, currentAgent(request)))
     }
   }
 
-  def my = Action.async { implicit request =>
+  def my = loginAction.async { implicit request =>
     val agent = currentAgent(request)
     projects(getCity(request)).map { responses =>
       val afterFilter = responses.filter { response =>
@@ -148,7 +143,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     }
   }
 
-  def show(id: String) = Action.async { implicit request =>
+  def show(id: String) = loginAction.async { implicit request =>
     val agent = currentAgent(request)
     applicationById(id, getCity(request)).map {
         case None =>
@@ -170,15 +165,6 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     Redirect(routes.ApplicationController.login()).withSession("city" -> newCity)
   }
 
-  def changeAgent(newAgentId: String) = Action { implicit request =>
-    val agent = agents.find(_.id == newAgentId).get
-    if(agent.admin) {
-      Redirect(routes.ApplicationController.all()).withSession(request.session - "agentId" + ("agentId" -> newAgentId))
-    } else {
-      Redirect(routes.ApplicationController.my()).withSession(request.session - "agentId" + ("agentId" -> newAgentId))
-    }
-  }
-
   def disconnectAgent() = Action { implicit request =>
     Redirect(routes.ApplicationController.login()).withSession(request.session - "agentId")
   }
@@ -195,7 +181,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     )(ReviewData.apply)(ReviewData.unapply)
   )
 
-  def addReview(applicationId: String) = Action.async { implicit request =>
+  def addReview(applicationId: String) = loginAction.async { implicit request =>
     reviewForm.bindFromRequest.fold(
       formWithErrors => {
         Future.successful(BadRequest(""))
@@ -211,7 +197,7 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
     )
   }
 
-  def updateStatus(id: String, status: String) = Action.async { implicit request =>
+  def updateStatus(id: String, status: String) = loginAction.async { implicit request =>
     applicationById(id, getCity(request)).map {
       case None =>
         NotFound("")
@@ -225,21 +211,30 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
   }
 
   private def sendNewApplicationEmailToAgent(application: models.Application, request: RequestHeader)(agent: Agent) = {
-    var url = routes.ApplicationController.show(application.id).absoluteURL()(request)
+    var url = s"${routes.ApplicationController.show(application.id).absoluteURL()(request)}?key=${agent.key}"
     val email = Email(
       s"Nouvelle demande de permis de végétalisation: ${application.address}",
-      "Robot Plante et Moi <administration@plante-et-moi.fr>",
+      "Plante et Moi <administration@plante-et-moi.fr>",
       Seq(s"${agent.name} <${agent.email}>"),
-      bodyText = Some(s"Nouvelle demande de permis de végétalisation à l'adresse ${application.address}. Voir la demande et laisser mon avis: ${url}"),
+      bodyText = Some(s"""Bonjour ${agent.name},
+                    |
+                    |Nous avons besoin de votre avis pour une demande de végétalisation au ${application.address} (c'est un projet de ${application._type}).
+                    |Vous pouvez voir la demande et laisser mon avis en ouvrant la page suivante:
+                    |${url}
+                    |
+                    |Merci de votre aide,
+                    |Si vous avez des questions, n'hésitez pas à nous contacter en répondant à ce mail""".stripMargin),
       bodyHtml = Some(
         s"""<html>
            |<body>
-           |<h1>Nouvelle demande de permis de végétalisation</h1>
-           |<ul>
-           |  <li>Addresse : ${application.address}</li>
-           |  <li>Type: ${application._type}</li>
-           |</ul>
-           |<a href="${url}">Voir la demande et laisser mon avis</a>
+           | Bonjour ${agent.name}, <br>
+           | <br>
+           | Nous avons besoin de votre avis pour une demande de végétalisation au ${application.address} <br>
+           | (c'est un projet de ${application._type}).<br>
+           |<a href="${url}">Vous pouvez voir la demande et laisser mon avis en cliquant ici</a><br>
+           | <br>
+           | Merci de votre aide, <br>
+           | Si vous avez des questions, n'hésitez pas à nous contacter en répondant à ce mail
            |</body>
            |</html>""".stripMargin)
     )
