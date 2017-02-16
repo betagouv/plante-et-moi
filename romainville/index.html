@@ -141,6 +141,21 @@
 			font-size: 25px;
 			line-height: 40px;
 		}
+		.footer {
+			margin: 0 auto;
+			height: 20px;
+			background-color: #2c3e50;
+			padding: 15px;
+			text-align: right;
+		}
+		.footer__link {
+			color: #95a5a6;
+			padding: 5px;
+			text-decoration:none; 
+		}
+		.footer__link:hover {
+			background-color: #34495e;
+		}
 	</style>
 </head>
 
@@ -162,7 +177,7 @@
 		<h1 class="main__title" id="search-street-title">Cherchez une rue à végétaliser</h1>
 		 <div class="search">
 			 <input type="text" id="address-search" name="address-search" placeholder="Saisissez une rue ici..." class="search__input">
-			 <button class="search__button" type="button" onclick="manualSearch();" id="search-button">Rechercher</button>
+			 <button class="search__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
 	     </div>
 	</div>
 
@@ -200,6 +215,20 @@ url('http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg'); backgroun
 			Vous pouvez végétaliser en 3 minutes par semaine seulement !
 		</div>
 	</div>
+
+	<div class="centered" style="
+			color: #0C518A; margin: 20px auto;">
+		<h1 class="main__title" id="search-street-title">Cherchez une rue à végétaliser</h1>
+		 <div class="search">
+			 <input type="text" id="address-search-bottom" name="address-search-bottom" placeholder="Saisissez une rue ici..." class="search__input">
+			 <button class="search__button" type="button" onclick="manualSearch('address-search-bottom');" id="search-button">Rechercher</button>
+	     </div>
+	</div>
+
+	<div class="footer">
+		<a class="footer__link" href="mailto:biodiversite&commat;beta.gouv.fr?subject=Aide%20Plante%20Et%20Moi%20Demande%20permis">Contact</a>
+	</div>
+
 
 	<script src="js/utils.js"></script>
 	<script src="js/main.js"></script>
@@ -251,17 +280,17 @@ url('http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg'); backgroun
 	function addressesDataSource(term, response){
     		try { requestAddresses.abort(); } catch(e){}
 			requestAddresses = new XMLHttpRequest();
-			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?type=housenumber&q='+term+'&limit=30&lon='+center[0]+'&lat='+center[1], true);
+			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?type=housenumber&q='+term+'&limit=30&citycode='+codeInsee+'&lon='+center[0]+'&lat='+center[1], true);
     		requestAddresses.onload = function() {
 			  if (requestAddresses.status >= 200 && requestAddresses.status < 400) {
 			    // Success!
 			    var data = JSON.parse(requestAddresses.responseText);
-			    var features = data["features"].filter(function(feature){
+			    var features = data["features"]/*.filter(function(feature){
 			    	if(codePostaux.indexOf(feature["properties"]["postcode"]) == -1) {
 			    		return false;
 			    	}
 			    	return true;
-			    });
+			    })*/;
 			    response(features);
 			  } else {
 			    response([]);
@@ -279,17 +308,31 @@ url('http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg'); backgroun
 		onSelect: onSelectAddress,
 		cache: false,
 	});
+	new autoComplete({
+    	selector: 'input[name=address-search-bottom]',
+    	minChars: 2,
+    	source: addressesDataSource,
+    	renderItem: renderFeature,
+		onSelect: onSelectAddress,
+		cache: false,
+	});
 
-	function manualSearch(){
-		document.getElementById('search-button').innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
-		var term = document.getElementById('address-search').value;
+
+	function manualSearch(fieldId){
+		Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+			button.innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
+		})
+		
+		var term = document.getElementById(fieldId).value;
 		addressesDataSource(term, function(results){
 			var result = results[0];
 			if(result) {
 				var coord = result["geometry"]["coordinates"]
 				document.location = 'demande.html?c='+city+'&address='+result["properties"]["label"] +"&lat="+coord[1]+"&lng="+coord[0];
 			} else {
-				document.getElementById('search-button').innerHTML = 'Rechercher';
+				Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+					button.innerHTML = 'Rechercher';
+				})
 				alert('Nous n\'avons pas trouver votre adresse :(');
 			}
 		})
