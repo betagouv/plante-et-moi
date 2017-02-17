@@ -15,7 +15,7 @@ body {
     display: block;
     position: relative;
     overflow: hidden;
-    background-color: seagreen;
+    background-color: #3FA435;
 }
 
 .header__image {
@@ -24,13 +24,15 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
     box-sizing: border-box; 
+    position: absolute;
 }
 
-.header__title {
-    color: #F8E273;
-    font-size: 30px;
-    font-weight: bold; 
-    margin: 10px;
+.header__image--right {
+    right: 30px;
+}
+
+.header__image--left {
+    left: 0px;
 }
 
 .header__ribbon {
@@ -38,7 +40,7 @@ body {
     text-transform: uppercase;
     position: absolute;
     top: 10px;
-    right: -15px;
+    right: -25px;
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
     width: 80px;

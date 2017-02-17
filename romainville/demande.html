@@ -11,6 +11,7 @@
 	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 	<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU"
 		crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.css">
 	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
 	<link rel="stylesheet" href="css/main.css" />
@@ -149,41 +150,42 @@
 		}
 
 		.button {
-			background-color:#44c767;
-			border-radius:28px;
-			border:1px solid #18ab29;
+			border-radius:3px;
+			border:1px solid black;
 			display:inline-block;
 			cursor:pointer;
 			color:#ffffff;
-			font-family:Arial;
-			font-size:17px;
-			padding:16px 31px;
+			font-size:25px;
+			font-weight: bold;
+    		font-family: Arvo,Georgia,serif;
+			padding: 5px 20px;
 			text-decoration:none;
-			text-shadow:0px 1px 0px #2f6627;
-			color: white !important;
 			letter-spacing: 0.2px;
 			font-weight: bold;
 			text-align: center;
+			cursor: pointer;
 		}
 		.button {
 			position:relative;
 			top:1px;
 		}
 		
-		.button--green {
-			background-color: #44c767;
+		.button--yellow {
+			background-color: #F8E273;
+			color: #b09409 !important;
+			border-color: #f7dd5c;
 		}
 		
-		.button--green:hover {
-			background-color: #5cbf2a;
+		.button--yellow:hover {
+			background-color: #faeca4;
+		}
+
+		.popup--green .leaflet-popup-content-wrapper {
+			background-color: rgba(63, 165, 53, 0.8);
 		}
 		
-		.popup--red .leaflet-popup-content-wrapper {
-			background-color: rgba(114, 175, 38, 0.8);
-		}
-		
-		.popup--red .leaflet-popup-tip {
-			background-color: rgba(114, 175, 38, 0.8);
+		.popup--green .leaflet-popup-tip {
+			background-color: rgba(63, 165, 53, 0.8);
 		}
 		
 		.galery {
@@ -235,7 +237,7 @@
 			text-align: center;
 			font-weight: bold;
 			color: white;
-			background: rgba(46,139,87, 0.7);
+			background: rgba(63, 165, 53, 0.7);
 		}
 		
 		.galery__card__description {
@@ -262,7 +264,7 @@
 		.galery__card__bottom--button {
 			letter-spacing: 0.2px;
 			font-weight: bold;
-			background-color: seagreen;
+			background-color: #3FA435;
 			text-decoration: none;
 			transition: none 200ms ease-out;
 			transition-property: color, background;
@@ -380,13 +382,12 @@
 </head>
 
 <body>
-	
 	<div class="header">
 		<div class="header__ribbon">
 			Beta
 		</div>
-		<img src="img/logoJEblanc.png" class="header__image">
-		<h1 class="header__title" id="header-title"><i class="fa fa-leaf"></i> Jardin'émoi</h1> 
+		<img src="img/logoJEblanc.png" class="header__image header__image--left">
+		<img src="img/logo-ville-vert-web.png" class="header__image header__image--right">
 	</div>
 
 	<div class="map-container" id="map-container">
@@ -534,8 +535,8 @@
 						  .addTo(map)
 		function manageResult(address) {
 				selectedAddress = address;
-				selectedPoint.bindPopup('<div style="text-align: center; font-size: 14px; font-weight: bold;">'+selectedAddress+'<a href="javascript:chooseProject();" class="button button--green">Choisir mon projet</a></div>',
-						       {autoClose:false, closeButton: false, className: 'popup--red'})
+				selectedPoint.bindPopup('<div style="text-align: center; font-size: 14px; font-weight: bold;">'+selectedAddress+'<a href="javascript:chooseProject();" class="button button--yellow">Choisir mon projet</a></div>',
+						       {autoClose:false, closeButton: false, className: 'popup--green'})
 						  .openPopup();
 		}
 		selectedPoint.on('move', function(e) {
