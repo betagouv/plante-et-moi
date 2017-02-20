@@ -38,3 +38,9 @@ function show(itemID) {
 Array.prototype.random = function () {
   return this[Math.floor((Math.random()*this.length))];
 }
+
+
+function validEmail(email) {
+  //http://emailregex.com/
+  return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+}
