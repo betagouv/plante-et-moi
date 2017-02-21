@@ -28,7 +28,6 @@
 			padding: 4%;
 			box-sizing:border-box;
 			background-image: url("img/glycinegouttiere.jpg");
-			background-position: right center;
 			background-repeat: no-repeat;
 			background-size: cover;
 			text-align: center;
@@ -69,12 +68,12 @@
 
 		.cube {
 			display: inline-block;
-			height: 290px;
+			height: 370px;
 			min-width: 300px; 
 			width: 43%; 
 			text-align: center;
 			box-sizing:border-box;
-			margin: 30px;
+			margin: 20px;
 			vertical-align: top;
 		}
 
@@ -88,12 +87,11 @@
 		.form__input {
 			margin: 0px;
 			padding: 10px;
-			width: 400px;
+			width: 100%;
 			height: 50px;
 			font-size: 25px;
 			border-width: 0px;
 			border-radius: 2px 2px 2px 2px;
-			float: left;
 			box-sizing:border-box;
 		}
 		.form__button {
@@ -107,12 +105,21 @@
 			padding: 16px 0px;
 			color: white;
 			font-weight: bold;
-			border-radius: 0px 2px 2px 0px;
 			width: 100px;
 			height: 50px;
 			border-width: 0px;
-			float: left;
 		}
+		@media (min-width: 564px) {
+			.form__input {
+				float: left;
+				width: 400px;
+			}
+			.form__button {
+				float: left;
+				border-radius: 0px 2px 2px 0px;
+			}
+		}
+
 		.form__button:hover {
 			background-color: seagreen;
 		}
@@ -192,7 +199,7 @@
 
 	<div class="centered">
 		<div class="cube" style="background-image: 
-url('img/mosaique1.jpg'); background-repeat: no-repeat;
+url('img/mosaique1.jpg'); background-repeat: no-repeat; 
 			background-size: cover; border-radius: 2px; 
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 			">
@@ -213,7 +220,7 @@ url('img/mosaique1.jpg'); background-repeat: no-repeat;
 		</div>
 		<div class="cube" style="background-image: 
 url('img/mosaique2.jpg'); background-repeat: no-repeat;
-			background-size: cover; background-position: center 20%; border-radius: 2px; 
+			background-size: cover; border-radius: 2px; 
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
 		</div>
 	</div>
