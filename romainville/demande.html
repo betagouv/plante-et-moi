@@ -618,8 +618,6 @@
     	prefix: 'fa'
   	});
 
-	var userNames = ["Pierre", "Paul","Jeanne", "Sophie","Jean", "Joseph"];
-
 	requestVerts.onload = function() {
 	  if (requestVerts.status >= 200 && requestVerts.status < 400) {
 	    // Success!
@@ -630,9 +628,9 @@
 							pointToLayer: function(geoJsonPoint, latlng) {
 								var marker = L.marker(latlng, {icon: plantMarker});
 								try { 
-									marker.bindPopup(feature["fields"]["type_veget"]+" par "+userNames.random()); 
+									marker.bindPopup(feature["fields"]["type_veget"]); 
 								} catch(e){
-									marker.bindPopup(feature["properties"]["name"]+" par "+userNames.random());
+									marker.bindPopup(feature["properties"]["name"]+" à disposition");
 								}
 								return marker;
 							}
@@ -674,7 +672,7 @@
 	var lat = getParameterByName('lat');
 	selectedAddress = getParameterByName('address');
 	var coord = { lat: lat, lng: lng};
-	map.setView(coord, 19);
+	map.setView(coord, 14);
 	selectPoint(coord, selectedAddress);
 
 	var doc = document.getElementById('typeform').contentWindow.document;
