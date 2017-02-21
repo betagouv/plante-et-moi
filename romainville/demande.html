@@ -637,13 +637,7 @@
 						})
 						.addTo(existingProjects);
 	    })
-		existingProjects.addTo(map)
-
-		var title = '<span class="map__legend"><div class="icon icon--green icon--circle"><i class="icon__symbol fa fa-leaf"></i></div> '+data["features"].length+' projets existants</span>';
-		var layers = { }
-		layers[title] = existingProjects;
-
-		L.control.layers(null, layers,({collapsed: false })).addTo(map);
+		existingProjects.addTo(map);
 	  } else {
 
 	  }
