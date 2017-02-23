@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Jardin'émoi - Romainville</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU"
+		crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
+	<link rel="stylesheet" href="css/main.css" />
+
+	<script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
+
+	<style type="text/css">
+		html, body { 
+			margin: 0; 
+			padding: 0; 
+			width: 100%; 
+			height: 100%;
+		}
+		
+		.important {
+			width: 100%;
+			font-size:22px;
+			display: table;
+			padding: 4%;
+			box-sizing:border-box;
+			background-image: url("img/glycinegouttiere.jpg");
+			background-repeat: no-repeat;
+			background-size: cover;
+			text-align: center;
+			color: white;
+		}
+
+		@media (max-width: 900px) {
+			.important {
+				font-size: 15px;
+			}
+		}
+
+		.important__text {
+			display: table-cell;
+			vertical-align: middle;
+			line-height: 1.2;
+		}
+		
+		.centered {
+			margin: 0 auto;
+			display: block;
+			position: relative;
+			max-width: 1200px;
+			min-width: 400px;
+			padding: 1px 4% 1px 4%;
+			text-align: center;
+		}
+		
+		.main__title {
+			color: #0C518A;
+		}
+
+
+		.main__title--invisible {
+			display: none !important;
+		}
+		
+
+		.cube {
+			display: inline-block;
+			height: 370px;
+			min-width: 300px; 
+			width: 43%; 
+			text-align: center;
+			box-sizing:border-box;
+			margin: 20px;
+			vertical-align: top;
+		}
+
+		.form__block {
+			display: inline-block;
+			vertical-align: middle;
+			border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			margin-bottom: 20px;
+		}
+		.form__input {
+			margin: 0px;
+			padding: 10px;
+			width: 100%;
+			height: 50px;
+			font-size: 25px;
+			border-width: 0px;
+			border-radius: 2px 2px 2px 2px;
+			box-sizing:border-box;
+		}
+		.form__button {
+			margin: 0px;
+			letter-spacing: 0.2px;
+			font-weight: bold;
+			background-color: #3FA435;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			padding: 16px 0px;
+			color: white;
+			font-weight: bold;
+			width: 100px;
+			height: 50px;
+			border-width: 0px;
+		}
+		@media (min-width: 564px) {
+			.form__input {
+				float: left;
+				width: 400px;
+			}
+			.form__button {
+				float: left;
+				border-radius: 0px 2px 2px 0px;
+			}
+		}
+
+		.form__button:hover {
+			background-color: seagreen;
+		}
+		.autocomplete-suggestion {
+			font-size: 25px;
+			line-height: 40px;
+		}
+		.footer {
+			margin: 0 auto;
+			height: 70px;
+			background-color: #2c3e50;
+			padding: 5px 15px;
+			text-align: right;
+		}
+		.footer__link {
+			color: #95a5a6;
+			padding: 5px;
+			text-decoration:none; 
+			display: inline-block;
+    		vertical-align: middle;
+			height: 60px;
+			line-height: 4em;
+		}
+		.footer__link:hover {
+			background-color: #34495e;
+		}
+		.footer__image {
+    		vertical-align: middle;	
+			height: 60px;
+		}
+		.card {
+			margin: 10px auto;
+			padding: 5px;
+			border-radius: 2px;
+			max-width: 600px;
+			min-height: 60px;
+			background-color: white;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+		}
+
+		.card--invisible {
+			display: none;
+		}
+		.form--invisible {
+			display: none;
+		}
+	</style>
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDomains", ["*.romainville.plante-et-moi.fr"]]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//stats.data.gouv.fr/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '33']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//stats.data.gouv.fr/piwik.php?idsite=33" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+</head>
+
+<body>
+	
+	<div class="header">
+		<div class="header__ribbon">
+			Beta
+		</div>
+		<img src="img/logoJEblanc.png" class="header__image header__image--left">
+		<img src="img/logo-ville-vert-web.png" class="header__image header__image--right">
+	</div>
+	<div class="important">
+		<h1 class="important__text">Jardinez en bas de chez vous<br>pour des rues plus belles, plus vivantes, plus natures</h1>
+	</div>
+
+	<div class="centered" style="
+			color: #0C518A; margin: 20px auto; text-align: center">
+		<div class="form" id="form-email">
+			<h1 class="main__title">Vous voulez participer ? <br> Entrez votre adresse mail, les services de la Ville vous contacteront.</h1>
+			<div class="form__block">
+				<input type="text" id="form-email__email" name="form-email__email" placeholder="Saisissez votre email ici" class="form__input">
+				<button class="form__button" type="button" onclick="addMailToMailingList();" id="form-email__submit-button">Valider</button>
+			</div>
+		</div>
+		 <div class="card card--invisible" id="card-email-success">
+			<p class="card__description">Nous avons bien enregistré votre adresse mail.<br> Nous vous recontacterons quand les inscriptions en ligne seront lancées.
+			</p>
+		</div>
+	</div>
+
+	<div class="centered">
+		<div class="cube" style="background-image: 
+url('img/mosaique1.jpg'); background-repeat: no-repeat; 
+			background-size: cover; border-radius: 2px; 
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			">
+
+		</div>
+		<div class="cube">
+			<h2 class="main__title">Envie de jardinage ? <br/>Besoin de nature en ville ?</h2>
+			Ça tombe bien : jardiner dans les rues, c’est permis à Romainville !
+			<br>En 2017, la Ville lance l’opération Jardin’émoi qui permet de planter dans l’espace public des plantes et fleurs, comestibles ou ornementales.
+			<br>Pour participer, il suffit de faire une demande à la mairie et de s’engager à respecter certaines règles (utiliser de la fumure organique, ne pas planter d’espèces invasives, etc.).
+		</div>
+	</div>
+
+	<div class="centered">
+				<div class="cube">
+			<h2 class="main__title">Pas la main verte ?</h2>
+			La Ville et ses partenaires associatifs vous conseillent et vous accompagnent, même en hiver ! Des graines et des outils vous seront fournis si besoin.
+		</div>
+		<div class="cube" style="background-image: 
+url('img/mosaique2.jpg'); background-repeat: no-repeat;
+			background-size: cover; border-radius: 2px; 
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
+		</div>
+	</div>
+
+<!--
+	<div class="centered" style="
+			color: #0C518A; margin: 20px auto;">
+		<h1 class="main__title">Cherchez une rue à végétaliser</h1>
+		 <div class="search">
+			 <input type="text" id="address-search-bottom" name="address-search-bottom" placeholder="Saisissez une rue ici..." class="search__input">
+			 <button class="search__button" type="button" onclick="manualSearch('address-search-bottom');" id="search-button">Rechercher</button>
+	     </div>
+	</div>-->
+
+	<div class="footer">
+		<a class="footer__link" href="http://www.developpement-durable.gouv.fr/greentech-verte" target="_blank"><img class="footer__image" src="img/logo_greentech_small.png"></a>
+		<a class="footer__link" href="http://biodiversite.beta.gouv.fr" target="_blank"><img class="footer__image" src="img/logo-plante-et-moi-01-small.png"></a>
+		<a class="footer__link" href="mailto:biodiversite&commat;beta.gouv.fr?subject=Aide%20Plante%20Et%20Moi%20Demande%20permis"><span class="footer__text">Contact</span></a>
+	</div>
+
+
+	<script src="js/utils.js"></script>
+	<script src="js/main.js"></script>
+	<script>
+	document.getElementById('search-street-title').innerHTML += ' dans '+city;
+
+	var center;
+	var codePostaux = [];
+	var codeInsee;
+
+    function sendReverseGeocodeRequest(latlng, response){
+    		try { requestReverseGeocode.abort(); } catch(e){}
+			requestReverseGeocode = new XMLHttpRequest();
+			requestReverseGeocode.open('GET', 'https://api-adresse.data.gouv.fr/reverse/?type=housenumber&lon='+latlng.lng+'&lat='+latlng.lat, true);
+    		requestReverseGeocode.onload = function() {
+			  if (requestReverseGeocode.status >= 200 && requestReverseGeocode.status < 400) {
+			    // Success!
+			    var data = JSON.parse(requestReverseGeocode.responseText);
+			    var features = data["features"];
+			    response(data["features"]);
+			  } else {
+			    response([]);
+			  }
+			};
+			requestReverseGeocode.send();
+    }
+
+	var requestReverseGeocode;
+
+	function reverseGeocodeAdress(latlng) {
+		sendReverseGeocodeRequest(latlng, function(features) {
+			selectedAddress = features[0]["properties"]["label"];
+		})
+	}
+
+// Autocomplete
+	function renderFeature(item, search){
+    	var coord = item["geometry"]["coordinates"]
+		return '<div class="autocomplete-suggestion" data-val="' + item["properties"]["label"] + '" data-lat="'+coord[1]+'" data-lng="'+coord[0]+'">' + item["properties"]["label"] + '</div>';
+	}
+
+	function onSelectAddress(event, term, item){
+		var coord = [item.getAttribute("data-lat"),item.getAttribute("data-lng")];
+		var address = item.getAttribute("data-val");
+
+		document.location = 'demande.html?c='+city+'&address='+address+"&lat="+item.getAttribute("data-lat")+"&lng="+item.getAttribute("data-lng");
+	}
+
+	function addressesDataSource(term, response){
+    		try { requestAddresses.abort(); } catch(e){}
+			requestAddresses = new XMLHttpRequest();
+			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?type=housenumber&q='+term+'&limit=30&citycode='+codeInsee+'&lon='+center[0]+'&lat='+center[1], true);
+    		requestAddresses.onload = function() {
+			  if (requestAddresses.status >= 200 && requestAddresses.status < 400) {
+			    // Success!
+			    var data = JSON.parse(requestAddresses.responseText);
+			    var features = data["features"]/*.filter(function(feature){
+			    	if(codePostaux.indexOf(feature["properties"]["postcode"]) == -1) {
+			    		return false;
+			    	}
+			    	return true;
+			    })*/;
+			    response(features);
+			  } else {
+			    response([]);
+			  }
+			};
+			requestAddresses.send();
+    	}
+
+	var requestAddresses;
+	new autoComplete({
+    	selector: 'input[name=address-search]',
+    	minChars: 2,
+    	source: addressesDataSource,
+    	renderItem: renderFeature,
+		onSelect: onSelectAddress,
+		cache: false,
+	});
+	new autoComplete({
+    	selector: 'input[name=address-search-bottom]',
+    	minChars: 2,
+    	source: addressesDataSource,
+    	renderItem: renderFeature,
+		onSelect: onSelectAddress,
+		cache: false,
+	});
+
+
+	function manualSearch(fieldId){
+		Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+			button.innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
+		})
+		
+		var term = document.getElementById(fieldId).value;
+		addressesDataSource(term, function(results){
+			var result = results[0];
+			if(result) {
+				var coord = result["geometry"]["coordinates"]
+				document.location = 'demande.html?c='+city+'&address='+result["properties"]["label"] +"&lat="+coord[1]+"&lng="+coord[0];
+			} else {
+				Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+					button.innerHTML = 'Rechercher';
+				})
+				alert('Nous n\'avons pas trouver votre adresse :(');
+			}
+		})
+	}
+
+	var googleSheetRequest; 
+	function addMailToGoogleSheet(email, onCompleted) {
+		var googleSheetRequest = new XMLHttpRequest();
+		googleSheetRequest.open('GET', 'https://docs.google.com/forms/d/e/1FAIpQLSfl8IvuSXkCeIGx2qvYBrGkCeow14QbIb7cpaQhK5BU4MvM_A/formResponse?entry.1559843151='+email);
+		googleSheetRequest.onload = function () {
+			onCompleted(googleSheetRequest.status >= 200 && googleSheetRequest.status < 400);
+		}
+		googleSheetRequest.onerror = function() {
+			onCompleted(googleSheetRequest.status == 0);
+		}
+		googleSheetRequest.send();
+	}
+
+	function addMailToMailingList() {
+		var email = document.getElementById('form-email__email').value;
+		
+		if(!validEmail(email)) {
+			alert("Vous devez saisir une adresse mail valide");
+			return ;
+		}
+		document.getElementById('form-email__submit-button').innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
+		addMailToGoogleSheet(email, function(success){
+			if(success) {
+				document.getElementById('form-email').classList.add("form--invisible");
+				document.getElementById('card-email-success').classList.remove("card--invisible");
+			} else {
+				document.getElementById('submit-button').innerHTML = 'Rechercher';
+				alert('Nous n\'avons pas pu ajouter votre adresse email :(');
+			}
+		})
+	}
+
+	
+
+
+</script>
+</body>
+
+</html>
