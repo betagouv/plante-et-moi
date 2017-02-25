@@ -44,22 +44,23 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
 
 
   val simple: RowParser[Application] = Macro.parser[Application](
-    "id", "name", "email", "type", "address", "creation_date", "coordinates", "phone", "fields", "files"
+    "id", "city", "name", "email", "type", "address", "creation_date", "coordinates", "phone", "fields", "files"
   )
 
   def findByApplicationId(applicationId: String) = db.withConnection { implicit connection =>
-    SQL("SELECT * FROM application WHERE application_id = {application_id}").on('id -> applicationId).as(simple.singleOpt)
+    SQL("SELECT * FROM application WHERE id = {id}").on('id -> applicationId).as(simple.singleOpt)
   }
 
   def insert(application: Application) = db.withConnection { implicit connection =>
     SQL(
       """
           INSERT INTO application VALUES (
-            {id}, {name}, {email}, {type}, {address}, {creation_date}, point({latitude}, {longitude}), {phone}, {fields}, {files}
+            {id}, {city}, {name}, {email}, {type}, {address}, {creation_date}, point({latitude}, {longitude}), {phone}, {fields}, {files}
           )
       """
     ).on(
       'id -> application.id,
+      'city -> application.city,
       'name -> application.name,
       'email -> application.email,
       'type -> application._type,
@@ -72,7 +73,7 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
       'files -> Json.toJson(application.files)
     ).executeUpdate()
   }
-  def all() = db.withConnection { implicit connection =>
-    SQL("SELECT * FROM application").as(simple.*)
+  def findByCity(city: String) = db.withConnection { implicit connection =>
+    SQL("SELECT * FROM application WHERE city = {city}").on('city -> city).as(simple.*)
   }
 }

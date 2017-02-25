@@ -3,6 +3,7 @@ package models
 import org.joda.time.DateTime
 
 case class Application(id: String,
+                       city: String,
                        name: String,
                        email: String,
                        _type: String,

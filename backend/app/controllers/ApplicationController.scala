@@ -16,12 +16,19 @@ import actions.LoginAction
 
 import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
-
 import play.api.libs.mailer._
 import org.apache.commons.mail.EmailAttachment
+import services.ApplicationService
 
 @Singleton
-class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Configuration, reviewService: ReviewService, applicationExtraService: ApplicationExtraService, mailerClient: MailerClient, agentService: AgentService, loginAction: LoginAction) extends Controller {
+class ApplicationController @Inject() (ws: WSClient,
+                                       configuration: play.api.Configuration,
+                                       reviewService: ReviewService,
+                                       applicationExtraService: ApplicationExtraService,
+                                       mailerClient: MailerClient,
+                                       agentService: AgentService,
+                                       loginAction: LoginAction,
+                                       applicationService: ApplicationService) extends Controller {
 
   private def getCity(request: RequestHeader) =
     request.session.get("city").getOrElse("Arles")
@@ -33,79 +40,15 @@ class ApplicationController @Inject() (ws: WSClient, configuration: play.api.Con
 
   private lazy val agents = agentService.all()
 
-  private lazy val typeformId = configuration.underlying.getString("typeform.id")
   private lazy val typeformKey = configuration.underlying.getString("typeform.key")
 
-  def mapArlesTypeformJsonToApplication(answer: JsValue): models.Application = {
-    val selectedAddress = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue de la demo")
-    val address = (answer \ "answers" \ "textfield_38117960").asOpt[String].getOrElse(selectedAddress)
-    val `type` = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
-    val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("non_renseigné@example.com")
-    implicit val dateReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
-    val date = (answer \ "metadata" \ "date_submit").as[DateTime]
-    val firstname = (answer \ "answers" \ "textfield_38072796").asOpt[String].getOrElse("John")
-    val lastname = (answer \ "answers" \ "textfield_38072795").asOpt[String].getOrElse("Doe")
-    val name = s"$firstname $lastname"
-    val id = (answer \ "token").as[String]
-    val phone = (answer \ "answers" \ "textfield_38072797").asOpt[String]
-    val lat = (answer \ "hidden" \ "lat").as[String].toDouble
-    val lon = (answer \ "hidden" \ "lon").as[String].toDouble
-    val coordinates = Coordinates(lat, lon)
-    var fields = Map[String,String]()
-    (answer \ "answers" \ "textfield_41115782").asOpt[String].map { answer =>
-      fields += "Espéces de plante grimpante" -> answer
-    }
-    (answer \ "answers" \ "textfield_41934708").asOpt[String].map { answer =>
-      fields += "Forme" -> answer
-    }
-    (answer \ "answers" \ "list_42010898_choice").asOpt[String].map { answer =>
-      fields += "Couleur" -> answer
-    }
-    (answer \ "answers" \ "list_42010898_other").asOpt[String].map { answer =>
-      fields += "Couleur" -> answer
-    }
-    (answer \ "answers" \ "textfield_41934830").asOpt[String].map { answer =>
-      fields += "Matériaux" -> answer
-    }
-    (answer \ "answers" \ "list_41934920_choice").asOpt[String].map { answer =>
-      fields += "Position" -> answer
-    }
-    (answer \ "answers" \ "list_40487664_choice").asOpt[String].map { answer =>
-      fields += "Collectif" -> "Oui"
-    }
-    (answer \ "answers" \ "textfield_40930276").asOpt[String].map { answer =>
-      fields += "Nom du collectif" -> answer
-    }
-    var files = ListBuffer[String]()
-    (answer \ "answers" \ "fileupload_40488503").asOpt[String].map { croquis =>
-      files.append(croquis.split('?')(0))
-    }
-    (answer \ "answers" \ "fileupload_40489342").asOpt[String].map { image =>
-      files.append(image.split('?')(0))
-    }
 
-    models.Application(id, name, email, `type`, address, date, coordinates, phone, fields, files.toList)
+
+  def projects(city: String) = Future.successful {
+    applicationService.findByCity(city).map { application =>
+      (application, applicationExtraService.findByApplicationId(application.id), reviewService.findByApplicationId(application.id))
+    }
   }
-
-  def projects(city: String) =
-    ws.url(s"https://api.typeform.com/v1/form/$typeformId")
-      .withQueryString("key" -> typeformKey,
-        "completed" -> "true",
-        "order_by" -> "date_submit,desc",
-        "limit" -> "20").get().map { response =>
-      val json = response.json
-      val totalShowing = (json \ "stats" \ "responses" \ "completed").as[Int]
-      val totalCompleted = (json \ "stats" \ "responses" \ "showing").as[Int]
-
-      val responses = (json \ "responses").as[List[JsValue]].filter { answer =>
-        (answer \ "hidden" \ "city").get == Json.toJson(city) &&
-          (answer \ "hidden" \ "lat").get != JsNull &&
-          (answer \ "hidden" \ "lon").get != JsNull
-      } .map(mapArlesTypeformJsonToApplication)
-      responses.map { application =>
-        (application, applicationExtraService.findByApplicationId(application.id), reviewService.findByApplicationId(application.id))
-      }
-    }
 
   def getImage(url: String) = loginAction.async { implicit request =>
     var request = ws.url(url.replaceFirst(":443", ""))
