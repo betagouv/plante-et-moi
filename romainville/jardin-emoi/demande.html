@@ -19,6 +19,9 @@
 	<script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
 	<script src="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.js"></script>
 
+	<link rel="stylesheet" href="https://cdn.rawgit.com/Norkart/Leaflet-MiniMap/v3.4.0/dist/Control.MiniMap.min.css" />
+	<script src="https://cdn.rawgit.com/Norkart/Leaflet-MiniMap/v3.4.0/dist/Control.MiniMap.min.js"></script>
+
 	<style type="text/css">
 		html, body { 
 			margin: 0; 
@@ -490,12 +493,19 @@
             maxZoom: 19
         });
 
+	photoLayer.addTo(map);
+
 	var mapLayer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
     	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     	minZoom: 10,
     	maxZoom: 20
 	});
-	mapLayer.addTo(map);
+
+	var mapLayerMiniMap = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
+    	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    	minZoom: 11,
+    	maxZoom: 15
+	});
 
 	var baseMaps = {
 		'<span class="map__legend">Photo aérienne</span>': photoLayer,
@@ -581,10 +591,15 @@
 	var request = new XMLHttpRequest();
 	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom='+city, true);
 
+	var polygonMiniMap;
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
 	    // Success!
 	    var data = JSON.parse(request.responseText);
+		polygonMiniMap = L.geoJson(data[0]["contour"],{
+		    color: '#0C518A',
+		    fill: false
+		})
 	    var polygon = L.geoJson(data[0]["contour"],{
 		    color: '#0C518A',
 		    fill: false
@@ -625,6 +640,7 @@
 
 // Add projects on the map
 	var existingProjects = new L.LayerGroup();
+	var existingProjectsMiniMap = new L.LayerGroup();
 	var requestVerts = new XMLHttpRequest();
 	requestVerts.open('GET', 'data/projects/'+city+'.geojson', true);
 
@@ -652,8 +668,19 @@
 							}
 						})
 						.addTo(existingProjects);
+			L.geoJson(feature["geometry"],  {
+							pointToLayer: function(geoJsonPoint, latlng) {
+								return L.marker(latlng, {icon: plantMarker});
+							}
+						}).addTo(existingProjectsMiniMap);
 	    })
 		existingProjects.addTo(map);
+		if(polygonMiniMap == undefined) {
+			var layers = new L.LayerGroup([mapLayerMiniMap, existingProjectsMiniMap]);
+		} else {
+			var layers = new L.LayerGroup([mapLayerMiniMap, polygonMiniMap, existingProjectsMiniMap]);
+		}
+		var miniMap = new L.Control.MiniMap(layers, { toggleDisplay: true }).addTo(map);
 	  } else {
 
 	  }
@@ -682,7 +709,7 @@
 	var lat = getParameterByName('lat');
 	selectedAddress = getParameterByName('address');
 	var coord = { lat: lat, lng: lng};
-	map.setView(coord, 14);
+	map.setView(coord, 19);
 	selectPoint(coord, selectedAddress);
 
 	var doc = document.getElementById('typeform').contentWindow.document;
