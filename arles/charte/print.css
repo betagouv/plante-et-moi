@@ -1,0 +1,41 @@
+/* CSS Print */
+* { background: transparent !important; color: #000 !important; /* Black prints faster: h5bp.com/s */ box-shadow: none !important; text-shadow: none !important; font-family: serif; font-size: 12pt; }
+
+body { width: auto; margin: 0 5%; padding: 0; }
+
+a, a:visited { text-decoration: underline; }
+
+a[href]:after { content: " (" attr(href) ")"; font-size: 10pt; text-decoration: none; }
+
+abbr[title]:after { content: " (" attr(title) ")"; }
+
+/* Don't show links for images, or javascript/internal links */
+.ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }
+
+pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+
+thead { display: table-header-group; /* h5bp.com/t */ }
+
+tr, img { page-break-inside: avoid; }
+
+img { max-width: 100% !important; }
+
+@page { margin: 1.5cm; }
+p, h1, h2, h3 { orphans: 3; widows: 3; }
+
+h1, h2, h3 { page-break-after: avoid; }
+
+h1 { font-size: 18pt; }
+
+h2 { font-size: 15pt; }
+
+h3 { font-size: 13pt; }
+
+#access, #search, .footer .copyright-right, #retourVA, #retourVersVA, #scrollToTop, #menuSharer { display: none; }
+
+#bandeau a, h2 a, h1 a, h3 a, .post-img-illustration a { text-decoration: none; }
+#bandeau a[href]:after, h2 a[href]:after, h1 a[href]:after, h3 a[href]:after, .post-img-illustration a[href]:after { content: ''; }
+
+#addrPreBandeau { text-align: right; }
+
+#bandeau h1 { font-variant: small-caps; }

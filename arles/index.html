@@ -1,207 +1,382 @@
- <!DOCTYPE html>
- <html>
- <head>
-	<title>Permis de végétaliser - Ville d'Arles</title>
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Biodiversité citoyenne | Ville d'Arles</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU"
+		crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="charte/style.css">
+	<link rel="stylesheet" type="text/css" media="print" href="charte/print.css">
+	<link rel="shortcut icon" href="charte/favicon.ico">
+	<link rel="shortcut icon" href="charte/favicon.png">
 
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
-	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+	<script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
 
 	<style type="text/css">
-		body {
-  			font-family: "Helvetica", "Arial", sans-serif;
-  			line-height: 1.5;
-			margin: 0px;  			
-		}
-		.header__logo {
-			background-color: #f1c400; /* Pantone 7406 */
-			height: 100px;
-			width: 100%;
-			padding: 0;
-			position: relative;
-			top: 20px;
-		}
-		.header__logo__img {
-			position: relative;
-			top: 10px;
-			left: 100px;
-			height: 80px;
-			max-width: 80%;
-		}
-		.header {
-			background-image: url("https://beta.gouv.fr/img/startup/biodiversite.jpg");
-		  	background-position: center top;
-		  	background-repeat: no-repeat;
-		  	background-size: cover;
-		  	height: 300px;
-		  	line-height: 1.2;
-		  	padding: 0px;
-		  	margin: 0 auto;
-		  	display: block;
-		  	position:relative;
-		  	overflow: hidden;
-		}
-		.header__text {
-  		  	text-align: center;
-  		  	color: white;
-  		  	padding: 30px 10px;
-  		  	line-height: 1.5;
-		}
-		.header__text__title {
-			display: inline-block;
-			color: white;
-			font-size: 20px;
-			font-weight: 300;
-			text-shadow: 2px 2px #000000;
-		}
-		.header__button {
-			border: 1px solid #003057;
-		  	border-radius: 290486px;
-		  	background-color:rgba(0, 0, 0, 0.5);
-		  	text-transform: uppercase;
-		  	text-decoration: none;
-		  	transition: none 200ms ease-out;
-		  	transition-property: color, background;
-		  	padding: 16px 32px;
-  			color: white;
-  			letter-spacing: 0.2px;
-		}
-		.header__button:hover {
-			background-color: #003057;
-		}	
-		.main {
-			margin: 0 auto;
-			display: block;
-			position:relative;
-		}
-		.main__text {
-			margin: 0 auto;
-			padding: 1px 5%;
-  			max-width: 800px;
-  			color: #555;
-  		  	background-color: #F3F3F3;
-		}
-		.main__map {
-			width: 100%;
-			height: 600px;
-			margin: 0 auto;
-			padding: 0%;
-  		  	text-align: center;
-		}
-		.main__title {
-			color: #003057;
-		}
-		.main__map__leaflet {
-			width: 100%;
+		html, body { 
+			margin: 0; 
+			padding: 0; 
+			width: 100%; 
 			height: 100%;
 		}
-		.footer {
-			padding: 33px;
+		
+		.important {
+			width: 100%;
+			display: table;
+			padding: 4%;
+			box-sizing:border-box;
+			background-image: url("img/square_jehan_rictus.jpg");
+			background-position: right center;
+			background-repeat: no-repeat;
+			background-size: cover;
 			text-align: center;
-			background-color: #f1c400;
+			color: white;
 		}
-		.footer_button {
-  			color: white;
+
+		@media (max-width: 900px) {
+			.important__text {
+				font-size: 15px;
+			}
 		}
+
+		.important__text {
+			font-size: 34px;
+			display: table-cell;
+			vertical-align: middle;
+			line-height: 1.2;
+			color: white;
+		}
+		
+		.centered {
+			margin: 0 auto;
+			display: block;
+			position: relative;
+			max-width: 950px;
+			min-width: 400px;
+			padding: 1px 5% 1px 5%;
+			text-align: center;
+		}
+		
+		.form {
+			padding: 1px 0px;
+			background-color: #F3F3F3;
+		}
+		
+		.form--invisible {
+			display: none;
+		}
+		
+		.form__block {
+			display: inline-block;
+			vertical-align: middle;
+			border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			margin-bottom: 20px;
+		}
+		.form__input {
+			margin: 0px;
+			padding: 10px;
+			width: 100%;
+			height: 50px;
+			font-size: 25px;
+			border-width: 0px;
+			border-radius: 2px 2px 2px 2px;
+			box-sizing:border-box;
+		}
+		.form__button {
+			margin: 0px;
+			letter-spacing: 0.2px;
+			font-weight: bold;
+			background-color: #3FA435;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			padding: 16px 0px;
+			color: white;
+			font-weight: bold;
+			width: 100px;
+			height: 50px;
+			border-width: 0px;
+		}
+		@media (min-width: 564px) {
+			.form__input {
+				float: left;
+				width: 400px;
+			}
+			.form__button {
+				float: left;
+				border-radius: 0px 2px 2px 0px;
+			}
+		}
+
+		.form__button:hover {
+			background-color: seagreen;
+		}
+
+		
+		.main__title {
+			color: #0C518A;
+		}
+
+
+		.main__title--invisible {
+			display: none !important;
+		}
+		
+
+		.cube {
+			display: inline-block;
+			height: 200px;
+			min-width: 300px; 
+			width:42%; 
+			text-align: center;
+			box-sizing:border-box;
+			margin: 30px;
+			vertical-align: top;
+		}
+
+		.search {
+			display: inline-block;
+			vertical-align: middle;
+			border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			margin-bottom: 20px;
+		}
+		.autocomplete-suggestion {
+			font-size: 25px;
+			line-height: 40px;
+		}
+		/*
+		.footer__link {
+			padding: 5px;
+			text-decoration:none; 
+			display: inline-block;
+    		vertical-align: middle;
+			height: 60px;
+			line-height: 4em;
+		}
+		.footer__image {
+    		vertical-align: middle;	
+			height: 60px;
+		}*/
 	</style>
 </head>
+
 <body>
-<div class="header">
-	<div class="header__logo">
-		<img class="header__logo__img" src="img/logo-arles-blue-540.png"></img>
-	</div>
-	<div class="header__text">
-		<h1 class="header__title">Permis de végétaliser</h1>
-		<a class="header__button" href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_arles" target="_blank">Faire ma demande</a>
-	</div>
-</div>
-<div class="main">
-	<div class="main__text">
-		<h2 class="main__title">Jardiner dans les rues d'Arles, c'est permis !</h2>
 
-		<p>Les Arlésiens sont nombreux à exprimer leur envie de développer et renforcer la place de la nature dans la ville. Si vous rêvez de devenir le jardinier ou la jardinière de votre quartier, le permis de végétaliser est fait pour vous ! Il vous permet de disposer d’un site de votre choix, et surtout, de vous occuper vous-même de ce petit bout de jardin inédit.</p>
-
-		<h2 class="main__title">Quels espaces peut-on végétaliser ?</h2>
-
-		<div class="main__map">
-			<div class="main__map__leaflet" id="map"></div>
+<header class="header">
+	<div id="preBandeau">
+		<div class="ligne">
+			<div class="cols-de-7" id="retourVersVA"><a href="http://www.ville-arles.fr" title="Consultez le site web de la ville d'Arles">www.ville-arles.fr</a></div>
+			<div id="addrPreBandeau" class="cols-de-17">Tél. 04 90 49 36 36</div>
 		</div>
-	
-
-		<h3 class="main__title">Toutes les idées sont les bienvenues</h3>
-
-		<p>Installer une jardinière au coin de sa rue pour y faire pousser des tomates, investir un pied d’arbre pour y semer des fleurs, faire courir des plantes grimpantes sur un mur, transformer un potelet en installation végétale… Toutes ces interventions participent au projet global de végétalisation de la ville, et fleurissent ici et là dans Arles. </p>
-
-
-		<h3 class="main__title">La notion d'espace public</h3>
-
-		<p>Lorsque ces projets sont situés sur la voie publique, ils nécessitent une autorisation préalable de la Ville d'Arles : c'est le principe du permis de végétaliser.
-
-		Le permis de végétaliser n'est pas destiné aux projets dé végétalisation d'un espace privé: si votre projet se situe dans votre cour d'immeuble, vous n'avez pas besoin de ce permis. Et si votre projet concerne un autre espace privé, il faut d'abord contacter le propriétaire.</p>
 	</div>
-	
+	<div id="bandeau">
+		<div class="ligne">
+			<a href="." title="Retournez à la page d'accueil"><h1>Retour à l'acceuil</h1></a>
+		</div>
+	</div>
+</header>
+
+<div id="main" class="ligne">
+	<div class="important">
+		<h1 class="important__text">Jardinez en bas de chez vous<br>pour des rues plus belles, plus vivantes, plus natures</h1>
+	</div>
+
+	<div class="centered" style="
+			color: #0C518A; margin: 20px auto;">
+		<h1 class="main__title" id="search-street-title">Cherchez une rue à végétaliser</h1>
+		 <div class="form__block">
+			 <input type="text" id="address-search" name="address-search" placeholder="Saisissez une rue ici..." class="form__input">
+			 <button class="form__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
+	     </div>
+	</div>
+
+	<div class="centered">
+		<div class="cube" style="background-image: 
+url('http://media.paperblog.fr/i/748/7484553/creation-dune-rue-jardin-exemple-bordeaux-L-yNfX3N.png'); background-repeat: no-repeat;
+			background-size: cover; border-radius: 2px; 
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			">
+
+		</div>
+		<div class="cube">
+			<h2 class="main__title">Envie de jardinage ? <br/>Besoin de nature en ville ?</h2>
+			Ça tombe bien : jardiner dans les rues, c’est permis !
+		</div>
+	</div>
+
+	<div class="centered">
+				<div class="cube">
+			<h2 class="main__title">Pas la main verte ?</h2>
+			On vous conseille sur les plantes et leur entretien, même en hiver !
+		</div>
+		<div class="cube" style="background-image: 
+url('http://www.citizenkid.com/application/views/images/media/59/450x350/Enfant-qui-jardine-290229.jpg'); background-repeat: no-repeat;
+			background-size: cover; background-position: center 60%; border-radius: 2px; 
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
+		</div>
+		<div class="cube" style="background-image: 
+url('http://www.pariscotejardin.fr/wp-content/P1290992-1024x768.jpg'); background-repeat: no-repeat;
+			background-size: cover; background-position: center center; border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); ">
+		</div>
+		<div class="cube">
+			<h2 class="main__title">Pas le temps ?</h2>
+			Vous pouvez végétaliser en 3 minutes par semaine seulement !
+		</div>
+	</div>
+
+	<div class="centered" style="
+			color: #0C518A; margin: 20px auto;">
+		<h1 class="main__title" id="search-street-title">Cherchez une rue à végétaliser</h1>
+		 <div class="form__block">
+			 <input type="text" id="address-search-bottom" name="address-search-bottom" placeholder="Saisissez une rue ici..." class="form__input">
+			 <button class="form__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
+	     </div>
+	</div>
+
 </div>
-<div class="footer">
-		<a class="footer_button header__button " href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_arles" target="_blank">Demander mon permis de végétaliser</a>
-</div>
+
+<footer class="footer">
+	<div id="footerContainer">
+	<div class="ligne info-footer">
+		<div class="cols-de-6">
+			<img src="charte/img/logo-arles.png" alt="Arles">
+		</div>
+		<!-- <div class="cols-de-6 accessibilite-adresse separation"><a href="#">Mentions légales</a> - <a href="#">Autre lien</a></div> -->
+		<div class="cols-de-12 adresse">
+			<div class="ligne">
+				<div class="cols-de-10">Hôtel de Ville
+				<br>Tél. 04 90 49 36 36</div>
+				<div class="cols-de-14">lundi - vendredi : 8h - 16h30
+				<br>samedi : 8h30 - 12h</div>
+			</div>
+		</div>
+	</div>
+	<div class="ligne" id="lastLine">
+		<div class="cols-de-10" id="retourVA"><a href="http://www.ville-arles.fr"><span>. | </span>Retour au site de la mairie</a></div>
+		<div class="cols-de-2 copyright-haut"><a href="http://twitter.com/VilledArles"><img alt="Suivez-nous sur Twitter" src="charte/img/twitter.png"></a></div>
+		<div class="cols-de-2 copyright-haut"><a href="http://www.facebook.com/ville.arles"><img alt="Suivez-nous sur Facebook" src="charte/img/fb.png"></a></div>
+		<div class="cols-de-2 copyright-haut"><a class="footer__link" href="http://www.developpement-durable.gouv.fr/greentech-verte" target="_blank"><img class="footer__image" src="img/logo_greentech_small.png"></a></div>
+		<div class="cols-de-2 copyright-haut"><a class="footer__link" href="http://biodiversite.beta.gouv.fr" target="_blank"><img class="footer__image" src="img/logo-plante-et-moi-01-small.png"></a></div>
+		<div class="cols-de-6 copyright-haut">© Ville d'Arles</div>
+	</div>
+	</div>
+</footer>
+
+
+<script src="js/utils.js"></script>
+<script src="js/main.js"></script>
 <script>
-	var map = L.map('map', {
-    	center: [43.672499, 4.625144],
-    	zoom: 14,
-    	minZoom: 10
+	var center;
+	var codePostaux = [];
+	var codeInsee;
+
+    function sendReverseGeocodeRequest(latlng, response){
+    		try { requestReverseGeocode.abort(); } catch(e){}
+			requestReverseGeocode = new XMLHttpRequest();
+			requestReverseGeocode.open('GET', 'https://api-adresse.data.gouv.fr/reverse/?type=housenumber&lon='+latlng.lng+'&lat='+latlng.lat, true);
+    		requestReverseGeocode.onload = function() {
+			  if (requestReverseGeocode.status >= 200 && requestReverseGeocode.status < 400) {
+			    // Success!
+			    var data = JSON.parse(requestReverseGeocode.responseText);
+			    var features = data["features"];
+			    response(data["features"]);
+			  } else {
+			    response([]);
+			  }
+			};
+			requestReverseGeocode.send();
+    }
+
+	var requestReverseGeocode;
+
+	function reverseGeocodeAdress(latlng) {
+		sendReverseGeocodeRequest(latlng, function(features) {
+			selectedAddress = features[0]["properties"]["label"];
+		})
+	}
+
+// Autocomplete
+	function renderFeature(item, search){
+    	var coord = item["geometry"]["coordinates"]
+		return '<div class="autocomplete-suggestion" data-val="' + item["properties"]["label"] + '" data-lat="'+coord[1]+'" data-lng="'+coord[0]+'">' + item["properties"]["label"] + '</div>';
+	}
+
+	function onSelectAddress(event, term, item){
+		var coord = [item.getAttribute("data-lat"),item.getAttribute("data-lng")];
+		var address = item.getAttribute("data-val");
+
+		document.location = 'demande.html?c='+city+'&address='+address+"&lat="+item.getAttribute("data-lat")+"&lng="+item.getAttribute("data-lng");
+	}
+
+	function addressesDataSource(term, response){
+    		try { requestAddresses.abort(); } catch(e){}
+			requestAddresses = new XMLHttpRequest();
+			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?type=housenumber&q='+term+'&limit=30&citycode='+codeInsee+'&lon='+center[0]+'&lat='+center[1], true);
+    		requestAddresses.onload = function() {
+			  if (requestAddresses.status >= 200 && requestAddresses.status < 400) {
+			    // Success!
+			    var data = JSON.parse(requestAddresses.responseText);
+			    var features = data["features"]/*.filter(function(feature){
+			    	if(codePostaux.indexOf(feature["properties"]["postcode"]) == -1) {
+			    		return false;
+			    	}
+			    	return true;
+			    })*/;
+			    response(features);
+			  } else {
+			    response([]);
+			  }
+			};
+			requestAddresses.send();
+    	}
+
+	var requestAddresses;
+	new autoComplete({
+    	selector: 'input[name=address-search]',
+    	minChars: 2,
+    	source: addressesDataSource,
+    	renderItem: renderFeature,
+		onSelect: onSelectAddress,
+		cache: false,
+	});
+	new autoComplete({
+    	selector: 'input[name=address-search-bottom]',
+    	minChars: 2,
+    	source: addressesDataSource,
+    	renderItem: renderFeature,
+		onSelect: onSelectAddress,
+		cache: false,
 	});
 
-	L.tileLayer('//{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png', {
-    	attribution: 'donn&eacute;es &copy; <a href="//osm.org/copyright">OpenStreetMap</a>/ODbL - rendu <a href="//openstreetmap.fr">OSM France</a>',
-    	minZoom: 1,
-    	maxZoom: 20
-	}).addTo(map);
 
-
-	var request = new XMLHttpRequest();
-	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom=arles', true);
-
-	request.onload = function() {
-	  if (request.status >= 200 && request.status < 400) {
-	    // Success!
-	    var data = JSON.parse(request.responseText);
-	    var polygon = L.geoJson(data[0]["contour"],{
-		    color: '#003057',
-		    fill: false
-		}).addTo(map)
-		var bounds = polygon.getBounds();
-	    map.setMaxBounds(bounds.pad(0.05));
-	    //var centre = L.geoJson(data[0]["centre"]).addTo(map);
-	  } else {
-	    // We reached our target server, but it returned an error
-
-	  }
-	};
-	request.send();
-
-	var requestArea = new XMLHttpRequest();
-	requestArea.open('GET', 'data/area.geojson', true);
-
-	requestArea.onload = function() {
-	  if (requestArea.status >= 200 && requestArea.status < 400) {
-	    // Success!
-	    var data = JSON.parse(requestArea.responseText);
-	    data["features"].map(function(feature){
-	    	var name = feature["properties"]["name"]
-	    	var polygon = L.geoJson(feature["geometry"])
-	    					.bindPopup(name+' (Parcelle '+Math.floor(Math.random()*1000+1)+') <br /><a href="https://tps-dev.apientreprise.fr/commencer/permis_de_vegetaliser_arles" target="_blank">Végétaliser cette espace</a>')
-	    					.addTo(map)
-	    })
-	    
-	  } else {
-	    // We reached our target server, but it returned an error
-
-	  }
-	};
-	requestArea.send();
+	function manualSearch(fieldId){
+		Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+			button.innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
+		})
+		
+		var term = document.getElementById(fieldId).value;
+		addressesDataSource(term, function(results){
+			var result = results[0];
+			if(result) {
+				var coord = result["geometry"]["coordinates"]
+				document.location = 'demande.html?c='+city+'&address='+result["properties"]["label"] +"&lat="+coord[1]+"&lng="+coord[0];
+			} else {
+				Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+					button.innerHTML = 'Rechercher';
+				})
+				alert('Nous n\'avons pas trouver votre adresse :(');
+			}
+		})
+	}
 
 </script>
 </body>
+
 </html>

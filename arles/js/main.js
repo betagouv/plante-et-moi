@@ -1,24 +1,5 @@
 
-var city = getParameterByName("c");
-if(city == null) {
-	city = "Arles";
-}
-var cityWithParticle;
-if(isVowelOrH(city[0])) {
-	cityWithParticle = "d'"+city;
-} else {
-	cityWithParticle = 'de '+city;
-}
-
-var headerTitle =  ' Végétalisez '+city;
-if(city == "Arles") {
-    headerTitle = "Biodiversité citoyenne";
-} else if(city == "Romainville") {
-    headerTitle = "Cadre de vie";
-}
-
-document.getElementById('header-title').innerHTML += ' '+headerTitle;
-document.title += ' - Ville '+cityWithParticle;
+var city = "Arles";
 	
 var center;
 var codePostaux = [];
