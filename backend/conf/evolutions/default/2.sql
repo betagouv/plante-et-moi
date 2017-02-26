@@ -1,6 +1,7 @@
 # --- !Ups
 CREATE TABLE application (
     id character varying(100) NOT NULL,
+    city character varying(100) NOT NULL,
     name character varying(100) NOT NULL,
     email character varying(150) NOT NULL,
     type character varying(50) NOT NULL,

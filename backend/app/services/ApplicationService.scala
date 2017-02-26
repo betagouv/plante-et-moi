@@ -74,6 +74,6 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
     ).executeUpdate()
   }
   def findByCity(city: String) = db.withConnection { implicit connection =>
-    SQL("SELECT * FROM application WHERE city = {city}").on('city -> city).as(simple.*)
+    SQL("SELECT * FROM application WHERE city = {city} ORDER BY creation_date DESC").on('city -> city).as(simple.*)
   }
 }

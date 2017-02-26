@@ -3,6 +3,7 @@ package services
 import javax.inject._
 
 import akka.actor._
+import controllers.routes
 import models.{Application, Coordinates}
 import org.joda.time.DateTime
 import play.api.Logger
@@ -12,12 +13,14 @@ import play.api.libs.ws.WSClient
 import scala.collection.mutable.ListBuffer
 import play.api.libs.json._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
+import play.api.libs.mailer.{Email, MailerClient}
+import play.api.mvc.RequestHeader
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
 @Singleton
-class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Configuration, ws: WSClient, applicationService: ApplicationService){
+class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Configuration, ws: WSClient, applicationService: ApplicationService, mailerClient: MailerClient){
   private lazy val typeformIds = configuration.underlying.getString("typeform.ids").split(",")
   private lazy val typeformKey = configuration.underlying.getString("typeform.key")
 
@@ -35,10 +38,42 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
       applications.foreach { application =>
         val app = applicationService.findByApplicationId(application.id)
         if(app.isEmpty) {
+          sendNewApplicationEmail(application)
           applicationService.insert(application)
         }
       }
     }
+  }
+
+  private def sendNewApplicationEmail(application: models.Application) = {
+    val email = Email(
+      s"Nouvelle demande de permis de végétalisation: ${application.address}",
+      "Plante et Moi <administration@plante-et-moi.fr>",
+      Seq(s"${application.name} <${application.email}>"),
+      bodyText = Some(s"""Bonjour ${application.name},
+                         |
+                         |Nous avons bien reçu votre demande de végétalisation au ${application.address} (c'est un projet de ${application._type}).
+                         |
+                         |L’autorisation suivra dans quelques semaines, accompagnée de la charte rappelant vos engagements ainsi que la liste des plantes proscrites et des plantes recommandées.
+                         |
+                         |Merci de votre demande,
+                         |Si vous avez des questions, n'hésitez pas à nous contacter""".stripMargin),
+      bodyHtml = Some(
+        s"""<html>
+           |<body>
+           | Bonjour ${application.name}, <br>
+           | <br>
+           | Nous avons bien reçu votre demande de végétalisation au ${application.address} (c'est un projet de ${application._type}).<br>
+           | <br>
+           | L’autorisation suivra dans quelques semaines, accompagnée de la charte rappelant vos engagements ainsi que la liste des plantes proscrites et des plantes recommandées. <br>
+           | <br>
+           | Merci de votre demande, <br>
+           | Si vous avez des questions, n'hésitez pas à nous contacter
+           |</body>
+           |</html>""".stripMargin)
+    )
+    Logger.info(s"Send mail to ${application.email}")
+    mailerClient.send(email)
   }
 
   def mapArlesTypeformJsonToApplication(answer: JsValue): models.Application = {
