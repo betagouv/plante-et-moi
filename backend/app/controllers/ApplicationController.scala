@@ -154,7 +154,7 @@ class ApplicationController @Inject() (ws: WSClient,
   }
 
   private def sendNewApplicationEmailToAgent(application: models.Application, request: RequestHeader)(agent: Agent) = {
-    var url = s"${routes.ApplicationController.show(application.id).absoluteURL()(request)}?key=${agent.key}"
+    val url = s"${routes.ApplicationController.show(application.id).absoluteURL()(request)}?key=${agent.key}"
     val email = Email(
       s"Nouvelle demande de permis de végétalisation: ${application.address}",
       "Plante et Moi <administration@plante-et-moi.fr>",
