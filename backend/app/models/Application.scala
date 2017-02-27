@@ -5,7 +5,8 @@ import org.joda.time.DateTime
 case class Application(id: String,
                        city: String,
                        status: String,
-                       name: String,
+                       firstname: String,
+                       lastname: String,
                        email: String,
                        _type: String,
                        address: String,
@@ -13,4 +14,6 @@ case class Application(id: String,
                        coordinates: Coordinates,
                        phone: Option[String] = None,
                        fields: Map[String, String] = Map(),
-                       files: List[String] = List())
+                       files: List[String] = List()) {
+   val name = s"${firstname.capitalize} ${lastname.capitalize}"
+}

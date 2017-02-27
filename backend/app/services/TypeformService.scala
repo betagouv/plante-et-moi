@@ -47,7 +47,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
 
   private def sendNewApplicationEmail(application: models.Application) = {
     val email = Email(
-      s"Nouvelle demande de permis de végétalisation: ${application.address}",
+      s"Nous avons bien reçu votre projet de ${application._type} à l'adresse: ${application.address}",
       "Plante et Moi <administration@plante-et-moi.fr>",
       Seq(s"${application.name} <${application.email}>"),
       bodyText = Some(s"""Bonjour ${application.name},
@@ -85,7 +85,6 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
     val date = (answer \ "metadata" \ "date_submit").as[DateTime]
     val firstname = (answer \ "answers" \ "textfield_38072796").asOpt[String].getOrElse("John")
     val lastname = (answer \ "answers" \ "textfield_38072795").asOpt[String].getOrElse("Doe")
-    val name = s"$firstname $lastname"
     val id = (answer \ "token").as[String]
     val phone = (answer \ "answers" \ "textfield_38072797").asOpt[String]
     val lat = (answer \ "hidden" \ "lat").as[String].toDouble
@@ -124,7 +123,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
     (answer \ "answers" \ "fileupload_40489342").asOpt[String].map { image =>
       files.append(image.split('?')(0))
     }
-    models.Application(id, city, "Nouvelle", name, email, `type`, address, date, coordinates, phone, fields, files.toList)
+    models.Application(id, city, "Nouvelle", firstname, lastname, email, `type`, address, date, coordinates, phone, fields, files.toList)
   }
 
   def getResponsesByFormId(id: String) = {
