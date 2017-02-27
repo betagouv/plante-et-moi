@@ -44,7 +44,7 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
 
 
   val simple: RowParser[Application] = Macro.parser[Application](
-    "id", "city", "name", "email", "type", "address", "creation_date", "coordinates", "phone", "fields", "files"
+    "id", "city", "status", "name", "email", "type", "address", "creation_date", "coordinates", "phone", "fields", "files"
   )
 
   def findByApplicationId(applicationId: String) = db.withConnection { implicit connection =>
@@ -55,12 +55,13 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
     SQL(
       """
           INSERT INTO application VALUES (
-            {id}, {city}, {name}, {email}, {type}, {address}, {creation_date}, point({latitude}, {longitude}), {phone}, {fields}, {files}
+            {id}, {city}, {status}, {name}, {email}, {type}, {address}, {creation_date}, point({latitude}, {longitude}), {phone}, {fields}, {files}
           )
       """
     ).on(
       'id -> application.id,
       'city -> application.city,
+      'status -> application.status,
       'name -> application.name,
       'email -> application.email,
       'type -> application._type,
@@ -75,5 +76,13 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
   }
   def findByCity(city: String) = db.withConnection { implicit connection =>
     SQL("SELECT * FROM application WHERE city = {city} ORDER BY creation_date DESC").on('city -> city).as(simple.*)
+  }
+
+  def updateStatus(id: String, newStatus: String) = db.withConnection { implicit connection =>
+    SQL("UPDATE application SET status = {status} WHERE id = {id}"
+    ).on(
+      'id -> id,
+      'status -> newStatus
+    ).executeUpdate()
   }
 }

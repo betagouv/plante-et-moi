@@ -80,7 +80,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
     val selectedAddress = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue de la demo")
     val address = (answer \ "answers" \ "textfield_38117960").asOpt[String].getOrElse(selectedAddress)
     val `type` = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
-    val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("non_renseigné@example.com")
+    val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("inconnue@example.com")
     implicit val dateReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
     val date = (answer \ "metadata" \ "date_submit").as[DateTime]
     val firstname = (answer \ "answers" \ "textfield_38072796").asOpt[String].getOrElse("John")
@@ -124,7 +124,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
     (answer \ "answers" \ "fileupload_40489342").asOpt[String].map { image =>
       files.append(image.split('?')(0))
     }
-    models.Application(id, city, name, email, `type`, address, date, coordinates, phone, fields, files.toList)
+    models.Application(id, city, "Nouvelle", name, email, `type`, address, date, coordinates, phone, fields, files.toList)
   }
 
   def getResponsesByFormId(id: String) = {

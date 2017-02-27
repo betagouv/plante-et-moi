@@ -4,6 +4,7 @@ import org.joda.time.DateTime
 
 case class Application(id: String,
                        city: String,
+                       status: String,
                        name: String,
                        email: String,
                        _type: String,

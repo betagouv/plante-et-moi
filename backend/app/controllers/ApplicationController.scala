@@ -24,7 +24,6 @@ import services.ApplicationService
 class ApplicationController @Inject() (ws: WSClient,
                                        configuration: play.api.Configuration,
                                        reviewService: ReviewService,
-                                       applicationExtraService: ApplicationExtraService,
                                        mailerClient: MailerClient,
                                        agentService: AgentService,
                                        loginAction: LoginAction,
@@ -46,7 +45,7 @@ class ApplicationController @Inject() (ws: WSClient,
 
   def projects(city: String) = Future.successful {
     applicationService.findByCity(city).map { application =>
-      (application, applicationExtraService.findByApplicationId(application.id), reviewService.findByApplicationId(application.id))
+      (application, reviewService.findByApplicationId(application.id))
     }
   }
 
@@ -79,8 +78,8 @@ class ApplicationController @Inject() (ws: WSClient,
     val agent = currentAgent(request)
     projects(getCity(request)).map { responses =>
       val afterFilter = responses.filter { response =>
-        response._2.status == "En cours" &&
-          !response._3.exists { _.agentId == agent.id }
+        response._1.status == "En cours" &&
+          !response._2.exists { _.agentId == agent.id }
       }
       Ok(views.html.myApplications(afterFilter, currentAgent(request)))
     }
@@ -96,7 +95,7 @@ class ApplicationController @Inject() (ws: WSClient,
               .map { review =>
                 review -> agents.find(_.id == review.agentId).get
               }
-          Ok(views.html.application(application._1, agent, reviews, application._2))
+          Ok(views.html.application(application._1, agent, reviews))
     }
   }
 
@@ -144,11 +143,11 @@ class ApplicationController @Inject() (ws: WSClient,
     applicationById(id, getCity(request)).map {
       case None =>
         NotFound("")
-      case Some((application, applicationExtra, _)) =>
-        if(status == "En cours" && applicationExtra.status != "En cours") {
+      case Some((application, _)) =>
+        if(status == "En cours" && application.status != "En cours") {
           agents.filter { agent => !agent.instructor && !agent.finalReview }.foreach(sendNewApplicationEmailToAgent(application, request))
         }
-        applicationExtraService.insertOrUpdate(applicationExtra.copy(status = status))
+        applicationService.updateStatus(application.id, status)
         Redirect(routes.ApplicationController.show(id))
     }
   }

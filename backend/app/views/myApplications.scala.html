@@ -1,5 +1,5 @@
 @import models._
-@(applications: List[(Application, ApplicationExtra, List[Review])], agent: Agent)
+@(applications: List[(Application, List[Review])], agent: Agent)
 @import java.util.Locale
 
 @main(agent)("Mes demandes (en attente de mon avis)")  {
@@ -14,7 +14,7 @@
     </tr>
     </thead>
     <tbody>
-    @for((application, applicationExtra, reviews) <- applications) {
+    @for((application, reviews) <- applications) {
     <tr onclick="window.document.location='@routes.ApplicationController.show(application.id)';">
         <td class="mdl-data-table__cell--non-numeric">@application.address</td>
         <td class="mdl-data-table__cell--non-numeric">@application._type</td>

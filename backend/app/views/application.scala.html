@@ -1,4 +1,4 @@
-@(application: models.Application, agent: Agent, reviews: List[(Review, Agent)], applicationExtra: models.ApplicationExtra)
+@(application: models.Application, agent: Agent, reviews: List[(Review, Agent)])
 @import java.util.Locale
 
 @main(agent)(s"${application.address} (${application._type}) - #${application.id.substring(0,2)}")  {
@@ -86,7 +86,7 @@
               Avancement
             </span>
             <span class="mdl-list__item-secondary-action">
-                @applicationExtra.status
+                @application.status
             </span>
         </li>
         @for((key,value) <- application.fields) {
@@ -103,7 +103,7 @@
 
 
 </div>
-@if(applicationExtra.status == "Nouvelle") {
+@if(application.status == "Nouvelle") {
     @if(agent.admin) {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
     <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1--offset mdl-grid" method="post">
