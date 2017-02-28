@@ -28,7 +28,11 @@
 			padding: 0; 
 			width: 100%; 
 			height: 100%;
-		}	
+		}
+
+		.body--noscroll {
+			overflow:hidden;
+		}
 
 		.important {
 			width: 100%;
@@ -67,7 +71,12 @@
 		}
 		
 		.form {
-			padding: 1px 0px;
+			top: 0;
+			left: 0;
+			margin: 0; 
+			padding: 0;
+			width: 100%;
+			height: 100%;
 			background-color: #F3F3F3;
 		}
 		
@@ -82,7 +91,7 @@
 		
 		.form__typeform {
 			width: 100%;
-			height: 600px;
+			height: 100%;
 			display: inline-block;
 			border-width: 0px;
 		}
@@ -383,6 +392,13 @@
 		.search__button:hover {
 			background-color: seagreen;
 		}
+		.content {
+			width: 100%;
+			height: 100%;
+		}
+		.content--invisible {
+			display: none;
+		}
 	</style>
 <!-- Piwik -->
 <script type="text/javascript">
@@ -403,6 +419,7 @@
 </head>
 
 <body>
+	<div id="content" class="content">
 	<div class="header">
 		<div class="header__ribbon">
 			Beta
@@ -457,10 +474,8 @@
 			<a class="galery__card__bottom galery__card__bottom--button">Je demande à participer à Jardin'émoi</a>
 		</div>
 	</div>
+	</div>
 	<div class="form form--invisible" id="permit__form">
-		<div class="centered">
-			<h1 class="form__title">Demande de participation à Jardin'émoi</h1>
-		</div>
 		<iframe id="typeform" class="form__typeform" ></iframe>
 	</div>
 
@@ -700,9 +715,11 @@
 		projectType = type;
 		var typeform = document.getElementById('typeform');
 		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng;
+		document.getElementById('content').classList.add('content--invisible');
 		var permitForm = document.getElementById('permit__form');
 		permitForm.classList.remove('form--invisible');
 		permitForm.scrollIntoView();
+		document.body.classList.add('body--noscroll')
 	}
 
 	var lng = getParameterByName('lng');
