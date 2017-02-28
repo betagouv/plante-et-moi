@@ -16,11 +16,44 @@ import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.mailer.{Email, MailerClient}
 import play.api.mvc.RequestHeader
 
+import scala.collection.mutable
 import scala.concurrent.Future
 import scala.concurrent.duration._
+import scala.util.{Failure, Success}
+
+case class TypeformQuestion(id: String, question: String, field_id: Int)
+case class TypeformStats(responses: Map[String,Int])
+case class TypeformMetadata(browser: String,
+                            platform: String,
+                            date_land: DateTime,
+                            date_submit: DateTime,
+                            user_agent: String,
+                            referer: String,
+                            network_id: String)
+case class TypeformResponse(completed: String, token: String, metadata: TypeformMetadata, hidden: Map[String, String], answers: Map[String, String])
+case class TypeformResult(http_status: Int, stats: TypeformStats, questions: List[TypeformQuestion], responses: List[TypeformResponse])
+
 
 @Singleton
 class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Configuration, ws: WSClient, applicationService: ApplicationService, mailerClient: MailerClient){
+
+  private implicit val dateReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
+  private implicit val metadataReads = Json.reads[TypeformMetadata]
+  private implicit val questionReads = Json.reads[TypeformQuestion]
+  private implicit val statsReads = Json.reads[TypeformStats]
+  private implicit val responseReads = Json.reads[TypeformResponse]
+  private implicit val resultReads = Json.reads[TypeformResult]
+
+
+  def getForm(id: String, key: String, completed: Boolean, limit: Int = 20, orderBy: String = "date_submit,desc") =
+    ws.url(s"https://api.typeform.com/v1/form/$id")
+      .withQueryString("key" -> key,
+        "completed" -> s"$completed",
+        "order_by" -> orderBy,
+        "limit" -> s"$limit").get().map { response =>
+      response.json.validate[TypeformResult].get
+    }
+
   private lazy val typeformIds = configuration.underlying.getString("typeform.ids").split(",")
   private lazy val typeformKey = configuration.underlying.getString("typeform.key")
 
@@ -33,15 +66,26 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
   private val scheduledTask = system.scheduler.schedule(delay, refresh)(refreshTask)
 
   def refreshTask = {
-    val responses = Future.reduce(typeformIds.map(getResponsesByFormId))(_ ++ _)
-    responses.foreach { applications =>
-      applications.foreach { application =>
-        val app = applicationService.findByApplicationId(application.id)
-        if(app.isEmpty) {
-          sendNewApplicationEmail(application)
-          applicationService.insert(application)
-        }
+    val responses = Future.reduce(typeformIds.map{ id =>
+      getForm(id, typeformKey, true, 100).map { result =>
+        Logger.info(s"TypeformService: convert data for $id")
+        val applications = result.responses.map(mapResponseToApplication(result.questions))
+        Logger.info(s"$applications")
+        applications
       }
+    })(_ ++ _)
+    responses.onComplete {
+      case Failure(ex) =>
+          Logger.error("Error occured when retrieve data from typeform", ex)
+      case Success(applications) =>
+        applications.foreach { application =>
+          val app = applicationService.findByApplicationId(application.id)
+          if (app.isEmpty) {
+            Logger.info(s"Import application for ${application.address}")
+            sendNewApplicationEmail(application)
+            applicationService.insert(application)
+          }
+        }
     }
   }
 
@@ -76,72 +120,53 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
     mailerClient.send(email)
   }
 
-  def mapArlesTypeformJsonToApplication(answer: JsValue): models.Application = {
-    val selectedAddress = (answer \ "hidden" \ "address").asOpt[String].getOrElse("12 rue de la demo")
-    val address = (answer \ "answers" \ "textfield_38117960").asOpt[String].getOrElse(selectedAddress)
-    val `type` = (answer \ "hidden" \ "type").asOpt[String].map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize).getOrElse("Inconnu")
-    val email = (answer \ "answers" \ "email_38072800").asOpt[String].getOrElse("inconnue@example.com")
-    implicit val dateReads = Reads.jodaDateReads("yyyy-MM-dd HH:mm:ss")
-    val date = (answer \ "metadata" \ "date_submit").as[DateTime]
-    val firstname = (answer \ "answers" \ "textfield_38072796").asOpt[String].getOrElse("John")
-    val lastname = (answer \ "answers" \ "textfield_38072795").asOpt[String].getOrElse("Doe")
-    val id = (answer \ "token").as[String]
-    val phone = (answer \ "answers" \ "textfield_38072797").asOpt[String]
-    val lat = (answer \ "hidden" \ "lat").as[String].toDouble
-    val lon = (answer \ "hidden" \ "lon").as[String].toDouble
-    val city = (answer \ "hidden" \ "city").as[String]
+  def mapResponseToApplication(questions: List[TypeformQuestion])(response: TypeformResponse) = {
+    val _type = response.hidden.getOrElse("type", "inconnue")
+    //_type.map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize)
+    val lat = response.hidden("lat").toDouble
+    val lon = response.hidden("lon").toDouble
     val coordinates = Coordinates(lat, lon)
-    var fields = Map[String,String]()
-    (answer \ "answers" \ "textfield_41115782").asOpt[String].map { answer =>
-      fields += "Espéces de plante grimpante" -> answer
-    }
-    (answer \ "answers" \ "textfield_41934708").asOpt[String].map { answer =>
-      fields += "Forme" -> answer
-    }
-    (answer \ "answers" \ "list_42010898_choice").asOpt[String].map { answer =>
-      fields += "Couleur" -> answer
-    }
-    (answer \ "answers" \ "list_42010898_other").asOpt[String].map { answer =>
-      fields += "Couleur" -> answer
-    }
-    (answer \ "answers" \ "textfield_41934830").asOpt[String].map { answer =>
-      fields += "Matériaux" -> answer
-    }
-    (answer \ "answers" \ "list_41934920_choice").asOpt[String].map { answer =>
-      fields += "Position" -> answer
-    }
-    (answer \ "answers" \ "list_40487664_choice").asOpt[String].map { answer =>
-      fields += "Collectif" -> "Oui"
-    }
-    (answer \ "answers" \ "textfield_40930276").asOpt[String].map { answer =>
-      fields += "Nom du collectif" -> answer
-    }
+    val city = response.hidden("city")
+    val id = response.token
+    val date = response.metadata.date_submit
+
+    var address = response.hidden.getOrElse("address", "12 rue de la demo")
+    var email = "inconnue@example.com"
+    var firstname = "John"
+    var lastname = "Doe"
+    var phone: Option[String] = None
+
+    var fields = mutable.Map[String,String]()
     var files = ListBuffer[String]()
-    (answer \ "answers" \ "fileupload_40488503").asOpt[String].map { croquis =>
-      files.append(croquis.split('?')(0))
+    response.answers.foreach { answer =>
+      val question = questions.find(_.id == answer._1)
+      (answer._1, question) match {
+        case (id, _) if id.startsWith("fileupload_") =>
+          files += answer._2.split('?')(0)
+        case (id, _) if id.startsWith("email_") =>
+          email = answer._2
+        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("adresse de votre") =>
+          address = answer._2
+        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("prénom") =>
+          firstname = answer._2
+        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("nom") =>
+          lastname = answer._2
+        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("téléphone") =>
+          phone = Some(answer._2)
+        case (id, Some(question)) if id.startsWith("yesno_") =>
+          val answerString = answer._2 match {
+            case "1" => "Oui"
+            case "0" => "Non"
+            case _ => "???"
+          }
+          fields += question.question -> answerString
+        case (_, Some(question)) =>
+          val previous = fields.get(question.question).map(old => s"$old, ${answer._2}").getOrElse( answer._2)
+          fields += question.question -> previous
+        case _ =>
+      }
     }
-    (answer \ "answers" \ "fileupload_40489342").asOpt[String].map { image =>
-      files.append(image.split('?')(0))
-    }
-    models.Application(id, city, "Nouvelle", firstname, lastname, email, `type`, address, date, coordinates, phone, fields, files.toList)
-  }
 
-  def getResponsesByFormId(id: String) = {
-    Logger.info(s"Refresh form $id")
-    ws.url(s"https://api.typeform.com/v1/form/$id")
-      .withQueryString("key" -> typeformKey,
-        "completed" -> "true",
-        "order_by" -> "date_submit,desc",
-        "limit" -> "100").get().map { response =>
-      val json = response.json
-      val totalShowing = (json \ "stats" \ "responses" \ "completed").as[Int]
-      val totalCompleted = (json \ "stats" \ "responses" \ "showing").as[Int]
-
-      (json \ "responses").as[List[JsValue]].filter { answer =>
-        (answer \ "hidden" \ "city").get != JsNull &&
-          (answer \ "hidden" \ "lat").get != JsNull &&
-          (answer \ "hidden" \ "lon").get != JsNull
-      }.map(mapArlesTypeformJsonToApplication)
-    }
+    models.Application(id, city, "Nouvelle", firstname, lastname, email, _type, address, date, coordinates, phone, fields.toMap, files.toList)
   }
 }
