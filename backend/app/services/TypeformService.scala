@@ -70,7 +70,6 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
       getForm(id, typeformKey, true, 100).map { result =>
         Logger.info(s"TypeformService: convert data for $id")
         val applications = result.responses.map(mapResponseToApplication(result.questions))
-        Logger.info(s"$applications")
         applications
       }
     })(_ ++ _)

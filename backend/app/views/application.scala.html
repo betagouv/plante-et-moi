@@ -21,7 +21,7 @@
 
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
     @if(!application.files.isEmpty) {
-    <div class="mdl-cell mdl-cell--4-col">
+    <div class="mdl-cell mdl-cell--3-col">
         @application.files.filter(_.endsWith("jpg")).map { file =>
             <img src='@routes.ApplicationController.getImage(file)' style="max-height: 300px; max-width: 300px; margin: 10px;">
         }
@@ -31,7 +31,7 @@
     </div>
     }
 
-    <ul class="demo-list-item mdl-list mdl-cell @if(application.files.isEmpty) {mdl-cell--12-col} else {mdl-cell--8-col}">
+    <ul class="demo-list-item mdl-list mdl-cell @if(application.files.isEmpty) {mdl-cell--12-col} else {mdl-cell--9-col}">
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
               Adresse du projet
