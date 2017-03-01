@@ -20,18 +20,15 @@
 </div>
 
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
-    @if(!application.files.isEmpty) {
-    <div class="mdl-cell mdl-cell--3-col">
-        @application.files.filter(_.endsWith("jpg")).map { file =>
-            <img src='@routes.ApplicationController.getImage(file)' style="max-height: 300px; max-width: 300px; margin: 10px;">
-        }
-        @application.files.filter(!_.endsWith("jpg")).map { file =>
-            Fichier: <a href='@routes.ApplicationController.getImage(file)'>@file.split('/').last</a>
+    @if(!application.imagesFiles().isEmpty) {
+    <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet">
+        @application.imagesFiles().map { file =>
+            <img src='@routes.ApplicationController.getImage(file)' style="max-width: 100%; margin: 10px;">
         }
     </div>
     }
 
-    <ul class="demo-list-item mdl-list mdl-cell @if(application.files.isEmpty) {mdl-cell--12-col} else {mdl-cell--9-col}">
+    <ul class="demo-list-item mdl-list mdl-cell @if(application.imagesFiles().isEmpty) {mdl-cell--12-col} else {mdl-cell--9-col} mdl-cell--12-col-tablet">
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
               Adresse du projet
@@ -95,6 +92,16 @@
             </span>
             <span class="mdl-list__item-secondary-action">
                 @value
+            </span>
+        </li>
+        }
+        @application.files.map { file =>
+        <li class="mdl-list__item">
+            <span class="mdl-list__item-primary-content">
+              Fichier
+            </span>
+            <span class="mdl-list__item-secondary-action">
+                 <a href='@routes.ApplicationController.getImage(file)'>@file.split('/').last</a>
             </span>
         </li>
         }

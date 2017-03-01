@@ -16,4 +16,7 @@ case class Application(id: String,
                        fields: Map[String, String] = Map(),
                        files: List[String] = List()) {
    val name = s"${firstname.capitalize} ${lastname.capitalize}"
+   private def imageFilter(fileName: String) = List("jpg","jpeg","png").exists(fileName.toLowerCase().endsWith(_))
+   def imagesFiles() = files.filter(imageFilter)
+   def notImageFiles() = files.filter(!imageFilter(_))
 }
