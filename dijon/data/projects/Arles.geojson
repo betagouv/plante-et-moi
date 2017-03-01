@@ -1,0 +1,387 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "iconClass": "Drop",
+          "color": "ForestGreen",
+          "showLabel": true,
+          "labelDirection": "auto",
+          "labelHover": true,
+          "labelInteractive": false
+        },
+        "name": "Jardinière",
+        "description": "10 février 2016\nInstallation de 4 jardinières en bois sur le trottoir\nAvec Incroyables comestibles\nRue Valentin Jaume\n"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.63749647140503,
+          43.68644797309035
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "23 février 2016\nInstallation d'une jardinière en bois (1,5lx0,65Lx1h en mètre)\nAvec Incroyables comestibles"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.621467590332032,
+          43.6750556955857
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "24 février 2016\nInstallation d'une jardinière en bois contre un mur\nAvec Incroyables comestibles\n"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.621075987815858,
+          43.67572497652664
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "7 mars 2016\nInstallation d'une jardinière en pierre de Fontvieille (100lx40Lx80h en cm)\nAvec Incroyables comestibles"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.622167646884919,
+          43.67493347826005
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "description": "29 mars 2016\nInstallation d'une jardinière ronde en plastique\nPlante un Muhlenbergia (attention est invasif en campagne)\n",
+        "name": "Jardinière"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.62340146303177,
+          43.67636903113776
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "18 mai 2016\nInstallation d'une jardinière en bois (1,10lx0,50L en mètre)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.621116220951081,
+          43.67532728875157
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "7 juin 2016\nInstallation de 4 jardinières en bois (0,5lx1L en mètre)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.6328696608543405,
+          43.678308912897236
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "5 juillet 2016\nInstallation de 2 jardinières en bois (130lx42Lx44h en cm)\nPlantation de lierre ou de clématite"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.6246540546417245,
+          43.67750774933257
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "5 juillet 2016\nInstallation d'une jardinière en bois de palette (70lx120Lx110h en cm)\nPlantation de vivaces d'ombre\n"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.623978137969972,
+          43.675426225956514
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "7 juillet 2016\nInstallation d'une jardinière en bois (60lx60Lx80h en cm)\n"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.620845317840577,
+          43.67545338516071
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "7 juillet  2016\nInstallation d'une jardinière en bois (50lx1Lx80h en cm)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.6222588419914254,
+          43.67542040612545
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "ForestGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière",
+        "description": "7 juillet 2016\nInstallation d'une jardinière (60lx60Lx80h en cm)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.622341990470887,
+          43.675102254501425
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "DarkOrange",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière (en attente)",
+        "description": "25 octobre 2016\nDemande d'installation d'une jardinière (20x60cm)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.620995521545411,
+          43.674941238097645
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "DarkOrange",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière (en attente)",
+        "description": "1er décembre 2016\nDemande d'installation de 6 jardinières : 4 sur la chaussée et 2 sur le trottoir"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.631085991859437,
+          43.6795911403123
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "DarkOrange",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière (en attente)",
+        "description": "21 décembre 2016\nJardinière (1,2lx0,46Lx0,5h en m)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.622948169708253,
+          43.674190469162
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "DarkOrange",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière (en attente)",
+        "description": "4 janvier 2017\nDemande d'installation de 2 jardinières en fibre-ciment"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.620056748390199,
+          43.67600238643856
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "DarkOrange",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière (en attente)",
+        "description": "13 janvier 2017\nDemande d'installation d'1 ou 2 jardinières"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.631702899932862,
+          43.67696652140308
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "DarkOrange",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Jardinière (en attente)",
+        "description": "13 janvier 2017\nDemande d'installation de 2 jardinières (0,80lx0,55Lx1h en m)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.623374640941621,
+          43.67319330933529
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "_storage_options": {
+          "color": "YellowGreen",
+          "iconClass": "Drop",
+          "showLabel": true,
+          "labelHover": true
+        },
+        "name": "Pied d'arbre",
+        "description": "23 février 2016\nPlantation d'un pied d'arbre\nAvec Incroyables comestibles"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.621499776840211,
+          43.67507315518335
+        ]
+      }
+    }
+  ]
+}
