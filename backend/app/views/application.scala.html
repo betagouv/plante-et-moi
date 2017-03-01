@@ -6,9 +6,6 @@
     <script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
     <script src='@routes.Assets.versioned("javascripts/Leaflet+Data.js")'></script>
 <style>
-.demo-list-item {
-    width: 550px;
-}
 .mdl-list__item-primary-content {
     font-weight: bold;
 }
@@ -23,6 +20,7 @@
 </div>
 
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
+    @if(!application.files.isEmpty) {
     <div class="mdl-cell mdl-cell--4-col">
         @application.files.filter(_.endsWith("jpg")).map { file =>
             <img src='@routes.ApplicationController.getImage(file)' style="max-height: 300px; max-width: 300px; margin: 10px;">
@@ -31,8 +29,9 @@
             Fichier: <a href='@routes.ApplicationController.getImage(file)'>@file.split('/').last</a>
         }
     </div>
+    }
 
-    <ul class="demo-list-item mdl-list mdl-cell mdl-cell--8-col">
+    <ul class="demo-list-item mdl-list mdl-cell @if(application.files.isEmpty) {mdl-cell--12-col} else {mdl-cell--8-col}">
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
               Adresse du projet
@@ -101,13 +100,12 @@
         }
     </ul>
 
-
 </div>
 @if(application.status == "Nouvelle") {
     @if(agent.admin) {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1--offset mdl-grid" method="post">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis aux agents)</button>
+    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1-offset mdl-grid" method="post">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis aux agents)</button>
     </form>
 </div>
     }
