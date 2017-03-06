@@ -107,9 +107,8 @@
 		
 		.map-container {
 			position: relative;
-			width: 90%;
-			min-height: 90%;
-			height: 90%;
+			width: 100%;
+			height: calc(100% - 52px);
 			margin: 0 auto;
 			padding: 0%;
 			text-align: center;
@@ -399,6 +398,110 @@
 		.content--invisible {
 			display: none;
 		}
+
+		.steps {
+			height: 52px;
+			width: 90%;
+			float: right;
+		}
+		.step {
+			box-sizing:border-box;
+		height: 100%;
+		width: 33.33%;
+		position: relative;
+		float: left;
+		text-align: center;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: white;
+		font-size: 20px;
+		font-weight: bold;
+		cursor: default;
+		}
+		.step--arrow:after {
+		content: '';
+			position: absolute;
+			top: 0; 
+			right: -25px; /*half of square's length*/
+			width: 50px; 
+			height: 50px;
+			transform: scale(0.707) rotate(45deg);
+			/*we need to prevent the arrows from getting buried under the next link*/
+			z-index: 1;
+			/*background same as links but the gradient will be rotated to compensate with the transform applied*/
+			background: #666;
+			/*stylish arrow design using box shadow*/
+		box-shadow: 
+				2px -2px 0 2px rgba(0, 0, 0, 0.4), 
+				3px -3px 0 2px rgba(255, 255, 255, 0.1);
+			/*
+				5px - for rounded arrows and 
+				50px - to prevent hover glitches on the border created using shadows*/
+		border-radius: 0 5px 0 50px;
+		}
+
+		.step--previous, .step--previous.step--arrow:after {
+		background-color: #3FA435;
+		}
+
+		.step--previous .step__number {
+		color: #3FA435;
+		}
+
+		/*
+		.step--previous:hover, .step--previous.step--arrow:hover:after {
+		background-color: #26831C;
+		cursor: pointer;
+		}
+
+		.step--previous:hover .step__number {
+		color: #26831C;
+		}*/
+
+		.step--current, .step--current.step--arrow:after {
+		background-color: #26831C;
+		}
+
+		.step--current .step__number {
+		color: #26831C;
+		}
+
+		.step--disable, .step--disable.step--arrow:after  {
+		background-color: #adadbb;
+		}
+
+		.step--disable .step__number {
+		color: #adadbb;
+		}
+
+
+		.step__number {
+		display: block;
+		background-color: white;
+		width: 25px;
+		height: 25px;
+		border-radius: 15px;
+		font-weight: bold;
+		margin: 0px 10px;
+		padding-top: 5px;
+		}
+
+
+		@media (max-width: 860px) {
+			.steps {
+				width: 100%;
+				}
+			.step {
+				font-size: 15px;
+				padding: 20px;
+				}
+			.step__number {
+				display: none;
+			}
+		}
+
+
 	</style>
 <!-- Piwik -->
 <script type="text/javascript">
@@ -420,12 +523,22 @@
 
 <body>
 	<div id="content" class="content">
-	<div class="header">
+	<div class="header header--52px">
 		<div class="header__ribbon">
 			Beta
 		</div>
 		<a href="."><img src="img/logoJEblanc.png" class="header__image header__image--left"></a>
-		<a href="http://www.ville-romainville.fr/" target="_blank"><img src="img/logo-ville-vert-web.png" class="header__image header__image--right"></a>
+		<div class="steps">
+			<div class="step step--current step--arrow" id="step-place">
+				<span class="step__number">1</span>   Choisir un lieu
+			</div>
+			<div class="step step--disable step--arrow" id="step-project">
+				<span class="step__number">2</span>   Choisir un projet
+			</div>
+			<div class="step step--disable" id="step-application">
+				<span class="step__number">3</span>   Faire une demande
+			</div>
+		</div>
 	</div>
 
 	<div class="map-container" id="map-container">
@@ -436,9 +549,6 @@
 				<h1 id="selectAddressProTip" class="map__protip__title">Déplacer le repère où vous souhaitez planter</h1>
 			</div>
 		</div>
-	</div>
-	<div class="centered">
-			<h1 class="main__title main__title--invisible" id="projectListTitle">Choisissez votre projet</h1>
 	</div>
 	<div class="galery galery--invisible" id="projectList">
 		<div class="galery__card" onclick="launchForm('projet de jardinière municipale');">
@@ -679,10 +789,13 @@
 	var projectType = '';
 
 	function chooseProject() {
+		document.getElementById('step-place').classList.remove('step--current');
+		document.getElementById('step-place').classList.add('step--previous');
+		document.getElementById('step-project').classList.remove('step--disable');
+		document.getElementById('step-project').classList.add('step--current');
+		document.getElementById('map-container').classList.add('map-container--invisible');
+		 
 		document.getElementById('projectList').classList.remove('galery--invisible');
-		var title = document.getElementById('projectListTitle');
-		title.classList.remove('main__title--invisible')
-		title.scrollIntoView();
 	}
 
 	function launchForm(type) {

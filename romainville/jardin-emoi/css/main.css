@@ -18,11 +18,15 @@ body {
     background-color: #3FA435;
 }
 
+.header--52px {
+    height: 52px;
+}
+
 .header__image {
-    height: calc(100% - 20px);
+    height: calc(100% - 10px);
     margin-left: 20px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     box-sizing: border-box; 
     position: absolute;
 }
