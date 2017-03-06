@@ -1,0 +1,908 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Jardin'émoi - Romainville</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+	<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU"
+		crossorigin="anonymous">
+	<link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.css">
+	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
+	<link rel="stylesheet" href="css/main.css" />
+
+	<script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
+	<script src="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.js"></script>
+
+	<link rel="stylesheet" href="https://cdn.rawgit.com/Norkart/Leaflet-MiniMap/v3.4.0/dist/Control.MiniMap.min.css" />
+	<script src="https://cdn.rawgit.com/Norkart/Leaflet-MiniMap/v3.4.0/dist/Control.MiniMap.min.js"></script>
+
+	<style type="text/css">
+		html, body { 
+			margin: 0; 
+			padding: 0; 
+			width: 100%; 
+			height: 100%;
+		}
+
+		.body--noscroll {
+			overflow:hidden;
+		}
+
+		.important {
+			width: 100%;
+			font-size:22px;
+			display: table;
+			padding: 4%;
+			box-sizing:border-box;
+			background-image: url("img/square_jehan_rictus.jpg");
+			background-position: right center;
+			background-repeat: no-repeat;
+			background-size: cover;
+			text-align: center;
+			color: white;
+		}
+
+		@media (max-width: 900px) {
+			.important {
+				font-size: 15px;
+			}
+		}
+
+		.important__text {
+			display: table-cell;
+			vertical-align: middle;
+			line-height: 1.2;
+		}
+		
+		.centered {
+			margin: 0 auto;
+			display: block;
+			position: relative;
+			max-width: 950px;
+			min-width: 400px;
+			padding: 1px 5% 1px 5%;
+			text-align: center;
+		}
+		
+		.form {
+			top: 0;
+			left: 0;
+			margin: 0; 
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #F3F3F3;
+		}
+		
+		.form--invisible {
+			display: none;
+		}
+		
+		.form__title {
+			padding: 1px 5%;
+			color: #0C518A;
+		}
+		
+		.form__typeform {
+			width: 100%;
+			height: 100%;
+			display: inline-block;
+			border-width: 0px;
+		}
+		
+		.main__title {
+			color: #0C518A;
+		}
+
+
+		.main__title--invisible {
+			display: none !important;
+		}
+		
+		.map-container {
+			position: relative;
+			width: calc(100% - 700px);
+			height: calc(100% - 52px);
+			padding: 0%;
+			text-align: center;
+			float: left;
+		}
+
+		.map-container--invisible {
+			display: none;
+		}
+		
+		.map__leaflet {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+		}
+		
+		.map__protip {
+			position: absolute;
+			bottom: 20px;
+			left: 50%;
+		}
+		
+		.map__protip__title {
+			position: relative;
+			padding: 0px 12px 0px 12px;
+			left: -50%;
+			display: block;
+			font-size: 25px;
+			border-radius: 25px;
+			color: white;
+			background: rgba(0, 0, 0, 0.5);
+		}
+		
+		.map__input {
+			position: absolute;
+			width: 400px;
+			max-width: 75%;
+			padding: 4px 10px;
+			margin: 5px;
+			font-size: 25px;
+		}
+
+		.map__legend {
+			font-size: 18px;
+			font-weight: bold;
+		}
+		
+		.address-search {
+			top: 5px;
+			left: 40px;
+		}
+
+		.button {
+			border-radius:3px;
+			border:1px solid black;
+			display:inline-block;
+			cursor:pointer;
+			color:#ffffff;
+			font-size:25px;
+			font-weight: bold;
+    		font-family: Arvo,Georgia,serif;
+			padding: 5px 20px;
+			text-decoration:none;
+			letter-spacing: 0.2px;
+			font-weight: bold;
+			text-align: center;
+			cursor: pointer;
+		}
+		.button {
+			position:relative;
+			top:1px;
+		}
+		
+		.button--yellow {
+			background-color: #F8E273;
+			color: #b09409 !important;
+			border-color: #f7dd5c;
+		}
+		
+		.button--yellow:hover {
+			background-color: #faeca4;
+		}
+
+		.popup--green .leaflet-popup-content-wrapper {
+			background-color: rgba(63, 165, 53, 0.8);
+		}
+		
+		.popup--green .leaflet-popup-tip {
+			background-color: rgba(63, 165, 53, 0.8);
+		}
+		
+		.galery {
+			margin: 0 0;
+			display: block;
+			height: calc(100% - 52px);
+			width: 700px;
+			background-color: #F3F3F3;
+			position: relative;
+			text-align: center;
+			box-sizing: border-box;
+			float: left;
+			overflow-y: scroll;
+		}
+		
+		.galery--invisible {
+			display: none;
+		}
+		
+		.galery__card {
+			margin: 12px;
+			padding: 0px;
+			width: 300px;
+			height: 400px;
+			border-radius: 2px;
+			display: inline-block;
+			vertical-align: top;
+			background-color: white;
+			position: relative;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+		}
+		
+		.galery__card__image {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			height: 200px;
+			border-radius: 2px 2px 0px 0px;
+		}
+		
+		.galery__card__title {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			top: -43px;
+			margin: 0px;
+			text-align: center;
+			font-weight: bold;
+			color: white;
+			background: rgba(63, 165, 53, 0.7);
+		}
+
+		.galery__card__subtitle {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			top: -43px;
+			margin: 0px;
+			text-align: center;
+			font-weight: bold;
+			color: white;
+			background: rgba(63, 165, 53, 0.8);
+		}
+		
+		.galery__card__description {
+			position: relative;
+			display: inline-block;
+			margin: 20px 10px 10px 10px;
+			padding: 0px;
+			text-align: left;
+			top: -50px;
+			color: #555;
+		}
+		
+		.galery__card__bottom {
+			position: absolute;
+			bottom: 0px;
+			margin: 0px;
+			width: 100%;
+			font-weight: bold;
+			border-radius: 0px 0px 2px 2px;
+			left: 0px;
+			display: block;
+		}
+		
+		.galery__card__bottom--button {
+			letter-spacing: 0.2px;
+			font-weight: bold;
+			background-color: #3FA435;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			padding: 16px 0px;
+			color: white;
+			border-color: black;
+		}
+		
+		.galery__card__bottom--button:hover {
+			background-color: green;
+		}
+		.icon {
+			position: relative;
+			width: 26px; 
+			height: 26px; 
+			text-align: center; 
+			display: inline-block; 
+			margin: 0;
+			vertical-align: middle;
+		}
+		.icon--circle {
+			border-radius: 50%;
+		}
+		.icon--green {
+			background-color: #72af26;
+		}
+		.icon--blue {
+			background-color: #38aadd;
+		}
+		.icon__symbol {
+			color: #fff;
+			margin-top: 4px; 
+			display: inline-block; 
+			font-size: 12px;
+			position: absolute;
+			top: 7px;
+    		left: 0px;
+    		right: 0px;
+    		margin: auto;
+		}
+		.leaflet-grab {
+			cursor: pointer;
+		}
+
+		.cube {
+			display: inline-block;
+			height: 160px;
+			min-width: 300px; 
+			width:42%; 
+			text-align: center;
+			box-sizing:border-box;
+			margin: 30px;
+			vertical-align: top;
+		}
+
+		.cta {
+			text-align: center; 
+			width: 100%; 
+			background-color: #F8E273;
+			min-height: 60px;
+		}
+		.cta__link {
+			display: block;
+			font-size: 40px;
+			max-width: 950px;
+    		margin: auto;;
+			background-color: #F8E273;
+			color: #DF225A;
+		}
+		.cta__link:hover {
+			background-color: #DF225A;
+			color: #F8E273;
+		}
+		.cta__link:link {
+			text-decoration:none; 
+		}
+		.search {
+			display: inline-block;
+			vertical-align: middle;
+			border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+		}
+		.search__input {
+			margin: 0px;
+			padding: 10px;
+			width: 400px;
+			height: 50px;
+			font-size: 25px;
+			border-width: 0px;
+			border-radius: 2px 2px 0px 2px;
+			float: left;
+			box-sizing:border-box;
+		}
+		.search__button {
+			margin: 0px;
+			letter-spacing: 0.2px;
+			font-weight: bold;
+			background-color: green;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			padding: 16px 0px;
+			color: white;
+			font-weight: bold;
+			border-radius: 0px 2px 2px 0px;
+			width: 100px;
+			height: 50px;
+			border-width: 0px;
+			float: left;
+		}
+		.search__button:hover {
+			background-color: seagreen;
+		}
+		.content {
+			width: 100%;
+			height: 100%;
+		}
+		.content--invisible {
+			display: none;
+		}
+
+		.steps {
+			height: 52px;
+			width: 90%;
+			float: right;
+		}
+		.step {
+			box-sizing:border-box;
+			height: 100%;
+			position: relative;
+			float: left;
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 20px;
+			font-weight: bold;
+			cursor: default;
+		}
+		.steps--3-col .step {
+			width: 33.33%;
+		}
+
+		.steps--2-col .step {
+			width: 50%;
+		}
+
+		.step--arrow:after {
+		content: '';
+			position: absolute;
+			top: 0; 
+			right: -25px; /*half of square's length*/
+			width: 50px; 
+			height: 50px;
+			transform: scale(0.707) rotate(45deg);
+			/*we need to prevent the arrows from getting buried under the next link*/
+			z-index: 1;
+			/*background same as links but the gradient will be rotated to compensate with the transform applied*/
+			background: #666;
+			/*stylish arrow design using box shadow*/
+		box-shadow: 
+				2px -2px 0 2px rgba(0, 0, 0, 0.4), 
+				3px -3px 0 2px rgba(255, 255, 255, 0.1);
+			/*
+				5px - for rounded arrows and 
+				50px - to prevent hover glitches on the border created using shadows*/
+		border-radius: 0 5px 0 50px;
+		}
+
+		.step--previous, .step--previous.step--arrow:after {
+		background-color: #3FA435;
+		}
+
+		.step--previous .step__number {
+		color: #3FA435;
+		}
+
+		/*
+		.step--previous:hover, .step--previous.step--arrow:hover:after {
+		background-color: #26831C;
+		cursor: pointer;
+		}
+
+		.step--previous:hover .step__number {
+		color: #26831C;
+		}*/
+
+		.step--current, .step--current.step--arrow:after {
+		background-color: #26831C;
+		}
+
+		.step--current .step__number {
+		color: #26831C;
+		}
+
+		.step--disable, .step--disable.step--arrow:after  {
+		background-color: #adadbb;
+		}
+
+		.step--disable .step__number {
+		color: #adadbb;
+		}
+
+
+		.step__number {
+		display: block;
+		background-color: white;
+		width: 25px;
+		height: 25px;
+		border-radius: 15px;
+		font-weight: bold;
+		margin: 0px 10px;
+		padding-top: 5px;
+		}
+
+
+		@media (max-width: 860px) {
+			.steps {
+				width: 100%;
+				}
+			.step {
+				font-size: 15px;
+				padding: 20px;
+				}
+			.step__number {
+				display: none;
+			}
+		}
+
+
+	</style>
+<!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["setDomains", ["*.romainville.plante-et-moi.fr"]]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//stats.data.gouv.fr/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', '33']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//stats.data.gouv.fr/piwik.php?idsite=33" style="border:0;" alt="" /></p></noscript>
+<!-- End Piwik Code -->
+</head>
+
+<body>
+	<div id="content" class="content">
+	<div class="header header--52px">
+		<div class="header__ribbon">
+			Beta
+		</div>
+		<a href="."><img src="img/logoJEblanc.png" class="header__image header__image--left"></a>
+		<div class="steps steps--2-col">
+			<div class="step step--current step--arrow" id="step-project">
+				<span class="step__number">1</span>   Choisir un projet
+			</div>
+			<div class="step step--disable" id="step-application">
+				<span class="step__number">2</span>   Faire une demande
+			</div>
+		</div>
+	</div>
+	<div class="galery galery--fixe" id="projectList">
+		<div class="galery__card">
+			<img class="galery__card__image" src="img/jardinieres-rue-stgermain.jpg"
+			/>
+			<h2 class="galery__card__title">Rue St Germain</h2>
+			<h3 class="galery__card__subtitle">Jardinière Municipale</h3>
+			<p class="galery__card__description">Adopter une jardinière municipale dans la rue Saint Germain. Vous pouvez la planter vous même !
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button"  onclick="launchForm('projet de jardinière municipale');">Participer à Jardin'émoi</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="img/jardinieres-en-bois.jpg" />
+			<h2 class="galery__card__title">Rue du Chemin Vert</h2>
+			<h3 class="galery__card__subtitle">Bac en bois sur pelouse</h3>
+			<p class="galery__card__description">Une pelouse inutilisée s'étend sous vos yeux... Ça vous dirait d'avoir un bac et d'y faire pousser tomates, radis ou menthe poivrée ? 
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" onclick="launchForm('projet de bac en bois');">Participer à Jardin'émoi</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="img/jardinieres-rue-stgermain.jpg"
+			/>
+			<h2 class="galery__card__title">Rue St Germain</h2>
+			<h3 class="galery__card__subtitle">Jardinière Municipale</h3>
+			<p class="galery__card__description">Adopter une jardinière municipale dans la rue Saint Germain. Vous pouvez la planter vous même !
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button"  onclick="launchForm('projet de jardinière municipale');">Participer à Jardin'émoi</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="img/jardinieres-en-bois.jpg" />
+			<h2 class="galery__card__title">Rue du Chemin Vert</h2>
+			<h3 class="galery__card__subtitle">Bac en bois sur pelouse</h3>
+			<p class="galery__card__description">Une pelouse inutilisée s'étend sous vos yeux... Ça vous dirait d'avoir un bac et d'y faire pousser tomates, radis ou menthe poivrée ? 
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" onclick="launchForm('projet de bac en bois');">Participer à Jardin'émoi</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="img/jardinieres-rue-stgermain.jpg"
+			/>
+			<h2 class="galery__card__title">Rue St Germain</h2>
+			<h3 class="galery__card__subtitle">Jardinière Municipale</h3>
+			<p class="galery__card__description">Adopter une jardinière municipale dans la rue Saint Germain. Vous pouvez la planter vous même !
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button"  onclick="launchForm('projet de jardinière municipale');">Participer à Jardin'émoi</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="img/jardinieres-en-bois.jpg" />
+			<h2 class="galery__card__title">Rue du Chemin Vert</h2>
+			<h3 class="galery__card__subtitle">Bac en bois sur pelouse</h3>
+			<p class="galery__card__description">Une pelouse inutilisée s'étend sous vos yeux... Ça vous dirait d'avoir un bac et d'y faire pousser tomates, radis ou menthe poivrée ? 
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" onclick="launchForm('projet de bac en bois');">Participer à Jardin'émoi</a>
+		</div>
+		<div class="galery__card">
+			<img class="galery__card__image" src="img/jardinieres-en-bois.jpg" />
+			<h2 class="galery__card__title">Rue du Chemin Vert</h2>
+			<h3 class="galery__card__subtitle">Bac en bois sur pelouse</h3>
+			<p class="galery__card__description">Une pelouse inutilisée s'étend sous vos yeux... Ça vous dirait d'avoir un bac et d'y faire pousser tomates, radis ou menthe poivrée ? 
+			</p>
+			<a class="galery__card__bottom galery__card__bottom--button" onclick="launchForm('projet de bac en bois');">Participer à Jardin'émoi</a>
+		</div>
+		<div class="galery__card" style="width: 90%; height: 150px; margin: 60px auto;">
+			<p><b>Une autre idée ?</b> <br>Je vois que vous n'êtes pas le genre de personne à faire comme tout le monde.
+				Laisser parler votre imagination
+
+				Proposer un nouveau lieu à végétaliser<br>
+			 	<input style="width: 250px" type="text" id="address-search" name="address-search" placeholder="Saisissez une rue ici..." class="form__input"> 
+				 <button class="form__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
+			</p>
+		</div>
+	</div>
+	<div class="map-container" id="map-container">
+		<div class="map__leaflet" id="map">
+		</div>
+	</div>
+	</div>
+	<div class="form form--invisible" id="permit__form">
+		<iframe id="typeform" class="form__typeform" ></iframe>
+	</div>
+
+	<script src="js/utils.js"></script>
+	<script src="js/main.js"></script>
+	<script>
+
+
+	var selectedPoint;
+	var selectedPointPopup;
+	var selectedAddress;
+	var map = L.map('map', {
+    	zoom: 15,
+    	minZoom: 12
+	});
+
+	function onCityGeoDataLoaded(){
+		 var polygon = L.geoJson(contour,{
+		    color: '#0C518A',
+		    fill: false
+		}).addTo(map)
+		var bounds = polygon.getBounds();
+	    map.setMaxBounds(bounds.pad(0.05));
+		//map.flyTo(center, 12);
+	}
+
+	var photoLayer = L.tileLayer('https://wxs.ign.fr/aux4oyb491ew3s7eqahym3ps/wmts/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fjpeg', {
+            attribution: "&copy; <a href='http://www.ign.fr'>IGN</a>",
+            minZoom: 12,
+            maxZoom: 19
+        });
+
+	photoLayer.addTo(map);
+
+	var mapLayer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
+    	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    	minZoom: 12,
+    	maxZoom: 20
+	});
+
+	var mapLayerMiniMap = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
+    	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+    	minZoom: 11,
+    	maxZoom: 15
+	});
+
+	var miniMapLayers = new L.LayerGroup();
+	mapLayerMiniMap.addTo(miniMapLayers);
+
+	var baseMaps = {
+		'<span class="map__legend">Photo aérienne</span>': photoLayer,
+		'<span class="map__legend">Carte</span>': mapLayer
+	};
+	var layerControl = L.control.layers(baseMaps, null,({collapsed: false }));
+	layerControl.addTo(map);
+
+	var moveMarker = L.AwesomeMarkers.icon({
+    	icon: 'circle',
+    	markerColor: 'blue',
+    	prefix: 'fa'
+  	});
+
+
+	function show(itemID) {
+		var itemDom = document.getElementById(itemID);
+		itemDom.classList.remove(itemID+'--invisible');
+		itemDom.scrollIntoView();
+	}
+
+    function sendReverseGeocodeRequest(latlng, response){
+    		try { requestReverseGeocode.abort(); } catch(e){}
+			requestReverseGeocode = new XMLHttpRequest();
+			requestReverseGeocode.open('GET', 'https://api-adresse.data.gouv.fr/reverse/?type=housenumber&lon='+latlng.lng+'&lat='+latlng.lat, true);
+    		requestReverseGeocode.onload = function() {
+			  if (requestReverseGeocode.status >= 200 && requestReverseGeocode.status < 400) {
+			    // Success!
+			    var data = JSON.parse(requestReverseGeocode.responseText);
+			    var features = data["features"];
+			    response(data["features"]);
+			  } else {
+			    response([]);
+			  }
+			};
+			requestReverseGeocode.send();
+    }
+
+	var requestReverseGeocode;
+
+	function reverseGeocodeAdress(latlng, onCompleted) {
+		coord = latlng;
+		sendReverseGeocodeRequest(latlng, function(features) {
+			onCompleted(features[0]["properties"]["label"]);
+		})
+	}
+
+	var request = new XMLHttpRequest();
+	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom='+city, true);
+
+	request.onload = function() {
+	  if (request.status >= 200 && request.status < 400) {
+	    // Success!
+	    var data = JSON.parse(request.responseText);
+		var polygonMiniMap = L.geoJson(data[0]["contour"],{
+		    color: '#0C518A',
+		    fill: false
+		})
+		polygonMiniMap.addTo(miniMapLayers);
+	    var polygon = L.geoJson(data[0]["contour"],{
+		    color: '#0C518A',
+		    fill: false
+		}).addTo(map)
+		var bounds = polygon.getBounds();
+	    map.setMaxBounds(bounds.pad(0.05));
+	    codePostaux = data[0]["codesPostaux"];
+	  } else {
+	    // We reached our target server, but it returned an error
+
+	  }
+	};
+	request.send();
+
+// Add projects on the map
+	var existingProjects = new L.LayerGroup();
+	var existingProjectsMiniMap = new L.LayerGroup();
+	var requestVerts = new XMLHttpRequest();
+	requestVerts.open('GET', 'data/projects/'+city+'.geojson', true);
+
+	var plantMarker = L.AwesomeMarkers.icon({
+    	icon: 'leaf',
+    	markerColor: 'green',
+    	prefix: 'fa'
+  	});
+
+	requestVerts.onload = function() {
+	  if (requestVerts.status >= 200 && requestVerts.status < 400) {
+	    // Success!
+	    var data = JSON.parse(requestVerts.responseText);
+
+	    data["features"].map(function(feature){
+	    	L.geoJson(feature["geometry"], {
+							pointToLayer: function(geoJsonPoint, latlng) {
+								var marker = L.marker(latlng, {icon: plantMarker});
+								try { 
+									marker.bindPopup(feature["fields"]["type_veget"]); 
+								} catch(e){
+									marker.bindPopup(feature["properties"]["name"]+" à disposition");
+								}
+								return marker;
+							}
+						})
+						.addTo(existingProjects);
+			L.geoJson(feature["geometry"],  {
+							pointToLayer: function(geoJsonPoint, latlng) {
+								return L.marker(latlng, {icon: plantMarker});
+							}
+						}).addTo(existingProjectsMiniMap);
+	    })
+		existingProjects.addTo(map);
+		existingProjectsMiniMap.addTo(miniMapLayers);
+	  } else {
+
+	  }
+	};
+	requestVerts.send();
+
+	var projectType = '';
+
+	function chooseProject() {
+		document.getElementById('step-place').classList.remove('step--current');
+		document.getElementById('step-place').classList.add('step--previous');
+		document.getElementById('step-project').classList.remove('step--disable');
+		document.getElementById('step-project').classList.add('step--current');
+		document.getElementById('map-container').classList.add('map-container--invisible');
+		 
+		document.getElementById('projectList').classList.remove('galery--invisible');
+	}
+
+	function launchForm(type) {
+		projectType = type;
+		var typeform = document.getElementById('typeform');
+		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng;
+		document.getElementById('content').classList.add('content--invisible');
+		var permitForm = document.getElementById('permit__form');
+		permitForm.classList.remove('form--invisible');
+		permitForm.scrollIntoView();
+		document.body.classList.add('body--noscroll')
+	}
+
+	var lng = getParameterByName('lng');
+	var lat = getParameterByName('lat');
+	selectedAddress = getParameterByName('address');
+	var coord = { lat: 48.885394, lng: 2.435672};
+	map.setView(coord, 14);
+	//var miniMap = new L.Control.MiniMap(miniMapLayers, { toggleDisplay: true, zoomLevelFixed: 12 }).addTo(map);
+
+	var doc = document.getElementById('typeform').contentWindow.document;
+	doc.open();
+	doc.write('<style>body {  \
+ 				heigth: 100%; \
+  				weight: 100%; \
+  				text-align: center; \
+			 }</style> \
+				<img src="img/spin.gif">');
+	doc.close();
+	
+
+// Autocomplete
+	function renderFeature(item, search){
+    	var coord = item["geometry"]["coordinates"]
+		return '<div class="autocomplete-suggestion" data-val="' + item["properties"]["label"] + '" data-lat="'+coord[1]+'" data-lng="'+coord[0]+'">' + item["properties"]["label"] + '</div>';
+	}
+
+	function onSelectAddress(event, term, item){
+		var coord = [item.getAttribute("data-lat"),item.getAttribute("data-lng")];
+		var address = item.getAttribute("data-val");
+
+		document.location = 'demande.html?address='+address+"&lat="+item.getAttribute("data-lat")+"&lng="+item.getAttribute("data-lng");
+	}
+
+	function addressesDataSource(term, response){
+    		try { requestAddresses.abort(); } catch(e){}
+			requestAddresses = new XMLHttpRequest();
+			requestAddresses.open('GET', 'https://api-adresse.data.gouv.fr/search/?type=housenumber&q='+term+'&limit=30&citycode='+codeInsee+'&lon='+center[0]+'&lat='+center[1], true);
+    		requestAddresses.onload = function() {
+			  if (requestAddresses.status >= 200 && requestAddresses.status < 400) {
+			    // Success!
+			    var data = JSON.parse(requestAddresses.responseText);
+			    var features = data["features"]/*.filter(function(feature){
+			    	if(codePostaux.indexOf(feature["properties"]["postcode"]) == -1) {
+			    		return false;
+			    	}
+			    	return true;
+			    })*/;
+			    response(features);
+			  } else {
+			    response([]);
+			  }
+			};
+			requestAddresses.send();
+    	}
+
+	var requestAddresses;
+	new autoComplete({
+    	selector: 'input[name=address-search]',
+    	minChars: 2,
+    	source: addressesDataSource,
+    	renderItem: renderFeature,
+		onSelect: onSelectAddress,
+		cache: false,
+	});
+
+
+	function manualSearch(fieldId){
+		Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+			button.innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
+		})
+		
+		var term = document.getElementById(fieldId).value;
+		addressesDataSource(term, function(results){
+			var result = results[0];
+			if(result) {
+				var coord = result["geometry"]["coordinates"]
+				document.location = 'demande.html?c='+city+'&address='+result["properties"]["label"] +"&lat="+coord[1]+"&lng="+coord[0];
+			} else {
+				Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+					button.innerHTML = 'Rechercher';
+				})
+				alert('Nous n\'avons pas trouver votre adresse :(');
+			}
+		})
+	}
+
+
+</script>
+</body>
+
+</html>

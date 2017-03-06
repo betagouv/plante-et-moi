@@ -105,9 +105,10 @@
 			padding: 16px 0px;
 			color: white;
 			font-weight: bold;
-			width: 100px;
-			height: 50px;
+			padding: 15px 30px;
+			height: 60px;
 			border-width: 0px;
+			font-size: 25px;
 		}
 		@media (min-width: 564px) {
 			.form__input {
@@ -201,15 +202,10 @@
 	<div class="centered" style="
 			color: #0C518A; margin: 20px auto; text-align: center">
 		<div class="form" id="form-email">
-			<h1 class="main__title">Vous voulez participer ? <br> Entrez votre adresse mail, les services de la Ville vous contacteront.</h1>
+			<h1 class="main__title">Vous voulez participer ? </h1>
 			<div class="form__block">
-				<input type="text" id="form-email__email" name="form-email__email" placeholder="Saisissez votre email ici" class="form__input">
-				<button class="form__button" type="button" onclick="addMailToMailingList();" id="form-email__submit-button">Valider</button>
+				<button class="form__button" type="button" onclick="document.location='projets.html';" id="form-email__submit-button">Explorer les projets</button>
 			</div>
-		</div>
-		 <div class="card card--invisible" id="card-email-success">
-			<p class="card__description">Nous avons bien enregistré votre adresse mail.<br> Nous vous recontacterons quand les inscriptions en ligne seront lancées.
-			</p>
 		</div>
 	</div>
 
@@ -241,15 +237,15 @@ url('img/mosaique2.jpg'); background-repeat: no-repeat;
 		</div>
 	</div>
 
-<!--
 	<div class="centered" style="
 			color: #0C518A; margin: 20px auto;">
-		<h1 class="main__title">Cherchez une rue à végétaliser</h1>
-		 <div class="search">
-			 <input type="text" id="address-search-bottom" name="address-search-bottom" placeholder="Saisissez une rue ici..." class="search__input">
-			 <button class="search__button" type="button" onclick="manualSearch('address-search-bottom');" id="search-button">Rechercher</button>
-	     </div>
-	</div>-->
+			<div class="form" id="form-email">
+			<h1 class="main__title">Vous voulez participer ? </h1>
+			<div class="form__block">
+				<button class="form__button" type="button" onclick="document.location='projets.html';" id="form-email__submit-button">Explorer les projets</button>
+			</div>
+		</div>
+	</div>
 
 	<div class="footer">
 		<a class="footer__link" href="http://www.developpement-durable.gouv.fr/greentech-verte" target="_blank"><img class="footer__image" src="img/logo_greentech_small.png"></a>
