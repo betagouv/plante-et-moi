@@ -77,58 +77,6 @@
 			vertical-align: top;
 		}
 
-		.form__block {
-			display: inline-block;
-			vertical-align: middle;
-			border-radius: 2px;
-			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-			margin-bottom: 20px;
-		}
-		.form__input {
-			margin: 0px;
-			padding: 10px;
-			width: 100%;
-			height: 50px;
-			font-size: 25px;
-			border-width: 0px;
-			border-radius: 2px 2px 2px 2px;
-			box-sizing:border-box;
-		}
-		.form__button {
-			margin: 0px;
-			letter-spacing: 0.2px;
-			font-weight: bold;
-			background-color: #3FA435;
-			text-decoration: none;
-			transition: none 200ms ease-out;
-			transition-property: color, background;
-			padding: 16px 0px;
-			color: white;
-			font-weight: bold;
-			padding: 15px 30px;
-			height: 60px;
-			border-width: 0px;
-			font-size: 25px;
-			cursor: pointer;
-		}
-		@media (min-width: 564px) {
-			.form__input {
-				float: left;
-				width: 400px;
-			}
-			.form__button {
-				float: left;
-				border-radius: 0px 2px 2px 0px;
-			}
-		}
-
-		.form__button:hover {
-			background-color: seagreen;
-		}
-		.autocomplete-suggestion {
-			font-size: 25px;
-			line-height: 40px;
-		}
 		.footer {
 			margin: 0 auto;
 			height: 70px;
@@ -148,10 +96,12 @@
 		.footer__link:hover {
 			background-color: #34495e;
 		}
+		
 		.footer__image {
     		vertical-align: middle;	
 			height: 60px;
 		}
+
 		.card {
 			margin: 10px auto;
 			padding: 5px;
@@ -204,9 +154,7 @@
 			color: #0C518A; margin: 20px auto; text-align: center">
 		<div class="form">
 			<h1 class="main__title">Vous voulez participer à Jardin'émoi ? </h1>
-			<div class="form__block">
-				<button class="form__button" type="button" onclick="document.location='projets.html';">Choisissez votre projet</button>
-			</div>
+			<a class="button button--yellow" href="projets.html">Choisissez votre projet</a>
 		</div>
 	</div>
 
@@ -241,9 +189,7 @@ url('img/mosaique2.jpg'); background-repeat: no-repeat;
 	<div class="centered" style="
 			color: #0C518A; margin: 20px auto;">
 			<h1 class="main__title">Vous voulez participer à Jardin'émoi ? </h1>
-			<div class="form__block">
-				<button class="form__button" type="button" onclick="document.location='projets.html';">Choisissez votre projet</button>
-			</div>
+			<a class="button button--yellow" href="projets.html">Choisissez votre projet</a>
 		</div>
 	</div>
 

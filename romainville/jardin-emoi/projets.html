@@ -35,32 +35,6 @@
 			overflow:hidden;
 		}
 
-		.important {
-			width: 100%;
-			font-size:22px;
-			display: table;
-			padding: 4%;
-			box-sizing:border-box;
-			background-image: url("img/square_jehan_rictus.jpg");
-			background-position: right center;
-			background-repeat: no-repeat;
-			background-size: cover;
-			text-align: center;
-			color: white;
-		}
-
-		@media (max-width: 900px) {
-			.important {
-				font-size: 15px;
-			}
-		}
-
-		.important__text {
-			display: table-cell;
-			vertical-align: middle;
-			line-height: 1.2;
-		}
-		
 		.centered {
 			margin: 0 auto;
 			display: block;
@@ -72,12 +46,7 @@
 		}
 		
 		.form {
-			top: 0;
-			left: 0;
-			margin: 0; 
-			padding: 0;
-			width: 100%;
-			height: 100%;
+			height: calc(100% - 52px);
 			background-color: #F3F3F3;
 		}
 		
@@ -108,7 +77,7 @@
 		
 		.map-container {
 			position: relative;
-			width: calc(100% - 700px);
+			width: calc(100% - 580px);
 			height: calc(100% - 52px);
 			padding: 0%;
 			float: left;
@@ -200,10 +169,10 @@
 		}
 		
 		.galery {
-			margin: 0 0;
+			margin: 0;
 			display: block;
 			height: calc(100% - 52px);
-			width: 700px;
+			width: 580px;
 			background-color: #F3F3F3;
 			position: relative;
 			text-align: center;
@@ -215,12 +184,21 @@
 		.galery--invisible {
 			display: none;
 		}
-		
+
+		@media (max-width: 850px) {
+			.galery {
+				margin: 0 auto;
+				width: 100%;
+			}
+			.map-container {
+				display: none;
+			}
+		}		
 		.galery__card {
-			margin: 12px;
+			margin: 10px;
 			padding: 0px;
-			width: 300px;
-			height: 400px;
+			width: 260px;
+			height: 380px;
 			border-radius: 2px;
 			display: inline-block;
 			vertical-align: top;
@@ -256,7 +234,7 @@
 			position: relative;
 			display: inline-block;
 			width: 100%;
-			top: -43px;
+			top: -44px;
 			margin: 0px;
 			text-align: center;
 			font-weight: bold;
@@ -285,27 +263,8 @@
 			border-radius: 0px 0px 2px 2px;
 			left: 0px;
 			display: block;
-			text-align: center;
-			color: white;
-			font-size: 18px;
 		}
 		
-		.galery__card__bottom--button {
-			letter-spacing: 0.2px;
-			font-weight: bold;
-			background-color: #3FA435;
-			text-decoration: none;
-			transition: none 200ms ease-out;
-			transition-property: color, background;
-			padding: 16px 0px;
-			color: white !important;
-			border-color: black;
-			cursor: pointer;
-		}
-		
-		.galery__card__bottom--button:hover {
-			background-color: green;
-		}
 		.icon {
 			position: relative;
 			width: 26px; 
@@ -408,13 +367,6 @@
 		.search__button:hover {
 			background-color: seagreen;
 		}
-		.content {
-			width: 100%;
-			height: 100%;
-		}
-		.content--invisible {
-			display: none;
-		}
 
 	</style>
 <!-- Piwik -->
@@ -435,15 +387,14 @@
 <!-- End Piwik Code -->
 </head>
 
-<body>
-	<div id="content" class="content">
+<body class="body--noscroll">
 	<div class="header header--52px">
 		<div class="header__ribbon">
 			Beta
 		</div>
 		<a href="."><img src="img/logoJEblanc.png" class="header__image header__image--left"></a>
 		<div class="steps steps--2-col">
-			<div class="step step--current step--arrow" id="step-project">
+			<div class="step step--current step--arrow" id="step-project" onclick="chooseProject();">
 				<span class="step__number">1</span>   Choisir un projet
 			</div>
 			<div class="step step--disable" id="step-application">
@@ -458,7 +409,9 @@
 			<h3 class="galery__card__subtitle">Jardinière Municipale</h3>
 			<p class="galery__card__description">Adopter une jardinière municipale dans la rue Saint Germain. Vous pouvez la planter vous même !
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button"  onclick="launchForm('projet de jardinière municipale');">Jardinez ici</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom"  onclick="launchForm('rue saint germain', { lat: 48.885394, lng: 2.435672}, 'projet de jardinière municipale');">Jardinez ici</a>
+			</div>
 		</div>
 		<div class="galery__card">
 			<img class="galery__card__image" src="img/jardinieres-en-bois.jpg" />
@@ -466,7 +419,9 @@
 			<h3 class="galery__card__subtitle">Bac en bois sur pelouse</h3>
 			<p class="galery__card__description">Une pelouse inutilisée s'étend sous vos yeux... Ça vous dirait d'avoir un bac et d'y faire pousser tomates, radis ou menthe poivrée ? 
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button" onclick="launchForm('projet de bac en bois');">Jardinez ici</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom"  onclick="launchForm('rue saint germain', { lat: 48.885394, lng: 2.435672}, 'projet de jardinière municipale');">Jardinez ici</a>
+			</div>
 		</div>
 		<div class="galery__card">
 			<img class="galery__card__image" src="img/jardinieres-rue-stgermain.jpg"
@@ -475,7 +430,9 @@
 			<h3 class="galery__card__subtitle">Jardinière Municipale</h3>
 			<p class="galery__card__description">Adopter une jardinière municipale dans la rue Saint Germain. Vous pouvez la planter vous même !
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button"  onclick="launchForm('projet de jardinière municipale');">Jardinez ici</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom"  onclick="launchForm('rue saint germain', { lat: 48.885394, lng: 2.435672}, 'projet de jardinière municipale');">Jardinez ici</a>
+			</div>
 		</div>
 		<div class="galery__card">
 			<img class="galery__card__image" src="img/jardinieres-en-bois.jpg" />
@@ -483,7 +440,10 @@
 			<h3 class="galery__card__subtitle">Bac en bois sur pelouse</h3>
 			<p class="galery__card__description">Une pelouse inutilisée s'étend sous vos yeux... Ça vous dirait d'avoir un bac et d'y faire pousser tomates, radis ou menthe poivrée ? 
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button" onclick="launchForm('projet de bac en bois');">Jardinez ici</a>
+			
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom"  onclick="launchForm('rue saint germain', { lat: 48.885394, lng: 2.435672}, 'projet de jardinière municipale');">Jardinez ici</a>
+			</div>
 		</div>
 		<div class="galery__card">
 			<img class="galery__card__image" src="img/jardinieres-rue-stgermain.jpg"
@@ -492,7 +452,9 @@
 			<h3 class="galery__card__subtitle">Jardinière Municipale</h3>
 			<p class="galery__card__description">Adopter une jardinière municipale dans la rue Saint Germain. Vous pouvez la planter vous même !
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button"  onclick="launchForm('projet de jardinière municipale');">Jardinez ici</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom"  onclick="launchForm('rue saint germain', { lat: 48.885394, lng: 2.435672}, 'projet de jardinière municipale');">Jardinez ici</a>
+			</div>
 		</div>
 		<div class="galery__card">
 			<img class="galery__card__image" src="img/jardinieres-en-bois.jpg" />
@@ -500,7 +462,9 @@
 			<h3 class="galery__card__subtitle">Bac en bois sur pelouse</h3>
 			<p class="galery__card__description">Une pelouse inutilisée s'étend sous vos yeux... Ça vous dirait d'avoir un bac et d'y faire pousser tomates, radis ou menthe poivrée ? 
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button" onclick="launchForm('projet de bac en bois');">Jardinez ici</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom"  onclick="launchForm('rue saint germain', { lat: 48.885394, lng: 2.435672}, 'projet de jardinière municipale');">Jardinez ici</a>
+			</div>
 		</div>
 		<div class="galery__card">
 			<img class="galery__card__image" src="img/jardinieres-en-bois.jpg" />
@@ -508,11 +472,12 @@
 			<h3 class="galery__card__subtitle">Bac en bois sur pelouse</h3>
 			<p class="galery__card__description">Une pelouse inutilisée s'étend sous vos yeux... Ça vous dirait d'avoir un bac et d'y faire pousser tomates, radis ou menthe poivrée ? 
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button" onclick="launchForm('projet de bac en bois');">Jardinez ici</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom"  onclick="launchForm('rue saint germain', { lat: 48.885394, lng: 2.435672}, 'projet de jardinière municipale');">Jardinez ici</a>
+			</div>
 		</div>
-		<div class="galery__card" style="width: 90%; height: 150px; margin: 60px auto;">
-			<p><b>Une autre idée ?</b> <br>Je vois que vous n'êtes pas le genre de personne à faire comme tout le monde.
-				Laisser parler votre imagination. Proposer un nouveau lieu à végétaliser :<br>
+		<div class="galery__card" style="width: 90%; height: 140px; margin: 60px auto; padding-top: 30px;">
+			<p><b>Une autre idée ?</b> <br>Proposer un nouveau lieu à végétaliser :<br>
 			 	<input style="width: 250px" type="text" id="address-search" name="address-search" placeholder="Saisissez une rue ici..." class="form__input"> 
 				 <button class="form__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
 			</p>
@@ -521,7 +486,6 @@
 	<div class="map-container" id="map-container">
 		<div class="map__leaflet" id="map">
 		</div>
-	</div>
 	</div>
 	<div class="form form--invisible" id="permit__form">
 		<iframe id="typeform" class="form__typeform" ></iframe>
@@ -539,6 +503,7 @@
     	zoom: 15,
     	minZoom: 14
 	});
+	map.setView({ lat: 48.885394, lng: 2.435672}, 14);
 
 	var photoLayer = L.tileLayer('https://wxs.ign.fr/aux4oyb491ew3s7eqahym3ps/wmts/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fjpeg', {
             attribution: "&copy; <a href='http://www.ign.fr'>IGN</a>",
@@ -554,15 +519,6 @@
     	maxZoom: 20
 	});
 
-	var mapLayerMiniMap = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
-    	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    	minZoom: 11,
-    	maxZoom: 15
-	});
-
-	var miniMapLayers = new L.LayerGroup();
-	mapLayerMiniMap.addTo(miniMapLayers);
-
 	var baseMaps = {
 		'<span class="map__legend">Photo aérienne</span>': photoLayer,
 		'<span class="map__legend">Carte</span>': mapLayer
@@ -576,39 +532,6 @@
     	prefix: 'fa'
   	});
 
-
-	function show(itemID) {
-		var itemDom = document.getElementById(itemID);
-		itemDom.classList.remove(itemID+'--invisible');
-		itemDom.scrollIntoView();
-	}
-
-    function sendReverseGeocodeRequest(latlng, response){
-    		try { requestReverseGeocode.abort(); } catch(e){}
-			requestReverseGeocode = new XMLHttpRequest();
-			requestReverseGeocode.open('GET', 'https://api-adresse.data.gouv.fr/reverse/?type=housenumber&lon='+latlng.lng+'&lat='+latlng.lat, true);
-    		requestReverseGeocode.onload = function() {
-			  if (requestReverseGeocode.status >= 200 && requestReverseGeocode.status < 400) {
-			    // Success!
-			    var data = JSON.parse(requestReverseGeocode.responseText);
-			    var features = data["features"];
-			    response(data["features"]);
-			  } else {
-			    response([]);
-			  }
-			};
-			requestReverseGeocode.send();
-    }
-
-	var requestReverseGeocode;
-
-	function reverseGeocodeAdress(latlng, onCompleted) {
-		coord = latlng;
-		sendReverseGeocodeRequest(latlng, function(features) {
-			onCompleted(features[0]["properties"]["label"]);
-		})
-	}
-
 	var request = new XMLHttpRequest();
 	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom='+city, true);
 
@@ -616,11 +539,6 @@
 	  if (request.status >= 200 && request.status < 400) {
 	    // Success!
 	    var data = JSON.parse(request.responseText);
-		var polygonMiniMap = L.geoJson(data[0]["contour"],{
-		    color: '#0C518A',
-		    fill: false
-		})
-		polygonMiniMap.addTo(miniMapLayers);
 	    var polygon = L.geoJson(data[0]["contour"],{
 		    color: '#0C518A',
 		    fill: false
@@ -683,35 +601,32 @@
 	};
 	requestVerts.send();
 
-	var projectType = '';
 
 	function chooseProject() {
-		document.getElementById('step-place').classList.remove('step--current');
-		document.getElementById('step-place').classList.add('step--previous');
-		document.getElementById('step-project').classList.remove('step--disable');
+		document.getElementById('step-application').classList.remove('step--current');
+		document.getElementById('step-application').classList.add('step--disable');
+		document.getElementById('step-project').classList.remove('step--previous');
 		document.getElementById('step-project').classList.add('step--current');
-		document.getElementById('map-container').classList.add('map-container--invisible');
-		 
+		document.getElementById('permit__form').classList.add('form--invisible');
 		document.getElementById('projectList').classList.remove('galery--invisible');
+		document.getElementById('map-container').classList.remove('map-container--invisible');
 	}
 
-	function launchForm(type) {
+	function launchForm(address, coord, type) {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
 		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng;
-		document.getElementById('content').classList.add('content--invisible');
-		var permitForm = document.getElementById('permit__form');
-		permitForm.classList.remove('form--invisible');
-		permitForm.scrollIntoView();
-		document.body.classList.add('body--noscroll')
+		
+		document.getElementById('step-project').classList.remove('step--current');
+		document.getElementById('step-project').classList.add('step--previous');
+		document.getElementById('step-application').classList.remove('step--disable');
+		document.getElementById('step-application').classList.add('step--current');
+		
+		document.getElementById('projectList').classList.add('galery--invisible');
+		document.getElementById('map-container').classList.add('map-container--invisible');
+		document.getElementById('permit__form').classList.remove('form--invisible');
 	}
-
-	var lng = getParameterByName('lng');
-	var lat = getParameterByName('lat');
-	selectedAddress = getParameterByName('address');
-	var coord = { lat: 48.885394, lng: 2.435672};
-	map.setView(coord, 15);
-	//var miniMap = new L.Control.MiniMap(miniMapLayers, { toggleDisplay: true, zoomLevelFixed: 12 }).addTo(map);
+	
 
 	var doc = document.getElementById('typeform').contentWindow.document;
 	doc.open();
