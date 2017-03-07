@@ -354,6 +354,7 @@
 		.cta__link:link {
 			text-decoration:none; 
 		}
+
 		.search {
 			display: inline-block;
 			vertical-align: middle;
@@ -398,110 +399,6 @@
 		.content--invisible {
 			display: none;
 		}
-
-		.steps {
-			height: 52px;
-			width: 90%;
-			float: right;
-		}
-		.step {
-			box-sizing:border-box;
-		height: 100%;
-		width: 33.33%;
-		position: relative;
-		float: left;
-		text-align: center;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		color: white;
-		font-size: 20px;
-		font-weight: bold;
-		cursor: default;
-		}
-		.step--arrow:after {
-		content: '';
-			position: absolute;
-			top: 0; 
-			right: -25px; /*half of square's length*/
-			width: 50px; 
-			height: 50px;
-			transform: scale(0.707) rotate(45deg);
-			/*we need to prevent the arrows from getting buried under the next link*/
-			z-index: 1;
-			/*background same as links but the gradient will be rotated to compensate with the transform applied*/
-			background: #666;
-			/*stylish arrow design using box shadow*/
-		box-shadow: 
-				2px -2px 0 2px rgba(0, 0, 0, 0.4), 
-				3px -3px 0 2px rgba(255, 255, 255, 0.1);
-			/*
-				5px - for rounded arrows and 
-				50px - to prevent hover glitches on the border created using shadows*/
-		border-radius: 0 5px 0 50px;
-		}
-
-		.step--previous, .step--previous.step--arrow:after {
-		background-color: #3FA435;
-		}
-
-		.step--previous .step__number {
-		color: #3FA435;
-		}
-
-		/*
-		.step--previous:hover, .step--previous.step--arrow:hover:after {
-		background-color: #26831C;
-		cursor: pointer;
-		}
-
-		.step--previous:hover .step__number {
-		color: #26831C;
-		}*/
-
-		.step--current, .step--current.step--arrow:after {
-		background-color: #26831C;
-		}
-
-		.step--current .step__number {
-		color: #26831C;
-		}
-
-		.step--disable, .step--disable.step--arrow:after  {
-		background-color: #adadbb;
-		}
-
-		.step--disable .step__number {
-		color: #adadbb;
-		}
-
-
-		.step__number {
-		display: block;
-		background-color: white;
-		width: 25px;
-		height: 25px;
-		border-radius: 15px;
-		font-weight: bold;
-		margin: 0px 10px;
-		padding-top: 5px;
-		}
-
-
-		@media (max-width: 860px) {
-			.steps {
-				width: 100%;
-				}
-			.step {
-				font-size: 15px;
-				padding: 20px;
-				}
-			.step__number {
-				display: none;
-			}
-		}
-
-
 	</style>
 <!-- Piwik -->
 <script type="text/javascript">
@@ -522,35 +419,21 @@
 </head>
 
 <body>
-	<div id="content" class="content">
 	<div class="header header--52px">
 		<div class="header__ribbon">
 			Beta
 		</div>
 		<a href="."><img src="img/logoJEblanc.png" class="header__image header__image--left"></a>
-		<div class="steps">
-			<div class="step step--current step--arrow" id="step-place">
-				<span class="step__number">1</span>   Choisir un lieu
-			</div>
-			<div class="step step--disable step--arrow" id="step-project">
-				<span class="step__number">2</span>   Choisir un projet
+		<div class="steps steps--2-col">
+			<div class="step step--current step--arrow" id="step-project">
+				<span class="step__number">1</span>   Choisir un projet
 			</div>
 			<div class="step step--disable" id="step-application">
-				<span class="step__number">3</span>   Faire une demande
+				<span class="step__number">2</span>   Faire une demande
 			</div>
 		</div>
 	</div>
-
-	<div class="map-container" id="map-container">
-		<div class="map__leaflet" id="map">
-			<!-- <input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="address-search map__input leaflet-bar leaflet-control">
-			-->
-			<div class="map__protip leaflet-control">
-				<h1 id="selectAddressProTip" class="map__protip__title">Déplacer le repère où vous souhaitez planter</h1>
-			</div>
-		</div>
-	</div>
-	<div class="galery galery--invisible" id="projectList">
+	<div class="galery" id="projectList">
 		<div class="galery__card" onclick="launchForm('projet de jardinière municipale');">
 			<img class="galery__card__image" src="img/jardinieres-rue-stgermain.jpg"
 			/>
@@ -584,7 +467,6 @@
 			<a class="galery__card__bottom galery__card__bottom--button">Je demande à participer à Jardin'émoi</a>
 		</div>
 	</div>
-	</div>
 	<div class="form form--invisible" id="permit__form">
 		<iframe id="typeform" class="form__typeform" ></iframe>
 	</div>
@@ -597,194 +479,6 @@
 	var selectedPointPopup;
 	var selectedAddress;
 	var codePostaux = [];
-	var map = L.map('map', {
-    	zoom: 15,
-    	minZoom: 15
-	});
-
-	function onCityGeoDataLoaded(){
-		 var polygon = L.geoJson(contour,{
-		    color: '#0C518A',
-		    fill: false
-		}).addTo(map)
-		var bounds = polygon.getBounds();
-	    map.setMaxBounds(bounds.pad(0.05));
-		//map.flyTo(center, 12);
-	}
-
-	var photoLayer = L.tileLayer('https://wxs.ign.fr/aux4oyb491ew3s7eqahym3ps/wmts/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fjpeg', {
-            attribution: "&copy; <a href='http://www.ign.fr'>IGN</a>",
-            minZoom: 13,
-            maxZoom: 19
-        });
-
-	photoLayer.addTo(map);
-
-	var mapLayer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
-    	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    	minZoom: 13,
-    	maxZoom: 20
-	});
-
-	var mapLayerMiniMap = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
-    	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    	minZoom: 11,
-    	maxZoom: 15
-	});
-
-	var miniMapLayers = new L.LayerGroup();
-	mapLayerMiniMap.addTo(miniMapLayers);
-
-	var baseMaps = {
-		'<span class="map__legend">Photo aérienne</span>': photoLayer,
-		'<span class="map__legend">Carte</span>': mapLayer
-	};
-	var layerControl = L.control.layers(baseMaps, null,({collapsed: false }));
-	layerControl.addTo(map);
-
-	var moveMarker = L.AwesomeMarkers.icon({
-    	icon: 'circle',
-    	markerColor: 'blue',
-    	prefix: 'fa'
-  	});
-
-
-	function show(itemID) {
-		var itemDom = document.getElementById(itemID);
-		itemDom.classList.remove(itemID+'--invisible');
-		itemDom.scrollIntoView();
-	}
-
-    function sendReverseGeocodeRequest(latlng, response){
-    		try { requestReverseGeocode.abort(); } catch(e){}
-			requestReverseGeocode = new XMLHttpRequest();
-			requestReverseGeocode.open('GET', 'https://api-adresse.data.gouv.fr/reverse/?type=housenumber&lon='+latlng.lng+'&lat='+latlng.lat, true);
-    		requestReverseGeocode.onload = function() {
-			  if (requestReverseGeocode.status >= 200 && requestReverseGeocode.status < 400) {
-			    // Success!
-			    var data = JSON.parse(requestReverseGeocode.responseText);
-			    var features = data["features"];
-			    response(data["features"]);
-			  } else {
-			    response([]);
-			  }
-			};
-			requestReverseGeocode.send();
-    }
-
-	var requestReverseGeocode;
-
-	function reverseGeocodeAdress(latlng, onCompleted) {
-		coord = latlng;
-		sendReverseGeocodeRequest(latlng, function(features) {
-			onCompleted(features[0]["properties"]["label"]);
-		})
-	}
-
-	function selectPoint(latlng, address) {
-    	try { map.removeLayer(selectedPoint); } catch(e){}
-		selectedPoint = L.marker(latlng, {
-							draggable: true,
-							clickable: false,
-							icon: moveMarker
-						})
-						  .addTo(map)
-		function manageResult(address) {
-				selectedAddress = address;
-				selectedPoint.bindPopup('<div style="text-align: center; font-size: 14px; font-weight: bold;">'+selectedAddress+'<a href="javascript:chooseProject();" class="button button--yellow">Choisir mon projet</a></div>',
-						       {autoClose:false, closeButton: false, className: 'popup--green'})
-						  .openPopup();
-		}
-		selectedPoint.on('move', function(e) {
-								selectedPoint.closePopup();
-							    reverseGeocodeAdress(e.latlng, manageResult);
-						  })
-
-		if(address == undefined) {
-			selectedAddress = 'adresse introuvable';
-			reverseGeocodeAdress(latlng, manageResult);
-		} else {
-			selectedAddress = address;
-			manageResult(address);
-		}
-					  
-	}
-
-
-	map.on('click', function(e) {
-		selectPoint(e.latlng);
-	});
-
-
-	var request = new XMLHttpRequest();
-	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom='+city, true);
-
-	request.onload = function() {
-	  if (request.status >= 200 && request.status < 400) {
-	    // Success!
-	    var data = JSON.parse(request.responseText);
-		var polygonMiniMap = L.geoJson(data[0]["contour"],{
-		    color: '#0C518A',
-		    fill: false
-		})
-		polygonMiniMap.addTo(miniMapLayers);
-	    var polygon = L.geoJson(data[0]["contour"],{
-		    color: '#0C518A',
-		    fill: false
-		}).addTo(map)
-		var bounds = polygon.getBounds();
-	    map.setMaxBounds(bounds.pad(0.05));
-	    codePostaux = data[0]["codesPostaux"];
-	  } else {
-	    // We reached our target server, but it returned an error
-
-	  }
-	};
-	request.send();
-
-// Add projects on the map
-	var existingProjects = new L.LayerGroup();
-	var existingProjectsMiniMap = new L.LayerGroup();
-	var requestVerts = new XMLHttpRequest();
-	requestVerts.open('GET', 'data/projects/'+city+'.geojson', true);
-
-	var plantMarker = L.AwesomeMarkers.icon({
-    	icon: 'leaf',
-    	markerColor: 'green',
-    	prefix: 'fa'
-  	});
-
-	requestVerts.onload = function() {
-	  if (requestVerts.status >= 200 && requestVerts.status < 400) {
-	    // Success!
-	    var data = JSON.parse(requestVerts.responseText);
-
-	    data["features"].map(function(feature){
-	    	L.geoJson(feature["geometry"], {
-							pointToLayer: function(geoJsonPoint, latlng) {
-								var marker = L.marker(latlng, {icon: plantMarker});
-								try { 
-									marker.bindPopup(feature["fields"]["type_veget"]); 
-								} catch(e){
-									marker.bindPopup(feature["properties"]["name"]+" à disposition");
-								}
-								return marker;
-							}
-						})
-						.addTo(existingProjects);
-			L.geoJson(feature["geometry"],  {
-							pointToLayer: function(geoJsonPoint, latlng) {
-								return L.marker(latlng, {icon: plantMarker});
-							}
-						}).addTo(existingProjectsMiniMap);
-	    })
-		existingProjects.addTo(map);
-		existingProjectsMiniMap.addTo(miniMapLayers);
-	  } else {
-
-	  }
-	};
-	requestVerts.send();
 
 	var projectType = '';
 
@@ -793,7 +487,6 @@
 		document.getElementById('step-place').classList.add('step--previous');
 		document.getElementById('step-project').classList.remove('step--disable');
 		document.getElementById('step-project').classList.add('step--current');
-		document.getElementById('map-container').classList.add('map-container--invisible');
 		 
 		document.getElementById('projectList').classList.remove('galery--invisible');
 	}
@@ -801,8 +494,8 @@
 	function launchForm(type) {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
-		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng;
-		document.getElementById('content').classList.add('content--invisible');
+		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+lat+'&lon='+lng;
+		document.getElementById('projectList').classList.add('galery--invisible');
 		var permitForm = document.getElementById('permit__form');
 		permitForm.classList.remove('form--invisible');
 		permitForm.scrollIntoView();
@@ -812,10 +505,6 @@
 	var lng = getParameterByName('lng');
 	var lat = getParameterByName('lat');
 	selectedAddress = getParameterByName('address');
-	var coord = { lat: lat, lng: lng};
-	map.setView(coord, 19);
-	selectPoint(coord, selectedAddress);
-	var miniMap = new L.Control.MiniMap(miniMapLayers, { toggleDisplay: true, zoomLevelFixed: 13, width: 250, height: 250 }).addTo(map);
 
 	var doc = document.getElementById('typeform').contentWindow.document;
 	doc.open();
