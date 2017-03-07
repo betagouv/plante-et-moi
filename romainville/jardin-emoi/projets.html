@@ -111,7 +111,6 @@
 			width: calc(100% - 700px);
 			height: calc(100% - 52px);
 			padding: 0%;
-			text-align: center;
 			float: left;
 		}
 
@@ -228,6 +227,8 @@
 			background-color: white;
 			position: relative;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			font-family: "Helvetica", "Arial", sans-serif;
+   			line-height: 1.5;
 		}
 		
 		.galery__card__image {
@@ -248,6 +249,7 @@
 			font-weight: bold;
 			color: white;
 			background: rgba(63, 165, 53, 0.7);
+			font-size: 25px;
 		}
 
 		.galery__card__subtitle {
@@ -260,16 +262,18 @@
 			font-weight: bold;
 			color: white;
 			background: rgba(63, 165, 53, 0.8);
+			font-size: 18px;
 		}
 		
 		.galery__card__description {
 			position: relative;
 			display: inline-block;
-			margin: 20px 10px 10px 10px;
+			margin: 20px 10px 10px 10px !important;
 			padding: 0px;
 			text-align: left;
 			top: -50px;
 			color: #555;
+			font-size: 15px;
 		}
 		
 		.galery__card__bottom {
@@ -281,6 +285,9 @@
 			border-radius: 0px 0px 2px 2px;
 			left: 0px;
 			display: block;
+			text-align: center;
+			color: white;
+			font-size: 18px;
 		}
 		
 		.galery__card__bottom--button {
@@ -291,8 +298,9 @@
 			transition: none 200ms ease-out;
 			transition-property: color, background;
 			padding: 16px 0px;
-			color: white;
+			color: white !important;
 			border-color: black;
+			cursor: pointer;
 		}
 		
 		.galery__card__bottom--button:hover {
@@ -554,9 +562,8 @@
 		</div>
 	</div>
 	<div class="galery galery--fixe" id="projectList">
-		<div class="galery__card">
-			<img class="galery__card__image" src="img/jardinieres-rue-stgermain.jpg"
-			/>
+		<div class="galery__card" id="card-1">
+			<img class="galery__card__image" src="img/jardinieres-rue-stgermain.jpg"/>
 			<h2 class="galery__card__title">Rue St Germain</h2>
 			<h3 class="galery__card__subtitle">Jardinière Municipale</h3>
 			<p class="galery__card__description">Adopter une jardinière municipale dans la rue Saint Germain. Vous pouvez la planter vous même !
@@ -642,16 +649,6 @@
     	zoom: 15,
     	minZoom: 12
 	});
-
-	function onCityGeoDataLoaded(){
-		 var polygon = L.geoJson(contour,{
-		    color: '#0C518A',
-		    fill: false
-		}).addTo(map)
-		var bounds = polygon.getBounds();
-	    map.setMaxBounds(bounds.pad(0.05));
-		//map.flyTo(center, 12);
-	}
 
 	var photoLayer = L.tileLayer('https://wxs.ign.fr/aux4oyb491ew3s7eqahym3ps/wmts/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fjpeg', {
             attribution: "&copy; <a href='http://www.ign.fr'>IGN</a>",
@@ -739,7 +736,7 @@
 		    fill: false
 		}).addTo(map)
 		var bounds = polygon.getBounds();
-	    map.setMaxBounds(bounds.pad(0.05));
+	    map.setMaxBounds(bounds.pad(1));
 	    codePostaux = data[0]["codesPostaux"];
 	  } else {
 	    // We reached our target server, but it returned an error
@@ -769,11 +766,15 @@
 	    	L.geoJson(feature["geometry"], {
 							pointToLayer: function(geoJsonPoint, latlng) {
 								var marker = L.marker(latlng, {icon: plantMarker});
+								/*
 								try { 
 									marker.bindPopup(feature["fields"]["type_veget"]); 
 								} catch(e){
 									marker.bindPopup(feature["properties"]["name"]+" à disposition");
-								}
+								}*/
+								var popup = document.getElementById('card-1').cloneNode(true);
+								popup.style.margin = "0px";
+								marker.bindPopup(popup.outerHTML);
 								return marker;
 							}
 						})
