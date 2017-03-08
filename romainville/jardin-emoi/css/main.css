@@ -180,17 +180,23 @@ color: #adadbb;
     color:#ffffff;
     font-size:25px;
     font-weight: bold;
-    font-family: Arvo,Georgia,serif;
+    /*font-family: Arvo,Georgia,serif;*/
     padding: 5px 20px;
     text-decoration:none;
     letter-spacing: 0.2px;
     font-weight: bold;
     text-align: center;
     cursor: pointer;
+    transition: none 200ms ease-out;		
+    transition-property: color, background;
 }
 .button {
     position:relative;
     top:1px;
+}
+
+.button--shadow {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 }
 
 .button--yellow {
