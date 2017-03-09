@@ -559,11 +559,20 @@
 	var requestVerts = new XMLHttpRequest();
 	requestVerts.open('GET', 'data/projects/'+city+'.geojson', true);
 
+/*
 	var plantMarker = L.AwesomeMarkers.icon({
     	icon: 'leaf',
     	markerColor: 'green',
     	prefix: 'fa'
-  	});
+  	});*/
+
+	var plantMarker = L.icon({
+   		iconUrl: 'img/repereJEvert.png',
+		iconSize:     [35, 65],
+    	iconAnchor:   [18, 64],
+    	popupAnchor:  [0, -40]
+	})
+
 
 	requestVerts.onload = function() {
 	  if (requestVerts.status >= 200 && requestVerts.status < 400) {
