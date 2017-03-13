@@ -12,6 +12,16 @@
 .map__leaflet {
     height: 250px;
 }
+.application__key {
+    width: 35%;
+    font-weight: bold;
+}
+.application__value {
+    width: 65%;
+}
+.application {
+    white-space: normal;
+}
 </style>
 }{
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
@@ -20,93 +30,58 @@
 </div>
 
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
+   <table class="application mdl-data-table mdl-js-data-table mdl-cell @if(application.imagesFiles().isEmpty) {mdl-cell--12-col} else {mdl-cell--9-col} mdl-cell--12-col-tablet">
+       <tbody>
+       <tr>
+           <td class="mdl-data-table__cell--non-numeric application__key" >Adresse du projet</td>
+           <td class="mdl-data-table__cell--non-numeric application__value">@application.address</td>
+       </tr>
+       <tr>
+           <td class="mdl-data-table__cell--non-numeric application__key">Type</td>
+           <td class="mdl-data-table__cell--non-numeric application__value">@application._type</td>
+       </tr>
+       <tr>
+           <td class="mdl-data-table__cell--non-numeric application__key">Date de dépot</td>
+           <td class="mdl-data-table__cell--non-numeric application__value">@application.creationDate.toString("dd MMM YYYY", new Locale("fr"))</td>
+       </tr>
+       <tr>
+           <td class="mdl-data-table__cell--non-numeric application__key">Nom du demandeur</td>
+           <td class="mdl-data-table__cell--non-numeric application__value">@application.name</td>
+       </tr>
+       <tr>
+           <td class="mdl-data-table__cell--non-numeric application__key">Courriel</td>
+           <td class="mdl-data-table__cell--non-numeric application__value">@application.email</td>
+       </tr>
+       <tr>
+           <td class="mdl-data-table__cell--non-numeric application__key">Téléphone</td>
+           <td class="mdl-data-table__cell--non-numeric application__value">@application.phone</td>
+       </tr>
+       <tr>
+           <td class="mdl-data-table__cell--non-numeric application__key">Avancement</td>
+           <td class="mdl-data-table__cell--non-numeric application__value">@application.status</td>
+       </tr>
+       @for((key,value) <- application.fields) {
+       <tr>
+           <td class="mdl-data-table__cell--non-numeric application__key">@key</td>
+           <td class="mdl-data-table__cell--non-numeric application__value">@value</td>
+       </tr>
+       }
+       @application.files.map { file =>
+       <tr>
+           <td class="mdl-data-table__cell--non-numeric application__key">Fichier</td>
+           <td class="mdl-data-table__cell--non-numeric application__value"><a href='@routes.ApplicationController.getImage(file)'>@file.split('/').last</a></td>
+       </tr>
+       }
+       </tbody>
+   </table>
+
     @if(!application.imagesFiles().isEmpty) {
     <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet">
         @application.imagesFiles().map { file =>
-            <img src='@routes.ApplicationController.getImage(file)' style="max-width: 100%; margin: 10px;">
+        <img src='@routes.ApplicationController.getImage(file)' style="max-width: 100%; margin: 10px;">
         }
     </div>
     }
-
-    <ul class="demo-list-item mdl-list mdl-cell @if(application.imagesFiles().isEmpty) {mdl-cell--12-col} else {mdl-cell--9-col} mdl-cell--12-col-tablet">
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Adresse du projet
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                @application.address
-            </span>
-        </li>
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Type
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                @application._type
-            </span>
-        </li>
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Date de dépot
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                @application.creationDate.toString("dd MMM YYYY", new Locale("fr"))
-            </span>
-        </li>
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Nom du demandeur
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                @application.name
-            </span>
-        </li>
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Courriel
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                @application.email
-            </span>
-        </li>
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Téléphone
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                @application.phone
-            </span>
-        </li>
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Avancement
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                @application.status
-            </span>
-        </li>
-        @for((key,value) <- application.fields) {
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              @key
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                @value
-            </span>
-        </li>
-        }
-        @application.files.map { file =>
-        <li class="mdl-list__item">
-            <span class="mdl-list__item-primary-content">
-              Fichier
-            </span>
-            <span class="mdl-list__item-secondary-action">
-                 <a href='@routes.ApplicationController.getImage(file)'>@file.split('/').last</a>
-            </span>
-        </li>
-        }
-    </ul>
-
 </div>
 @if(application.status == "Nouvelle") {
     @if(agent.admin) {
