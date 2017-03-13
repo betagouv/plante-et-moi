@@ -70,12 +70,19 @@
 			display: inline-block;
 			height: 370px;
 			min-width: 300px; 
-			width: 43%; 
+			width: 41%; 
 			text-align: center;
 			box-sizing:border-box;
 			margin: 40px;
 			vertical-align: top;
 		}
+
+		@media (max-width: 950px) {
+			.cube {
+				width: 90%;
+				max-height: 300px;
+			}
+		}	
 
 		.footer {
 			margin: 0 auto;
@@ -151,20 +158,20 @@
 	</div>
 
 	<div class="centered" style="
-			color: #0C518A; margin: 20px auto; text-align: center">
+			color: #0C518A; margin: 20px auto; text-align: center; ">
 		<div class="form">
 			<h1 class="main__title">Vous voulez participer à Jardin'émoi ? </h1>
 			<a class="button button--yellow button--shadow" href="projets.html">Choisissez votre projet</a>
 		</div>
 	</div>
 
-	<div class="centered">
+	<div class="centered" style="padding: 0px;">
 		<div class="cube" style="background-image: 
 url('img/mosaique1.jpg'); background-repeat: no-repeat; 
+		background-position: center left;
 			background-size: cover; border-radius: 2px; 
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 			">
-
 		</div>
 		<div class="cube" style="padding-top: 40px;">
 			<h2 class="main__title">Envie de jardinage ? <br/>Besoin de nature en ville ?</h2>
@@ -181,6 +188,7 @@ url('img/mosaique1.jpg'); background-repeat: no-repeat;
 		</div>
 		<div class="cube" style="background-image: 
 url('img/mosaique2.jpg'); background-repeat: no-repeat;
+background-position: center left;
 			background-size: cover; border-radius: 2px; 
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);">
 		</div>
