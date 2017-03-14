@@ -74,9 +74,12 @@
     </tbody>
 </table>
 @if(!application.imagesFiles().isEmpty) {
-<div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp">
+<div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid mdl-grid--no-spacing">
     @application.imagesFiles().map { file =>
-    <img src='@routes.ApplicationController.getImage(file)' style="max-width: 100%; margin: 0px;">
+    <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
+        <img src='@routes.ApplicationController.getImage(file)' style="width: 100%; margin: 0px;">
+    </div>
+    <div class="mdl-cell--1-col" style="height: 20px"></div>
     }
 </div>
 }
