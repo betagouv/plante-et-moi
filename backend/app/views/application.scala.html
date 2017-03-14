@@ -29,64 +29,62 @@
     </div>
 </div>
 
-<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid" style="text-align: center;">
-   <table class="application mdl-data-table mdl-js-data-table mdl-cell @if(application.imagesFiles().isEmpty) {mdl-cell--12-col} else {mdl-cell--9-col} mdl-cell--12-col-tablet">
-       <tbody>
-       <tr>
-           <td class="mdl-data-table__cell--non-numeric application__key" >Adresse du projet</td>
-           <td class="mdl-data-table__cell--non-numeric application__value">@application.address</td>
-       </tr>
-       <tr>
-           <td class="mdl-data-table__cell--non-numeric application__key">Type</td>
-           <td class="mdl-data-table__cell--non-numeric application__value">@application._type</td>
-       </tr>
-       <tr>
-           <td class="mdl-data-table__cell--non-numeric application__key">Date de dépot</td>
-           <td class="mdl-data-table__cell--non-numeric application__value">@application.creationDate.toString("dd MMM YYYY", new Locale("fr"))</td>
-       </tr>
-       <tr>
-           <td class="mdl-data-table__cell--non-numeric application__key">Nom du demandeur</td>
-           <td class="mdl-data-table__cell--non-numeric application__value">@application.name</td>
-       </tr>
-       <tr>
-           <td class="mdl-data-table__cell--non-numeric application__key">Courriel</td>
-           <td class="mdl-data-table__cell--non-numeric application__value">@application.email</td>
-       </tr>
-       <tr>
-           <td class="mdl-data-table__cell--non-numeric application__key">Téléphone</td>
-           <td class="mdl-data-table__cell--non-numeric application__value">@application.phone</td>
-       </tr>
-       <tr>
-           <td class="mdl-data-table__cell--non-numeric application__key">Avancement</td>
-           <td class="mdl-data-table__cell--non-numeric application__value">@application.status</td>
-       </tr>
-       @for((key,value) <- application.fields) {
-       <tr>
-           <td class="mdl-data-table__cell--non-numeric application__key">@key</td>
-           <td class="mdl-data-table__cell--non-numeric application__value">@value</td>
-       </tr>
-       }
-       @application.files.map { file =>
-       <tr>
-           <td class="mdl-data-table__cell--non-numeric application__key">Fichier</td>
-           <td class="mdl-data-table__cell--non-numeric application__value"><a href='@routes.ApplicationController.getImage(file)'>@file.split('/').last</a></td>
-       </tr>
-       }
-       </tbody>
-   </table>
-
-    @if(!application.imagesFiles().isEmpty) {
-    <div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet">
-        @application.imagesFiles().map { file =>
-        <img src='@routes.ApplicationController.getImage(file)' style="max-width: 100%; margin: 10px;">
-        }
-    </div>
+<table class="application mdl-data-table mdl-js-data-table mdl-cell @if(application.imagesFiles().isEmpty) {mdl-cell--12-col} else {mdl-cell--9-col} mdl-cell--12-col-tablet mdl-shadow--2dp">
+    <tbody>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric application__key" >Adresse du projet</td>
+        <td class="mdl-data-table__cell--non-numeric application__value">@application.address</td>
+    </tr>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric application__key">Type</td>
+        <td class="mdl-data-table__cell--non-numeric application__value">@application._type</td>
+    </tr>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric application__key">Date de dépot</td>
+        <td class="mdl-data-table__cell--non-numeric application__value">@application.creationDate.toString("dd MMM YYYY", new Locale("fr"))</td>
+    </tr>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric application__key">Nom du demandeur</td>
+        <td class="mdl-data-table__cell--non-numeric application__value">@application.name</td>
+    </tr>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric application__key">Courriel</td>
+        <td class="mdl-data-table__cell--non-numeric application__value">@application.email</td>
+    </tr>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric application__key">Téléphone</td>
+        <td class="mdl-data-table__cell--non-numeric application__value">@application.phone</td>
+    </tr>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric application__key">Avancement</td>
+        <td class="mdl-data-table__cell--non-numeric application__value">@application.status</td>
+    </tr>
+    @for((key,value) <- application.fields) {
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric application__key">@key</td>
+        <td class="mdl-data-table__cell--non-numeric application__value">@value</td>
+    </tr>
+    }
+    @application.files.map { file =>
+    <tr>
+        <td class="mdl-data-table__cell--non-numeric application__key">Fichier</td>
+        <td class="mdl-data-table__cell--non-numeric application__value"><a href='@routes.ApplicationController.getImage(file)'>@file.split('/').last</a></td>
+    </tr>
+    }
+    </tbody>
+</table>
+@if(!application.imagesFiles().isEmpty) {
+<div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-shadow--2dp">
+    @application.imagesFiles().map { file =>
+    <img src='@routes.ApplicationController.getImage(file)' style="max-width: 100%; margin: 0px;">
     }
 </div>
+}
+
 @if(application.status == "Nouvelle") {
     @if(agent.admin) {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1-offset mdl-grid" method="post">
+    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1-offset-desktop mdl-grid" method="post">
         <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis aux agents)</button>
     </form>
 </div>
