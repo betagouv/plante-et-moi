@@ -601,7 +601,8 @@
 	function launchForm(address, coord, type) {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
-		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng;
+		var domain = window.location.hostname;
+		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+address+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng+'&domain='+domain;
 		
 		document.getElementById('step-project').classList.remove('step--current');
 		document.getElementById('step-project').classList.add('step--previous');
