@@ -120,12 +120,11 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
   }
 
   def mapResponseToApplication(questions: List[TypeformQuestion])(response: TypeformResponse) = {
-    val _type = response.hidden.getOrElse("type", "inconnue")
-    //_type.map(_.stripPrefix("projet de ").stripSuffix(" fleuris").capitalize)
+    val _type = response.hidden.getOrElse("type", "inconnue").stripPrefix("projet de ").stripSuffix(" fleuris").capitalize
     val lat = response.hidden("lat").toDouble
     val lon = response.hidden("lon").toDouble
     val coordinates = Coordinates(lat, lon)
-    val city = response.hidden("city")
+    val city = response.hidden("city").toLowerCase()
     val id = response.token
     val date = response.metadata.date_submit
 

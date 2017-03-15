@@ -30,7 +30,7 @@ class ApplicationController @Inject() (ws: WSClient,
                                        applicationService: ApplicationService) extends Controller {
 
   private def getCity(request: RequestHeader) =
-    request.session.get("city").getOrElse("Arles")
+    request.session.get("city").getOrElse("arles").toLowerCase()
 
   private def currentAgent(request: RequestHeader): Agent = {
     val id = request.session.get("agentId").getOrElse("admin")
@@ -63,7 +63,8 @@ class ApplicationController @Inject() (ws: WSClient,
 
   def all = loginAction.async { implicit request =>
     projects(getCity(request)).map { responses =>
-      Ok(views.html.allApplications(responses, currentAgent(request), agents.filter { agent => !agent.instructor }.length))
+      val numberOrReviewNeeded = agents.count { agent => !agent.instructor }
+      Ok(views.html.allApplications(responses, currentAgent(request), numberOrReviewNeeded))
     }
   }
 
@@ -104,7 +105,7 @@ class ApplicationController @Inject() (ws: WSClient,
 
 
   def changeCity(newCity: String) = Action { implicit request =>
-    Redirect(routes.ApplicationController.login()).withSession("city" -> newCity)
+    Redirect(routes.ApplicationController.login()).withSession("city" -> newCity.toLowerCase)
   }
 
   def disconnectAgent() = Action { implicit request =>
