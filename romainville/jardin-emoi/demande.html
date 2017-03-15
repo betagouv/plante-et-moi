@@ -425,7 +425,8 @@
 	function launchForm(type) {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
-		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+lat+'&lon='+lng;
+		var domain = window.location.hostname;
+		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+lat+'&lon='+lng+'&domain='+domain;
 		document.getElementById('projectList').classList.add('galery--invisible');
 		var permitForm = document.getElementById('permit__form');
 		permitForm.classList.remove('form--invisible');
