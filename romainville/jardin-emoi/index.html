@@ -161,7 +161,7 @@
 			color: #0C518A; margin: 20px auto; text-align: center; ">
 		<div class="form">
 			<h1 class="main__title">Vous voulez participer à Jardin'émoi ? </h1>
-			<a class="button button--yellow button--shadow" href="projets.html">Cliquez-ici pour choisir votre projet</a>
+			<a class="button button--yellow button--shadow" href="projets.html" onclick="changeButton()">Cliquez-ici pour choisir votre projet</a>
 		</div>
 	</div>
 
@@ -197,7 +197,7 @@ background-position: center left;
 	<div class="centered" style="
 			color: #0C518A; margin: 20px auto;">
 			<h1 class="main__title">Vous voulez participer à Jardin'émoi ? </h1>
-			<a class="button button--yellow button--shadow" href="projets.html">Cliquez-ici pour choisir votre projet</a>
+			<a class="button button--yellow button--shadow" href="projets.html" onclick="changeButton()">Cliquez-ici pour choisir votre projet</a>
 		</div>
 	</div><br><br>
 
@@ -295,6 +295,11 @@ background-position: center left;
 		cache: false,
 	});
 
+	function changeButton() {
+		Array.from(document.getElementsByClassName('button')).forEach(function(button){
+			button.innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
+		})
+	}
 
 	function manualSearch(fieldId){
 		Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
