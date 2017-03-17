@@ -13,14 +13,23 @@
     height: 250px;
 }
 .application__key {
-    width: 35%;
+    width: 40%;
     font-weight: bold;
 }
 .application__value {
-    width: 65%;
+    width: 60%;
 }
 .application {
     white-space: normal;
+}
+
+@@media (max-width: 600px) {
+    .mdl-data-table__cell--non-numeric {
+        display: block;
+        float: left;
+        width: 100%;
+        height: initial !important;
+    }
 }
 </style>
 }{
@@ -29,7 +38,7 @@
     </div>
 </div>
 
-<table class="application mdl-data-table mdl-js-data-table mdl-cell @if(application.imagesFiles().isEmpty) {mdl-cell--12-col} else {mdl-cell--9-col} mdl-cell--12-col-tablet mdl-shadow--2dp">
+<table class="application mdl-data-table mdl-js-data-table mdl-cell @if(application.imagesFiles().isEmpty) {mdl-cell--12-col} else {mdl-cell--6-col} mdl-cell--12-col-phone mdl-shadow--2dp" style="table-layout: fixed;">
     <tbody>
     <tr>
         <td class="mdl-data-table__cell--non-numeric application__key" >Adresse du projet</td>
@@ -74,7 +83,7 @@
     </tbody>
 </table>
 @if(!application.imagesFiles().isEmpty) {
-<div class="mdl-cell mdl-cell--3-col mdl-cell--12-col-tablet mdl-cell--12-col-phone mdl-grid mdl-grid--no-spacing">
+<div class="mdl-cell mdl-cell--6-col mdl-cell--12-col-phone mdl-grid mdl-grid--no-spacing">
     @application.imagesFiles().map { file =>
     <div class="mdl-card mdl-shadow--2dp mdl-cell mdl-cell--12-col">
         <img src='@routes.ApplicationController.getImage(file)' style="width: 100%; margin: 0px;">
