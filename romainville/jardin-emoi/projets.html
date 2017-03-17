@@ -178,8 +178,24 @@
 			text-align: center;
 			box-sizing: border-box;
 			float: left;
+		}
+
+		.galery--force-scrollbar {
 			overflow-y: scroll;
 		}
+
+		.galery--force-scrollbar::-webkit-scrollbar {
+			-webkit-appearance: none;
+			width: 11px;
+		}
+		.galery--force-scrollbar::-webkit-scrollbar-thumb {
+			border-radius: 8px;
+			background-color: rgba(0,0,0,.5);
+			-webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+		}
+		.galery--force-scrollbar::-webkit-scrollbar-track { 
+			border-radius: 8px; 
+		} 
 		
 		.galery--invisible {
 			display: none;
@@ -207,6 +223,10 @@
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 			font-family: "Helvetica", "Arial", sans-serif;
    			line-height: 1.5;
+		}
+
+		.galery__card--clickable {
+			cursor: pointer;
 		}
 		
 		.galery__card__image {
@@ -367,7 +387,6 @@
 		.search__button:hover {
 			background-color: seagreen;
 		}
-
 	</style>
 <!-- Piwik -->
 <script type="text/javascript">
@@ -402,8 +421,8 @@
 			</div>
 		</div>
 	</div>
-	<div class="galery galery--fixe" id="projectList">
-		<div class="galery__card" data-coord-lat="48.892466" data-coord-lng="2.435285"   onclick="launchForm('place André Léonet', { lat: 48.892466, lng: 2.435285}, 'projet de jardinière municipale');">
+	<div class="galery galery--fixe galery--force-scrollbar" id="projectList">
+		<div class="galery__card galery__card--clickable" data-coord-lat="48.892466" data-coord-lng="2.435285"   onclick="launchForm('place André Léonet', { lat: 48.892466, lng: 2.435285}, 'projet de jardinière municipale');">
 			<img class="galery__card__image" src="img/jardinieres-espace-brel.jpg"/>
 			<h2 class="galery__card__title">Place André Léonet</h2>
 			<h3 class="galery__card__subtitle">Jardinières municipales</h3>
@@ -413,7 +432,7 @@
 				<a class="button button--yellow button--card-bottom">Jardinez ici</a>
 			</div>
 		</div>
-		<div class="galery__card" data-coord-lat="48.88179184157838" data-coord-lng="2.4321627616882324" onclick="launchForm('rue saint germain', { lat: 48.88179184157838, lng: 2.4321627616882324}, 'projet de jardinière municipale');">
+		<div class="galery__card galery__card--clickable" data-coord-lat="48.88179184157838" data-coord-lng="2.4321627616882324" onclick="launchForm('rue saint germain', { lat: 48.88179184157838, lng: 2.4321627616882324}, 'projet de jardinière municipale');">
 			<img class="galery__card__image" src="img/jardinieres-rue-stgermain.jpg"/>
 			<h2 class="galery__card__title">Rue Saint-Germain</h2>
 			<h3 class="galery__card__subtitle">Jardinières Municipales</h3>
@@ -423,7 +442,7 @@
 				<a class="button button--yellow button--card-bottom">Jardinez ici</a>
 			</div>
 		</div>
-		<div class="galery__card" data-coord-lat="48.880610" data-coord-lng="2.440816" onclick="launchForm('rue saint germain', { lat: 48.880610, lng: 2.440816}, 'projet de bac en bois');">
+		<div class="galery__card galery__card--clickable" data-coord-lat="48.880610" data-coord-lng="2.440816" onclick="launchForm('rue saint germain', { lat: 48.880610, lng: 2.440816}, 'projet de bac en bois');">
 			<img class="galery__card__image" src="img/square-barbusse.jpg" />
 			<h2 class="galery__card__title">Square Barbusse</h2>
 			<h3 class="galery__card__subtitle">Bacs en bois sur pelouse</h3>
@@ -433,7 +452,7 @@
 				<a class="button button--yellow button--card-bottom">Jardinez ici</a>
 			</div>
 		</div>
-		<div class="galery__card" data-coord-lat="48.876720" data-coord-lng="2.447206" onclick="launchForm('rue du Chemin Vert', { lat: 48.876720, lng: 2.447206}, 'projet de bac en bois');">
+		<div class="galery__card galery__card--clickable" data-coord-lat="48.876720" data-coord-lng="2.447206" onclick="launchForm('rue du Chemin Vert', { lat: 48.876720, lng: 2.447206}, 'projet de bac en bois');">
 			<img class="galery__card__image" src="img/jardinieres-en-bois.jpg" />
 			<h2 class="galery__card__title">Rue du Chemin Vert</h2>
 			<h3 class="galery__card__subtitle">Bacs en bois sur pelouse</h3>
@@ -444,7 +463,7 @@
 				<a class="button button--yellow button--card-bottom">Jardinez ici</a>
 			</div>
 		</div>
-		<div class="galery__card" data-coord-lat="48.894780" data-coord-lng="2.430321" onclick="launchForm('pavillon de l’horloge', { lat: 48.894780, lng: 2.430321}, 'projet de bac en bois');">
+		<div class="galery__card galery__card--clickable" data-coord-lat="48.894780" data-coord-lng="2.430321" onclick="launchForm('pavillon de l’horloge', { lat: 48.894780, lng: 2.430321}, 'projet de bac en bois');">
 			<img class="galery__card__image" src="http://horloge-romainville.fr/files/horloge/data/photo/vue4.jpg"
 			/>
 			<h2 class="galery__card__title">Pavillon de l’horloge</h2>
@@ -455,7 +474,7 @@
 				<a class="button button--yellow button--card-bottom">Jardinez ici</a>
 			</div>
 		</div>
-		<div class="galery__card" data-coord-lat="48.89328383309143" data-coord-lng="2.435821294784546" onclick="launchForm('Sente des Frères Lumières', { lat: 48.89328383309143, lng: 2.435821294784546}, 'projet de bac en bois');">
+		<div class="galery__card galery__card--clickable" data-coord-lat="48.89328383309143" data-coord-lng="2.435821294784546" onclick="launchForm('Sente des Frères Lumières', { lat: 48.89328383309143, lng: 2.435821294784546}, 'projet de bac en bois');">
 			<img class="galery__card__image" src="img/rue-freres-lumieres.jpg"
 			/>
 			<h2 class="galery__card__title" style="font-size: 20px; height: 37px;">Sente des Frères Lumières</h2>
@@ -466,7 +485,7 @@
 				<a class="button button--yellow button--card-bottom">Jardinez ici</a>
 			</div>
 		</div>
-		<div class="galery__card" data-coord-lat="48.885394" data-coord-lng="2.435672" onclick="launchForm('rue saint germain', { lat: 48.885394, lng: 2.435672}, 'projet de jardinière municipale');">
+		<div class="galery__card galery__card--clickable" data-coord-lat="48.885394" data-coord-lng="2.435672" onclick="launchForm('rue saint germain', { lat: 48.885394, lng: 2.435672}, 'projet de jardinière municipale');">
 			<img class="galery__card__image" src="http://www.ville-leslilas.fr/dossiers/10-0-215/images/0802_basefort_chateau.jpg" />
 			<h2 class="galery__card__title">Allée du Château</h2>
 			<h3 class="galery__card__subtitle">Jardinières et bacs en bois sur pelouse</h3>
@@ -511,13 +530,13 @@
             maxZoom: 19
         });
 
-	photoLayer.addTo(map);
-
 	var mapLayer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
     	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     	minZoom: 12,
     	maxZoom: 20
 	});
+
+	mapLayer.addTo(map);
 
 	var baseMaps = {
 		'<span class="map__legend">Photo aérienne</span>': photoLayer,
@@ -555,15 +574,6 @@
 
 // Add projects on the map
 	var existingProjects = new L.LayerGroup();
-	var existingProjectsMiniMap = new L.LayerGroup();
-	var requestVerts = new XMLHttpRequest();
-	requestVerts.open('GET', 'data/projects/'+city+'.geojson', true);
-
-/*  var plantMarker = L.AwesomeMarkers.icon({
-    	icon: 'leaf',
-    	markerColor: 'green',
-    	prefix: 'fa'
-  	});*/
 
 	var plantMarker = L.icon({
    		iconUrl: 'img/repereJEvert.png',
