@@ -23,7 +23,7 @@ body {
 }
 
 .header__image {
-    height: 42px;
+    height: calc(100% - 10px);
     margin-left: 20px;
     margin-top: 5px;
     margin-bottom: 5px;
@@ -152,7 +152,6 @@ color: #adadbb;
     padding-top: 5px;
 }
 
-
 @media (max-width: 900px) {
     .step {
         font-size: 15px;
@@ -162,6 +161,7 @@ color: #adadbb;
         height: 20px;
     }
 }
+
 @media (max-width: 600px) {
     .step__number {
         display: none;
