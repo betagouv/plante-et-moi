@@ -18,6 +18,8 @@ CREATE TABLE application_imported (
     address character varying(500) NOT NULL,
     creation_date date NOT NULL,
     coordinates point NOT NULL,
+    source character varying(50) NOT NULL,
+    source_id character varying(50) NOT NULL,
     phone character varying(50) NULL,
     fields json NOT NULL,
     files json NOT NULL,
@@ -32,5 +34,5 @@ CREATE TABLE application_extra (
 
 # --- !Downs
 DROP TABLE application_extra;
-DROP TABLE application;
+DROP TABLE application_imported;
 DROP TABLE review;

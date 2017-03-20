@@ -44,7 +44,7 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
 
 
   val simple: RowParser[Application] = Macro.parser[Application](
-    "id", "city", "status", "firstname", "lastname", "email", "type", "address", "creation_date", "coordinates", "phone", "fields", "files"
+    "id", "city", "status", "firstname", "lastname", "email", "type", "address", "creation_date", "coordinates", "source", "source_id", "phone", "fields", "files"
   )
 
   def findByApplicationId(applicationId: String) = db.withConnection { implicit connection =>
@@ -55,7 +55,7 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
     SQL(
       """
           INSERT INTO application_imported VALUES (
-            {id}, {city}, {firstname}, {lastname}, {email}, {type}, {address}, {creation_date}, point({latitude}, {longitude}), {phone}, {fields}, {files}
+            {id}, {city}, {firstname}, {lastname}, {email}, {type}, {address}, {creation_date}, point({latitude}, {longitude}), {source}, {source_id}, {phone}, {fields},{files}
           )
       """
     ).on(
@@ -69,6 +69,8 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
       'creation_date -> application.creationDate,
       'latitude -> application.coordinates.latitude,
       'longitude -> application.coordinates.longitude,
+      'source -> application.source,
+      'source_id -> application.sourceId,
       'phone -> application.phone,
       'fields -> Json.toJson(application.fields),
       'files -> Json.toJson(application.files)
@@ -76,7 +78,7 @@ class ApplicationService @Inject()(dbapi: DBApi) extends AnormJson with AnormCoo
     SQL(
       """
           INSERT INTO application_extra VALUES (
-            {id}, {status}
+            {application_id}, {status}
           ) ON CONFLICT DO NOTHING
       """
     ).on(

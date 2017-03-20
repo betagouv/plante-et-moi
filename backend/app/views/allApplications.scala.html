@@ -19,7 +19,6 @@
             <th class="mdl-data-table__cell--non-numeric">Avancement</th>
             <th class="mdl-data-table__cell--non-numeric">Avis</th>
             <th class="mdl-data-table__cell--non-numeric">Type</th>
-            <th class="mdl-data-table__cell--non-numeric">Dossier</th>
         </tr>
         </thead>
         <tbody>
@@ -29,9 +28,8 @@
                 <td class="mdl-data-table__cell--non-numeric">@application.name</td>
                 <td class="mdl-data-table__cell--non-numeric">@application.creationDate.toString("dd MMM YYYY", new Locale("fr"))</td>
                 <td class="mdl-data-table__cell--non-numeric">@application.status</td>
-                <td class="mdl-data-table__cell--non-numeric">@reviews.length / @numberOfReviews</td>
+                <td class="mdl-data-table__cell--non-numeric" style="white-space: nowrap;">@reviews.length / @numberOfReviews</td>
                 <td class="mdl-data-table__cell--non-numeric">@application._type</td>
-                <td class="mdl-data-table__cell--non-numeric">@application.id.substring(0,2)</td>
             </tr>
         }
         </tbody>

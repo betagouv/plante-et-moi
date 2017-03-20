@@ -15,6 +15,7 @@ import play.api.libs.json._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.mailer.{Email, MailerClient}
 import play.api.mvc.RequestHeader
+import utils.Hash
 
 import scala.collection.mutable
 import scala.concurrent.Future
@@ -142,7 +143,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
     val lon = response.hidden("lon").get.toDouble
     val coordinates = Coordinates(lat, lon)
     val city = response.hidden("city").get.toLowerCase()
-    val id = response.token
+    val typeformId = response.token
     val date = response.metadata.date_submit
 
     var address = response.hidden("address").get
@@ -181,7 +182,8 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
         case _ =>
       }
     }
-
-    models.Application(id, city, "Nouvelle", firstname, lastname, email, _type, address, date, coordinates, phone, fields.toMap, files.toList)
+    var source = "typeform"
+    var applicationId = Hash.sha256(s"$source$typeformId")
+    models.Application(applicationId, city, "Nouvelle", firstname, lastname, email, _type, address, date, coordinates, source, typeformId, phone, fields.toMap, files.toList)
   }
 }

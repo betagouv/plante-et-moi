@@ -1,7 +1,7 @@
 @(application: models.Application, agent: Agent, reviews: List[(Review, Agent)])(implicit flash: Flash)
 @import java.util.Locale
 
-@main(agent)(s"${application.address} (${application._type}) - #${application.id.substring(0,2)}")  {
+@main(agent)(s"${application.address} (${application._type})")  {
     <link rel="stylesheet" href="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@@1.0.1/dist/leaflet.js"></script>
     <script src='@routes.Assets.versioned("javascripts/Leaflet+Data.js")'></script>
