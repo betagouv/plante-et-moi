@@ -41,8 +41,6 @@ class ApplicationController @Inject() (ws: WSClient,
 
   private lazy val typeformKey = configuration.underlying.getString("typeform.key")
 
-
-
   def projects(city: String) = Future.successful {
     applicationService.findByCity(city).map { application =>
       (application, reviewService.findByApplicationId(application.id))
@@ -134,7 +132,7 @@ class ApplicationController @Inject() (ws: WSClient,
         val agent = currentAgent(request)
         val review = Review(applicationId, agent.id, DateTime.now(), reviewData.favorable, reviewData.comment)
         Future(reviewService.insertOrUpdate(review)).map { _ =>
-          Redirect(routes.ApplicationController.show(applicationId))
+          Redirect(routes.ApplicationController.my()).flashing("success" -> "Votre avis a bien été pris en compte.")
         }
       }
     )
@@ -145,11 +143,13 @@ class ApplicationController @Inject() (ws: WSClient,
       case None =>
         NotFound("")
       case Some((application, _)) =>
+        var message = "Le status de la demande a été mis à jour"
         if(status == "En cours" && application.status != "En cours") {
           agents.filter { agent => !agent.instructor && !agent.finalReview }.foreach(sendNewApplicationEmailToAgent(application, request))
+          message = "Le status de la demande a été mis à jour, un mail a été envoyé aux agents pour obtenir leurs avis."
         }
         applicationService.updateStatus(application.id, status)
-        Redirect(routes.ApplicationController.show(id))
+        Redirect(routes.ApplicationController.all()).flashing("success" -> message)
     }
   }
 

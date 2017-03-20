@@ -1,6 +1,7 @@
 @import models._
-@(applications: List[(Application, List[Review])], agent: Agent)
 @import java.util.Locale
+
+@(applications: List[(Application, List[Review])], agent: Agent)(implicit flash: Flash)
 
 @main(agent)("Mes demandes (en attente de votre avis)")  {
 

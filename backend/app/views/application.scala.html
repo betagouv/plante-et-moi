@@ -1,4 +1,4 @@
-@(application: models.Application, agent: Agent, reviews: List[(Review, Agent)])
+@(application: models.Application, agent: Agent, reviews: List[(Review, Agent)])(implicit flash: Flash)
 @import java.util.Locale
 
 @main(agent)(s"${application.address} (${application._type}) - #${application.id.substring(0,2)}")  {
@@ -96,8 +96,8 @@
 @if(application.status == "Nouvelle") {
     @if(agent.admin) {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1-offset-desktop mdl-grid" method="post">
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis aux agents)</button>
+    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1-offset-desktop mdl-grid" method="post" onsubmit="disableButton('application-complete');">
+        <button id="application-complete" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis aux agents)</button>
     </form>
 </div>
     }
@@ -115,11 +115,9 @@
                       <i class="material-icons mdl-list__item-icon">@if(review.favorable) {check}else{block}</i>
                       <span>@reviewAgent.qualite.capitalize (@reviewAgent.name)</span>
                       <span class="mdl-list__item-text-body">
-                          @application.creationDate.toString("dd MMM YYYY", new Locale("fr")) -
+                          @application.creationDate.toString("dd MMM YYYY", new Locale("fr"))
                           @if(!review.comment.isEmpty()) {
-                                Commentaire de l'agent: `<i>@review.comment</i>`
-                          } else {
-                                L'agent n'a pas laissé de commentaire.
+                                - Commentaire de l'agent: `<i>@review.comment</i>`
                           }
                       </span>
                     </span>
@@ -149,7 +147,7 @@
                 <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" style="width: 100%;" name="comment">@currentReview.map(_.comment).getOrElse("")</textarea>
                 <label class="mdl-textfield__label" for="sample5">Saisir mon commentaire...</label>
             </div>
-            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--10-col mdl-cell--1-offset">
+            <button id="review-validation" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--10-col mdl-cell--1-offset">
                 @if(currentReview.isEmpty) { Ajouter } else { Modifier } mon avis
             </button>
         }
@@ -206,6 +204,10 @@
 		}).addTo(map)
 	}
 
+	function disableButton(button) {
+	    document.getElementById(button).disabled = true;
+	}
+
 	function checkForm() {
 	    var favorable = document.getElementById("option-1").checked;
 	    var unfavorable = document.getElementById("option-2").checked;
@@ -218,6 +220,7 @@
 	        alert("Vous devez laisser un commentaire sur un avis défavorable");
 	        return false;
 	    }
+	    disableButton('review-validation');
 	    return true;
 	}
 </script>

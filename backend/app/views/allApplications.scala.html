@@ -1,5 +1,5 @@
 @import models._
-@(applications: List[(Application, List[Review])], agent: Agent, numberOfReviews: Int)
+@(applications: List[(Application, List[Review])], agent: Agent, numberOfReviews: Int)(implicit flash: Flash)
 @import java.util.Locale
 
 @main(agent)("Toutes les demandes") {
