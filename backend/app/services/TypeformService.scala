@@ -65,6 +65,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
 
   private lazy val typeformIds = configuration.underlying.getString("typeform.ids").split(",")
   private lazy val typeformKey = configuration.underlying.getString("typeform.key")
+  private lazy val typeformDomains = configuration.underlying.getString("typeform.domains").split(",")
 
   private val refresh = configuration.getMilliseconds("typeform.refresh") match {
     case Some(t) => t millis
@@ -74,7 +75,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
 
   private val scheduledTask = system.scheduler.schedule(delay, refresh)(refreshTask)
 
-  def refreshTask = {
+  private def refreshTask = {
     val responses = Future.reduce(typeformIds.map{ id =>
       getForm(id, typeformKey, true, 100).map { response =>
         val result = response.json.validate[TypeformResult]
@@ -83,7 +84,9 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
           case success: JsSuccess[TypeformResult] =>
             Logger.info(s"TypeformService: convert data for $id")
             val result = success.get
-            applications = result.responses.map(mapResponseToApplication(result.questions))
+            applications = result.responses
+                .filter(filterPerDomains)
+                .map(mapResponseToApplication(result.questions))
           case error: JsError =>
             val errorString = JsError.toJson(error).toString()
             Logger.error(s"TypeformService: json errors for $id ${errorString}")
@@ -104,6 +107,11 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
           }
         }
     }
+  }
+
+  private def filterPerDomains(response: TypeformResponse): Boolean = {
+    val domain = response.hidden("domain").getOrElse("nodomain")
+    typeformDomains.contains(domain)
   }
 
   private def sendNewApplicationEmail(application: models.Application) = {
@@ -165,7 +173,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
           address = answer._2
         case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("prénom") =>
           firstname = answer._2
-        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("nom") =>
+        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.endsWith("nom") =>
           lastname = answer._2
         case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("téléphone") =>
           phone = Some(answer._2)
