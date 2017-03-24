@@ -1,0 +1,86 @@
+@import models._
+@(agents: List[Agent], agent: Agent)(implicit flash: Flash)
+@import java.util.Locale
+
+@main(agent)("Gestion des agents") {
+<style>
+    .pem-table {
+        width: 100%;
+    }
+</style>
+} {
+<div class="mdl-cell mdl-cell--12-col">
+    <table class="mdl-data-table mdl-js-data-table pem-table mdl-shadow--2dp pem-table" style="white-space: normal;">
+        <thead>
+        <tr>
+            <th class="mdl-data-table__cell--non-numeric">Nom</th>
+            <th class="mdl-data-table__cell--non-numeric">Service/Qualité</th>
+            <th class="mdl-data-table__cell--non-numeric">Email</th>
+            <th class="mdl-data-table__cell--non-numeric">Admin</th>
+            <th class="mdl-data-table__cell--non-numeric">Instructeur</th>
+            <th class="mdl-data-table__cell--non-numeric">Avis</th>
+            <th class="mdl-data-table__cell--non-numeric">Avis final</th>
+        </tr>
+        </thead>
+        <tbody>
+        @for(agent <- agents) {
+        <tr>
+            <td class="mdl-data-table__cell--non-numeric">@agent.name</td>
+            <td class="mdl-data-table__cell--non-numeric">@agent.qualite.capitalize</td>
+            <td class="mdl-data-table__cell--non-numeric">@agent.email</td>
+            <td>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events">
+                    <input type="checkbox" class="mdl-checkbox__input" @if(agent.admin){ checked } disabled>
+                </label>
+            </td>
+            <td>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events">
+                    <input type="checkbox" class="mdl-checkbox__input" @if(agent.instructor){ checked } disabled>
+                </label>
+            </td>
+            <td>
+                <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events">
+                    <input type="checkbox" class="mdl-checkbox__input" @if(agent.review){ checked } disabled>
+                </label>
+            </td>
+            <td class="">
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-@agent.id">
+                    <input type="radio" id="option-@agent.id" class="mdl-radio__button" name="options" value="@agent.id" @if(agent.finalReview){ checked } disabled>
+                </label>
+            </td>
+        </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <h4>Admin</h4>
+    <ul>
+        <li>Peut ajouter et supprimer des agents</li>
+        <li>Peut changer les permissions des agents</li>
+    </ul>
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <h4>Instructeur</h4>
+    <ul>
+        <li>Peut indiquer qu'un dossier est complet et lancer la demande d'avis aux autres agents</li>
+        <li>Reçoit une notification par email à chaque nouveau dossier</li>
+    </ul>
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <h4>Avis</h4>
+    <ul>
+        <li>Peut laisser un avis favorable ou défavorable sur le dossier ainsi qu'un commentaire</li>
+        <li>Reçoit une notification par email à chaque fois qu'un dossier est déclaré complet par le service instructeur</li>
+        <li>Note: si un agent d'un service a déjà laissé un avis, un autre agent du même service ne pourra pas en laisser un deuxième </li>
+    </ul>
+</div>
+<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
+    <h4>Avis final</h4>
+    <ul>
+        <li>Peut laisser un avis favorable ou défavorable sur le dossier une fois que tous les services concernés ont laissé leur avis</li>
+        <li>Reçoit une notification par email quand un agent de chaque service a laissé son avis</li>
+        <li>Note: Une seule personne peut laisser l'avis final</li>
+    </ul>
+</div>
+}

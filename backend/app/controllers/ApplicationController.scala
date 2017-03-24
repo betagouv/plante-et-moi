@@ -2,11 +2,9 @@ package controllers
 
 import javax.inject._
 
-import play.api._
 import play.api.mvc._
 import play.api.libs.ws._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.libs.json._
 import models._
 import org.joda.time.DateTime
 import play.api.data._
@@ -14,10 +12,8 @@ import play.api.data.Forms._
 import play.api.libs.mailer.MailerClient
 import actions.LoginAction
 
-import scala.collection.mutable.ListBuffer
 import scala.concurrent.Future
 import play.api.libs.mailer._
-import org.apache.commons.mail.EmailAttachment
 import services.ApplicationService
 
 @Singleton
