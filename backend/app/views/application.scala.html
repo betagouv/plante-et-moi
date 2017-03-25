@@ -92,67 +92,70 @@
     }
 </div>
 }
-
-@if(application.status == "Nouvelle") {
-    @if(agent.admin) {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1-offset-desktop mdl-grid" method="post" onsubmit="disableButton('application-complete');">
-        <button id="application-complete" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis aux agents)</button>
-    </form>
-</div>
-    }
-} else {
-<div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col mdl-grid">
-        <h3 class="mdl-cell mdl-cell--12-col">Récapitulatif des avis</h3>
-        @if(reviews.isEmpty) {
-            <p>Pas encore d'avis</p>
+    @if(application.status == "Nouvelle") {
+        @if(agent.instructor) {
+        <form action='@routes.ApplicationController.updateStatus(application.id, "En cours")' class="mdl-cell mdl-cell--10-col mdl-cell--1-offset-desktop mdl-grid" method="post" onsubmit="disableButton('application-complete');">
+            <button id="application-complete" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col">Demande complète (Demander les avis aux agents)</button>
+        </form>
         } else {
-        <ul class="demo-list-three mdl-list mdl-cell mdl-cell--12-col">
-            @for((review,reviewAgent) <- reviews) {
-                <li class="mdl-list__item mdl-list__item--three-line">
-                    <span class="mdl-list__item-primary-content ">
-                      <i class="material-icons mdl-list__item-icon">@if(review.favorable) {check}else{block}</i>
-                      <span>@reviewAgent.qualite.capitalize (@reviewAgent.name)</span>
-                      <span class="mdl-list__item-text-body">
-                          @application.creationDate.toString("dd MMM YYYY", new Locale("fr"))
-                          @if(!review.comment.isEmpty()) {
-                                - Commentaire de l'agent: `<i>@review.comment</i>`
-                          }
-                      </span>
-                    </span>
-                    <span class="mdl-list__item-secondary-content">
-                        <span>@if(review.favorable){Favorable}else{Défavorable}</span>
-                    </span>
-                </li>
+            <p>Cette demande est attente de validation par un agent instructeur, vous ne pouvez pas intervenir dessus</p>
+        }
+    } else {
+        <div class="mdl-cell mdl-cell--12-col mdl-grid">
+            <h3 class="mdl-cell mdl-cell--12-col">Récapitulatif des avis</h3>
+            @if(reviews.isEmpty) {
+                <p>Pas encore d'avis</p>
+            } else {
+            <ul class="demo-list-three mdl-list mdl-cell mdl-cell--12-col">
+                @for((review,reviewAgent) <- reviews) {
+                    <li class="mdl-list__item mdl-list__item--three-line">
+                        <span class="mdl-list__item-primary-content ">
+                          <i class="material-icons mdl-list__item-icon">@if(review.favorable) {check}else{block}</i>
+                          <span>@reviewAgent.qualite.capitalize (@reviewAgent.name)</span>
+                          <span class="mdl-list__item-text-body">
+                              @application.creationDate.toString("dd MMM YYYY", new Locale("fr"))
+                              @if(!review.comment.isEmpty()) {
+                                    - Commentaire de l'agent: `<i>@review.comment</i>`
+                              }
+                          </span>
+                        </span>
+                        <span class="mdl-list__item-secondary-content">
+                            <span>@if(review.favorable){Favorable}else{Défavorable}</span>
+                        </span>
+                    </li>
+                }
+            </ul>
             }
-        </ul>
-        }
-    </div>
+        </div>
+    }
 </div>
+@if(application.status != "Nouvelle") {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    <div class="mdl-cell mdl-cell--12-col mdl-grid">
-    <form action="@routes.ApplicationController.addReview(application.id)" class="mdl-grid" method="post" onsubmit="return checkForm()">
-        @defining(reviews.find(_._1.agentId == agent.id).map(_._1)) { currentReview =>
-            <h3 class="mdl-cell mdl-cell--12-col">@if(currentReview.isEmpty) { Ajouter } else { Modifier } mon avis en tant @if("aeiou".contains(agent.qualite.charAt(0).toLower)){ qu'} else { que }@agent.qualite</h3>
-            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-1">
-                <input type="radio" id="option-1" class="mdl-radio__button" name="favorable" value="true" @if(currentReview.map(_.favorable).getOrElse(false)){checked}>
-                <span class="mdl-radio__label">Favorable</span>
-            </label>
-            <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-2">
-                <input type="radio" id="option-2" class="mdl-radio__button" name="favorable" value="false" @if(currentReview.map(!_.favorable).getOrElse(false)){checked}>
-                <span class="mdl-radio__label">Défavorable</span>
-            </label>
-            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
-                <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" style="width: 100%;" name="comment">@currentReview.map(_.comment).getOrElse("")</textarea>
-                <label class="mdl-textfield__label" for="sample5">Saisir mon commentaire...</label>
-            </div>
-            <button id="review-validation" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--10-col mdl-cell--1-offset">
-                @if(currentReview.isEmpty) { Ajouter } else { Modifier } mon avis
-            </button>
-        }
-    </form>
-    </div>
+    @if(agent.review) {
+        <div class="mdl-cell mdl-cell--12-col mdl-grid">
+        <form action="@routes.ApplicationController.addReview(application.id)" class="mdl-grid" method="post" onsubmit="return checkForm()">
+            @defining(reviews.find(_._1.agentId == agent.id).map(_._1)) { currentReview =>
+                <h3 class="mdl-cell mdl-cell--12-col">@if(currentReview.isEmpty) { Ajouter } else { Modifier } mon avis en tant @if("aeiou".contains(agent.qualite.charAt(0).toLower)){ qu'} else { que }@agent.qualite</h3>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-1">
+                    <input type="radio" id="option-1" class="mdl-radio__button" name="favorable" value="true" @if(currentReview.map(_.favorable).getOrElse(false)){checked}>
+                    <span class="mdl-radio__label">Favorable</span>
+                </label>
+                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-cell mdl-cell--5-col mdl-cell--1-offset" for="option-2">
+                    <input type="radio" id="option-2" class="mdl-radio__button" name="favorable" value="false" @if(currentReview.map(!_.favorable).getOrElse(false)){checked}>
+                    <span class="mdl-radio__label">Défavorable</span>
+                </label>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label mdl-cell mdl-cell--12-col">
+                    <textarea class="mdl-textfield__input" type="text" rows= "5" id="sample5" style="width: 100%;" name="comment">@currentReview.map(_.comment).getOrElse("")</textarea>
+                    <label class="mdl-textfield__label" for="sample5">Saisir mon commentaire...</label>
+                </div>
+                <button id="review-validation" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--10-col mdl-cell--1-offset">
+                    @if(currentReview.isEmpty) { Ajouter } else { Modifier } mon avis
+                </button>
+            }
+        </form>
+        </div>
+    }
 </div>
 }
 <script>

@@ -163,19 +163,19 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
     var fields = mutable.Map[String,String]()
     var files = ListBuffer[String]()
     response.answers.foreach { answer =>
-      val question = questions.find(_.id == answer._1)
+      val question = questions.find(_.id == answer._1).map(_.question.replaceAll("<[^>]*>", ""))
       (answer._1, question) match {
         case (id, _) if id.startsWith("fileupload_") =>
           files += answer._2.split('?')(0)
         case (id, _) if id.startsWith("email_") =>
           email = answer._2
-        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("adresse de votre") =>
+        case (id, Some(question)) if id.startsWith("textfield_") && question.toLowerCase.contains("adresse de votre") =>
           address = answer._2
-        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("prénom") =>
+        case (id, Some(question)) if id.startsWith("textfield_") && question.toLowerCase.contains("prénom") =>
           firstname = answer._2
-        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.endsWith("nom") =>
+        case (id, Some(question)) if id.startsWith("textfield_") && question.toLowerCase.endsWith("nom") =>
           lastname = answer._2
-        case (id, Some(question)) if id.startsWith("textfield_") && question.question.toLowerCase.contains("téléphone") =>
+        case (id, Some(question)) if id.startsWith("textfield_") && question.toLowerCase.contains("téléphone") =>
           phone = Some(answer._2)
         case (id, Some(question)) if id.startsWith("yesno_") =>
           val answerString = answer._2 match {
@@ -183,10 +183,10 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
             case "0" => "Non"
             case _ => "???"
           }
-          fields += question.question -> answerString
+          fields += question -> answerString
         case (_, Some(question)) =>
-          val previous = fields.get(question.question).map(old => s"$old, ${answer._2}").getOrElse( answer._2)
-          fields += question.question -> previous
+          val previous = fields.get(question).map(old => s"$old, ${answer._2}").getOrElse( answer._2)
+          fields += question -> previous
         case _ =>
       }
     }
