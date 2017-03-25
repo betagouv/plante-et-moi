@@ -15,7 +15,7 @@ case class Agent(id: String,
                  key: String,
                  admin: Boolean,
                  instructor: Boolean,
-                 review: Boolean,
+                 canReview: Boolean,
                  finalReview: Boolean)
 
 @javax.inject.Singleton

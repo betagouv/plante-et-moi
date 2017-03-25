@@ -49,7 +49,7 @@
         <div class="login-container mdl-grid">
             <div class="mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone"></div>
             <div class="login-content mdl-color--white mdl-shadow--4dp content mdl-color-text--grey-800 mdl-cell mdl-cell--8-col">
-                <h3>Administration @city</h3>
+                <h3>Administration @city.capitalize</h3>
                 @for(agent <- agents) {
                     <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-cell mdl-cell--12-col" onclick="connexion('@agent.id')">Connexion @agent.qualite.capitalize</a>
                 }

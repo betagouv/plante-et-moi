@@ -132,7 +132,7 @@
 </div>
 @if(application.status != "Nouvelle") {
 <div class="mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--12-col mdl-grid">
-    @if(agent.review) {
+    @if(agent.canReview) {
         <div class="mdl-cell mdl-cell--12-col mdl-grid">
         <form action="@routes.ApplicationController.addReview(application.id)" class="mdl-grid" method="post" onsubmit="return checkForm()">
             @defining(reviews.find(_._1.agentId == agent.id).map(_._1)) { currentReview =>

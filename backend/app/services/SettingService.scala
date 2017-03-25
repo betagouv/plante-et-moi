@@ -24,7 +24,7 @@ class SettingService @Inject()(dbapi: DBApi, configuration: Configuration) exten
         "email" -> "jean.paul.durable@example.com",
         "admin" -> true,
         "instructor" -> true,
-        "review" -> false,
+        "canReview" -> false,
         "finalReview" -> false
       ),
       Json.obj(
@@ -34,7 +34,7 @@ class SettingService @Inject()(dbapi: DBApi, configuration: Configuration) exten
         "email" -> "jean.marc.voirie@example.com",
         "admin" -> false,
         "instructor" -> false,
-        "review" -> true,
+        "canReview" -> true,
         "finalReview" -> false
       ),
       Json.obj(
@@ -44,26 +44,10 @@ class SettingService @Inject()(dbapi: DBApi, configuration: Configuration) exten
         "email" -> "natasha.dupond.elu@example.com",
         "admin" -> true,
         "instructor" -> false,
-        "review" -> true,
+        "canReview" -> true,
         "finalReview" -> true
       )
     )
-
-      /*
-      Agent(id: String,
-                 name: String,
-                 qualite: String,
-                 email: String,
-                 key: String,
-                 admin: Boolean,
-                 instructor: Boolean,
-                 review: Boolean,
-                 finalReview: Boolean)
-      Agent("admin", "Jean Paul", "service développement durable", "jean.paul.durable@example.com", Hash.sha256(s"${cryptoSecret}Iz7h_09MqC"), true, true, false, false),
-      Agent("verts", "Jeanne D'arc", "direction des espaces verts-propreté", "jeanne.d-arc.verts@example.com", Hash.sha256(s"${cryptoSecret}nYX3aeNs"), false, false, true, false),
-      Agent("voirie", "Jeanne D'arc", "service de la voirie", "jeanne.d-arc.voirie@example.com", Hash.sha256(s"${cryptoSecret}o-35qG5T"), false, false, true, false),
-      Agent("public", "Jeanne D'arc", "direction occupation du domaine public", "jeanne.d-arc.public@example.com", Hash.sha256(s"{cryptoSecret}_eMMIKc9"), false, false, true, false),
-      Agent("elu", "Richard Dupont", "adjoint au maire parcs et jardins", "jdupont.elu@example.com", Hash.sha256(s"${cryptoSecret}Bv5_75R"), true, false, true, true) */
   )
 
   @inline private def className(that: Any): String =
