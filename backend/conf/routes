@@ -16,6 +16,8 @@ POST     /toutes-les-demandes/:id                       controllers.ApplicationC
 GET     /login                                          controllers.ApplicationController.login()
 GET     /disconnect                                     controllers.ApplicationController.disconnectAgent()
 GET     /agents                                         controllers.AgentController.all
+GET     /settings                                       controllers.SettingController.all
+POST    /settings                                       controllers.SettingController.update
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

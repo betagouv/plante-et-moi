@@ -2,7 +2,10 @@ package models
 
 import javax.inject.Inject
 
+import services.SettingService
 import utils.Hash
+import play.api.libs.json._
+import play.api.libs.json.Reads._
 
 case class Agent(id: String,
                  name: String,
@@ -15,8 +18,12 @@ case class Agent(id: String,
                  finalReview: Boolean)
 
 @javax.inject.Singleton
-class AgentService @Inject()(configuration: play.api.Configuration) {
+class AgentService @Inject()(configuration: play.api.Configuration, settingService: SettingService) {
   private lazy val cryptoSecret = configuration.underlying.getString("play.crypto.secret")
+
+  private implicit def resultReads(city: String): Reads[Agent] = {
+    JsPath.json.update((JsPath \ 'key).json.copyFrom((JsPath \ 'email).json.pick[JsString].map{ jsString => JsString(Hash.sha256(s"${jsString.value}$city$cryptoSecret")) })) andThen Json.reads[Agent]
+  }
 
   private lazy val agents = List(
     Agent("admin", "Jean Paul", "service développement durable", "jean.paul.durable@example.com", Hash.sha256(s"${cryptoSecret}Iz7h_09MqC"), true, true, false, false),
@@ -26,9 +33,12 @@ class AgentService @Inject()(configuration: play.api.Configuration) {
     Agent("elu", "Richard Dupont", "adjoint au maire parcs et jardins", "jdupont.elu@example.com", Hash.sha256(s"${cryptoSecret}Bv5_75R"), true, false, true, true)
   )
 
-  def all() = agents
+  def all(city: String) = {
+    implicit val agentReads = resultReads(city)
+    settingService.findByKey(city)("AGENTS").flatMap(_._2.validate[List[Agent]].asOpt).getOrElse(List())
+  }
 
-  def byId(id: String) = agents.find(_.id == id)
+  def byId(city: String)(id: String) = all(city).find(_.id == id)
 
-  def byKey(key: String) = agents.find(_.key == key)
+  def byKey(city: String)(key: String) = all(city).find(_.key == key)
 }

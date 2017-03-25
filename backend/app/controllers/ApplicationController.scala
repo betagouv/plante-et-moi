@@ -28,13 +28,6 @@ class ApplicationController @Inject() (ws: WSClient,
   private def getCity(request: RequestHeader) =
     request.session.get("city").getOrElse("arles").toLowerCase()
 
-  private def currentAgent(request: RequestHeader): Agent = {
-    val id = request.session.get("agentId").getOrElse("admin")
-    agents.find(_.id == id).get
-  }
-
-  private lazy val agents = agentService.all()
-
   private lazy val typeformKey = configuration.underlying.getString("typeform.key")
 
   def projects(city: String) = Future.successful {
@@ -57,38 +50,38 @@ class ApplicationController @Inject() (ws: WSClient,
 
   def all = loginAction.async { implicit request =>
     projects(getCity(request)).map { responses =>
-      val numberOrReviewNeeded = agents.count { agent => !agent.instructor }
-      Ok(views.html.allApplications(responses, currentAgent(request), numberOrReviewNeeded))
+      val numberOrReviewNeeded = agentService.all(request.currentCity).count { agent => !agent.instructor }
+      Ok(views.html.allApplications(responses, request.currentAgent, numberOrReviewNeeded))
     }
   }
 
   def map = loginAction.async { implicit request =>
     val city = getCity(request)
     projects(city).map { responses =>
-      Ok(views.html.mapApplications(city, responses, currentAgent(request)))
+      Ok(views.html.mapApplications(city, responses, request.currentAgent))
     }
   }
 
   def my = loginAction.async { implicit request =>
-    val agent = currentAgent(request)
+    val agent = request.currentAgent
     projects(getCity(request)).map { responses =>
       val afterFilter = responses.filter { response =>
         response._1.status == "En cours" &&
           !response._2.exists { _.agentId == agent.id }
       }
-      Ok(views.html.myApplications(afterFilter, currentAgent(request)))
+      Ok(views.html.myApplications(afterFilter, request.currentAgent))
     }
   }
 
   def show(id: String) = loginAction.async { implicit request =>
-    val agent = currentAgent(request)
+    val agent = request.currentAgent
     applicationById(id, getCity(request)).map {
         case None =>
           NotFound("")
         case Some(application) =>
           val reviews = reviewService.findByApplicationId(id)
               .map { review =>
-                review -> agents.find(_.id == review.agentId).get
+                review -> agentService.all(request.currentCity).find(_.id == review.agentId).get
               }
           Ok(views.html.application(application._1, agent, reviews))
     }
@@ -107,7 +100,7 @@ class ApplicationController @Inject() (ws: WSClient,
   }
 
   def login() = Action { implicit request =>
-    Ok(views.html.login(agents, getCity(request)))
+    Ok(views.html.login(agentService.all(getCity(request)), getCity(request)))
   }
 
   case class ReviewData(favorable: Boolean, comment: String)
@@ -125,7 +118,7 @@ class ApplicationController @Inject() (ws: WSClient,
       },
       reviewData => {
         val city = getCity(request)
-        val agent = currentAgent(request)
+        val agent = request.currentAgent
         val review = Review(applicationId, agent.id, DateTime.now(), reviewData.favorable, reviewData.comment)
         Future(reviewService.insertOrUpdate(review)).map { _ =>
           Redirect(routes.ApplicationController.my()).flashing("success" -> "Votre avis a bien été pris en compte.")
@@ -141,7 +134,7 @@ class ApplicationController @Inject() (ws: WSClient,
       case Some((application, _)) =>
         var message = "Le status de la demande a été mis à jour"
         if(status == "En cours" && application.status != "En cours") {
-          agents.filter { agent => !agent.instructor && !agent.finalReview }.foreach(sendNewApplicationEmailToAgent(application, request))
+          agentService.all(request.currentCity).filter { agent => !agent.instructor && !agent.finalReview }.foreach(sendNewApplicationEmailToAgent(application, request))
           message = "Le status de la demande a été mis à jour, un mail a été envoyé aux agents pour obtenir leurs avis."
         }
         applicationService.updateStatus(application.id, status)

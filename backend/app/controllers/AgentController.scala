@@ -11,6 +11,6 @@ class AgentController @Inject()(agentService: AgentService,
                                 loginAction: LoginAction) extends Controller {
 
   def all = loginAction { implicit request =>
-    Ok(views.html.allAgents(agentService.all(), request.currentAgent))
+    Ok(views.html.allAgents(agentService.all(request.currentCity), request.currentAgent))
   }
 }
