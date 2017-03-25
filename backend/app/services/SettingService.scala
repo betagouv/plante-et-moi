@@ -81,7 +81,7 @@ class SettingService @Inject()(dbapi: DBApi, configuration: Configuration) exten
       }
     }
 
-  private val settingParser = SqlParser.str("key") ~ SqlParser.get[JsValue]("value") map(SqlParser.flatten)
+  private val settingParser = SqlParser.str("key") ~ SqlParser.get[JsValue]("value") map SqlParser.flatten
 
   def findByKey(city: String)(key: String) = db.withConnection { implicit connection =>
     SQL("SELECT * FROM setting WHERE key = {key} AND city = {city}").on('key -> key, 'city -> city).as(settingParser.singleOpt).orElse(defaultValues.get(key).map(key -> _))

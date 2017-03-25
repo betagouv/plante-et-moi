@@ -58,8 +58,8 @@
             <a class="mdl-navigation__link" href="@routes.ApplicationController.my()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">folder_open</i>Mes demandes en cours</a>
             <a class="mdl-navigation__link" href="@routes.ApplicationController.all()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">folder</i>Toutes les demandes</a>
             <a class="mdl-navigation__link" href="@routes.ApplicationController.map()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">place</i>Carte des projets</a>
+            <a class="mdl-navigation__link" href="@routes.AgentController.all()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Agents</a>
             @if(agent.admin) {
-                <a class="mdl-navigation__link" href="@routes.AgentController.all()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">people</i>Agents</a>
                 <a class="mdl-navigation__link" href="@routes.SettingController.all()"><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">settings</i>Paramètres</a>
             }
             <div class="mdl-layout-spacer"></div>
