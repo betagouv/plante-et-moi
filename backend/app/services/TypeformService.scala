@@ -1,10 +1,10 @@
 package services
 
+import java.util.Locale
 import javax.inject._
 
 import akka.actor._
-import controllers.routes
-import models.{Application, Coordinates}
+import models.{Application, Coordinates, EmailTemplate, EmailTemplateService}
 import org.joda.time.DateTime
 import play.api.Logger
 import play.api.libs.json.{JsValue, Json, Reads}
@@ -14,7 +14,6 @@ import scala.collection.mutable.ListBuffer
 import play.api.libs.json._
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
 import play.api.libs.mailer.{Email, MailerClient}
-import play.api.mvc.RequestHeader
 import utils.Hash
 
 import scala.collection.mutable
@@ -22,21 +21,20 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import scala.util.{Failure, Success}
 
-case class TypeformQuestion(id: String, question: String, field_id: Int)
-case class TypeformStats(responses: Map[String,Int])
-case class TypeformMetadata(browser: String,
-                            platform: String,
-                            date_land: DateTime,
-                            date_submit: DateTime,
-                            user_agent: String,
-                            referer: String,
-                            network_id: String)
-case class TypeformResponse(completed: String, token: String, metadata: TypeformMetadata, hidden: Map[String, Option[String]], answers: Map[String, String])
-case class TypeformResult(http_status: Int, stats: TypeformStats, questions: List[TypeformQuestion], responses: List[TypeformResponse])
-
-
 @Singleton
-class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Configuration, ws: WSClient, applicationService: ApplicationService, mailerClient: MailerClient) {
+class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Configuration, ws: WSClient, applicationService: ApplicationService, mailerClient: MailerClient, emailTemplateService: EmailTemplateService) {
+
+  private case class TypeformQuestion(id: String, question: String, field_id: Int)
+  private case class TypeformStats(responses: Map[String,Int])
+  private case class TypeformMetadata(browser: String,
+                              platform: String,
+                              date_land: DateTime,
+                              date_submit: DateTime,
+                              user_agent: String,
+                              referer: String,
+                              network_id: String)
+  private case class TypeformResponse(completed: String, token: String, metadata: TypeformMetadata, hidden: Map[String, Option[String]], answers: Map[String, String])
+  private case class TypeformResult(http_status: Int, stats: TypeformStats, questions: List[TypeformQuestion], responses: List[TypeformResponse])
 
 
   private implicit val optionMap = Reads[Option[String]]{
@@ -89,7 +87,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
                 .map(mapResponseToApplication(result.questions))
           case error: JsError =>
             val errorString = JsError.toJson(error).toString()
-            Logger.error(s"TypeformService: json errors for $id ${errorString}")
+            Logger.error(s"TypeformService: json errors for $id $errorString")
         }
         applications
       }
@@ -98,14 +96,24 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
       case Failure(ex) =>
           Logger.error("Error occured when retrieve data from typeform", ex)
       case Success(applications) =>
-        applications.foreach { application =>
-          val app = applicationService.findByApplicationId(application.id)
-          if (app.isEmpty) {
-            Logger.info(s"Import application for ${application.address}")
-            sendNewApplicationEmail(application)
-            applicationService.insert(application)
-          }
+        applications.groupBy(_.city).foreach { cityApplications =>
+          manageApplicationForCity(cityApplications._1, cityApplications._2)
         }
+    }
+  }
+
+  private def manageApplicationForCity(city: String, applications: List[Application]): Unit = {
+    emailTemplateService.get(city, "RECEPTION_EMAIL").fold {
+      Logger.error(s"No RECEPTION_EMAIL email template for city $city")
+    } { emailTemplate =>
+      applications foreach { application =>
+        val app = applicationService.findByApplicationId(application.id)
+        if (app.isEmpty) {
+          Logger.info(s"Import application for ${application.address}")
+          sendNewApplicationEmail(emailTemplate)(application)
+          applicationService.insert(application)
+        }
+      }
     }
   }
 
@@ -114,32 +122,42 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
     typeformDomains.contains(domain)
   }
 
-  private def sendNewApplicationEmail(application: models.Application) = {
+  private def sendNewApplicationEmail(emailTemplate: EmailTemplate)(application: models.Application) = {
+    val applicationString =
+      s"""- Date de la demande:
+         |${application.creationDate.toString("dd MMM YYYY", new Locale("fr"))}
+         |
+         |- Nom:
+         |${application.lastname}
+         |
+         |- Prénom:
+         |${application.firstname}
+         |
+         |- Email:
+         |${application.email}
+         |
+         |- Type:
+         |${application._type}
+         |
+         |- Address du projet:
+         |${application.address}
+         |
+         |- Numéro de téléphone:
+         |${application.phone.getOrElse("pas de numéro de téléphone")}
+         |
+         ${application.fields.map{ case (key, value) => s"|- $key:\n $value\n" }.mkString}
+         |- Nombre de fichiers joint à la demande: ${application.files.length}
+       """.stripMargin
+    val body = emailTemplate.body
+      .replaceAll("<application.id>", application.id)
+      .replaceAll("<application>", applicationString)
+
     val email = Email(
-      s"Nous avons bien reçu votre projet de ${application._type} à l'adresse: ${application.address}",
-      "Plante et Moi <administration@plante-et-moi.fr>",
+      emailTemplate.title,
+      emailTemplate.from,
       Seq(s"${application.name} <${application.email}>"),
-      bodyText = Some(s"""Bonjour ${application.name},
-                         |
-                         |Nous avons bien reçu votre demande de végétalisation au ${application.address} (c'est un projet de ${application._type}).
-                         |
-                         |L’autorisation suivra dans quelques semaines, accompagnée de la charte rappelant vos engagements ainsi que la liste des plantes proscrites et des plantes recommandées.
-                         |
-                         |Merci de votre demande,
-                         |Si vous avez des questions, n'hésitez pas à nous contacter""".stripMargin),
-      bodyHtml = Some(
-        s"""<html>
-           |<body>
-           | Bonjour ${application.name}, <br>
-           | <br>
-           | Nous avons bien reçu votre demande de végétalisation au ${application.address} (c'est un projet de ${application._type}).<br>
-           | <br>
-           | L’autorisation suivra dans quelques semaines, accompagnée de la charte rappelant vos engagements ainsi que la liste des plantes proscrites et des plantes recommandées. <br>
-           | <br>
-           | Merci de votre demande, <br>
-           | Si vous avez des questions, n'hésitez pas à nous contacter
-           |</body>
-           |</html>""".stripMargin)
+      bodyText = Some(body),
+      replyTo = emailTemplate.replyTo
     )
     Logger.info(s"Send mail to ${application.email}")
     mailerClient.send(email)
@@ -191,7 +209,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
       }
     }
     var source = "typeform"
-    var applicationId = Hash.sha256(s"$source$typeformId")
+    var applicationId = Hash.md5(s"$source$typeformId")
     models.Application(applicationId, city, "Nouvelle", firstname, lastname, email, _type, address, date, coordinates, source, typeformId, phone, fields.toMap, files.toList)
   }
 }
