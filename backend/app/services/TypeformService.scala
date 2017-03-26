@@ -185,7 +185,7 @@ class TypeformService @Inject()(system: ActorSystem, configuration: play.api.Con
           }
           fields += question -> answerString
         case (_, Some(question)) =>
-          val previous = fields.get(question).map(old => s"$old, ${answer._2}").getOrElse( answer._2)
+          val previous = fields.get(question).map(old => s"$old\n${answer._2}").getOrElse(answer._2)
           fields += question -> previous
         case _ =>
       }
