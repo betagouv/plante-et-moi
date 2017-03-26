@@ -558,12 +558,6 @@
 	var layerControl = L.control.layers(baseMaps, null,({collapsed: false }));
 	layerControl.addTo(map);
 
-	var moveMarker = L.AwesomeMarkers.icon({
-    	icon: 'circle',
-    	markerColor: 'blue',
-    	prefix: 'fa'
-  	});
-
 	var request = new XMLHttpRequest();
 	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom='+city, true);
 
@@ -589,7 +583,7 @@
 	var existingProjects = new L.LayerGroup();
 
 	var plantMarker = L.icon({
-   		iconUrl: 'img/repereJEvert.png',
+   		iconUrl: 'img/repereJEjaune.png',
 		iconSize:     [35, 65],
     	iconAnchor:   [18, 64],
     	popupAnchor:  [0, -40]
