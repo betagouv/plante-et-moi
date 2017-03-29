@@ -6,16 +6,17 @@
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 	<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU"
 		crossorigin="anonymous">
 	<link rel="stylesheet" href="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.css">
-	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="charte/style.css">
+	<link rel="stylesheet" type="text/css" media="print" href="charte/print.css">
 	<link rel="stylesheet" href="css/main.css" />
+	<link rel="shortcut icon" href="charte/favicon.ico">
+	<link rel="shortcut icon" href="charte/favicon.png">
 
-	<script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
 	<script src="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.js"></script>
 
 	<style type="text/css">
@@ -24,6 +25,7 @@
 			padding: 0; 
 			width: 100%; 
 			height: 100%;
+			overflow-x: hidden;
 		}	
 
 		.important {
@@ -94,12 +96,11 @@
 		
 		.map-container {
 			position: relative;
-			width: 90%;
-			min-height: 90%;
-			height: 90%;
-			margin: 0 auto;
-			padding: 0%;
+			width: 100%;
+			height: calc(100% - 80px);
+			padding: 20px;
 			text-align: center;
+			box-sizing: border-box;
 		}
 
 		.map-container--invisible {
@@ -107,7 +108,7 @@
 		}
 		
 		.map__leaflet {
-			position: absolute;
+			position: relative;
 			width: 100%;
 			height: 100%;
 		}
@@ -147,42 +148,12 @@
 			top: 5px;
 			left: 40px;
 		}
-
-		.button {
-			background-color:#44c767;
-			border-radius:28px;
-			border:1px solid #18ab29;
-			display:inline-block;
-			cursor:pointer;
-			color:#ffffff;
-			font-family:Arial;
-			font-size:17px;
-			padding:16px 31px;
-			text-decoration:none;
-			text-shadow:0px 1px 0px #2f6627;
-			color: white !important;
-			letter-spacing: 0.2px;
-			font-weight: bold;
-			text-align: center;
-		}
-		.button {
-			position:relative;
-			top:1px;
-		}
 		
-		.button--green {
-			background-color: #44c767;
-		}
-		
-		.button--green:hover {
-			background-color: #5cbf2a;
-		}
-		
-		.popup--red .leaflet-popup-content-wrapper {
+		.popup--green .leaflet-popup-content-wrapper {
 			background-color: rgba(114, 175, 38, 0.8);
 		}
 		
-		.popup--red .leaflet-popup-tip {
+		.popup--green .leaflet-popup-tip {
 			background-color: rgba(114, 175, 38, 0.8);
 		}
 		
@@ -236,6 +207,7 @@
 			font-weight: bold;
 			color: white;
 			background: rgba(46,139,87, 0.7);
+			line-height: 1.5;
 		}
 		
 		.galery__card__description {
@@ -376,17 +348,47 @@
 		.search__button:hover {
 			background-color: seagreen;
 		}
+
+		.header-application {
+			height: 52px;
+			padding: 0px;
+			margin: 0 auto;
+			display: block;
+			position: relative;
+			overflow: hidden;
+		}
+		.header__image {
+			height: calc(100% - 10px);
+			width: 190px;
+			box-sizing: border-box; 
+			position: absolute;
+			margin-top: 10px;
+		}
+		.header__image--left {
+			left: 0px;
+			background: url("charte/img/bandeau-small.png") no-repeat left top #fff;
+		}
 	</style>
 </head>
 
 <body>
-	
-	<div class="header">
+<header class="header-application">
 		<div class="header__ribbon">
 			Beta
 		</div>
-		<h1 class="header__title" id="header-title"><i class="fa fa-leaf"></i> Biodiversité citoyenne - Ville d'Arles</h1> 
-	</div>
+		<a href="."><div class="header__image header__image--left"></div></a>
+		<div class="steps steps--3-col">
+			<div class="step step--current step--arrow" id="step-place">
+				<span class="step__number">1</span>   Choisir un lieu
+			</div>
+			<div class="step step--disable step--arrow" id="step-application">
+				<span class="step__number">2</span>   Choisir un projet
+			</div>
+			<div class="step step--disable" id="step-application">
+				<span class="step__number">3</span>   Faire une demande
+			</div>
+		</div>
+</header>
 
 	<div class="map-container" id="map-container">
 		<div class="map__leaflet" id="map">
@@ -409,7 +411,9 @@
 				sans effort. Les abeilles vont vous remercier.
 				<br><br>Déjà 23 Jardinières (et combien de jardinier ?)
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom">Je demande mon permis</a>
+			</div>
 		</div>
 		<div class="galery__card" onclick="launchForm('projet de croix de Saint-André');"> 
 			<img class="galery__card__image" src="http://www.pyrenees-equipements.com/imagesproduits/produit139_2.gif" />
@@ -418,7 +422,9 @@
 				vos plantes, et c’est tout.
 				<br><br>111 déjà aménagés
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom">Je demande mon permis</a>
+			</div>
 		</div>
 		<div class="galery__card" onclick="launchForm('projet de pied d\'arbre fleuris');">
 			<img class="galery__card__image" src="http://parcjardin.mairie-albi.fr/wp-content/gallery/photos/dscn0152.jpg" />
@@ -427,7 +433,9 @@
 				dit que certain y plantait des légumes :)
 				<br><br>2 pieds aménagé la semaine dernière
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom">Je demande mon permis</a>
+			</div>
 		</div>
 		<div class="galery__card" onclick="launchForm('projet de friche');">
 			<img class="galery__card__image" src="http://www.jejardine.org/images/stories/2_La_plante_et_son_milieu/friche.jpg" />
@@ -435,17 +443,21 @@
 			<p class="galery__card__description">Aménagez ce lieu abandonné
 				<br><br>Déjà 12 friches
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom">Je demande mon permis</a>
+			</div>
 		</div>
 		<div class="galery__card" onclick="launchForm('projet de fosse');">
-			<img class="galery__card__image" src="https://www.tours.fr/uploads/Image/55/8504_151_fleur-de-trottoir-premiere-plantation.jpg"
+			<img class="galery__card__image" src="http://jardinage.lemonde.fr/images/articles/historique/a-fleur-trottoir-183311.jpg"
 			/>
 			<h2 class="galery__card__title">Fosse</h2>
 			<p class="galery__card__description">Et si on faisait un trou devant chez vous ? La mairie peut casser un peu de trottoir pour construire une fosse végétalisable.
 				Un peu de terre, des graines et c’est parti !
 				<br><br>On a déjà fait 61 fosses !
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom">Je demande mon permis</a>
+			</div>
 		</div>
 		<div class="galery__card" onclick="launchForm('projet de végétalisation');">
 			<img class="galery__card__image" src="img/autre-projet.jpg" />
@@ -453,7 +465,9 @@
 			<p class="galery__card__description">Une autre idée ? Je vois que vous n'êtes pas le genre de personne à faire comme tout le monde.
 				Laisser parler votre imagination
 			</p>
-			<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
+			<div class="galery__card__bottom">
+				<a class="button button--yellow button--card-bottom">Je demande mon permis</a>
+			</div>
 		</div>
 	</div>
 	<div class="form form--invisible" id="permit__form">
@@ -462,6 +476,33 @@
 		</div>
 		<iframe id="typeform" class="form__typeform" ></iframe>
 	</div>
+
+	<footer class="footer">
+	<div id="footerContainer">
+	<div class="ligne info-footer">
+		<div class="cols-de-6">
+			<img src="charte/img/logo-arles.png" alt="Arles">
+		</div>
+		<!-- <div class="cols-de-6 accessibilite-adresse separation"><a href="#">Mentions légales</a> - <a href="#">Autre lien</a></div> -->
+		<div class="cols-de-12 adresse">
+			<div class="ligne">
+				<div class="cols-de-10">Hôtel de Ville
+				<br>Tél. 04 90 49 36 36</div>
+				<div class="cols-de-14">lundi - vendredi : 8h - 16h30
+				<br>samedi : 8h30 - 12h</div>
+			</div>
+		</div>
+	</div>
+	<div class="ligne" id="lastLine">
+		<div class="cols-de-10" id="retourVA"><a href="http://www.ville-arles.fr"><span>. | </span>Retour au site de la mairie</a></div>
+		<div class="cols-de-2 copyright-haut"><a href="http://twitter.com/VilledArles"><img alt="Suivez-nous sur Twitter" src="charte/img/twitter.png"></a></div>
+		<div class="cols-de-2 copyright-haut"><a href="http://www.facebook.com/ville.arles"><img alt="Suivez-nous sur Facebook" src="charte/img/fb.png"></a></div>
+		<div class="cols-de-2 copyright-haut"><a class="footer__link" href="http://www.developpement-durable.gouv.fr/greentech-verte" target="_blank"><img class="footer__image" src="img/logo_greentech_small.png"></a></div>
+		<div class="cols-de-2 copyright-haut"><a class="footer__link" href="http://biodiversite.beta.gouv.fr" target="_blank"><img class="footer__image" src="img/logo-plante-et-moi-01-small.png"></a></div>
+		<div class="cols-de-6 copyright-haut">© Ville d'Arles</div>
+	</div>
+	</div>
+</footer>
 
 	<script src="js/utils.js"></script>
 	<script src="js/main.js"></script>
@@ -554,9 +595,8 @@
 						})
 						  .addTo(map)
 		function manageResult(address) {
-				selectedAddress = address;
-				selectedPoint.bindPopup('<div style="text-align: center; font-size: 14px; font-weight: bold;">'+selectedAddress+'<a href="javascript:chooseProject();" class="button button--green">Choisir mon projet</a></div>',
-						       {autoClose:false, closeButton: false, className: 'popup--red'})
+				selectedPoint.bindPopup('<div style="text-align: center; font-size: 14px; font-weight: bold;">'+selectedAddress+'<a href="javascript:chooseProject();" class="button button--yellow">Choisir mon projet</a></div>',
+						       {autoClose:false, closeButton: false, className: 'popup--green'})
 						  .openPopup();
 		}
 		selectedPoint.on('move', function(e) {
@@ -650,7 +690,7 @@
 								try { 
 									marker.bindPopup(feature["fields"]["type_veget"]+" par "+userNames.random()); 
 								} catch(e){
-									marker.bindPopup(feature["properties"]["name"]+" par "+userNames.random());
+									marker.bindPopup(feature["properties"]["name"]+": \n"+feature["properties"]["description"]);
 								}
 								return marker;
 							}
