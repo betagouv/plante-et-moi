@@ -592,6 +592,7 @@
 						})
 						  .addTo(map)
 		function manageResult(address) {
+				selectedAddress = address;
 				selectedPoint.bindPopup('<div style="text-align: center; font-size: 14px; font-weight: bold;">'+selectedAddress+'<a href="javascript:chooseProject();" class="button button--yellow">Choisir mon projet</a></div>',
 						       {autoClose:false, closeButton: false, className: 'popup--green'})
 						  .openPopup();
