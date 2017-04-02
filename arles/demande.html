@@ -378,10 +378,10 @@
 		</div>
 		<a href="."><div class="header__image header__image--left"></div></a>
 		<div class="steps steps--3-col">
-			<div class="step step--current step--arrow" id="step-place">
+			<div class="step step--current step--arrow" id="step-place" onclick="choosePlace()">
 				<span class="step__number">1</span>   Choisir un lieu
 			</div>
-			<div class="step step--disable step--arrow" id="step-application">
+			<div class="step step--disable step--arrow" id="step-project">
 				<span class="step__number">2</span>   Choisir un projet
 			</div>
 			<div class="step step--disable" id="step-application">
@@ -471,9 +471,6 @@
 		</div>
 	</div>
 	<div class="form form--invisible" id="permit__form">
-		<div class="centered">
-			<h1 class="form__title">Demande de Permis de végétaliser</h1>
-		</div>
 		<iframe id="typeform" class="form__typeform" ></iframe>
 	</div>
 
@@ -712,11 +709,33 @@
 
 	var projectType = '';
 
+	function choosePlace() {
+		document.getElementById('step-place').classList.remove('step--previous');
+		document.getElementById('step-place').classList.add('step--current');
+		document.getElementById('map-container').classList.remove('map-container--invisible');
+
+		document.getElementById('step-project').classList.remove('step--current');
+		document.getElementById('step-project').classList.remove('step--previous');
+		document.getElementById('step-project').classList.add('step--disable');
+		document.getElementById('projectList').classList.add('galery--invisible');
+
+		document.getElementById('step-application').classList.remove('step--current');
+		document.getElementById('step-application').classList.add('step--disable');
+		document.getElementById('permit__form').classList.add('form--invisible');
+	}
+
 	function chooseProject() {
+		document.getElementById('step-place').classList.remove('step--current');
+		document.getElementById('step-place').classList.add('step--previous');
+		document.getElementById('map-container').classList.add('map-container--invisible');
+
+		document.getElementById('step-project').classList.remove('step--disable');
+		document.getElementById('step-project').classList.add('step--current');
 		document.getElementById('projectList').classList.remove('galery--invisible');
-		var title = document.getElementById('projectListTitle');
-		title.classList.remove('main__title--invisible')
-		title.scrollIntoView();
+		
+		document.getElementById('step-application').classList.remove('step--current');
+		document.getElementById('step-application').classList.add('step--disable');
+		document.getElementById('permit__form').classList.add('form--invisible');
 	}
 
 	function launchForm(type) {
@@ -724,9 +743,14 @@
 		var typeform = document.getElementById('typeform');
 		var domain = window.location.hostname;
 		typeform.src = 'https://amazingcontent.typeform.com/to/WNwIJx?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng+'&domain='+domain;
-		var permitForm = document.getElementById('permit__form');
-		permitForm.classList.remove('form--invisible');
-		permitForm.scrollIntoView();
+
+		document.getElementById('step-project').classList.remove('step--current');
+		document.getElementById('step-project').classList.add('step--previous');
+		document.getElementById('projectList').classList.add('galery--invisible');
+		
+		document.getElementById('step-application').classList.remove('step--disable');
+		document.getElementById('step-application').classList.add('step--current');
+		document.getElementById('permit__form').classList.remove('form--invisible');
 	}
 
 	var lng = getParameterByName('lng');
