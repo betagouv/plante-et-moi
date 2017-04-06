@@ -427,7 +427,7 @@
 		projectType = type;
 		var typeform = document.getElementById('typeform');
 		var domain = window.location.hostname;
-		typeform.src = 'https://amazingcontent.typeform.com/to/ouyQGk?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+lat+'&lon='+lng+'&domain='+domain;
+		typeform.src = 'https://amazingcontent.typeform.com/to/'+typeformId+'?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+lat+'&lon='+lng+'&domain='+domain;
 		document.getElementById('projectList').classList.add('galery--invisible');
 		var permitForm = document.getElementById('permit__form');
 		permitForm.classList.remove('form--invisible');
