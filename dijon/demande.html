@@ -2,37 +2,213 @@
 <html>
 
 <head>
-	<title>Permis de végétaliser - Ville de Dijon</title>
+	<title>Biodiversité citoyenne | Ville d'Arles</title>
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
 	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
 	<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU"
 		crossorigin="anonymous">
-	<link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
+		<link rel="stylesheet" href="css/main.css" />
 	<link rel="stylesheet" href="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.css">
-	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
-	<link rel="stylesheet" href="css/main.css" />
 
-	<script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
 	<script src="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.js"></script>
 
-	<link rel="stylesheet" href="https://cdn.rawgit.com/Norkart/Leaflet-MiniMap/v3.4.0/dist/Control.MiniMap.min.css" />
-	<script src="https://cdn.rawgit.com/Norkart/Leaflet-MiniMap/v3.4.0/dist/Control.MiniMap.min.js"></script>
-
 	<style type="text/css">
+	body {
+		line-height: 1.5;
+		background-color: #F3F3F3;
+		font-family: "Helvetica", "Arial", sans-serif;
+	}
+	  body {
+            background-image: url(img/bg_home.png);
+            background-repeat: no-repeat;
+            background-position: center -70px;
+        }
+
+
+h1, h2, h3, h4 {
+	font-family: Lato !important;
+}
+
+.header__ribbon {
+    text-align: center;
+    text-transform: uppercase;
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 100px;
+    background-color: #008cba;
+    color: #fff;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    z-index: 10;
+}
+
+.steps {
+    height: 55px;
+    width: calc(100% - 190px);
+    float: right;
+}
+.step {
+    box-sizing:border-box;
+    height: 100%;
+    position: relative;
+    float: left;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: default;
+}
+.steps--3-col .step {
+    width: 33.33%;
+}
+
+.steps--2-col .step {
+    width: 50%;
+}
+
+.step--arrow:after {
+    content: '';
+    position: absolute;
+    top: 0; 
+    right: -25px; /*half of square's length*/
+    width: 53px; 
+    height: 53px;
+    transform: scale(0.707) rotate(45deg);
+    /*we need to prevent the arrows from getting buried under the next link*/
+    z-index: 1;
+    /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+    background: #666;
+        /*stylish arrow design using box shadow*/
+    box-shadow: 
+            2px -2px 0 2px rgba(0, 0, 0, 0.4), 
+            3px -3px 0 2px rgba(255, 255, 255, 0.1);
+        /*
+            5px - for rounded arrows and 
+            50px - to prevent hover glitches on the border created using shadows*/
+    border-radius: 0 5px 0 50px;
+}
+
+.step--previous, .step--previous.step--arrow:after {
+    background-color: #3FA435;
+}
+
+.step--previous .step__number {
+    color: #3FA435;
+}
+
+
+.step--previous:hover, .step--previous.step--arrow:hover:after {
+    background-color: #26831C;
+    cursor: pointer;
+}
+
+.step--previous:hover .step__number {
+    color: #26831C;
+}
+
+.step--current, .step--current.step--arrow:after {
+    background-color: #26831C;
+}
+
+.step--current .step__number {
+    color: #26831C;
+}
+
+.step--disable, .step--disable.step--arrow:after  {
+    background-color: #adadbb;
+}
+
+.step--disable .step__number {
+    color: #adadbb;
+}
+
+.step__number {
+    display: block;
+    background-color: white;
+    width: 30px;
+    height: 25px;
+    border-radius: 15px;
+    font-weight: bold;
+    margin: 0px 10px;
+    padding-top: 5px;
+    line-height: 1;
+}
+
+@media (max-width: 900px) {
+    .step {
+        font-size: 15px;
+        padding: 20px;
+     }
+    .step__number {
+        height: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .step__number {
+        display: none;
+    }
+}
+
+.button {
+    border-radius:3px;
+    border:1px solid black;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:25px;
+    font-weight: bold;
+    padding: 5px 20px;
+    text-decoration:none;
+    letter-spacing: 0.2px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: none 200ms ease-out;		
+    transition-property: color, background;
+}
+.button {
+    position:relative;
+    top:1px;
+}
+
+.button--shadow {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.button--yellow {
+    background-color: #F8E273;
+    color: #b09409 !important;
+    border-color: #f7dd5c;
+}
+
+.button--yellow:hover {
+    background-color: #faeca4;
+}
+
+.button--card-bottom {
+    width: 100%;
+	box-sizing: border-box;
+    border-radius: 0px 0px 2px 2px !important;
+}
+
 		html, body { 
 			margin: 0; 
 			padding: 0; 
 			width: 100%; 
 			height: 100%;
-		}
-
-		.body--noscroll {
-			overflow:hidden;
-		}
+			overflow-x: hidden;
+		}	
 
 		.important {
 			width: 100%;
@@ -71,13 +247,9 @@
 		}
 		
 		.form {
-			top: 0;
-			left: 0;
-			margin: 0; 
-			padding: 0;
-			width: 100%;
-			height: 100%;
+			padding: 1px 0px;
 			background-color: #F3F3F3;
+			height: 100%;
 		}
 		
 		.form--invisible {
@@ -107,12 +279,10 @@
 		
 		.map-container {
 			position: relative;
-			width: 90%;
-			min-height: 90%;
-			height: 90%;
-			margin: 0 auto;
-			padding: 0%;
+			width: 100%;
+			height: 100%;
 			text-align: center;
+			box-sizing: border-box;
 		}
 
 		.map-container--invisible {
@@ -120,7 +290,7 @@
 		}
 		
 		.map__leaflet {
-			position: absolute;
+			position: relative;
 			width: 100%;
 			height: 100%;
 		}
@@ -160,52 +330,22 @@
 			top: 5px;
 			left: 40px;
 		}
-
-		.button {
-			border-radius:3px;
-			border:1px solid black;
-			display:inline-block;
-			cursor:pointer;
-			color:#ffffff;
-			font-size:25px;
-			font-weight: bold;
-    		font-family: Arvo,Georgia,serif;
-			padding: 5px 20px;
-			text-decoration:none;
-			letter-spacing: 0.2px;
-			font-weight: bold;
-			text-align: center;
-			cursor: pointer;
-		}
-		.button {
-			position:relative;
-			top:1px;
-		}
 		
-		.button--yellow {
-			background-color: #F8E273;
-			color: #b09409 !important;
-			border-color: #f7dd5c;
-		}
-		
-		.button--yellow:hover {
-			background-color: #faeca4;
-		}
-
 		.popup--green .leaflet-popup-content-wrapper {
-			background-color: rgba(63, 165, 53, 0.8);
+			background-color: rgba(114, 175, 38, 0.8);
 		}
 		
 		.popup--green .leaflet-popup-tip {
-			background-color: rgba(63, 165, 53, 0.8);
+			background-color: rgba(114, 175, 38, 0.8);
 		}
-
+		
 		.galery {
 			margin: 0 auto;
+			padding-top: 10px;
+			padding-bottom: 15px;
 			display: block;
 			min-height: 100%;
 			width: 100%;
-			background-color: #F3F3F3;
 			position: relative;
 			text-align: center;
 		}
@@ -226,6 +366,7 @@
 			background-color: white;
 			position: relative;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			cursor: pointer;
 		}
 		
 		.galery__card:hover {
@@ -250,6 +391,7 @@
 			font-weight: bold;
 			color: white;
 			background: rgba(46,139,87, 0.7);
+			line-height: 1.5;
 		}
 		
 		.galery__card__description {
@@ -390,108 +532,104 @@
 		.search__button:hover {
 			background-color: seagreen;
 		}
-		.content {
-			width: 100%;
-			height: 100%;
+
+		.header {
+			height: 55px;
+			padding: 0px;
+			margin: 0 auto;
+			display: block;
+			position: relative;
+			overflow: hidden;
 		}
-		.content--invisible {
-			display: none;
+		.header__image {
+			height: 100%;
+			width: 190px;
+			box-sizing: border-box; 
+			position: absolute;
+		}
+		.header__image--left {
+			left: 0px;
+			background: url("img/logo_biodiv.png") no-repeat left top;
+		}
+		.main {
+			height: calc(100% - 80px);
+			margin-top: 20px;
+		}
+		.centered {
+			height: calc(100% - 80px);
 		}
 	</style>
 </head>
 
 <body>
-	<div id="content" class="content">
-		<div class="header">
-			<div class="header__ribbon">
-				Beta
-			</div>
-			<a href="."><img src="img/logo_biodiv.png" class="header__image header__image--left" style="height: 53px"></a>
-			<a href="http://www.dijon.fr/" target="_blank"><img src="https://www.dijon.fr/extension/yosemite_custom/design/www/images/header/logo.png" class="header__image header__image--right" style="height: 33px;
-		margin-top: 20px;"></a>
+<div class="header">
+		<div class="header__ribbon">
+			Beta
 		</div>
+		<a href="."><div class="header__image header__image--left"></div></a>
+		<div class="steps steps--3-col">
+			<div class="step step--current step--arrow" id="step-place" onclick="choosePlace()">
+				<span class="step__number">1</span>   Choisir un lieu
+			</div>
+			<div class="step step--disable step--arrow" id="step-project">
+				<span class="step__number">2</span>   Choisir un projet
+			</div>
+			<div class="step step--disable" id="step-application">
+				<span class="step__number">3</span>   Faire une demande
+			</div>
+		</div>
+</div>
 
+<div class="centered">
+	<div class="main">
 		<div class="map-container" id="map-container">
 			<div class="map__leaflet" id="map">
 				<!-- <input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="address-search map__input leaflet-bar leaflet-control">
 				-->
 				<div class="map__protip leaflet-control">
-					<h1 id="selectAddressProTip" class="map__protip__title">Déplacer le repère où vous souhaitez planter</h1>
+					<h1 id="selectAddressProTip" class="map__protip__title">Déplacer le repère sur l'endroit à végétaliser</h1>
 				</div>
 			</div>
 		</div>
-		<div class="centered">
-				<h1 class="main__title main__title--invisible" id="projectListTitle">Choisissez le type projet que vous souhaitez faire</h1>
-		</div>
 		<div class="galery galery--invisible" id="projectList">
-			<div class="galery__card" onclick="launchForm('projet de jardinière');">
-				<img class="galery__card__image" src="http://www.airdemidi.org/wp-content/uploads/2016/10/potager-dans-la-rue.jpg"
-				/>
-				<h2 class="galery__card__title">Jardinière</h2>
-				<p class="galery__card__description">Vous pouvez la construire vous même! Disséminez quelques graines de fleurs sur la terre retournée : une micro-prairie
-					sans effort. Les abeilles vont vous remercier.
-					<br><br>Déjà 23 Jardinières (et combien de jardinier ?)
-				</p>
-				<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
-			</div>
-			<div class="galery__card" onclick="launchForm('projet de poteau végétalisé');"> 
-				<img class="galery__card__image" src="http://monjardindansmarue.fr/wp-content/uploads/2015/04/3-GreenPods1.jpg" />
-				<h2 class="galery__card__title">Poteau végétalisé</h2>
-				<p class="galery__card__description">Les poteaux de stationnement près de chez vous font grise mine ? Passez les au vert en les coiffant d’un pot ! Choisissez
-					une plante, et c’est tout.
-					<br><br>111 poteau déjà aménagé
-				</p>
-				<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
-			</div>
-			<div class="galery__card" onclick="launchForm('projet de croix de Saint-André');"> 
-				<img class="galery__card__image" src="http://www.pyrenees-equipements.com/imagesproduits/produit139_2.gif" />
-				<h2 class="galery__card__title">Croix de Saint-André</h2>
-				<p class="galery__card__description">Les croix de Saint-André près de chez vous font grise mine ? Passez les au vert en les coiffant d’une jardinière ! Choisissez
-					vos plantes, et c’est tout.
-					<br><br>111 déjà aménagés
-				</p>
-				<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
-			</div>
 			<div class="galery__card" onclick="launchForm('projet de pied d\'arbre fleuris');">
-				<img class="galery__card__image" src="http://parcjardin.mairie-albi.fr/wp-content/gallery/photos/dscn0152.jpg" />
+				<img class="galery__card__image" src="img/P1040455.jpg" />
 				<h2 class="galery__card__title">Pied d'arbre fleuris</h2>
-				<p class="galery__card__description">Retournez la terre et plantez des graminés. Ça pousse tout seul avec peu d'eau et ça résiste très bien au froid. On m'a
-					dit que certain y plantait des légumes :)
-					<br><br>2 pieds aménagé la semaine dernière
+				<p class="galery__card__description">Adoptez en un près de chez vous. Vous pourrez y planter des fleurs, des légumes, des aromates... Laissez parler votre imagination :)
 				</p>
-				<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
+				<div class="galery__card__bottom">
+					<a class="button button--yellow button--card-bottom">Je demande mon permis</a>
+				</div>
 			</div>
-			<div class="galery__card" onclick="launchForm('projet de friche');">
-				<img class="galery__card__image" src="http://www.jejardine.org/images/stories/2_La_plante_et_son_milieu/friche.jpg" />
-				<h2 class="galery__card__title">Friche</h2>
-				<p class="galery__card__description">Aménagez ce lieu abandonné
-					<br><br>Déjà 12 friches
-				</p>
-				<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
-			</div>
-			<div class="galery__card" onclick="launchForm('projet de fosse');">
-				<img class="galery__card__image" src="https://www.tours.fr/uploads/Image/55/8504_151_fleur-de-trottoir-premiere-plantation.jpg"
+			<div class="galery__card" onclick="launchForm('projet de pied de mur');">
+				<img class="galery__card__image" src="img/P1010222.jpg"
 				/>
-				<h2 class="galery__card__title">Fosse</h2>
+				<h2 class="galery__card__title">Pied de mur</h2>
 				<p class="galery__card__description">Et si on faisait un trou devant chez vous ? La mairie peut casser un peu de trottoir pour construire une fosse végétalisable.
 					Un peu de terre, des graines et c’est parti !
-					<br><br>On a déjà fait 61 fosses !
 				</p>
-				<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
-			</div>
-			<div class="galery__card" onclick="launchForm('projet de végétalisation');">
-				<img class="galery__card__image" src="img/autre-projet.jpg" />
-				<h2 class="galery__card__title">Autre projet</h2>
-				<p class="galery__card__description">Une autre idée ? Je vois que vous n'êtes pas le genre de personne à faire comme tout le monde.
-					Laisser parler votre imagination
-				</p>
-				<a class="galery__card__bottom galery__card__bottom--button">Je demande mon permis</a>
+				<div class="galery__card__bottom">
+					<a class="button button--yellow button--card-bottom">Je demande mon permis</a>
+				</div>
 			</div>
 		</div>
+		<div class="form form--invisible" id="permit__form">
+			<iframe id="typeform" class="form__typeform" ></iframe>
+		</div>
 	</div>
-	<div class="form form--invisible" id="permit__form">
-		<iframe id="typeform" class="form__typeform" ></iframe>
-	</div>
+	 <div class="footer">
+            <ul class="footer__logos">
+                <li><img src="img/Dijon.png" alt="Dijon"></li>
+                <li><img src="img/gd.png" alt="Le Grand Dijon"></li>
+                <li><img src="img/JardinSciences.png" alt="Le jardin des Sciences"></li>
+                <li><a href="http://www.developpement-durable.gouv.fr/greentech-verte" target="_blank"><img class="footer__image" src="img/logo_greentech_small.png"></a></li>
+                <li><a ref="http://biodiversite.beta.gouv.fr" target="_blank"><img class="footer__image" src="img/logo-plante-et-moi-01-small.png"></a></li>
+            </ul>
+            <div class="footer__links">
+                <a href="mailto:biodiversite&commat;beta.gouv.fr?subject=Aide%20Plante%20Et%20Moi%20Demande%20permis"><span class="footer__text">Contact</span></a>
+            </div>
+        </div>
+    </div>
 
 	<script src="js/utils.js"></script>
 	<script src="js/main.js"></script>
@@ -519,21 +657,14 @@
 	var photoLayer = L.tileLayer('https://wxs.ign.fr/aux4oyb491ew3s7eqahym3ps/wmts/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fjpeg', {
             attribution: "&copy; <a href='http://www.ign.fr'>IGN</a>",
             minZoom: 10,
-            maxZoom: 18
+            maxZoom: 19
         });
-
 	photoLayer.addTo(map);
 
 	var mapLayer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
     	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
     	minZoom: 10,
     	maxZoom: 20
-	});
-
-	var mapLayerMiniMap = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
-    	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
-    	minZoom: 11,
-    	maxZoom: 15
 	});
 
 	var baseMaps = {
@@ -620,15 +751,10 @@
 	var request = new XMLHttpRequest();
 	request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom='+city, true);
 
-	var polygonMiniMap;
 	request.onload = function() {
 	  if (request.status >= 200 && request.status < 400) {
 	    // Success!
 	    var data = JSON.parse(request.responseText);
-		polygonMiniMap = L.geoJson(data[0]["contour"],{
-		    color: '#0C518A',
-		    fill: false
-		})
 	    var polygon = L.geoJson(data[0]["contour"],{
 		    color: '#0C518A',
 		    fill: false
@@ -669,7 +795,6 @@
 
 // Add projects on the map
 	var existingProjects = new L.LayerGroup();
-	var existingProjectsMiniMap = new L.LayerGroup();
 	var requestVerts = new XMLHttpRequest();
 	requestVerts.open('GET', 'data/projects/'+city+'.geojson', true);
 
@@ -678,6 +803,8 @@
     	markerColor: 'green',
     	prefix: 'fa'
   	});
+
+	var userNames = ["Pierre", "Paul","Jeanne", "Sophie","Jean", "Joseph"];
 
 	requestVerts.onload = function() {
 	  if (requestVerts.status >= 200 && requestVerts.status < 400) {
@@ -689,27 +816,22 @@
 							pointToLayer: function(geoJsonPoint, latlng) {
 								var marker = L.marker(latlng, {icon: plantMarker});
 								try { 
-									marker.bindPopup(feature["fields"]["type_veget"]); 
+									marker.bindPopup(feature["fields"]["type_veget"]+" par "+userNames.random()); 
 								} catch(e){
-									marker.bindPopup(feature["properties"]["name"]+" à disposition");
+									marker.bindPopup(feature["properties"]["name"]+": \n"+feature["properties"]["description"]);
 								}
 								return marker;
 							}
 						})
 						.addTo(existingProjects);
-			L.geoJson(feature["geometry"],  {
-							pointToLayer: function(geoJsonPoint, latlng) {
-								return L.marker(latlng, {icon: plantMarker});
-							}
-						}).addTo(existingProjectsMiniMap);
 	    })
-		existingProjects.addTo(map);
-		if(polygonMiniMap == undefined) {
-			var layers = new L.LayerGroup([mapLayerMiniMap, existingProjectsMiniMap]);
-		} else {
-			var layers = new L.LayerGroup([mapLayerMiniMap, polygonMiniMap, existingProjectsMiniMap]);
-		}
-		var miniMap = new L.Control.MiniMap(layers, { toggleDisplay: true }).addTo(map);
+		existingProjects.addTo(map)
+
+		var title = '<span class="map__legend"><div class="icon icon--green icon--circle"><i class="icon__symbol fa fa-leaf"></i></div> '+data["features"].length+' projets existants</span>';
+		var layers = { }
+		layers[title] = existingProjects;
+
+		L.control.layers(null, layers,({collapsed: false })).addTo(map);
 	  } else {
 
 	  }
@@ -718,22 +840,48 @@
 
 	var projectType = '';
 
+	function choosePlace() {
+		document.getElementById('step-place').classList.remove('step--previous');
+		document.getElementById('step-place').classList.add('step--current');
+		document.getElementById('map-container').classList.remove('map-container--invisible');
+
+		document.getElementById('step-project').classList.remove('step--current');
+		document.getElementById('step-project').classList.remove('step--previous');
+		document.getElementById('step-project').classList.add('step--disable');
+		document.getElementById('projectList').classList.add('galery--invisible');
+
+		document.getElementById('step-application').classList.remove('step--current');
+		document.getElementById('step-application').classList.add('step--disable');
+		document.getElementById('permit__form').classList.add('form--invisible');
+	}
+
 	function chooseProject() {
+		document.getElementById('step-place').classList.remove('step--current');
+		document.getElementById('step-place').classList.add('step--previous');
+		document.getElementById('map-container').classList.add('map-container--invisible');
+
+		document.getElementById('step-project').classList.remove('step--disable');
+		document.getElementById('step-project').classList.add('step--current');
 		document.getElementById('projectList').classList.remove('galery--invisible');
-		var title = document.getElementById('projectListTitle');
-		title.classList.remove('main__title--invisible')
-		title.scrollIntoView();
+		
+		document.getElementById('step-application').classList.remove('step--current');
+		document.getElementById('step-application').classList.add('step--disable');
+		document.getElementById('permit__form').classList.add('form--invisible');
 	}
 
 	function launchForm(type) {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
-		typeform.src = 'https://amazingcontent.typeform.com/to/Eju9dd?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng;
-		document.getElementById('content').classList.add('content--invisible');
-		var permitForm = document.getElementById('permit__form');
-		permitForm.classList.remove('form--invisible');
-		permitForm.scrollIntoView();
-		document.body.classList.add('body--noscroll')
+		var domain = window.location.hostname;
+		typeform.src = 'https://amazingcontent.typeform.com/to/'+typeformId+'?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng+'&domain='+domain;
+
+		document.getElementById('step-project').classList.remove('step--current');
+		document.getElementById('step-project').classList.add('step--previous');
+		document.getElementById('projectList').classList.add('galery--invisible');
+		
+		document.getElementById('step-application').classList.remove('step--disable');
+		document.getElementById('step-application').classList.add('step--current');
+		document.getElementById('permit__form').classList.remove('form--invisible');
 	}
 
 	var lng = getParameterByName('lng');
@@ -749,6 +897,7 @@
  				heigth: 100%; \
   				weight: 100%; \
   				text-align: center; \
+				background-color: #FFFFFF; \
 			 }</style> \
 				<img src="img/spin.gif">');
 	doc.close();
