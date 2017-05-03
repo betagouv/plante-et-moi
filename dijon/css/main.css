@@ -1,4 +1,10 @@
 body {
+    line-height: 1.5;
+    background-color: #F3F3F3;
+    font-family: "Helvetica", "Arial", sans-serif;
+}
+
+body {
     background-color: #F0EEE7;
 }
 .centered {
