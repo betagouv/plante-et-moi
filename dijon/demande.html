@@ -218,7 +218,7 @@ h1, h2, h3, h4 {
 		.form {
 			padding: 1px 0px;
 			background-color: #F3F3F3;
-			height: 100%;
+			height: 80vh;
 		}
 		
 		.form--invisible {
@@ -626,11 +626,12 @@ h1, h2, h3, h4 {
 	
 
 	var photoLayer = L.tileLayer('http://tiles.arcgis.com/tiles/5e9nT6GAayqss4ni/arcgis/rest/services/Ortho_2013_Grand_Dijon/MapServer/WMTS/tile/1.0.0/Ortho_2013_Grand_Dijon/default/default028mm/{z}/{y}/{x}.jpeg', {
-           attribution: "&copy; GDDIJON",
-            minZoom: 0,
-            maxZoom: 19,
-			zoomOffset: -11
-        }); 
+		attribution: "&copy; GDDIJON",
+		minZoom: 0,
+		maxZoom: 20,
+		maxNativeZoom: 8,
+		zoomOffset: -11
+	}); 
 	
 	photoLayer.addTo(map);
 
@@ -846,7 +847,7 @@ h1, h2, h3, h4 {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
 		var domain = window.location.hostname;
-		typeform.src = 'https://amazingcontent.typeform.com/to/'+typeformId+'?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng+'&domain='+domain;
+		typeform.contentWindow.location.replace('https://amazingcontent.typeform.com/to/'+typeformId+'?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng+'&domain='+domain);
 
 		document.getElementById('step-project').classList.remove('step--current');
 		document.getElementById('step-project').classList.add('step--previous');
@@ -861,7 +862,7 @@ h1, h2, h3, h4 {
 	var lat = getParameterByName('lat');
 	selectedAddress = getParameterByName('address');
 	var coord = { lat: lat, lng: lng};
-	map.setView(coord, 18);
+	map.setView(coord, 19);
 	selectPoint(coord, selectedAddress);
 
 	var doc = document.getElementById('typeform').contentWindow.document;
@@ -874,6 +875,10 @@ h1, h2, h3, h4 {
 			 }</style> \
 				<img src="img/spin.gif">');
 	doc.close();
+
+	window.onbeforeunload = function(e) {
+		return 'Si vous quittez la page, vous perdrez toute demande en cours.';
+	};
 	
 </script>
 </body>

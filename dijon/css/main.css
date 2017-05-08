@@ -13,12 +13,8 @@ body {
 .centered--fixed {
     max-width: 980px;
 }
-.centered--relative {
-    
-}
 
-
- .main {
+.main {
     border-top: 4px solid rgb(152, 45, 129);
     background-color: white;
     padding: 25px 20px 25px 20px;
