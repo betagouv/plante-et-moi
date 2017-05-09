@@ -635,10 +635,11 @@ h1, h2, h3, h4 {
 	
 	photoLayer.addTo(map);
 
-	var mapLayer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
-    	attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+	var mapLayer = L.tileLayer('http://tiles.arcgis.com/tiles/5e9nT6GAayqss4ni/arcgis/rest/services/FDP_com_V10/MapServer/WMTS/tile/1.0.0/FDP_com_V10/default/default028mm/{z}/{y}/{x}.png', {
+    	attribution: "&copy; GDDIJON",
     	minZoom: 10,
-    	maxZoom: 20
+    	maxZoom: 20,
+		zoomOffset: -9
 	});
 
 	var baseMaps = {
