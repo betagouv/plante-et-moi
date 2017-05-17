@@ -141,23 +141,22 @@
 			padding: 10px;
 			width: 100%;
 			height: 50px;
-			font-size: 25px;
+			font-size: 20px;
 			border-width: 0px;
 			border-radius: 2px 2px 2px 2px;
 			box-sizing:border-box;
 		}
 		.form__button {
 			margin: 0px;
-			letter-spacing: 0.2px;
+            font-size: 22px;
 			font-weight: bold;
 			background-color: #3FA435;
 			text-decoration: none;
 			transition: none 200ms ease-out;
 			transition-property: color, background;
-			padding: 16px 0px;
 			color: white;
 			font-weight: bold;
-			width: 100px;
+			width: 150px;
 			height: 50px;
 			border-width: 0px;
 		}
@@ -185,6 +184,10 @@
 			font-size: 25px;
 			line-height: 40px;
 		}
+        .cube__legend {
+            font-size: 12px;
+            color: #9E8652;
+        }
     </style>
 </head>
 <body>
@@ -199,7 +202,7 @@
         <div class="main">
             <h1 style="text-align: center">​Jardinez en bas de chez vous pour des rues plus belles, plus vivantes, plus natures</h1>
             <div style="margin-top: 30px; margin-bottom: 20px; text-align: center">
-                <h2>Vous voulez participer à l'opération <br>« J'adopte un pied d'arbre, un pied de mur » ?</h2>
+                <h2 style="color: #282D33;">Vous voulez participer à l'opération <br>« J'adopte un pied d'arbre, un pied de mur » ?</h2>
                 <div class="form__block" style="margin-top: 10px;">
                     <input type="text" id="address-search" name="address-search" placeholder="Cherchez une rue ici..." class="form__input">
                     <button class="form__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
@@ -210,18 +213,21 @@
                     <h3>Besoin de nature en ville ?</h3>
                     <br>Ça tombe bien : jardiner dans les rues, c’est permis à Dijon !
                     <br>Dans le cadre du « plan biodiversité », la Ville lance l’opération « J'adopte un pied d'arbre, un pied de mur » qui permet de planter dans l’espace public des plantes et fleurs. 
-                    <br><br><img class="cube__img" src="img/nature-ville.JPG" >
+                    <br><br><img class="cube__img" src="img/nature-ville.JPG" ><br>
+                    <span class="cube__legend">rue Georges Bizet</span>
                 </div>
                 <div class="cube">
                     <h3>Envie de jardinage ?</h3>
-                    <br>Pour participer, il suffit de faire une demande à la mairie et de s’engager à respecter certaines règles (utiliser de la fumure organique, ne pas planter d’espèces invasives, etc.). 
-                    <br><br><img class="cube__img" src="img/envie.JPG">
+                    <br>Pour participer, il suffit de faire une demande à la mairie et de s’engager à respecter certaines règles. 
+                    <br><br><img class="cube__img" src="img/envie.JPG"><br>
+                    <span class="cube__legend">rue Beranger</span>
                 </div>
                 <div class="cube">
                     <h3>Pas la main verte ?</h3>
-                    <br>Le Jardin des sciences vous conseille et vous accompagne, même en hiver ! 
-                    <br>Des idées d'espèces végétales, contribuant à la biodiversité urbaine et utiles pour les pollinisateurs, vous seront proposées. Et des graines, bulbes ou plantes vous seront fournis pour débuter !
-                    <br><br><img class="cube__img" src="img/main-verte.JPG">
+                    <br>Le Jardin des sciences vous conseille et vous accompagne, toute l'année. 
+                    <br>Des idées d'espèces végétales, contribuant à la biodiversité urbaine et utiles pour les pollinisateurs, vous seront proposées. Et des graines, bulbes ou plantes vous seront proposés pour débuter !
+                    <br><br><img class="cube__img" src="img/main-verte.JPG"><br>
+                    <span class="cube__legend">rue Jehan de Marville</span>
                 </div>
             </div>
         </div>
