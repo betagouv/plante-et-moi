@@ -849,7 +849,12 @@ h1, h2, h3, h4 {
 		projectType = type;
 		var typeform = document.getElementById('typeform');
 		var domain = window.location.hostname;
-		typeform.contentWindow.location.replace('https://amazingcontent.typeform.com/to/'+typeformId+'?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng+'&domain='+domain);
+		var url = 'https://amazingcontent.typeform.com/to/'+typeformId+'?type='+projectType+'&address='+selectedAddress+'&city='+city+'&lat='+coord.lat+'&lon='+coord.lng+'&domain='+domain;
+		var data = docCookies.getItem(city+"-data");
+		if(data != "" && data != null) {
+			url = url+"&data="+data;
+		}
+		typeform.contentWindow.location.replace(url);
 
 		document.getElementById('step-project').classList.remove('step--current');
 		document.getElementById('step-project').classList.add('step--previous');

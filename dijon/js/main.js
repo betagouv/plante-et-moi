@@ -25,3 +25,9 @@ requestCityGeoData.onload = function() {
     }
 };
 requestCityGeoData.send();
+
+var hash = window.location.hash.substr(1);
+if( window.location.hash.substr(1) != "") {
+    docCookies.setItem(city+"-data", hash, 86400);
+    window.location.hash = "";
+}
