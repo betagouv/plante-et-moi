@@ -6,6 +6,8 @@
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <style type="text/css">
 		.galery {
 			margin: 0;
@@ -90,12 +92,32 @@
 			left: 0px;
 			display: block;
 		}
+		.invisible {
+			display: none;
+		}
+		.tag {
+			background-color: grey;
+			padding: 6px;
+			color: white;
+			border-width: 0px;
+		}
+		.tag-selected {
+			background-color: black;
+		}
 	</style>
 
 </head>
 
 <body>
 <h1>Planter quoi ?</h1>
+<div id="tag_filter" class="invisible">
+	Type de projet : 
+	<button class="tag tag-selected" onclick="filterPlantsByProject(this)">Tous</button>
+	<button class="tag" onclick="filterPlantsByProject(this)">Trottoirs</button>
+	<button class="tag" onclick="filterPlantsByProject(this)">Mobilier urbain</button>
+	<button class="tag" onclick="filterPlantsByProject(this)">Façades et murets</button>
+	<button class="tag" onclick="filterPlantsByProject(this)">Pieds d'arbres</button>
+</div>
 <div class="galery" id="galery">
 		<div class="galery__card" id="item">
 			<img class="galery__card__image" src=""/>
@@ -104,6 +126,29 @@
 </div>
 
 <script>
+	function filterPlantsByProject(elem) {
+		var filter = elem.innerText;
+		Array.from(document.getElementsByClassName("galery__card"))
+		.forEach(function(plant){ 
+			if(filter == "Tous") {
+				plant.classList.remove("invisible")
+			} else {
+				if(Array.from(plant.getElementsByClassName("tag")).reduce(function(acc, tag){ 
+					return acc || tag.innerHTML == filter
+				}, false)) {
+					plant.classList.remove("invisible")
+				} else {
+					plant.classList.add("invisible")
+				}
+			}
+		})
+		Array.from(document.getElementById("tag_filter").getElementsByClassName("tag"))
+		.forEach(function(tag){ 
+			tag.classList.remove("tag-selected");
+		})
+		elem.classList.add("tag-selected");
+	}
+
     function showPlants(plants) {
         var card = document.getElementById("item");
         var newCards = plants.map(function(plant) {
@@ -112,7 +157,7 @@
                 if(child.className == "galery__card__image") {
                     child.src = plant["Wikipedia Thumb Url"];
                 } else if (child.className == "galery__card__description") {
-                    child.innerHTML = plant["Nom"]+"<br>"+plant["Nom latin"]+"<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia</a>";
+                    child.innerHTML = plant["Nom"]+"<br>"+plant["Nom latin"]+"<br><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> "+plant["Exposition"]+"<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a><br><span class='tag'>"+plant["Projet"]+"</span>";
                 }
             });
             return newCard;
@@ -122,6 +167,7 @@
         newCards.forEach(function(plant){
             galery.appendChild(plant);
         });
+		document.getElementById("tag_filter").classList.remove("invisible");
     }
 
     var request = new XMLHttpRequest();
