@@ -1,0 +1,8 @@
+{
+  "name": "plants",
+  "version": "1.0.0",
+  "main": "enhance-plants-by-wikipedia.mjs",
+  "dependencies": {
+    "babyparse": "0.4.6"
+  }
+}
