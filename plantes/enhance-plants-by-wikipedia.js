@@ -55,7 +55,9 @@ fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
                 var page = Object.values(result.query.pages)[0];
                 if(page != undefined) {
                     plant["Wikipedia Page Url"] = page.fullurl;
-                    var image = page.images[0];
+                    var image = page.images.filter(function(el) {
+                       return (el.title.indexOf(".svg") == -1) && (el.title.indexOf(".png") == -1)
+                    })[0];
                     if(image != undefined) {
                         plant["Wikipedia Image Title"] = image.title;
                     }
