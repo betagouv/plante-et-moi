@@ -19,16 +19,18 @@ const httpGetContent = function(url) {
     })
 };
 
-function getSearchWikipedia(search) {
-    return httpGetContent("https://fr.wikipedia.org/w/api.php?action=query&list=search&srsearch="+encodeURIComponent(search)+"&format=json")
+
+
+function getSearchWikipedia(search, lang) {
+    return httpGetContent("https://"+lang+".wikipedia.org/w/api.php?action=query&list=search&srsearch="+encodeURIComponent(search)+"&format=json")
 }
 
-function getWikipediaPage(page_name) {
-    return httpGetContent("https://fr.wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(page_name)+"&prop=images|info&inprop=url&format=json")
+function getWikipediaPage(page_name, lang) {
+    return httpGetContent("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(page_name)+"&prop=images|info&inprop=url&format=json")
 }
 
-function getWikipediaFile(file_name) {
-    return httpGetContent("https://fr.wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(file_name)+"&prop=imageinfo&iiprop=url|user&iiurlwidth=220&format=json")
+function getWikipediaFile(file_name, lang) {
+    return httpGetContent("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(file_name)+"&prop=imageinfo&iiprop=url|user&iiurlwidth=220&format=json")
 }
 
 fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
@@ -37,10 +39,24 @@ fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
   }
   var parsed = Baby.parse(data, { header: true, skipEmptyLines: false });
   var plants_with_page_title = Promise.all(parsed.data.map((plant) => {
-    return getSearchWikipedia(plant['Nom latin']).then((result) => { 
-       var page = result.query.search[0];
+    return getSearchWikipedia(plant['Nom latin'], "fr")
+    .then((result) => { 
+        var page = result.query.search[0];
+        if(page == undefined) {
+            return getSearchWikipedia(plant["Nom latin"], "en")
+                .then((result) => {
+                    return {result: result, lang: "en"}
+                })
+        }
+        return new Promise((resolve, reject) => {
+            resolve({result: result, lang: "fr"});
+        });
+    })
+    .then((result) => { 
+       var page = result.result.query.search[0];
        if(page != undefined) {
           plant["Wikipedia Page Title"] = page.title;
+          plant["Wikipedia Lang"] = result.lang;
        }
        return plant;
     });
@@ -50,18 +66,18 @@ fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
   var plants_with_image_title = plants_with_page_title.then((results) => 
      Promise.all(results.map((plant) => {
         if(plant["Wikipedia Page Title"] != undefined) {
-            return getWikipediaPage(plant["Wikipedia Page Title"])
+            return getWikipediaPage(plant["Wikipedia Page Title"], plant["Wikipedia Lang"])
               .then((result) => { 
                 var page = Object.values(result.query.pages)[0];
                 if(page != undefined) {
                     plant["Wikipedia Page Url"] = page.fullurl;
                     var image = page.images.filter(function(el) {
-                       return (el.title.indexOf(".svg") == -1) && (el.title.indexOf(".png") == -1)
+                       return (el.title.indexOf(".svg") == -1) && (el.title.indexOf(".png") == -1) && (el.title.indexOf("Asteracea poster") == -1)
                     })[0];
                     if(image != undefined) {
                         plant["Wikipedia Image Title"] = image.title;
                     }
-                }
+                } 
                 return plant;
               })
         }
@@ -73,7 +89,7 @@ fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
   var plants = plants_with_image_title.then((results) => 
      Promise.all(results.map((plant) => {
         if(plant["Wikipedia Image Title"] != undefined) {
-            return getWikipediaFile(plant["Wikipedia Image Title"])
+            return getWikipediaFile(plant["Wikipedia Image Title"], plant["Wikipedia Lang"])
               .then((result) => { 
                 var page = Object.values(result.query.pages)[0];
                 if(page != undefined) {
