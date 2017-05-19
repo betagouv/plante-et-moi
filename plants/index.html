@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Planter quoi ?</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+		.galery {
+			margin: 0;
+			display: block;
+			height: 100%;
+			width: 100%;
+			background-color: #F3F3F3;
+			position: relative;
+			text-align: center;
+			box-sizing: border-box;
+			float: left;
+		}
+		.galery__card {
+			margin: 10px;
+			padding: 0px;
+			width: 220px;
+			border-radius: 2px;
+			display: inline-block;
+			vertical-align: top;
+			background-color: white;
+			position: relative;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			font-family: "Helvetica", "Arial", sans-serif;
+   			line-height: 1.5;
+		}
+
+		.galery__card--clickable {
+			cursor: pointer;
+		}
+		
+		.galery__card__image {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			border-radius: 2px 2px 0px 0px;
+		}
+		
+		.galery__card__title {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			top: -40px;
+			margin: 0px;
+			text-align: center;
+			font-weight: bold;
+			color: white;
+			background: rgba(63, 165, 53, 0.7);
+			font-size: 22px;
+		}
+
+		.galery__card__subtitle {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			top: -41px;
+			margin: 0px;
+			text-align: center;
+			font-weight: bold;
+			color: white;
+			background: rgba(63, 165, 53, 0.8);
+			font-size: 15px;
+		}
+		
+		.galery__card__description {
+			position: relative;
+			display: inline-block;
+			margin: 20px 10px 10px 10px !important;
+			padding: 0px;
+			text-align: left;
+			color: #555;
+			font-size: 15px;
+		}
+		
+		.galery__card__bottom {
+			position: absolute;
+			bottom: 0px;
+			margin: 0px;
+			width: 100%;
+			font-weight: bold;
+			border-radius: 0px 0px 2px 2px;
+			left: 0px;
+			display: block;
+		}
+	</style>
+
+</head>
+
+<body>
+<h1>Planter quoi ?</h1>
+<div class="galery" id="galery">
+		<div class="galery__card" id="item">
+			<img class="galery__card__image" src=""/>
+			<p class="galery__card__description"></p>
+		</div>
+</div>
+
+<script>
+    function showPlants(plants) {
+        var card = document.getElementById("item");
+        var newCards = plants.map(function(plant) {
+            var newCard = card.cloneNode(true);
+            Array.from(newCard.children).forEach(function(child) {
+                if(child.className == "galery__card__image") {
+                    child.src = plant["Wikipedia Thumb Url"];
+                } else if (child.className == "galery__card__description") {
+                    child.innerHTML = plant["Nom"]+"<br>"+plant["Nom latin"]+"<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia</a>";
+                }
+            });
+            return newCard;
+        });
+        var galery = document.getElementById("galery");
+        galery.removeChild(card);
+        newCards.forEach(function(plant){
+            galery.appendChild(plant);
+        });
+    }
+
+    var request = new XMLHttpRequest();
+	request.open('GET', 'data/enhance-urban-plants.json', true);
+
+	request.onload = function() {
+	  if (request.status >= 200 && request.status < 400) {
+	    // Success!
+	    var data = JSON.parse(request.responseText);
+	    showPlants(data)
+	  } else {
+	    // We reached our target server, but it returned an error
+
+	  }
+	};
+	request.send();
+
+</script>
+</body>
+</html>
