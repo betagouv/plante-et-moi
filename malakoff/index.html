@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Permis de végétaliser | Ville de Malakoff </title>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Dosis:600|Raleway|Playfair+Display" rel="stylesheet"> 
+	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
+    <style>
+        html, body {
+            font-family: 'Raleway',Arial,Verdana,Helvetica,sans-serif;
+            font-weight: normal;
+            font-style: normal;
+        }
+        .centered {
+            margin: 0px auto;
+            max-width: 1200px;
+        }
+        .header {
+            width: 100%;
+            position: relative;
+            padding: 10px 0 0px 0;
+            height: 110px;
+        }
+        .header__logo {
+            float: left;
+            max-width: 100%;
+            height: auto;
+        }
+        .header__separator {
+            height: 2px;
+            background-color: #d8d8d8;
+            width: 100%;
+            margin-top: 10px;
+            float: left;
+        }
+        .gallery {
+            margin: 0 auto;
+			display: block;
+			text-align: center;
+        }
+        .cube {
+			display: inline-block;
+			width: 370px; 
+			text-align: center;
+			box-sizing:border-box;
+			margin: 20px;
+			vertical-align: top;
+            border: 1px solid #d8d8d8;
+            box-sizing: border-box;
+            padding: 0px 20px 20px 20px;
+		}
+        .cube:first-child {
+            margin-left: 0px;
+            
+        }
+        .cube:last-child {
+            margin-right: 0px;
+        }
+
+		@media (max-width: 950px) {
+			.cube {
+				width: 100%;
+                margin: 0px;
+			}
+		}	
+        .form__block {
+			display: inline-block;
+			vertical-align: middle;
+			border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			margin-bottom: 20px;
+		}
+        .form__input {
+			margin: 0px;
+			padding: 10px;
+			width: 100%;
+			height: 50px;
+			font-size: 20px;
+			border-width: 0px;
+			border-radius: 2px 2px 2px 2px;
+			box-sizing:border-box;
+		}
+		.form__button {
+			margin: 0px;
+            font-size: 22px;
+			font-weight: bold;
+			background-color: #3FA435;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			color: white;
+			font-weight: bold;
+			width: 150px;
+			height: 50px;
+			border-width: 0px;
+		}
+		@media (min-width: 564px) {
+			.form__input {
+				float: left;
+				width: 400px;
+			}
+			.form__button {
+				float: left;
+				border-radius: 0px 2px 2px 0px;
+			}
+		}
+
+		.form__button:hover {
+			background-color: seagreen;
+		}
+
+        .cube__img {
+            width: 90%;
+            border-radius: 50%;
+            max-width: 300px;
+        }
+        .footer {
+            width: 100%;
+            min-height: 130px;
+            height: auto;
+            border-top: 1px solid #d8d8d8;
+            border-bottom: 1px solid #d8d8d8;
+            background: url(img/ville_de_malakoff.jpg) no-repeat right 0;
+            margin: 23px 0px 22px 0px;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .footer__title {
+            text-transform: uppercase;
+            color: #363333;
+            font-family: 'Dosis',Arial,Verdana,sans-serif;
+            font-size: 1.5em;
+            line-height: 1em;
+            margin: 0 0 5px 0;
+        }
+        .footer__description {
+            float: left;
+            font-size: 0.8em;
+            line-height: 1.5em;
+        }
+        h1 {
+            color: #641d55;
+            font-family: 'Playfair Display',Arial,Verdana,sans-serif;
+            font-size: 2.9em;
+            font-style: italic;
+            line-height: 1.2em;
+            letter-spacing: 0.012em;
+        }
+        h3 {
+            text-transform: uppercase;
+            color: #000000;
+            font-family: 'Dosis',Arial,Verdana,sans-serif;
+            font-size: 1.8em;
+            line-height: 1.2em;
+            padding: 10px 0 10px 0;
+        }
+        .bandeau {
+            margin-top: 10px;
+            margin-bottom: 30px; 
+            text-align: center;
+            border: 1px solid #d8d8d8;
+        }
+        .bandeau__image {
+            width: 100%;
+            height: auto;
+        }
+        .form {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="centered">
+        <div class="header">
+            <img class="header__logo" src="img/logo_malakoff.png" alt="Ville de Malakoff" width="462" height="78">
+            <div class="header__separator"></div>
+        </div>
+         <div class="main">
+            <div class="bandeau">
+                <img class="bandeau__image" src="http://www.malakoff.fr/uploads/tx_cimbase/bandeau_cadre_de_vie.jpg">
+                 <h1 style="text-align: center">​Jardinez en bas de chez vous pour des rues plus belles, plus vivantes, plus natures</h1>
+                <div class="form">
+                    <h2 style="color: #282D33;">Vous voulez participer à l'opération <br>« J'adopte un pied d'arbre, un pied de mur » ?</h2>
+                    <div class="form__block" style="margin-top: 10px;">
+                        <input type="text" id="address-search" name="address-search" placeholder="Cherchez une rue ici..." class="form__input">
+                        <button class="form__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
+                    </div>
+                </div>
+           </div>
+            <div class="gallery">
+                <div class="cube">
+                    <h3>Besoin de nature en ville ?</h3>
+                    <br>Ça tombe bien : jardiner dans les rues, c’est permis à Malakoff !
+                    <br>Dans le cadre du « plan biodiversité », la Ville lance l’opération « J'adopte un pied d'arbre, un pied de mur » qui permet de planter dans l’espace public des plantes et fleurs. 
+                    <br><br><img class="cube__img" src="img/nature-ville.JPG" ><br>
+                </div>
+                <div class="cube">
+                    <h3>Envie de jardinage ?</h3>
+                    <br>Pour participer, il suffit de faire une demande à la mairie et de s’engager à respecter certaines règles. 
+                    <br><br><img class="cube__img" src="img/envie.JPG"><br>
+                </div>
+                <div class="cube">
+                    <h3>Pas la main verte ?</h3>
+                    <br>La ferme urbaine vous conseille et vous accompagne, toute l'année. 
+                    <br>Des idées d'espèces végétales, contribuant à la biodiversité urbaine et utiles pour les pollinisateurs, vous seront proposées. Et des graines, bulbes ou plantes vous seront proposés pour débuter !
+                    <br><br><img class="cube__img" src="img/main-verte.JPG"><br>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+                <h2 class="footer__title">Mairie</h2>
+                <div class="footer__description">
+                    1 place du 11 Novembre 1918<br>92240 Malakoff<br>
+                    <strong>Tél : </strong>01 47 46 75 00 / <strong>Fax : </strong>01 42 53 04 03<br>    
+                    <a href="mailto:mairie@ville-malakoff.fr">Nous contacter par mail</a>           
+                </div>
+        </div>
+    </div>
+    <script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+
+        function onAddressSelected(coord, address) {
+            //document.location = 'demande.html?c='+city+'&address='+address+"&lat="+item.getAttribute("data-lat")+"&lng="+item.getAttribute("data-lng");
+            alert("Demo, cette partie n'est pas implémentée");
+        }
+
+        new autoComplete({
+            selector: 'input[name=address-search]',
+            minChars: 2,
+            source: addressesDataSource,
+            renderItem: renderFeature,
+            onSelect: onSelectAddress(onAddressSelected),
+            cache: false,
+        });
+    </script>
+</body>
+</html>
+   
