@@ -23,7 +23,9 @@ requestCityGeoData.onload = function() {
 };
 requestCityGeoData.send();
 
-// Autocomplete
+/*
+  Autocomplete
+*/
 function renderFeature(item, search){
     var coord = item["geometry"]["coordinates"]
     return '<div class="autocomplete-suggestion" data-val="' + item["properties"]["label"] + '" data-lat="'+coord[1]+'" data-lng="'+coord[0]+'">' + item["properties"]["label"] + '</div>';
@@ -31,7 +33,7 @@ function renderFeature(item, search){
 
 function onSelectAddress(action) {
     return function(event, term, item){
-        var coord = [item.getAttribute("data-lat"),item.getAttribute("data-lng")];
+        var coord = [item.getAttribute("data-lng"),item.getAttribute("data-lat")];
         var address = item.getAttribute("data-val");
 
         action(coord,address);
@@ -60,3 +62,18 @@ function addressesDataSource(term, response){
     requestAddresses.send();
 }
 var requestAddresses;
+
+
+/*
+  URL UTILS
+*/
+
+function getParameterByName(name) {
+    var url = window.location.href;
+   	name = name.replace(/[\[\]]/g, "\\$&");
+   	var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+    results = regex.exec(url);
+   	if (!results) return null;
+   	if (!results[2]) return '';
+  	return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
