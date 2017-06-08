@@ -39,11 +39,15 @@ fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
   }
   var parsed = Baby.parse(data, { header: true, skipEmptyLines: false });
   var plants_with_page_title = Promise.all(parsed.data.map((plant) => {
-    return getSearchWikipedia(plant['Nom latin'], "fr")
+    var searchName = plant['Genre'];
+    if(plant['Espèce'] != "sp.") {
+        searchName += " "+plant['Espèce'];
+    }
+    return getSearchWikipedia(searchName, "fr")
     .then((result) => { 
         var page = result.query.search[0];
         if(page == undefined) {
-            return getSearchWikipedia(plant["Nom latin"], "en")
+            return getSearchWikipedia(searchName, "en")
                 .then((result) => {
                     return {result: result, lang: "en"}
                 })

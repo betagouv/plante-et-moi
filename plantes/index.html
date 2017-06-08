@@ -224,7 +224,7 @@
                 if(child.className == "galery__card__image") {
                     child.style.backgroundImage = "url('"+plant["Wikipedia Thumb Url"]+"')";
                 } else if (child.className == "galery__card__description") {
-					var description = "<h3>"+plant["Nom"]+"</h3><h4>"+plant["Nom latin"]+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol "+plant["Sol"].replace(/,/g, ", ")+"<br><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> "+plant["Exposition"].replace(/,/g, ", ");
+					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+plant["Genre"]+" "+plant["Espèce"]+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol "+plant["Sol"].replace(/,/g, ", ")+"<br><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> "+plant["Exposition"].replace(/,/g, ", ");
 					if (plant["Périodicité"] != "") {
 						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Plante "+plant["Périodicité"];
 
