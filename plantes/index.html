@@ -9,8 +9,13 @@
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
     <style type="text/css">
+		body, html {
+			margin: 0px;
+			width: 100%;
+			overflow-x: hidden;
+		}
 		.galery {
-			margin: 0;
+			padding: 10px;
 			display: block;
 			height: 100%;
 			width: 100%;
@@ -23,7 +28,8 @@
 		.galery__card {
 			margin: 10px;
 			padding: 0px;
-			width: 220px;
+			width: 570px;
+			height: 300px;
 			border-radius: 2px;
 			display: inline-block;
 			vertical-align: top;
@@ -40,19 +46,27 @@
 		
 		.galery__card__image {
 			position: relative;
-			display: inline-block;
-			max-width: 100%;
-			max-height: 200px;
+			background-repeat: no-repeat;
+			background-position: center top;
+			width: 300px;
+			height: 100%;
 			border-radius: 2px 2px 0px 0px;
+			float: left;
+			margin: 0px;
+			background-size: cover;
 		}
 		
 		.galery__card__description {
 			position: relative;
-			margin: 20px 10px 10px 10px !important;
-			padding: 0px;
+			padding: 20px;
 			text-align: left;
 			color: #555;
 			font-size: 15px;
+			height: 100%;
+			width: 270px;
+			float: left;
+			box-sizing: border-box;
+			margin: 0px;
 		}
 		
 		.galery__card__bottom {
@@ -73,16 +87,78 @@
 			padding: 6px;
 			color: white;
 			border-width: 0px;
+			margin: 3px;
+			margin-top: 6px;
 		}
 		.tag-selected {
 			background-color: black;
+		}
+		h1 {
+			font-size: 4em;
+			text-align: center;
+			font-family: "Helvetica", "Arial", sans-serif;
+			margin: 0px;
+			color: white;
+		}
+		h3 {
+			font-size: 2.3em;
+			margin-top: 0px;
+			margin-bottom: 0px;
+			line-height: 1.1;
+		}
+		h4 {
+			font-size: 1.2em;
+			font-weight: normal;
+			font-style: italic;
+			margin-top: 2px;
+		}
+		.bee {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			background-color: #fbd53b;
+			width: 60px;
+			height: 60px;
+			margin: 10px;
+			-webkit-mask-image: url("img/icon_bee_transparent.svg");
+			-webkit-mask-repeat: no-repeat;
+		}
+
+		.seeding, .flowering  {
+			position: absolute;
+			bottom: 0px;
+			width: 50%;
+			height: 80px;
+			background-color: #e6e6e6;
+			padding: 12px;
+			box-sizing: border-box;
+		}
+		.seeding {
+			left: 0px;
+		}
+		.flowering {
+			right: 0px;
+		}
+		.header {
+			width: 100%;
+			background-color: #22b573;
+			margin: 0px;
+			padding: 10px;
+		}
+		.filters {
+			width: 100%;
+			padding: 20px;
+			background-color: darkgrey;
 		}
 	</style>
 
 </head>
 
 <body>
-<h1>Planter quoi ?</h1>
+	<div class="header">
+		<h1>Planter quoi ?</h1>
+	</div>
+	<div class="filters">
 <div id="tag_filter" class="invisible">
 	Type de projet : 
 	<button class="tag tag-selected" onclick="filterPlantsByProject(this)">Tous</button>
@@ -91,10 +167,12 @@
 	<button class="tag" onclick="filterPlantsByProject(this)">Façades et murets</button>
 	<button class="tag" onclick="filterPlantsByProject(this)">Pieds d'arbres</button>
 </div>
+	</div>
 <div class="galery" id="galery">
 		<div class="galery__card" id="item">
-			<img class="galery__card__image" src=""/>
+			<div class="galery__card__image"></div>
 			<p class="galery__card__description"></p>
+			<div class="bee"></div>
 		</div>
 </div>
 
@@ -128,10 +206,24 @@
             var newCard = card.cloneNode(true);
             Array.from(newCard.children).forEach(function(child) {
                 if(child.className == "galery__card__image") {
-                    child.src = plant["Wikipedia Thumb Url"];
+                    child.style.backgroundImage = "url('"+plant["Wikipedia Thumb Url"]+"')";
                 } else if (child.className == "galery__card__description") {
-                    child.innerHTML = plant["Nom"]+"<br>"+plant["Nom latin"]+"<br><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> "+plant["Exposition"]+"<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a><br><span class='tag'>"+plant["Projet"]+"</span>";
-                }
+					var description = "<h3>"+plant["Nom"]+"</h3><h4>"+plant["Nom latin"]+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol "+plant["Sol"].replace(/,/g, ", ")+"<br><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> "+plant["Exposition"].replace(/,/g, ", ");
+					if (plant["Périodicité"] != "") {
+						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Plante "+plant["Périodicité"];
+
+					}
+					//description += "<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a>"
+					description += "<div class='seeding'><i class='material-icons' style='color: #603813; vertical-align: middle;'>spa</i> "+plant["Saison de Plantation"].replace(/,/g, ", ")+"</div>"
+					description += "<div class='flowering'><i class='material-icons' style='color: #603813; vertical-align: middle;'>nature</i>"+plant["Saison de Floraison"].replace(/,/g, ", ")+"</div>"
+					description += "<br>";
+
+                    child.innerHTML = description;
+                } else if (child.className == "bee") {
+					if (plant["Propriétés"].indexOf("mellifère") == -1) {
+						child.style.display = "None";
+					}
+				}
             });
             return newCard;
         });

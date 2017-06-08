@@ -30,7 +30,7 @@ function getWikipediaPage(page_name, lang) {
 }
 
 function getWikipediaFile(file_name, lang) {
-    return httpGetContent("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(file_name)+"&prop=imageinfo&iiprop=url|user&iiurlwidth=220&format=json")
+    return httpGetContent("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(file_name)+"&prop=imageinfo&iiprop=url|user&iiurlwidth=300&format=json")
 }
 
 fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
