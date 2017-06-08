@@ -76,7 +76,7 @@ fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
                 if(page != undefined) {
                     plant["Wikipedia Page Url"] = page.fullurl;
                     var image = page.images.filter(function(el) {
-                       return (el.title.indexOf(".svg") == -1) && (el.title.indexOf(".png") == -1) && (el.title.indexOf("Asteracea poster") == -1)
+                       return (el.title.indexOf(".svg") == -1) && (el.title.indexOf(".png") == -1) && (el.title.indexOf("Asteracea poster") == -1) && (el.title.indexOf("Sunflowers.JPG") == -1)
                     })[0];
                     if(image != undefined) {
                         plant["Wikipedia Image Title"] = image.title;

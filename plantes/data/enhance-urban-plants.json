@@ -436,7 +436,7 @@
     "Espèce": "nivea",
     "Nom vernaculaire": "Luzule nivale",
     "Famille": "Juncacées",
-    "Types de projet": "Pieds d'arbres",
+    "Types de projet": "Pieds d'arbres,Mobilier urbain",
     "Périodicité": "vivace",
     "Propriétés": "vivace,feuillage persistant",
     "Floraison couleur": "blanches",
@@ -444,8 +444,8 @@
     "Floraison période": "juin - août",
     "Saison de Floraison": "été",
     "Hauteur": "45 à 50 cm",
-    "Plantation": "printemps - automne",
-    "Saison de Plantation": "printemps,été,automne",
+    "Plantation": "printemps, automne",
+    "Saison de Plantation": "printemps,automne",
     "Exposition": "mi-ombre,ombre,soleil",
     "Sol": "léger",
     "Entretien": "couper les parties sèches et nettoyer les touffes en fin d'hiver",
@@ -756,27 +756,6 @@
     "Wikipedia Url Url": "https://upload.wikimedia.org/wikipedia/commons/5/55/Impatiens_parviflora.jpg"
   },
   {
-    "Genre": "Luzala",
-    "Espèce": "nivea",
-    "Nom vernaculaire": "Luzule nivale",
-    "Famille": "Juncacées",
-    "Types de projet": "Mobilier urbain",
-    "Périodicité": "vivace",
-    "Propriétés": "graminé,vivace,feuillage persistant",
-    "Floraison couleur": "blanche",
-    "Floraison Couleur Normalisé": "blanc",
-    "Floraison période": "juin à août",
-    "Saison de Floraison": "été",
-    "Hauteur": "45 à 45 cm",
-    "Plantation": "printemps, automne",
-    "Saison de Plantation": "printemps,automne",
-    "Exposition": "mi-ombre,ombre,soleil",
-    "Sol": "léger",
-    "Entretien": "couper les parties sèches et nettoyer les touffes en fin d'hiver",
-    "Multiplication": "semis au printemps",
-    "Commentaire": "soleil si sol humide"
-  },
-  {
     "Genre": "Petroselinum",
     "Espèce": "sp.",
     "Nom vernaculaire": "Persil",
@@ -934,8 +913,8 @@
     "Wikipedia Page Title": "Serpolet",
     "Wikipedia Lang": "fr",
     "Wikipedia Page Url": "https://fr.wikipedia.org/wiki/Serpolet",
-    "Wikipedia Image Title": "Fichier:Sunflowers.JPG",
-    "Wikipedia Thumb Url": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/Sunflowers.JPG/300px-Sunflowers.JPG",
-    "Wikipedia Url Url": "https://upload.wikimedia.org/wikipedia/commons/0/09/Sunflowers.JPG"
+    "Wikipedia Image Title": "Fichier:Wilder Thymian.jpg",
+    "Wikipedia Thumb Url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Wilder_Thymian.jpg/300px-Wilder_Thymian.jpg",
+    "Wikipedia Url Url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Wilder_Thymian.jpg"
   }
 ]
