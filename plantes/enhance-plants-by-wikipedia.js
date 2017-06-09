@@ -5,6 +5,7 @@ const httpGetContent = function(url) {
   return new Promise((resolve, reject) => {
     const lib = url.startsWith('https') ? require('https') : require('http');
     const request = lib.get(url, (response) => {
+      response.setEncoding('utf8');
       if (response.statusCode < 200 || response.statusCode > 299) {
          reject(new Error('Failed to load page, status code: ' + response.statusCode));
        }
@@ -38,15 +39,18 @@ fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
     return console.log(err);
   }
   var parsed = Baby.parse(data, { header: true, skipEmptyLines: false });
+  console.log("Number of plants in csv: "+parsed.data.length);
   var plants_with_page_title = Promise.all(parsed.data.map((plant) => {
     var searchName = plant['Genre'];
     if(plant['Espèce'] != "sp.") {
         searchName += " "+plant['Espèce'];
+    } else {
+        searchName += " genre";
     }
     return getSearchWikipedia(searchName, "fr")
     .then((result) => { 
         var page = result.query.search[0];
-        if(page == undefined) {
+        if(page == undefined || page.title.indexOf("Écozone paléarctique : plantes à graines par nom scientifique") != -1) {
             return getSearchWikipedia(searchName, "en")
                 .then((result) => {
                     return {result: result, lang: "en"}
@@ -108,8 +112,9 @@ fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
         })
      }))
   );
- 
-  plants.then((results) => {
+
+  plants.then((results) => {  
+         console.log("Number of plants to write: "+results.length);
          fs.writeFile("data/enhance-urban-plants.json", JSON.stringify(results, null, 2), function(err) {
             if(err) {
                 return console.log(err);
