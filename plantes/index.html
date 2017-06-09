@@ -28,7 +28,7 @@
 		.galery__card {
 			margin: 10px;
 			padding: 0px;
-			width: 570px;
+			width: 600px;
 			height: 300px;
 			border-radius: 2px;
 			display: inline-block;
@@ -58,12 +58,12 @@
 		
 		.galery__card__description {
 			position: relative;
-			padding: 20px;
+			padding: 15px;
 			text-align: left;
 			color: #555;
 			font-size: 15px;
 			height: 300px;
-			width: 270px;
+			width: 300px;
 			float: left;
 			box-sizing: border-box;
 			margin: 0px;
@@ -73,9 +73,6 @@
 			.galery__card {
 				width: 300px;
 				height: 600px;
-			}
-			.galery__card__description {
-				width: 300px;
 			}
 		}
 		
@@ -98,7 +95,7 @@
 			color: white;
 			border-width: 0px;
 			margin: 3px;
-			margin-top: 6px;
+			line-height: 2.2;
 		}
 		.tag-selected {
 			background-color: black;
@@ -111,7 +108,7 @@
 			color: white;
 		}
 		h3 {
-			font-size: 2.3em;
+			font-size: 1.8em;
 			margin-top: 0px;
 			margin-bottom: 0px;
 			line-height: 1.1;
@@ -121,6 +118,7 @@
 			font-weight: normal;
 			font-style: italic;
 			margin-top: 2px;
+			margin-bottom: 10px;
 		}
 		.bee {
 			position: absolute;
@@ -229,7 +227,12 @@
 						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Plante "+plant["Périodicité"];
 
 					}
-					description += "<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a>"
+					//description += "<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a>";
+					description += "<br>";
+					plant["Types de projet"].split(",").forEach(function (tag) {
+						description += "<span class='tag'>"+tag+"</span>";
+					})
+
 					description += "<div class='seeding'>";
 					if(plant["Saison de Plantation"] != "") {
 						description += "<i class='material-icons' style='color: #603813; vertical-align: middle;'>spa</i> <span class='seeding__text'>"+plant["Saison de Plantation"].replace(/,/g, ", ")+"</span>";
