@@ -23,21 +23,41 @@
 			position: relative;
 			text-align: center;
 			box-sizing: border-box;
-			float: left;
 		}
+		.galery__container {
+			width: 1860px;
+			text-align: left;
+			display: inline-block;
+		}
+		@media (max-width: 1860px) {
+			.galery__container {
+				width: 1240px;
+			}
+		}
+		@media (max-width: 1240px) {
+			.galery__container {
+				width: 620px;
+			}
+		}
+
 		.galery__card {
 			margin: 10px;
 			padding: 0px;
 			width: 600px;
 			height: 300px;
 			border-radius: 2px;
-			display: inline-block;
 			vertical-align: top;
 			background-color: white;
 			position: relative;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 			font-family: "Helvetica", "Arial", sans-serif;
    			line-height: 1.5;
+			float: left;
+			overflow: hidden;
+		}
+
+		.galery__card:hover {
+			height: 470px;
 		}
 
 		.galery__card--clickable {
@@ -55,24 +75,33 @@
 			margin: 0px;
 			background-size: cover;
 		}
-		
-		.galery__card__description {
+
+		.galery__card__short-description, .galery__card__long-description {
 			position: relative;
+			box-sizing: border-box;
+			float: left;
+			margin: 0px;
 			padding: 15px;
-			text-align: left;
 			color: #555;
 			font-size: 15px;
-			height: 300px;
+		}
+		
+		.galery__card__short-description {
 			width: 300px;
-			float: left;
-			box-sizing: border-box;
-			margin: 0px;
+			height: 300px;
+		}
+		.galery__card__long-description {
+			width: 100%;
+			height: 170px;
 		}
 
 		@media (max-width: 600px) {
 			.galery__card {
 				width: 300px;
 				height: 600px;
+			}
+			.galery__card:hover {
+				height: 770px;
 			}
 		}
 		
@@ -183,11 +212,14 @@
 </div>
 	</div>
 <div class="galery" id="galery">
+	<div class="galery__container" id="galery__container">
 		<div class="galery__card" id="item">
 			<div class="galery__card__image"></div>
-			<p class="galery__card__description"></p>
+			<p class="galery__card__short-description"></p>
+			<p class="galery__card__long-description">Credit photo: Wikipedia</p>
 			<div class="bee"></div>
 		</div>
+	</div>
 </div>
 
 <script>
@@ -221,7 +253,7 @@
             Array.from(newCard.children).forEach(function(child) {
                 if(child.className == "galery__card__image") {
                     child.style.backgroundImage = "url('"+plant["Wikipedia Thumb Url"]+"')";
-                } else if (child.className == "galery__card__description") {
+                } else if (child.className == "galery__card__short-description") {
 					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+plant["Genre"]+" "+plant["Espèce"]+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol "+plant["Sol"].replace(/,/g, ", ")+"<br><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> "+plant["Exposition"].replace(/,/g, ", ");
 					if (plant["Périodicité"] != "") {
 						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Plante "+plant["Périodicité"];
@@ -246,7 +278,24 @@
 					description += "<br>";
 
                     child.innerHTML = description;
-                } else if (child.className == "bee") {
+                } else if (child.className == "galery__card__long-description") {
+					var description = "Famille: "+plant["Famille"];
+					if(plant["Floraison couleur"] != "") {
+						description += "<br>Couleur de floraison : " + plant["Floraison couleur"];
+					}
+					if(plant["Hauteur"] != "") {
+						description += "<br>Hauteur : " + plant["Hauteur"];
+					}
+					if(plant["Entretien"] != "") {
+						description += "<br>Entretien : " + plant["Entretien"];
+					}
+					if(plant["Multiplication"] != "") {
+						description += "<br>Multiplication : " + plant["Multiplication"];
+					}
+
+					description +="<br>Credit photo: <a href='"+plant["Wikipedia Page Url"]+"' target='_blank'>Wikipedia</a>"
+                    child.innerHTML = description;
+				} else if (child.className == "bee") {
 					if (plant["Propriétés"].indexOf("mellifère") == -1) {
 						child.style.display = "None";
 					}
@@ -254,7 +303,7 @@
             });
             return newCard;
         });
-        var galery = document.getElementById("galery");
+        var galery = document.getElementById("galery__container");
         galery.removeChild(card);
         newCards.forEach(function(plant){
             galery.appendChild(plant);
