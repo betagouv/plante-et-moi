@@ -193,6 +193,20 @@
 			padding: 20px;
 			background-color: darkgrey;
 		}
+		.save {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			color: black;
+			font-size: 30px;
+			margin: 10px;
+			text-align: center;
+			cursor: pointer;
+			vertical-align: middle;
+		}
+		.save i {
+			font-size: 30px;
+		}
 	</style>
 
 </head>
@@ -218,11 +232,32 @@
 			<p class="galery__card__short-description"></p>
 			<p class="galery__card__long-description">Credit photo: Wikipedia</p>
 			<div class="bee"></div>
+			<p class="save" onclick="favorite(this);"><i class='material-icons'>star_border</i></p>
 		</div>
 	</div>
 </div>
 
+
+<script src="https://cdn.rawgit.com/madmurphy/cookies.js/c2eba5d7/cookies.js"></script>
 <script>
+	var favorites = [];
+	var data = docCookies.getItem("favorites");
+	if(data != "" && data != null) {
+		favorites = data.split(",")
+	}
+
+	function favorite(saveNode) {
+		var name = saveNode.parentNode.getElementsByTagName("h4")[0].innerText;
+		if(saveNode.firstElementChild.innerText == "star") {
+			saveNode.firstElementChild.innerText = "star_border";
+			favorites.splice(favorites.indexOf(name),1);
+		} else {
+			saveNode.firstElementChild.innerText = "star";
+			favorites.push(name);
+		}
+		docCookies.setItem("favorites", favorites.join(), 86400);
+	}
+
 	function filterPlantsByProject(elem) {
 		var filter = elem.innerText;
 		Array.from(document.getElementsByClassName("galery__card"))
@@ -251,10 +286,11 @@
         var newCards = plants.map(function(plant) {
             var newCard = card.cloneNode(true);
             Array.from(newCard.children).forEach(function(child) {
+				var name = plant["Genre"]+" "+plant["Espèce"];
                 if(child.className == "galery__card__image") {
                     child.style.backgroundImage = "url('"+plant["Wikipedia Thumb Url"]+"')";
                 } else if (child.className == "galery__card__short-description") {
-					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+plant["Genre"]+" "+plant["Espèce"]+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol "+plant["Sol"].replace(/,/g, ", ")+"<br><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> "+plant["Exposition"].replace(/,/g, ", ");
+					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+name+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol "+plant["Sol"].replace(/,/g, ", ")+"<br><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> "+plant["Exposition"].replace(/,/g, ", ");
 					if (plant["Périodicité"] != "") {
 						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Plante "+plant["Périodicité"];
 
@@ -298,6 +334,10 @@
 				} else if (child.className == "bee") {
 					if (plant["Propriétés"].indexOf("mellifère") == -1) {
 						child.style.display = "None";
+					}
+				} else if (child.className == "save") {
+					if (favorites.indexOf(name) != -1) {
+						child.firstElementChild.innerText = "star";
 					}
 				}
             });
