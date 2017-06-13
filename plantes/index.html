@@ -312,7 +312,7 @@
 	</div>
 	<div class="filters invisible" id="filters">
 		<div id="tag_filter">
-			Type de projet : 
+			<b>Type de projet</b> : 
 			<button class="tag tag-selected" onclick="filterPlantsByTag(this.innerText)">Tous</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
@@ -320,14 +320,26 @@
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
 		</div>
 		<div id="">
-			Exposition :
-			<label><input type="radio" name="exposition" value="Tous" checked onclick="updateViewFromFilter()">Toute</label>
-			<label><input type="radio" name="exposition" value="soleil" onclick="updateViewFromFilter()"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> Soleil</label>
+			<b>Exposition</b> :
+			<label><input type="radio" name="exposition" value="Tous" checked='checked' onclick="updateViewFromFilter()">Pas de filtre</label>
+			<label><input type="radio" name="exposition" value="soleil" onclick="updateViewFromFilter()"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> soleil</label>
 			<label><input type="radio" name="exposition" value="mi-ombre"
-			onclick="updateViewFromFilter()"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> Mi-ombre</label>
+			onclick="updateViewFromFilter()"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> mi-ombre</label>
 			<label>
 			<input type="radio" name="exposition" value="ombre"
-			onclick="updateViewFromFilter()"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> Ombre<label>
+			onclick="updateViewFromFilter()"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> ombre<label>
+		</div>
+		<div id="">
+			<b>Périodicité</b> :
+			<label><input type="radio" name="periodicity" value="Tous" checked='checked' onclick="updateViewFromFilter()">Pas de filtre</label>
+			<label><input type="radio" name="periodicity" value="vivace"
+			onclick="updateViewFromFilter()"> vivace</label>
+			<label><input type="radio" name="periodicity" value="annuelle"
+			onclick="updateViewFromFilter()"> annuelle</label>
+			<label><input type="radio" name="periodicity" value="bisannuelle"
+			onclick="updateViewFromFilter()"> bisannuelle</label>
+		</div>
+		<div id="filters__grounds">
 		</div>
 	</div>
 	<div class="galery invisible" id="galery">
@@ -385,12 +397,23 @@
 	}
 
 	function updateViewFromFilter() {
-		var exposition = document.querySelector('input[name="exposition"]:checked').value;
-		var project = document.querySelector('#tag_filter .tag-selected').innerText;
-
 		var filters = [ 
-			{  name: "exposition", value: exposition },
-			{  name: "tag", value: project },
+			{  
+				name: "exposition", 
+				value: document.querySelector('input[name="exposition"]:checked').value 
+			},
+			{  
+				name: "tag",
+				value: document.querySelector('#tag_filter .tag-selected').innerText 
+			},
+			{ 
+				name: "ground",
+				value: document.querySelector('input[name="ground"]:checked').value
+			},
+			{
+				name: "periodicity",
+				value: document.querySelector('input[name="periodicity"]:checked').value
+			}
 		] 
 		Array.from(document.getElementsByClassName("galery__card"))
 		.forEach(function(plant){
@@ -413,8 +436,8 @@
 			}, false);
 	}
 
-
     function showPlants(plants) {
+		var allGrounds = [];
         var card = document.getElementById("item");
         var newCards = plants.map(function(plant) {
             var newCard = card.cloneNode(true);
@@ -423,8 +446,14 @@
                 if(child.className == "galery__card__image") {
                     child.style.backgroundImage = "url('"+plant["Wikipedia Thumb Url"]+"')";
                 } else if (child.className == "galery__card__short-description") {
-					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+name+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol "+plant["Sol"].replace(/,/g, ", ")+"<br>";
-
+					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+name+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol ";
+					
+					var groundsList = plant["Sol"].split(',');
+					allGrounds = allGrounds.concat(groundsList);
+					description += groundsList.map(function(ground) {
+						 return "<span class='ground'>"+ground+"</span>";
+					}).join(', ');
+					description += "<br>";
 					plant["Exposition"].split(',').forEach(function(exposition) {
 						if(exposition == "soleil") {
 							description += "<i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i>";
@@ -435,10 +464,9 @@
 						}
 						description += " <span class='exposition'>"+exposition+"</span> ";
 					})
-					description += "<br>";
 
 					if (plant["Périodicité"] != "") {
-						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Plante "+plant["Périodicité"];
+						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Plante  <span class='periodicity'>"+plant["Périodicité"]+"</span>";
 
 					}
 					//description += "<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a>";
@@ -489,6 +517,15 @@
             });
             return newCard;
         });
+		allGrounds = allGrounds.reduce((a, x) => ~a.indexOf(x) ? a : a.concat(x), []).sort();
+
+
+		var groundFilterHTML = "<b>Sol</b> : <label><input type='radio' name='ground' value='Tous' onclick='updateViewFromFilter()' checked='checked'>Pas de filtre</label> ";
+		allGrounds.forEach(function(ground){
+			groundFilterHTML += "<label><input type='radio' name='ground' value='"+ground+"' onclick='updateViewFromFilter()'>"+ground+"</label> ";
+		})
+		document.getElementById("filters__grounds").innerHTML = groundFilterHTML;
+
         var galery = document.getElementById("galery__container");
         galery.removeChild(card);
         newCards.forEach(function(plant){
