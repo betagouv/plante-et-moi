@@ -12,12 +12,13 @@
 		body, html {
 			margin: 0px;
 			width: 100%;
+			height: 100%;
 			overflow-x: hidden;
 		}
 		.galery {
 			padding: 10px;
 			display: block;
-			height: 100%;
+			min-height: 100%;
 			width: 100%;
 			background-color: #F3F3F3;
 			position: relative;
@@ -136,6 +137,12 @@
 			margin: 0px;
 			color: white;
 		}
+		h2 {
+			font-size: 2em;
+			text-align: center;
+			font-family: "Helvetica", "Arial", sans-serif;
+			color: white;
+		}
 		h3 {
 			font-size: 1.8em;
 			margin-top: 0px;
@@ -188,11 +195,22 @@
 			background-color: #22b573;
 			margin: 0px;
 			padding: 10px;
+			box-sizing: border-box;
+		}
+		.filters, .types {
+			width: 100%;
+			background-color: darkgrey;
+			box-sizing: border-box;
 		}
 		.filters {
-			width: 100%;
 			padding: 20px;
-			background-color: darkgrey;
+		}
+		.types {
+			height: 80%;
+			width: 100%;
+			margin: 0 auto;
+			padding: 10px;
+			text-align: center;
 		}
 		.save {
 			position: absolute;
@@ -213,6 +231,27 @@
 			width: 100%;
 			background-color: grey;
 			color: #e6e6e6;
+			box-sizing: border-box;
+		}
+		.types__button {
+			height: 270px;
+			width: 270px;
+			display: inline-block;
+			margin: 10px;
+			padding: 20px;
+			border-radius: 2px;
+			vertical-align: top;
+			background-color: grey;
+			color: white;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			text-align: left;
+			cursor: pointer;
+		}
+		.types__button ul, .types__button b {
+			visibility: hidden;
+		}
+		.types__button:hover ul, .types__button:hover b {
+			visibility: visible;
 		}
 	</style>
 
@@ -222,28 +261,87 @@
 	<div class="header">
 		<h1>Planter quoi ?</h1>
 	</div>
-	<div class="filters">
-<div id="tag_filter" class="invisible">
-	Type de projet : 
-	<button class="tag tag-selected" onclick="filterPlantsByProject(this)">Tous</button>
-	<button class="tag" onclick="filterPlantsByProject(this)">Trottoirs</button>
-	<button class="tag" onclick="filterPlantsByProject(this)">Mobilier urbain</button>
-	<button class="tag" onclick="filterPlantsByProject(this)">Façades et murets</button>
-	<button class="tag" onclick="filterPlantsByProject(this)">Pieds d'arbres</button>
-</div>
-	</div>
-<div class="galery" id="galery">
-	<div class="galery__container" id="galery__container">
-		<div class="galery__card" id="item">
-			<div class="galery__card__image"></div>
-			<p class="galery__card__short-description"></p>
-			<p class="galery__card__long-description">Credit photo: Wikipedia</p>
-			<div class="bee"></div>
-			<p class="save" onclick="favorite(this);"><i class='material-icons'>star_border</i></p>
+	<div class="types" id="types">
+		<h2>Pour quel type de projet cherchez vous une plante ?</h2>
+		<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+			<h3>Trottoirs</h3>
+			<p>Trottoir large et placette avec jardinières, bacs ou pots posés sur le sol.
+			</p>
+			<b>Recommendations</b>
+			<ul>
+				<li>Fleurs & vivaces</li>
+				<li>Arbustes (pour contenants de grande taille)</li>
+				<li>Espèces résistantes à la sécheresse et peu exigeantes en eau</li>
+			</ul>
+		</div>
+		<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+			<h3>Mobilier urbain</h3>
+			<p>
+				Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.
+			</p>
+			<b>Recommendations</b>
+			<ul>
+				<li>Espèces grimpantes à fleurs et vivances</li>
+				<li>Variétés à croissance rapide, qui garnissent vite un treillage</li>
+			</ul>
+		</div>
+		<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+			<h3>Façades et murets</h3>
+			<p>
+				Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité). 
+			</p>
+			<b>Recommendations</b>
+			<ul>
+				<li>Annuelles, bisannuelles ou vivaces à faible développement</li>
+				<li>Résistantes</li>
+				<li>Aucune partie saillante qui risquerait d'être dangereuse</li>
+			</ul>
+		</div>
+		<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+			<h3>Pieds d'arbres</h3>
+			<p>
+				Culture en pleine terre sur le pourtour existant d'un arbre de rue.
+			</p>
+			<b>Recommendations</b>
+			<ul>
+				<li>Résistantes</li>
+				<li>A développement limité et à faible développement racinaire</li>
+				<li>Economes en eau</li>
+			</ul>
 		</div>
 	</div>
-</div>
-<div class="footer">
+	<div class="filters invisible" id="filters">
+		<div id="tag_filter">
+			Type de projet : 
+			<button class="tag tag-selected" onclick="filterPlantsByTag(this.innerText)">Tous</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Façades et murets</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
+		</div>
+		<div id="">
+			Exposition :
+			<label><input type="radio" name="exposition" value="Tous" checked onclick="updateViewFromFilter()">Toute</label>
+			<label><input type="radio" name="exposition" value="soleil" onclick="updateViewFromFilter()"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> Soleil</label>
+			<label><input type="radio" name="exposition" value="mi-ombre"
+			onclick="updateViewFromFilter()"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> Mi-ombre</label>
+			<label>
+			<input type="radio" name="exposition" value="ombre"
+			onclick="updateViewFromFilter()"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> Ombre<label>
+		</div>
+	</div>
+	<div class="galery invisible" id="galery">
+		<div class="galery__container" id="galery__container">
+			<div class="galery__card" id="item">
+				<div class="galery__card__image"></div>
+				<p class="galery__card__short-description"></p>
+				<p class="galery__card__long-description">Credit photo: Wikipedia</p>
+				<div class="bee"></div>
+				<p class="save" onclick="favorite(this);"><i class='material-icons'>star_border</i></p>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
 		Crédit photos : wikipedia/wikimedia<br>
 		Crédit icone d'abeille : bee par alican de the Noun Project<br>
 		Donnée de plantes fournit par la Mairie de Paris<br><br>
@@ -271,28 +369,50 @@
 		docCookies.setItem("favorites", favorites.join(), 86400);
 	}
 
-	function filterPlantsByProject(elem) {
-		var filter = elem.innerText;
-		Array.from(document.getElementsByClassName("galery__card"))
-		.forEach(function(plant){ 
-			if(filter == "Tous") {
-				plant.classList.remove("invisible")
-			} else {
-				if(Array.from(plant.getElementsByClassName("tag")).reduce(function(acc, tag){ 
-					return acc || tag.innerHTML == filter
-				}, false)) {
-					plant.classList.remove("invisible")
-				} else {
-					plant.classList.add("invisible")
-				}
-			}
-		})
+	function filterPlantsByTag(filter, type) {
 		Array.from(document.getElementById("tag_filter").getElementsByClassName("tag"))
 		.forEach(function(tag){ 
-			tag.classList.remove("tag-selected");
+			if(tag.innerText == filter) {
+				tag.classList.add("tag-selected");
+			} else {
+				tag.classList.remove("tag-selected");
+			}
 		})
-		elem.classList.add("tag-selected");
+		updateViewFromFilter();
+		document.getElementById("types").classList.add("invisible");
+		document.getElementById("galery").classList.remove("invisible");
+		document.getElementById("filters").classList.remove("invisible");
 	}
+
+	function updateViewFromFilter() {
+		var exposition = document.querySelector('input[name="exposition"]:checked').value;
+		var project = document.querySelector('#tag_filter .tag-selected').innerText;
+
+		var filters = [ 
+			{  name: "exposition", value: exposition },
+			{  name: "tag", value: project },
+		] 
+		Array.from(document.getElementsByClassName("galery__card"))
+		.forEach(function(plant){
+			if(filters.reduce(function(acc, filter){ 
+				return acc && matchFilter(plant, filter);
+			}, true)) {
+				plant.classList.remove("invisible");
+			} else {
+				plant.classList.add("invisible");
+			}
+		})
+	}
+	
+	function matchFilter(plant, filter) {
+		if(filter.value == "Tous") {
+			return true;
+		} 
+		return Array.from(plant.getElementsByClassName(filter.name)).reduce(function(acc, elem){ 
+					return acc || elem.innerText == filter.value;
+			}, false);
+	}
+
 
     function showPlants(plants) {
         var card = document.getElementById("item");
@@ -303,7 +423,20 @@
                 if(child.className == "galery__card__image") {
                     child.style.backgroundImage = "url('"+plant["Wikipedia Thumb Url"]+"')";
                 } else if (child.className == "galery__card__short-description") {
-					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+name+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol "+plant["Sol"].replace(/,/g, ", ")+"<br><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> "+plant["Exposition"].replace(/,/g, ", ");
+					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+name+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol "+plant["Sol"].replace(/,/g, ", ")+"<br>";
+
+					plant["Exposition"].split(',').forEach(function(exposition) {
+						if(exposition == "soleil") {
+							description += "<i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i>";
+						} else if(exposition == "mi-ombre") {
+							description += "<i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i>";
+						} else if(exposition == "ombre") {
+							description += "<i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i>";
+						}
+						description += " <span class='exposition'>"+exposition+"</span> ";
+					})
+					description += "<br>";
+
 					if (plant["Périodicité"] != "") {
 						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Plante "+plant["Périodicité"];
 
