@@ -57,10 +57,6 @@
 			overflow: hidden;
 		}
 
-		.galery__card:hover {
-			height: 470px;
-		}
-
 		.galery__card--clickable {
 			cursor: pointer;
 		}
@@ -100,9 +96,6 @@
 			.galery__card {
 				width: 300px;
 				height: 600px;
-			}
-			.galery__card:hover {
-				height: 770px;
 			}
 		}
 		
@@ -206,7 +199,7 @@
 			padding: 20px;
 		}
 		.types {
-			height: 80%;
+			min-height: 80%;
 			width: 100%;
 			margin: 0 auto;
 			padding: 10px;
@@ -233,11 +226,20 @@
 			color: #e6e6e6;
 			box-sizing: border-box;
 		}
-		.types__button {
-			height: 270px;
+		.type {
+			height: 340px;
 			width: 270px;
 			display: inline-block;
+			padding: 0px;
 			margin: 10px;
+			text-align: center;
+			vertical-align: top;
+			color: white;
+			text-align: left;
+		}
+		.types__button {
+			height: 210px;
+			display: inline-block;
 			padding: 20px;
 			border-radius: 2px;
 			vertical-align: top;
@@ -246,6 +248,9 @@
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 			text-align: left;
 			cursor: pointer;
+		}
+		.types__button:hover {
+			background-color: #b2b2b2;
 		}
 		.types__button ul, .types__button b {
 			visibility: hidden;
@@ -263,51 +268,44 @@
 	</div>
 	<div class="types" id="types">
 		<h2>Pour quel type de projet cherchez vous une plante ?</h2>
-		<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
-			<h3>Trottoirs</h3>
-			<p>Trottoir large et placette avec jardinières, bacs ou pots posés sur le sol.
+		<div class="type"> 
+			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+				<h3>Trottoirs</h3>
+				<img src="http://demo.plante-et-moi.fr/arles/img/jardiniere.jpg" style="width: 100%;" />
+			</div>
+			<p style="display: inline-block;">Trottoir large et placette avec jardinières, bacs ou pots posés sur le sol.<br>
+			<a href="#">+ d'informations</a>
 			</p>
-			<b>Recommendations</b>
-			<ul>
-				<li>Fleurs & vivaces</li>
-				<li>Arbustes (pour contenants de grande taille)</li>
-				<li>Espèces résistantes à la sécheresse et peu exigeantes en eau</li>
-			</ul>
 		</div>
-		<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
-			<h3>Mobilier urbain</h3>
+		<div class="type"> 
+			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+				<h3>Mobilier urbain</h3>
+				<img src="http://demo.plante-et-moi.fr/arles/img/rue_vegetalisee_1.jpg" style="width: 100%;" />
+			</div>
 			<p>
-				Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.
-			</p>
-			<b>Recommendations</b>
-			<ul>
-				<li>Espèces grimpantes à fleurs et vivances</li>
-				<li>Variétés à croissance rapide, qui garnissent vite un treillage</li>
-			</ul>
+					Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.<br>
+			<a href="#">+ d'informations</a>
+				</p>
 		</div>
-		<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
-			<h3>Façades et murets</h3>
+		<div class="type"> 
+			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+				<h3>Façades et murets</h3>
+				<img src="http://demo.plante-et-moi.fr/dijon/img/pied%20de%20mur.JPG" style="width: 100%;" />
+			</div>
 			<p>
-				Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité). 
-			</p>
-			<b>Recommendations</b>
-			<ul>
-				<li>Annuelles, bisannuelles ou vivaces à faible développement</li>
-				<li>Résistantes</li>
-				<li>Aucune partie saillante qui risquerait d'être dangereuse</li>
-			</ul>
+					Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité).<br>
+			<a href="#">+ d'informations</a>
+				</p>
 		</div>
-		<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
-			<h3>Pieds d'arbres</h3>
-			<p>
-				Culture en pleine terre sur le pourtour existant d'un arbre de rue.
-			</p>
-			<b>Recommendations</b>
-			<ul>
-				<li>Résistantes</li>
-				<li>A développement limité et à faible développement racinaire</li>
-				<li>Economes en eau</li>
-			</ul>
+		<div class="type"> 
+			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+				<h3>Pieds d'arbres</h3>
+				<img src="http://demo.plante-et-moi.fr/dijon/img/tour%20d'arbres.JPG" style="width: 100%;" />
+			</div>
+							<p>
+					Culture en pleine terre sur le pourtour existant d'un arbre de rue.<br>
+			<a href="#">+ d'informations</a>
+				</p>
 		</div>
 	</div>
 	<div class="filters invisible" id="filters">
