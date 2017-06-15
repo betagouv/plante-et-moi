@@ -88,8 +88,22 @@
 			height: 300px;
 		}
 		.galery__card__long-description {
-			width: 100%;
-			height: 170px;
+			position: absolute;
+			padding-top: 70px;
+			top: 0px;
+			left: 0px;
+			width: 300px;
+			height: 300px;
+			background-color: rgba(255, 255, 255, 0.9);
+		}
+
+
+		.galery__card__long-description, .galery__card .galery__card__short-description h4 {
+			visibility: hidden;
+		}
+
+		.galery__card:hover .galery__card__long-description, .galery__card:hover .galery__card__short-description h4 {
+			visibility: visible;
 		}
 
 		@media (max-width: 600px) {
@@ -274,7 +288,7 @@
 				<img src="http://demo.plante-et-moi.fr/arles/img/jardiniere.jpg" style="width: 100%;" />
 			</div>
 			<p style="display: inline-block;">Trottoir large et placette avec jardinières, bacs ou pots posés sur le sol.<br>
-			<a href="#">+ d'informations</a>
+			<a href="#">En savoir plus</a>
 			</p>
 		</div>
 		<div class="type"> 
@@ -284,7 +298,7 @@
 			</div>
 			<p>
 					Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.<br>
-			<a href="#">+ d'informations</a>
+			<a href="#">En savoir plus</a>
 				</p>
 		</div>
 		<div class="type"> 
@@ -294,7 +308,7 @@
 			</div>
 			<p>
 					Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité).<br>
-			<a href="#">+ d'informations</a>
+			<a href="#">En savoir plus</a>
 				</p>
 		</div>
 		<div class="type"> 
@@ -304,7 +318,7 @@
 			</div>
 							<p>
 					Culture en pleine terre sur le pourtour existant d'un arbre de rue.<br>
-			<a href="#">+ d'informations</a>
+			<a href="#">En savoir plus</a>
 				</p>
 		</div>
 	</div>
