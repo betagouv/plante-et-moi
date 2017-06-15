@@ -4,4 +4,5 @@
 
 Le code source et la documentation sont sous licence [MIT](LICENCE).
 
-Les photos, images, données sont sous copyrights de leurs propriétaires respectifs.
+Les photos, images et données sont la propriété de leurs auteurs respectifs. 
+Leur réutilisation est sujette à autorisation préalable.
