@@ -35,15 +35,29 @@
         }
         .cube {
 			display: inline-block;
-			width: 370px; 
+			width: 368px; 
+            height: 650px;
 			text-align: center;
-			box-sizing:border-box;
 			margin: 20px;
 			vertical-align: top;
             border: 1px solid #d8d8d8;
-            box-sizing: border-box;
-            padding: 0px 20px 20px 20px;
+            padding: 0px;
+            position: relative;
 		}
+         .cube__img {
+            width: 100%;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+        }    
+        .cube__description {
+            padding: 0px 20px 20px 20px;
+            width: 100%;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            box-sizing: border-box;
+        }  
         .cube:first-child {
             margin-left: 0px;
             
@@ -110,11 +124,7 @@
 		.form__button:hover {
 			background-color: seagreen;
 		}
-
-        .cube__img {
-            width: 100%;
-            max-width: 300px;
-        }        
+  
         .bandeau {
             margin-top: 10px;
             margin-bottom: 30px; 
@@ -155,20 +165,26 @@
            </div>
             <div class="gallery">
                 <div class="cube">
-                    <h3>Besoin de nature en ville ?</h3>
-                    <br>Ça tombe bien : jardiner dans les rues, c’est permis à MALAKOFF !
-                    <br>Dans le cadre de l'engagement n°5 « la nature entre à MALAKOFF », la Ville lance l’opération « Nature en ville » qui permet de planter dans l’espace public des fleurs, légumes, aromates...
+                    <div class="cube__description">
+                        <h3>Besoin de nature en ville ?</h3>
+                        <br>Ça tombe bien : jardiner dans les rues, c’est permis à MALAKOFF !
+                        <br>Dans le cadre de l'engagement n°5 « la nature entre à MALAKOFF », la Ville lance l’opération « Nature en ville » qui permet de planter dans l’espace public des fleurs, légumes, aromates...
+                    </div>
                     <br><br><img class="cube__img" src="img/nature-ville.JPG" >
                 </div>
                 <div class="cube">
-                    <h3>Envie de jardinage ?</h3>
-                    <br>Demander votre permis de végétaliser : il suffit d'un peu d'imagination, de quelques graines, et de suivre quelques règles simples de respect du vivant. 
-                    <br><br><br><br><br><img class="cube__img" src="img/envie.JPG">
+                    <div class="cube__description">
+                        <h3>Envie de jardinage ?</h3>
+                        <br>Demander votre permis de végétaliser : il suffit d'un peu d'imagination, de vous munir de quelques graines ou plants, et de suivre quelques règles simples de respect du vivant. 
+                    </div>
+                    <img class="cube__img" src="img/envie.JPG">
                 </div>
                 <div class="cube">
-                    <h3>Pas la main verte ?</h3>
-                    <br>L'entr'aide est de règle entre jardiniers des rues. N'hésitez pas à faire une petite visite à la ferme urbaine de Corsico'
-                    <br><br><br><br><br><br><img class="cube__img" src="img/main-verte.JPG">
+                    <div class="cube__description">
+                        <h3>Pas la main verte ?</h3>
+                        <br>L'entr'aide est de règle entre jardiniers des rues. N'hésitez pas à faire une petite visite à la ferme urbaine de Corsico'
+                    </div>
+                    <img class="cube__img" src="img/main-verte.JPG">
                 </div>
             </div>
         </div>
