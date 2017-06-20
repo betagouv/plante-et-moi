@@ -36,7 +36,7 @@
         .cube {
 			display: inline-block;
 			width: 368px; 
-            height: 650px;
+            height: 655px;
 			text-align: center;
 			margin: 20px;
 			vertical-align: top;
@@ -44,12 +44,14 @@
             padding: 0px;
             position: relative;
 		}
+
          .cube__img {
             width: 100%;
             position: absolute;
             bottom: 0px;
             left: 0px;
         }    
+
         .cube__description {
             padding: 0px 20px 20px 20px;
             width: 100%;
@@ -57,7 +59,12 @@
             top: 0px;
             left: 0px;
             box-sizing: border-box;
+            font-size: 1.2em;
         }  
+        .cube__description h3 {
+            font-size: 1.3em;
+        }
+
         .cube:first-child {
             margin-left: 0px;
             
@@ -67,9 +74,6 @@
         }
 
 		@media (max-width: 950px) {
-			.cube {
-                margin: 0px;
-			}
             .cube {
                 margin-bottom: 20px;
              }
