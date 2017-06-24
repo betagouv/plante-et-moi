@@ -351,8 +351,6 @@
 			<label><input type="radio" name="periodicity" value="bisannuelle"
 			onclick="updateViewFromFilter()"> bisannuelle</label>
 		</div>
-		<div id="filters__grounds">
-		</div>
 	</div>
 	<div class="galery invisible" id="galery">
 		<div class="galery__container" id="galery__container">
@@ -418,10 +416,10 @@
 				name: "tag",
 				value: document.querySelector('#tag_filter .tag-selected').innerText 
 			},
-			{ 
+		/*	{ 
 				name: "ground",
 				value: document.querySelector('input[name="ground"]:checked').value
-			},
+			},*/
 			{
 				name: "periodicity",
 				value: document.querySelector('input[name="periodicity"]:checked').value
@@ -529,6 +527,8 @@
             });
             return newCard;
         });
+
+		/*
 		allGrounds = allGrounds.reduce((a, x) => ~a.indexOf(x) ? a : a.concat(x), []).sort();
 
 
@@ -536,7 +536,7 @@
 		allGrounds.forEach(function(ground){
 			groundFilterHTML += "<label><input type='radio' name='ground' value='"+ground+"' onclick='updateViewFromFilter()'>"+ground+"</label> ";
 		})
-		document.getElementById("filters__grounds").innerHTML = groundFilterHTML;
+		document.getElementById("filters__grounds").innerHTML = groundFilterHTML; */
 
         var galery = document.getElementById("galery__container");
         galery.removeChild(card);
