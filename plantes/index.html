@@ -134,13 +134,13 @@
 			border-width: 0px;
 			margin: 3px;
 			line-height: 2.2;
+			width: 120px;
 		}
 		.tag-selected {
 			background-color: #22b573;
 		}
 		h1 {
-			font-size: 2.5em;
-			text-align: center;
+			font-size: 1.5em;
 			font-family: "Helvetica", "Arial", sans-serif;
 			margin: 0px;
 			color: white;
@@ -161,11 +161,10 @@
 			text-align: center;
 		}
 		h4 {
-			font-size: 1.2em;
-			font-weight: normal;
-			font-style: italic;
+			font-size: 1em;
 			margin-top: 18px;
 			margin-bottom: 10px;
+			text-transform: uppercase;
 		}
 		.bee {
 			position: absolute;
@@ -206,6 +205,7 @@
 			margin: 0px;
 			padding: 20px;
 			box-sizing: border-box;
+			text-align: left;
 		}
 		.filters, .types {
 			width: 100%;
@@ -323,23 +323,29 @@
    			padding-top: 0px;
 			margin: 10px;
 		}
+		.selector legend {
+			font-weight: bold;
+			font-style: italic;
+		}
 		.filter__color {
 		    width: 15px;
 			height: 15px;
 			display: inline-block;
 			border-radius: 50%;
 		}
-		
+		#tag_filter {
+			padding-left: 40px;
+		}
 	</style>
 
 </head>
 
 <body>
 	<div class="header">
-		<h1>Planter quoi en région parisienne ?</h1>
+		<h1><i class="fa fa-leaf" aria-hidden="true"></i> Plante Et Moi</h1>
 	</div>
 	<div class="types" id="types">
-		<h2>Pour quel type de projet cherchez vous une plante ?</h2>
+		<h2>Planter quoi avec mon permis de végétaliser à Paris ?</h2>
 		<div class="type">
 			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Trottoirs</h3>
