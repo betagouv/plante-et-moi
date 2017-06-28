@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
     <style type="text/css">
 		body, html {
 			margin: 0px;
@@ -98,11 +99,11 @@
 		}
 
 
-		.galery__card__long-description, .galery__card .galery__card__short-description h4 {
+		.galery__card__long-description {
 			visibility: hidden;
 		}
 
-		.galery__card:hover .galery__card__long-description, .galery__card:hover .galery__card__short-description h4 {
+		.galery__card:hover .galery__card__long-description {
 			visibility: visible;
 		}
 
@@ -138,7 +139,7 @@
 			background-color: #22b573;
 		}
 		h1 {
-			font-size: 4em;
+			font-size: 2.5em;
 			text-align: center;
 			font-family: "Helvetica", "Arial", sans-serif;
 			margin: 0px;
@@ -148,20 +149,22 @@
 			font-size: 2em;
 			text-align: center;
 			font-family: "Helvetica", "Arial", sans-serif;
-			color: white;
+			color: cadetblue;
 		}
 		h3 {
-			font-size: 1.8em;
+			font-size: 1.5em;
 			margin-top: 0px;
-			margin-bottom: 0px;
+			margin-bottom: 14px;
 			line-height: 1.1;
 			max-width: 250px;
+			font-family: 'Open Sans', sans-serif;
+			text-align: center;
 		}
 		h4 {
 			font-size: 1.2em;
 			font-weight: normal;
 			font-style: italic;
-			margin-top: 2px;
+			margin-top: 18px;
 			margin-bottom: 10px;
 		}
 		.bee {
@@ -201,12 +204,12 @@
 			width: 100%;
 			background-color: #22b573;
 			margin: 0px;
-			padding: 10px;
+			padding: 20px;
 			box-sizing: border-box;
 		}
 		.filters, .types {
 			width: 100%;
-			background-color: darkgrey;
+			background-color: #e4edd9;
 			box-sizing: border-box;
 		}
 		.filters {
@@ -248,8 +251,10 @@
 			margin: 10px;
 			text-align: center;
 			vertical-align: top;
-			color: white;
 			text-align: left;
+			font-family: 'Open Sans', sans-serif;
+			color: #383838;
+			font-size: 0.9em;
 		}
 		.types__button {
 			height: 210px;
@@ -257,7 +262,7 @@
 			padding: 20px;
 			border-radius: 2px;
 			vertical-align: top;
-			background-color: grey;
+			background-color: cadetblue;
 			color: white;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 			text-align: left;
@@ -314,15 +319,12 @@
 		}
 		.selector fieldset {
 			width: 300px;
-		/*	width: 100%;
-			height: 100%;
-			position: absolute;
-			top: 0px;
-			left: 0px;
-			border-width: 0px;*/
+			padding: 20px;
+   			padding-top: 0px;
+			margin: 10px;
 		}
 		.filter__color {
-		     width: 15px;
+		    width: 15px;
 			height: 15px;
 			display: inline-block;
 			border-radius: 50%;
@@ -390,14 +392,14 @@
 		<div class="selector">
 			<fieldset>
 				<legend>Environnement</legend>
-				<h4>Ensoleillement</h4>
+				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>wb_sunny</i> Ensoleillement</h4>
 				<label><input type="checkbox" value="soleil" name="exposition"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> soleil</label>
 				<label><input type="checkbox" value="mi-ombre" name="exposition"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> mi-ombre</label>
 				<label><input type="checkbox" value="ombre" name="exposition"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> ombre</label>
 			</fieldset>
 			<fieldset>
 				<legend>Aspect de la plante</legend>
-				<h4>Couleur des fleurs</h4>
+				<h4><i class="fa fa-asterisk" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Couleur des fleurs</h4>
 				<label><input type="checkbox" name="flowering-color" value="bleu"><div class="filter__color" style="background-color: blue"></div>Bleu</label>
 				<label><input type="checkbox" name="flowering-color" value="rouge"><div class="filter__color" style="background-color: red"></div>Rouge</label>
 				<label><input type="checkbox" name="flowering-color" value="blanc"><div class="filter__color" style="background-color: white"></div>Blanc</label>
@@ -406,35 +408,35 @@
 				<label><input type="checkbox" name="flowering-color" value="jaune"><div class="filter__color" style="background-color: blue"></div>Jaune</label>
 				<label><input type="checkbox" name="flowering-color" value="orange"><div class="filter__color" style="background-color: orange"></div>Orange</label>
 
-				<h4>Taille de la plante</h4>
+				<h4><i class="fa fa-sort" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Taille de la plante</h4>
 				<label><input type="checkbox" name="size" value="Moins de 50 cm">Moins de 50 cm</label>
 				<label><input type="checkbox" name="size" value="Entre 50 cm et 80 cm">Entre 50 cm et 80 cm</label>
 				<label><input type="checkbox" name="size" value="Plus de 80 cm">Plus de 80 cm</label>
 
-				<h4>Feuillage</h4>
+				<h4><i class="fa fa-leaf" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Feuillage</h4>
 				<label><input type="checkbox" name="foliage" value="persistant">Persistant</label>
 				<label><input type="checkbox" name="foliage" value="semi-persistant">Semi-persistant</label>
 			</fieldset>
 			<fieldset>
 				<legend>Calendrier de la plante</legend>
-				<h4>Période de plantation</h4>
+				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i> Période de plantation</h4>
 				<label><input type="checkbox" name="seeding-season" value="printemps">Printemps</label>
 				<label><input type="checkbox" name="seeding-season" value="été">Été</label>
 				<label><input type="checkbox" name="seeding-season" value="automne">Automne</label>
 				<label><input type="checkbox" name="seeding-season" value="hiver">Hiver</label>
-				<h4>Période de floraison</h4>
+				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>nature</i> Période de floraison</h4>
 				<label><input type="checkbox" name="flowering-season" value="printemps">Printemps</label>
 				<label><input type="checkbox" name="flowering-season" value="été">Été</label>
 				<label><input type="checkbox" name="flowering-season" value="automne">Automne</label>
 				<label><input type="checkbox" name="flowering-season" value="hiver">Hiver</label>
-				<h4>Périodicité</h4>
+				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Périodicité</h4>
 				<label><input type="checkbox" name="periodicity" value="vivace">Vivace</label>
 				<label><input type="checkbox" name="periodicity" value="annuelle">Annuelle</label>
 				<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
 			</fieldset>
 			<fieldset>
 				<legend>Mellifère</legend>
-				<h4>Abeille-Friendly</h4>
+				<h4><i class="fa fa-bug" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Abeille-Friendly</h4>
 				<label><input type="checkbox" name="melliferous" value="oui">Bzzzz ! Bzzzz !</label>
 			</fieldset>
 		</div>
@@ -550,7 +552,7 @@
                 if(child.className == "galery__card__image") {
                     child.style.backgroundImage = "url('"+plant["Wikipedia Thumb Url"]+"')";
                 } else if (child.className == "galery__card__short-description") {
-					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+name+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i>Sol ";
+					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
 					
 					var groundsList = plant["Sol"].split(',');
 					allGrounds = allGrounds.concat(groundsList);
@@ -581,14 +583,14 @@
 
 					description += "<div class='seeding'>";
 					if(plant["Saison de Plantation"] != "") {
-						description += "<i class='material-icons' style='color: #603813; vertical-align: middle;'>spa</i><span class='seeding__text'>"+plant["Saison de Plantation"].split(",").map(function(color) {
+						description += "<i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i><span class='seeding__text'>"+plant["Saison de Plantation"].split(",").map(function(color) {
 							return "<span class='seeding-season'>"+color+"</span>";
 						}).join(', ')+"</span>";
 					}
 					description += "</div>";
 					description += "<div class='flowering'>";
 					if(plant["Saison de Floraison"] != "") {
-						description += "<i class='material-icons' style='color: #603813; vertical-align: middle;'>nature</i><span class='flowering__text'>"+plant["Saison de Floraison"].split(",").map(function(color) {
+						description += "<i class='material-icons' style='color: #666666; vertical-align: middle;'>nature</i><span class='flowering__text'>"+plant["Saison de Floraison"].split(",").map(function(color) {
 							return "<span class='flowering-season'>"+color+"</span>";
 						}).join(', ')+"</span>";
 					}
@@ -597,7 +599,9 @@
 
                     child.innerHTML = description;
                 } else if (child.className == "galery__card__long-description") {
-					var description = "Famille: "+plant["Famille"];
+					var description = "Nom latin: <span class='latin-name'>"+name+"</span>";
+					
+					description += "<br>Famille: "+plant["Famille"];
 					if(plant["Floraison couleur"] != "") {
 						description += "<br>Couleur de floraison : " + plant["Floraison couleur"].split(",").map(function(color) {
 							return "<span>"+color+"</span>";
