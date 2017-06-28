@@ -135,7 +135,7 @@
 			line-height: 2.2;
 		}
 		.tag-selected {
-			background-color: black;
+			background-color: #22b573;
 		}
 		h1 {
 			font-size: 4em;
@@ -271,18 +271,74 @@
 		}
 		.types__button:hover ul, .types__button:hover b {
 			visibility: visible;
+			
 		}
+
+		.filter {
+			list-style-type: none;
+			display: inline-block;
+		}
+		.filter li {
+			display: block;
+			border: 1px solid black;
+			background-color: grey;
+			width: 100px;
+			margin: 0px;
+			text-align: center;
+			float: left;
+			color: white;
+			padding: 10px;
+			font-weight: bold;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			cursor: pointer;
+		}
+		.filter li:first-child {
+			border-radius: 10px 0px 0px 10px;
+		}
+		.filter li:last-child {
+			border-radius: 0px 10px 10px 0px;
+		}
+		.filter li:hover {
+			background-color: #b2b2b2;
+		}
+
+		.filter__selected {
+			background-color: black !important;
+		}
+		.selector {
+			width: 100%;
+			display: flex;
+ 			flex-flow: row wrap;
+			justify-content: space-around;
+
+		}
+		.selector fieldset {
+			width: 300px;
+		/*	width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			border-width: 0px;*/
+		}
+		.filter__color {
+		     width: 15px;
+			height: 15px;
+			display: inline-block;
+			border-radius: 50%;
+		}
+		
 	</style>
 
 </head>
 
 <body>
 	<div class="header">
-		<h1>Planter quoi ?</h1>
+		<h1>Planter quoi en région parisienne ?</h1>
 	</div>
 	<div class="types" id="types">
 		<h2>Pour quel type de projet cherchez vous une plante ?</h2>
-		<div class="type"> 
+		<div class="type">
 			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Trottoirs</h3>
 				<img src="http://demo.plante-et-moi.fr/arles/img/jardiniere.jpg" style="width: 100%;" />
@@ -291,7 +347,7 @@
 			<a href="#">En savoir plus</a>
 			</p>
 		</div>
-		<div class="type"> 
+		<div class="type">
 			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Mobilier urbain</h3>
 				<img src="http://demo.plante-et-moi.fr/arles/img/rue_vegetalisee_1.jpg" style="width: 100%;" />
@@ -301,7 +357,7 @@
 			<a href="#">En savoir plus</a>
 				</p>
 		</div>
-		<div class="type"> 
+		<div class="type">
 			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Façades et murets</h3>
 				<img src="http://demo.plante-et-moi.fr/dijon/img/pied%20de%20mur.JPG" style="width: 100%;" />
@@ -311,7 +367,7 @@
 			<a href="#">En savoir plus</a>
 				</p>
 		</div>
-		<div class="type"> 
+		<div class="type">
 			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Pieds d'arbres</h3>
 				<img src="http://demo.plante-et-moi.fr/dijon/img/tour%20d'arbres.JPG" style="width: 100%;" />
@@ -324,35 +380,68 @@
 	</div>
 	<div class="filters invisible" id="filters">
 		<div id="tag_filter">
-			<b>Type de projet</b> : 
+			<b>Type de projet</b>
 			<button class="tag tag-selected" onclick="filterPlantsByTag(this.innerText)">Tous</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Façades et murets</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
 		</div>
-		<div id="">
-			<b>Exposition</b> :
-			<label><input type="radio" name="exposition" value="Tous" checked='checked' onclick="updateViewFromFilter()">Pas de filtre</label>
-			<label><input type="radio" name="exposition" value="soleil" onclick="updateViewFromFilter()"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> soleil</label>
-			<label><input type="radio" name="exposition" value="mi-ombre"
-			onclick="updateViewFromFilter()"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> mi-ombre</label>
-			<label>
-			<input type="radio" name="exposition" value="ombre"
-			onclick="updateViewFromFilter()"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> ombre<label>
-		</div>
-		<div id="">
-			<b>Périodicité</b> :
-			<label><input type="radio" name="periodicity" value="Tous" checked='checked' onclick="updateViewFromFilter()">Pas de filtre</label>
-			<label><input type="radio" name="periodicity" value="vivace"
-			onclick="updateViewFromFilter()"> vivace</label>
-			<label><input type="radio" name="periodicity" value="annuelle"
-			onclick="updateViewFromFilter()"> annuelle</label>
-			<label><input type="radio" name="periodicity" value="bisannuelle"
-			onclick="updateViewFromFilter()"> bisannuelle</label>
+		<div class="selector">
+			<fieldset>
+				<legend>Environnement</legend>
+				<h4>Ensoleillement</h4>
+				<label><input type="checkbox" value="soleil" name="exposition"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> soleil</label>
+				<label><input type="checkbox" value="mi-ombre" name="exposition"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> mi-ombre</label>
+				<label><input type="checkbox" value="ombre" name="exposition"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> ombre</label>
+			</fieldset>
+			<fieldset>
+				<legend>Aspect de la plante</legend>
+				<h4>Couleur des fleurs</h4>
+				<label><input type="checkbox" name="flowering-color" value="bleu"><div class="filter__color" style="background-color: blue"></div>Bleu</label>
+				<label><input type="checkbox" name="flowering-color" value="rouge"><div class="filter__color" style="background-color: red"></div>Rouge</label>
+				<label><input type="checkbox" name="flowering-color" value="blanc"><div class="filter__color" style="background-color: white"></div>Blanc</label>
+				<label><input type="checkbox" name="flowering-color" value="rose"><div class="filter__color" style="background-color: pink"></div>Rose</label>
+				<label><input type="checkbox" name="flowering-color" value="violet"><div class="filter__color" style="background-color: purple"></div>Violet</label>
+				<label><input type="checkbox" name="flowering-color" value="jaune"><div class="filter__color" style="background-color: blue"></div>Jaune</label>
+				<label><input type="checkbox" name="flowering-color" value="orange"><div class="filter__color" style="background-color: orange"></div>Orange</label>
+
+				<h4>Taille de la plante</h4>
+				<label><input type="checkbox" name="size" value="Moins de 50 cm">Moins de 50 cm</label>
+				<label><input type="checkbox" name="size" value="Entre 50 cm et 80 cm">Entre 50 cm et 80 cm</label>
+				<label><input type="checkbox" name="size" value="Plus de 80 cm">Plus de 80 cm</label>
+
+				<h4>Feuillage</h4>
+				<label><input type="checkbox" name="foliage" value="persistant">Persistant</label>
+				<label><input type="checkbox" name="foliage" value="semi-persistant">Semi-persistant</label>
+			</fieldset>
+			<fieldset>
+				<legend>Calendrier de la plante</legend>
+				<h4>Période de plantation</h4>
+				<label><input type="checkbox" name="seeding-season" value="printemps">Printemps</label>
+				<label><input type="checkbox" name="seeding-season" value="été">Été</label>
+				<label><input type="checkbox" name="seeding-season" value="automne">Automne</label>
+				<label><input type="checkbox" name="seeding-season" value="hiver">Hiver</label>
+				<h4>Période de floraison</h4>
+				<label><input type="checkbox" name="flowering-season" value="printemps">Printemps</label>
+				<label><input type="checkbox" name="flowering-season" value="été">Été</label>
+				<label><input type="checkbox" name="flowering-season" value="automne">Automne</label>
+				<label><input type="checkbox" name="flowering-season" value="hiver">Hiver</label>
+				<h4>Périodicité</h4>
+				<label><input type="checkbox" name="periodicity" value="vivace">Vivace</label>
+				<label><input type="checkbox" name="periodicity" value="annuelle">Annuelle</label>
+				<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
+			</fieldset>
+			<fieldset>
+				<legend>Mellifère</legend>
+				<h4>Abeille-Friendly</h4>
+				<label><input type="checkbox" name="melliferous" value="oui">Bzzzz ! Bzzzz !</label>
+			</fieldset>
 		</div>
 	</div>
 	<div class="galery invisible" id="galery">
+		<h3 class="galery__title"><span class="result-count"></span> resultats</h3>
+		<hr>
 		<div class="galery__container" id="galery__container">
 			<div class="galery__card" id="item">
 				<div class="galery__card__image"></div>
@@ -378,6 +467,13 @@
 	if(data != "" && data != null) {
 		favorites = data.split(",")
 	}
+
+
+	Array.from(document.querySelectorAll(".filters input")).forEach(function(elem) {
+		elem.addEventListener("click", function(event) {
+			updateViewFromFilter();
+		});
+	});
 
 	function favorite(saveNode) {
 		var name = saveNode.parentNode.getElementsByTagName("h4")[0].innerText;
@@ -407,42 +503,40 @@
 	}
 
 	function updateViewFromFilter() {
-		var filters = [ 
-			{  
-				name: "exposition", 
-				value: document.querySelector('input[name="exposition"]:checked').value 
-			},
-			{  
+		var filters = ["exposition", "flowering-color", "size", "foliage", "seeding-season", "flowering-season", "periodicity", "melliferous"].map(function(name){
+			return {  
+				name: name, 
+				values: Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(e){ return e.value })
+			};
+		});
+		filters.push({  
 				name: "tag",
-				value: document.querySelector('#tag_filter .tag-selected').innerText 
-			},
-		/*	{ 
-				name: "ground",
-				value: document.querySelector('input[name="ground"]:checked').value
-			},*/
-			{
-				name: "periodicity",
-				value: document.querySelector('input[name="periodicity"]:checked').value
-			}
-		] 
+				values: [document.querySelector('#tag_filter .tag-selected').innerText]
+			});
+
+		var count = 0;
 		Array.from(document.getElementsByClassName("galery__card"))
 		.forEach(function(plant){
 			if(filters.reduce(function(acc, filter){ 
 				return acc && matchFilter(plant, filter);
 			}, true)) {
 				plant.classList.remove("invisible");
+				count++;
 			} else {
 				plant.classList.add("invisible");
 			}
 		})
+		Array.from(document.getElementsByClassName("result-count")).forEach(function(elem){
+			elem.innerText = count;
+		});
 	}
 	
 	function matchFilter(plant, filter) {
-		if(filter.value == "Tous") {
+		if(filter.values[0] == "Tous" || filter.values == false) {
 			return true;
 		} 
 		return Array.from(plant.getElementsByClassName(filter.name)).reduce(function(acc, elem){ 
-					return acc || elem.innerText == filter.value;
+					return acc || filter.values.indexOf(elem.innerText) != -1;
 			}, false);
 	}
 
@@ -456,7 +550,7 @@
                 if(child.className == "galery__card__image") {
                     child.style.backgroundImage = "url('"+plant["Wikipedia Thumb Url"]+"')";
                 } else if (child.className == "galery__card__short-description") {
-					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+name+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i> Sol ";
+					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><h4>"+name+"</h4><i class='material-icons' style='color: #603813; vertical-align: middle;'>line_style</i>Sol ";
 					
 					var groundsList = plant["Sol"].split(',');
 					allGrounds = allGrounds.concat(groundsList);
@@ -476,7 +570,7 @@
 					})
 
 					if (plant["Périodicité"] != "") {
-						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Plante  <span class='periodicity'>"+plant["Périodicité"]+"</span>";
+						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i>Plante  <span class='periodicity'>"+plant["Périodicité"]+"</span>";
 
 					}
 					//description += "<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a>";
@@ -487,12 +581,16 @@
 
 					description += "<div class='seeding'>";
 					if(plant["Saison de Plantation"] != "") {
-						description += "<i class='material-icons' style='color: #603813; vertical-align: middle;'>spa</i> <span class='seeding__text'>"+plant["Saison de Plantation"].replace(/,/g, ", ")+"</span>";
+						description += "<i class='material-icons' style='color: #603813; vertical-align: middle;'>spa</i><span class='seeding__text'>"+plant["Saison de Plantation"].split(",").map(function(color) {
+							return "<span class='seeding-season'>"+color+"</span>";
+						}).join(', ')+"</span>";
 					}
 					description += "</div>";
 					description += "<div class='flowering'>";
 					if(plant["Saison de Floraison"] != "") {
-						description += "<i class='material-icons' style='color: #603813; vertical-align: middle;'>nature</i> <span class='flowering__text'>"+plant["Saison de Floraison"].replace(/,/g, ", ")+"</span>";
+						description += "<i class='material-icons' style='color: #603813; vertical-align: middle;'>nature</i><span class='flowering__text'>"+plant["Saison de Floraison"].split(",").map(function(color) {
+							return "<span class='flowering-season'>"+color+"</span>";
+						}).join(', ')+"</span>";
 					}
 					description += "</div>";
 					description += "<br>";
@@ -501,8 +599,24 @@
                 } else if (child.className == "galery__card__long-description") {
 					var description = "Famille: "+plant["Famille"];
 					if(plant["Floraison couleur"] != "") {
-						description += "<br>Couleur de floraison : " + plant["Floraison couleur"];
+						description += "<br>Couleur de floraison : " + plant["Floraison couleur"].split(",").map(function(color) {
+							return "<span>"+color+"</span>";
+						}).join(', ');
 					}
+					if(plant["Floraison Couleur Normalisé"] != "") {
+						description += plant["Floraison Couleur Normalisé"].split(",").map(function(color) {
+							return "<span class='flowering-color invisible'>"+color+"</span>";
+						}).join('');
+					}
+					if(plant["Feuillage"] != "") {
+						description += plant["Feuillage"].split(",").map(function(color) {
+							return "<span class='foliage invisible'>"+color+"</span>";
+						}).join('');
+					}
+					if(plant["Propriétés"].indexOf("mellifère") != -1) {
+						description += "<span class='melliferous invisible'>oui</span>";
+					}
+
 					if(plant["Hauteur"] != "") {
 						description += "<br>Hauteur : " + plant["Hauteur"];
 					}
@@ -529,12 +643,12 @@
         });
 
 		/*
-		allGrounds = allGrounds.reduce((a, x) => ~a.indexOf(x) ? a : a.concat(x), []).sort();
+		allGrounds = allGrounds.reduce((a, x) =>~a.indexOf(x) ? a : a.concat(x), []).sort();
 
 
-		var groundFilterHTML = "<b>Sol</b> : <label><input type='radio' name='ground' value='Tous' onclick='updateViewFromFilter()' checked='checked'>Pas de filtre</label> ";
+		var groundFilterHTML = "<b>Sol</b>: <label><input type='radio' name='ground' value='Tous' onclick='updateViewFromFilter()' checked='checked'>Pas de filtre</label>";
 		allGrounds.forEach(function(ground){
-			groundFilterHTML += "<label><input type='radio' name='ground' value='"+ground+"' onclick='updateViewFromFilter()'>"+ground+"</label> ";
+			groundFilterHTML += "<label><input type='radio' name='ground' value='"+ground+"' onclick='updateViewFromFilter()'>"+ground+"</label>";
 		})
 		document.getElementById("filters__grounds").innerHTML = groundFilterHTML; */
 
