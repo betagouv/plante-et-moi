@@ -352,7 +352,6 @@
 				<img src="http://demo.plante-et-moi.fr/arles/img/jardiniere.jpg" style="width: 100%;" />
 			</div>
 			<p style="display: inline-block;">Trottoir large et placette avec jardinières, bacs ou pots posés sur le sol.<br>
-			<a href="#">En savoir plus</a>
 			</p>
 		</div>
 		<div class="type">
@@ -362,7 +361,6 @@
 			</div>
 			<p>
 					Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.<br>
-			<a href="#">En savoir plus</a>
 				</p>
 		</div>
 		<div class="type">
@@ -372,7 +370,6 @@
 			</div>
 			<p>
 					Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité).<br>
-			<a href="#">En savoir plus</a>
 				</p>
 		</div>
 		<div class="type">
@@ -382,7 +379,6 @@
 			</div>
 							<p>
 					Culture en pleine terre sur le pourtour existant d'un arbre de rue.<br>
-			<a href="#">En savoir plus</a>
 				</p>
 		</div>
 	</div>
@@ -625,6 +621,11 @@
 					}
 					if(plant["Propriétés"].indexOf("mellifère") != -1) {
 						description += "<span class='melliferous invisible'>oui</span>";
+					}
+					if(plant["Hauteur Normalisé"] != "") {
+						description += plant["Hauteur Normalisé"].split(",").map(function(height) {
+							return "<span class='size invisible'>"+height+"</span>";
+						}).join('');
 					}
 
 					if(plant["Hauteur"] != "") {
