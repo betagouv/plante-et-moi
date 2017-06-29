@@ -6,16 +6,17 @@
 
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
-	  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-    <style type="text/css">
-		body, html {
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<style type="text/css">
+		body,
+		html {
 			margin: 0px;
 			width: 100%;
 			height: 100%;
 			overflow-x: hidden;
 		}
+
 		.galery {
 			padding: 10px;
 			display: block;
@@ -26,16 +27,19 @@
 			text-align: center;
 			box-sizing: border-box;
 		}
+
 		.galery__container {
 			width: 1860px;
 			text-align: left;
 			display: inline-block;
 		}
+
 		@media (max-width: 1860px) {
 			.galery__container {
 				width: 1240px;
 			}
 		}
+
 		@media (max-width: 1240px) {
 			.galery__container {
 				width: 620px;
@@ -53,7 +57,7 @@
 			position: relative;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 			font-family: "Helvetica", "Arial", sans-serif;
-   			line-height: 1.5;
+			line-height: 1.5;
 			float: left;
 			overflow: hidden;
 		}
@@ -61,7 +65,7 @@
 		.galery__card--clickable {
 			cursor: pointer;
 		}
-		
+
 		.galery__card__image {
 			position: relative;
 			background-repeat: no-repeat;
@@ -74,7 +78,8 @@
 			background-size: cover;
 		}
 
-		.galery__card__short-description, .galery__card__long-description {
+		.galery__card__short-description,
+		.galery__card__long-description {
 			position: relative;
 			box-sizing: border-box;
 			float: left;
@@ -83,11 +88,12 @@
 			color: #555;
 			font-size: 15px;
 		}
-		
+
 		.galery__card__short-description {
 			width: 300px;
 			height: 300px;
 		}
+
 		.galery__card__long-description {
 			position: absolute;
 			padding-top: 70px;
@@ -113,7 +119,7 @@
 				height: 600px;
 			}
 		}
-		
+
 		.galery__card__bottom {
 			position: absolute;
 			bottom: 0px;
@@ -124,9 +130,11 @@
 			left: 0px;
 			display: block;
 		}
+
 		.invisible {
 			display: none;
 		}
+
 		.tag {
 			background-color: grey;
 			padding: 6px;
@@ -136,21 +144,25 @@
 			line-height: 2.2;
 			width: 120px;
 		}
+
 		.tag-selected {
 			background-color: #22b573;
 		}
+
 		h1 {
 			font-size: 1.5em;
 			font-family: "Helvetica", "Arial", sans-serif;
 			margin: 0px;
 			color: white;
 		}
+
 		h2 {
 			font-size: 2em;
 			text-align: center;
 			font-family: "Helvetica", "Arial", sans-serif;
 			color: cadetblue;
 		}
+
 		h3 {
 			font-size: 1.5em;
 			margin-top: 0px;
@@ -160,12 +172,14 @@
 			font-family: 'Open Sans', sans-serif;
 			text-align: center;
 		}
+
 		h4 {
 			font-size: 1em;
 			margin-top: 18px;
 			margin-bottom: 10px;
 			text-transform: uppercase;
 		}
+
 		.bee {
 			position: absolute;
 			top: 0px;
@@ -178,7 +192,8 @@
 			-webkit-mask-repeat: no-repeat;
 		}
 
-		.seeding, .flowering  {
+		.seeding,
+		.flowering {
 			position: absolute;
 			bottom: 0px;
 			width: 50%;
@@ -190,15 +205,20 @@
 			align-items: center;
 			justify-content: center;
 		}
+
 		.seeding {
 			left: 0px;
 		}
+
 		.flowering {
 			right: 0px;
 		}
-		.seeding__text, .flowering__text {
+
+		.seeding__text,
+		.flowering__text {
 			margin-left: 5px;
 		}
+
 		.header {
 			width: 100%;
 			background-color: #22b573;
@@ -207,14 +227,18 @@
 			box-sizing: border-box;
 			text-align: left;
 		}
-		.filters, .types {
+
+		.filters,
+		.types {
 			width: 100%;
 			background-color: #e4edd9;
 			box-sizing: border-box;
 		}
+
 		.filters {
 			padding: 20px;
 		}
+
 		.types {
 			min-height: 80%;
 			width: 100%;
@@ -222,6 +246,7 @@
 			padding: 10px;
 			text-align: center;
 		}
+
 		.save {
 			position: absolute;
 			top: 0px;
@@ -233,9 +258,11 @@
 			cursor: pointer;
 			vertical-align: middle;
 		}
+
 		.save i {
 			font-size: 30px;
 		}
+
 		.footer {
 			padding: 15px;
 			width: 100%;
@@ -243,6 +270,7 @@
 			color: #e6e6e6;
 			box-sizing: border-box;
 		}
+
 		.type {
 			height: 340px;
 			width: 270px;
@@ -256,6 +284,7 @@
 			color: #383838;
 			font-size: 0.9em;
 		}
+
 		.types__button {
 			height: 210px;
 			display: inline-block;
@@ -268,21 +297,26 @@
 			text-align: left;
 			cursor: pointer;
 		}
+
 		.types__button:hover {
 			background-color: #b2b2b2;
 		}
-		.types__button ul, .types__button b {
+
+		.types__button ul,
+		.types__button b {
 			visibility: hidden;
 		}
-		.types__button:hover ul, .types__button:hover b {
+
+		.types__button:hover ul,
+		.types__button:hover b {
 			visibility: visible;
-			
 		}
 
 		.filter {
 			list-style-type: none;
 			display: inline-block;
 		}
+
 		.filter li {
 			display: block;
 			border: 1px solid black;
@@ -297,12 +331,15 @@
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 			cursor: pointer;
 		}
+
 		.filter li:first-child {
 			border-radius: 10px 0px 0px 10px;
 		}
+
 		.filter li:last-child {
 			border-radius: 0px 10px 10px 0px;
 		}
+
 		.filter li:hover {
 			background-color: #b2b2b2;
 		}
@@ -310,29 +347,60 @@
 		.filter__selected {
 			background-color: black !important;
 		}
+
 		.selector {
 			width: 100%;
+			display: -webkit-flex;
 			display: flex;
- 			flex-flow: row wrap;
-			justify-content: space-around;
+			-webkit-flex-wrap: wrap;
+			flex-wrap: wrap;
+		}
 
-		}
 		.selector fieldset {
-			width: 300px;
+			width: 100%;
 			padding: 20px;
-   			padding-top: 0px;
-			margin: 10px;
+			padding-top: 0px;
+			margin-top: -1px;
+			padding: 1em;
+			border: 1px solid #ddd;
+			-webkit-order: 1;
+			order: 1;
 		}
-		.selector legend {
+
+		.selector legend {}
+
+		.selector>label {
+			background: #eee;
+			border: 1px solid #ddd;
+			padding: .7em 1em;
+			cursor: pointer;
+			z-index: 1;
+			margin-left: -1px;
 			font-weight: bold;
 			font-style: italic;
 		}
+
+		.selector input[type=radio]:checked+label {
+			background: #fff;
+			border-bottom: 1px solid #fff;
+		}
+
+		.selector input[type=radio],
+		.selector fieldset {
+			display: none;
+		}
+
+		.selector input[type=radio]:checked+label+fieldset {
+			display: block;
+		}
+
 		.filter__color {
-		    width: 15px;
+			width: 15px;
 			height: 15px;
 			display: inline-block;
 			border-radius: 50%;
 		}
+
 		#tag_filter {
 			padding-left: 40px;
 		}
@@ -360,8 +428,8 @@
 				<img src="http://demo.plante-et-moi.fr/arles/img/rue_vegetalisee_1.jpg" style="width: 100%;" />
 			</div>
 			<p>
-					Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.<br>
-				</p>
+				Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.<br>
+			</p>
 		</div>
 		<div class="type">
 			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
@@ -369,17 +437,17 @@
 				<img src="http://demo.plante-et-moi.fr/dijon/img/pied%20de%20mur.JPG" style="width: 100%;" />
 			</div>
 			<p>
-					Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité).<br>
-				</p>
+				Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité).<br>
+			</p>
 		</div>
 		<div class="type">
 			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Pieds d'arbres</h3>
 				<img src="http://demo.plante-et-moi.fr/dijon/img/tour%20d'arbres.JPG" style="width: 100%;" />
 			</div>
-							<p>
-					Culture en pleine terre sur le pourtour existant d'un arbre de rue.<br>
-				</p>
+			<p>
+				Culture en pleine terre sur le pourtour existant d'un arbre de rue.<br>
+			</p>
 		</div>
 	</div>
 	<div class="filters invisible" id="filters">
@@ -392,15 +460,18 @@
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
 		</div>
 		<div class="selector">
+			<input id="tab1" type="radio" name="current-tab" checked="checked" />
+			<label for="tab1">Environnement</label>
 			<fieldset>
-				<legend>Environnement</legend>
 				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>wb_sunny</i> Ensoleillement</h4>
 				<label><input type="checkbox" value="soleil" name="exposition"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> soleil</label>
 				<label><input type="checkbox" value="mi-ombre" name="exposition"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> mi-ombre</label>
 				<label><input type="checkbox" value="ombre" name="exposition"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> ombre</label>
 			</fieldset>
+
+			<input id="tab2" type="radio" name="current-tab" />
+			<label for="tab2">Aspect de la plante</label>
 			<fieldset>
-				<legend>Aspect de la plante</legend>
 				<h4><i class="fa fa-asterisk" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Couleur des fleurs</h4>
 				<label><input type="checkbox" name="flowering-color" value="bleu"><div class="filter__color" style="background-color: blue"></div>Bleu</label>
 				<label><input type="checkbox" name="flowering-color" value="rouge"><div class="filter__color" style="background-color: red"></div>Rouge</label>
@@ -419,8 +490,9 @@
 				<label><input type="checkbox" name="foliage" value="persistant">Persistant</label>
 				<label><input type="checkbox" name="foliage" value="semi-persistant">Semi-persistant</label>
 			</fieldset>
+			<input id="tab3" type="radio" name="current-tab" />
+			<label for="tab3">Calendrier de la plante</label>
 			<fieldset>
-				<legend>Calendrier de la plante</legend>
 				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i> Période de plantation</h4>
 				<label><input type="checkbox" name="seeding-season" value="printemps">Printemps</label>
 				<label><input type="checkbox" name="seeding-season" value="été">Été</label>
@@ -436,8 +508,9 @@
 				<label><input type="checkbox" name="periodicity" value="annuelle">Annuelle</label>
 				<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
 			</fieldset>
+			<input id="tab4" type="radio" name="current-tab" />
+			<label for="tab4">Mellifère</label>
 			<fieldset>
-				<legend>Mellifère</legend>
 				<h4><i class="fa fa-bug" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Abeille-Friendly</h4>
 				<label><input type="checkbox" name="melliferous" value="oui">Bzzzz ! Bzzzz !</label>
 			</fieldset>
@@ -457,235 +530,1000 @@
 		</div>
 	</div>
 	<div class="footer">
-		Crédit photos : wikipedia/wikimedia<br>
-		Crédit icone d'abeille : bee par alican de the Noun Project<br>
-		Donnée de plantes fournit par la Mairie de Paris<br><br>
-		Créé par Plante Et Moi : <a href="https://beta.gouv.fr/startup/biodiversite.html">https://beta.gouv.fr/startup/biodiversite.html</a><br>
+		Crédit photos : wikipedia/wikimedia<br> Crédit icone d'abeille : bee par alican de the Noun Project<br> Donnée de plantes
+		fournit par la Mairie de Paris<br><br> Créé par Plante Et Moi : <a href="https://beta.gouv.fr/startup/biodiversite.html">https://beta.gouv.fr/startup/biodiversite.html</a><br>
 	</div>
 
 
-<script src="https://cdn.rawgit.com/madmurphy/cookies.js/c2eba5d7/cookies.js"></script>
-<script>
-	var favorites = [];
-	var data = docCookies.getItem("favorites");
-	if(data != "" && data != null) {
-		favorites = data.split(",")
-	}
-
-
-	Array.from(document.querySelectorAll(".filters input")).forEach(function(elem) {
-		elem.addEventListener("click", function(event) {
-			updateViewFromFilter();
-		});
-	});
-
-	function favorite(saveNode) {
-		var name = saveNode.parentNode.getElementsByTagName("h4")[0].innerText;
-		if(saveNode.firstElementChild.innerText == "star") {
-			saveNode.firstElementChild.innerText = "star_border";
-			favorites.splice(favorites.indexOf(name),1);
-		} else {
-			saveNode.firstElementChild.innerText = "star";
-			favorites.push(name);
+	<script src="https://cdn.rawgit.com/madmurphy/cookies.js/c2eba5d7/cookies.js"></script>
+	<script>
+		var favorites = [];
+		var data = docCookies.getItem("favorites");
+		if (data != "" && data != null) {
+			favorites = data.split(",")
 		}
-		docCookies.setItem("favorites", favorites.join(), 86400);
-	}
 
-	function filterPlantsByTag(filter, type) {
-		Array.from(document.getElementById("tag_filter").getElementsByClassName("tag"))
-		.forEach(function(tag){ 
-			if(tag.innerText == filter) {
-				tag.classList.add("tag-selected");
-			} else {
-				tag.classList.remove("tag-selected");
-			}
-		})
-		updateViewFromFilter();
-		document.getElementById("types").classList.add("invisible");
-		document.getElementById("galery").classList.remove("invisible");
-		document.getElementById("filters").classList.remove("invisible");
-	}
 
-	function updateViewFromFilter() {
-		var filters = ["exposition", "flowering-color", "size", "foliage", "seeding-season", "flowering-season", "periodicity", "melliferous"].map(function(name){
-			return {  
-				name: name, 
-				values: Array.from(document.querySelectorAll('input[name="'+name+'"]:checked')).map(function(e){ return e.value })
-			};
+		Array.from(document.querySelectorAll(".filters input")).forEach(function (elem) {
+			elem.addEventListener("click", function (event) {
+				updateViewFromFilter();
+			});
 		});
-		filters.push({  
+
+		function favorite(saveNode) {
+			var name = saveNode.parentNode.getElementsByTagName("h4")[0].innerText;
+			if (saveNode.firstElementChild.innerText == "star") {
+				saveNode.firstElementChild.innerText = "star_border";
+				favorites.splice(favorites.indexOf(name), 1);
+			} else {
+				saveNode.firstElementChild.innerText = "star";
+				favorites.push(name);
+			}
+			docCookies.setItem("favorites", favorites.join(), 86400);
+		}
+
+		function filterPlantsByTag(filter, type) {
+			Array.from(document.getElementById("tag_filter").getElementsByClassName("tag"))
+				.forEach(function (tag) {
+					if (tag.innerText == filter) {
+						tag.classList.add("tag-selected");
+					} else {
+						tag.classList.remove("tag-selected");
+					}
+				})
+			updateViewFromFilter();
+			document.getElementById("types").classList.add("invisible");
+			document.getElementById("galery").classList.remove("invisible");
+			document.getElementById("filters").classList.remove("invisible");
+		}
+
+		function updateViewFromFilter() {
+			var filters = ["exposition", "flowering-color", "size", "foliage", "seeding-season", "flowering-season", "periodicity", "melliferous"].map(function (name) {
+				return {
+					name: name,
+					values: Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function (e) { return e.value })
+				};
+			});
+			filters.push({
 				name: "tag",
 				values: [document.querySelector('#tag_filter .tag-selected').innerText]
 			});
 
-		var count = 0;
-		Array.from(document.getElementsByClassName("galery__card"))
-		.forEach(function(plant){
-			if(filters.reduce(function(acc, filter){ 
-				return acc && matchFilter(plant, filter);
-			}, true)) {
-				plant.classList.remove("invisible");
-				count++;
-			} else {
-				plant.classList.add("invisible");
+			var count = 0;
+			Array.from(document.getElementsByClassName("galery__card"))
+				.forEach(function (plant) {
+					if (filters.reduce(function (acc, filter) {
+						return acc && matchFilter(plant, filter);
+					}, true)) {
+						plant.classList.remove("invisible");
+						count++;
+					} else {
+						plant.classList.add("invisible");
+					}
+				})
+			Array.from(document.getElementsByClassName("result-count")).forEach(function (elem) {
+				elem.innerText = count;
+			});
+		}
+
+		function matchFilter(plant, filter) {
+			if (filter.values[0] == "Tous" ||  filter.values == false) {
+				return true;
 			}
-		})
-		Array.from(document.getElementsByClassName("result-count")).forEach(function(elem){
-			elem.innerText = count;
-		});
-	}
-	
-	function matchFilter(plant, filter) {
-		if(filter.values[0] == "Tous" || filter.values == false) {
-			return true;
-		} 
-		return Array.from(plant.getElementsByClassName(filter.name)).reduce(function(acc, elem){ 
-					return acc || filter.values.indexOf(elem.innerText) != -1;
+			return Array.from(plant.getElementsByClassName(filter.name)).reduce(function (acc, elem) {
+				return acc || filter.values.indexOf(elem.innerText) != -1;
 			}, false);
-	}
+		}
 
-    function showPlants(plants) {
-		var allGrounds = [];
-        var card = document.getElementById("item");
-        var newCards = plants.map(function(plant) {
-            var newCard = card.cloneNode(true);
-            Array.from(newCard.children).forEach(function(child) {
-				var name = plant["Genre"]+" "+plant["Espèce"];
-                if(child.className == "galery__card__image") {
-                    child.style.backgroundImage = "url('"+plant["Wikipedia Thumb Url"]+"')";
-                } else if (child.className == "galery__card__short-description") {
-					var description = "<h3>"+plant["Nom vernaculaire"]+"</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
-					
-					var groundsList = plant["Sol"].split(',');
-					allGrounds = allGrounds.concat(groundsList);
-					description += groundsList.map(function(ground) {
-						 return "<span class='ground'>"+ground+"</span>";
-					}).join(', ');
-					description += "<br>";
-					plant["Exposition"].split(',').forEach(function(exposition) {
-						if(exposition == "soleil") {
-							description += "<i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i>";
-						} else if(exposition == "mi-ombre") {
-							description += "<i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i>";
-						} else if(exposition == "ombre") {
-							description += "<i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i>";
-						}
-						description += " <span class='exposition'>"+exposition+"</span> ";
-					})
+		function showPlants(plants) {
+			var allGrounds = [];
+			var card = document.getElementById("item");
+			var newCards = plants.map(function (plant) {
+				var newCard = card.cloneNode(true);
+				Array.from(newCard.children).forEach(function (child) {
+					var name = plant["Genre"] + " " + plant["Espèce"];
+					if (child.className == "galery__card__image") {
+						child.style.backgroundImage = "url('" + plant["Wikipedia Thumb Url"] + "')";
+					} else if (child.className == "galery__card__short-description") {
+						var description = "<h3>" + plant["Nom vernaculaire"] + "</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
 
-					if (plant["Périodicité"] != "") {
-						description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i>Plante  <span class='periodicity'>"+plant["Périodicité"]+"</span>";
-
-					}
-					//description += "<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a>";
-					description += "<br>";
-					plant["Types de projet"].split(",").forEach(function (tag) {
-						description += "<span class='tag'>"+tag+"</span>";
-					})
-
-					description += "<div class='seeding'>";
-					if(plant["Saison de Plantation"] != "") {
-						description += "<i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i><span class='seeding__text'>"+plant["Saison de Plantation"].split(",").map(function(color) {
-							return "<span class='seeding-season'>"+color+"</span>";
-						}).join(', ')+"</span>";
-					}
-					description += "</div>";
-					description += "<div class='flowering'>";
-					if(plant["Saison de Floraison"] != "") {
-						description += "<i class='material-icons' style='color: #666666; vertical-align: middle;'>nature</i><span class='flowering__text'>"+plant["Saison de Floraison"].split(",").map(function(color) {
-							return "<span class='flowering-season'>"+color+"</span>";
-						}).join(', ')+"</span>";
-					}
-					description += "</div>";
-					description += "<br>";
-
-                    child.innerHTML = description;
-                } else if (child.className == "galery__card__long-description") {
-					var description = "Nom latin: <span class='latin-name'>"+name+"</span>";
-					
-					description += "<br>Famille: "+plant["Famille"];
-					if(plant["Floraison couleur"] != "") {
-						description += "<br>Couleur de floraison : " + plant["Floraison couleur"].split(",").map(function(color) {
-							return "<span>"+color+"</span>";
+						var groundsList = plant["Sol"].split(',');
+						allGrounds = allGrounds.concat(groundsList);
+						description += groundsList.map(function (ground) {
+							return "<span class='ground'>" + ground + "</span>";
 						}).join(', ');
-					}
-					if(plant["Floraison Couleur Normalisé"] != "") {
-						description += plant["Floraison Couleur Normalisé"].split(",").map(function(color) {
-							return "<span class='flowering-color invisible'>"+color+"</span>";
-						}).join('');
-					}
-					if(plant["Feuillage"] != "") {
-						description += plant["Feuillage"].split(",").map(function(color) {
-							return "<span class='foliage invisible'>"+color+"</span>";
-						}).join('');
-					}
-					if(plant["Propriétés"].indexOf("mellifère") != -1) {
-						description += "<span class='melliferous invisible'>oui</span>";
-					}
-					if(plant["Hauteur Normalisé"] != "") {
-						description += plant["Hauteur Normalisé"].split(",").map(function(height) {
-							return "<span class='size invisible'>"+height+"</span>";
-						}).join('');
-					}
+						description += "<br>";
+						plant["Exposition"].split(',').forEach(function (exposition) {
+							if (exposition == "soleil") {
+								description += "<i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i>";
+							} else if (exposition == "mi-ombre") {
+								description += "<i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i>";
+							} else if (exposition == "ombre") {
+								description += "<i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i>";
+							}
+							description += " <span class='exposition'>" + exposition + "</span> ";
+						})
 
-					if(plant["Hauteur"] != "") {
-						description += "<br>Hauteur : " + plant["Hauteur"];
+						if (plant["Périodicité"] != "") {
+							description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i>Plante  <span class='periodicity'>" + plant["Périodicité"] + "</span>";
+
+						}
+						//description += "<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a>";
+						description += "<br>";
+						plant["Types de projet"].split(",").forEach(function (tag) {
+							description += "<span class='tag'>" + tag + "</span>";
+						})
+
+						description += "<div class='seeding'>";
+						if (plant["Saison de Plantation"] != "") {
+							description += "<i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i><span class='seeding__text'>" + plant["Saison de Plantation"].split(",").map(function (color) {
+								return "<span class='seeding-season'>" + color + "</span>";
+							}).join(', ') + "</span>";
+						}
+						description += "</div>";
+						description += "<div class='flowering'>";
+						if (plant["Saison de Floraison"] != "") {
+							description += "<i class='material-icons' style='color: #666666; vertical-align: middle;'>nature</i><span class='flowering__text'>" + plant["Saison de Floraison"].split(",").map(function (color) {
+								return "<span class='flowering-season'>" + color + "</span>";
+							}).join(', ') + "</span>";
+						}
+						description += "</div>";
+						description += "<br>";
+
+						child.innerHTML = description;
+					} else if (child.className == "galery__card__long-description") {
+						var description = "Nom latin: <span class='latin-name'>" + name + "</span>";
+
+						description += "<br>Famille: " + plant["Famille"];
+						if (plant["Floraison couleur"] != "") {
+							description += "<br>Couleur de floraison : " + plant["Floraison couleur"].split(",").map(function (color) {
+								return "<span>" + color + "</span>";
+							}).join(', ');
+						}
+						if (plant["Floraison Couleur Normalisé"] != "") {
+							description += plant["Floraison Couleur Normalisé"].split(",").map(function (color) {
+								return "<span class='flowering-color invisible'>" + color + "</span>";
+							}).join('');
+						}
+						if (plant["Feuillage"] != "") {
+							description += plant["Feuillage"].split(",").map(function (color) {
+								return "<span class='foliage invisible'>" + color + "</span>";
+							}).join('');
+						}
+						if (plant["Propriétés"].indexOf("mellifère") != -1) {
+							description += "<span class='melliferous invisible'>oui</span>";
+						}
+						if (plant["Hauteur Normalisé"] != "") {
+							description += plant["Hauteur Normalisé"].split(",").map(function (height) {
+								return "<span class='size invisible'>" + height + "</span>";
+							}).join('');
+						}
+
+						if (plant["Hauteur"] != "") {
+							description += "<br>Hauteur : " + plant["Hauteur"];
+						}
+						if (plant["Entretien"] != "") {
+							description += "<br>Entretien : " + plant["Entretien"];
+						}
+						if (plant["Multiplication"] != "") {
+							description += "<br>Multiplication : " + plant["Multiplication"];
+						}
+
+						description += "<br>Credit photo: <a href='" + plant["Wikipedia Page Url"] + "' target='_blank'>Wikipedia</a>"
+						child.innerHTML = description;
+					} else if (child.className == "bee") {
+						if (plant["Propriétés"].indexOf("mellifère") == -1) {
+							child.style.display = "None";
+						}
+					} else if (child.className == "save") {
+						if (favorites.indexOf(name) != -1) {
+							child.firstElementChild.innerText = "star";
+						}
 					}
-					if(plant["Entretien"] != "") {
-						description += "<br>Entretien : " + plant["Entretien"];
-					}
-					if(plant["Multiplication"] != "") {
-						description += "<br>Multiplication : " + plant["Multiplication"];
-					}
+				});
+				return newCard;
+			});
 
-					description +="<br>Credit photo: <a href='"+plant["Wikipedia Page Url"]+"' target='_blank'>Wikipedia</a>"
-                    child.innerHTML = description;
-				} else if (child.className == "bee") {
-					if (plant["Propriétés"].indexOf("mellifère") == -1) {
-						child.style.display = "None";
-					}
-				} else if (child.className == "save") {
-					if (favorites.indexOf(name) != -1) {
-						child.firstElementChild.innerText = "star";
-					}
-				}
-            });
-            return newCard;
-        });
+			/*
+			allGrounds = allGrounds.reduce((a, x) =>~a.indexOf(x) ? a : a.concat(x), []).sort();
+	
+	
+			var groundFilterHTML = "<b>Sol</b>: <label><input type='radio' name='ground' value='Tous' onclick='updateViewFromFilter()' checked='checked'>Pas de filtre</label>";
+			allGrounds.forEach(function(ground){
+				groundFilterHTML += "<label><input type='radio' name='ground' value='"+ground+"' onclick='updateViewFromFilter()'>"+ground+"</label>";
+			})
+			document.getElementById("filters__grounds").innerHTML = groundFilterHTML; */
 
-		/*
-		allGrounds = allGrounds.reduce((a, x) =>~a.indexOf(x) ? a : a.concat(x), []).sort();
+			var galery = document.getElementById("galery__container");
+			galery.removeChild(card);
+			newCards.forEach(function (plant) {
+				galery.appendChild(plant);
+			});
+			document.getElementById("tag_filter").classList.remove("invisible");
+		}
 
+		var request = new XMLHttpRequest();
+		request.open('GET', 'data/enhance-urban-plants.json', true);
 
-		var groundFilterHTML = "<b>Sol</b>: <label><input type='radio' name='ground' value='Tous' onclick='updateViewFromFilter()' checked='checked'>Pas de filtre</label>";
-		allGrounds.forEach(function(ground){
-			groundFilterHTML += "<label><input type='radio' name='ground' value='"+ground+"' onclick='updateViewFromFilter()'>"+ground+"</label>";
-		})
-		document.getElementById("filters__grounds").innerHTML = groundFilterHTML; */
+		request.onload = function () {
+			if (request.status >= 200 && request.status < 400) {
+				// Success!
+				var data = JSON.parse(request.responseText);
+				showPlants(data)
+			} else {
+				// We reached our target server, but it returned an error
 
-        var galery = document.getElementById("galery__container");
-        galery.removeChild(card);
-        newCards.forEach(function(plant){
-            galery.appendChild(plant);
-        });
-		document.getElementById("tag_filter").classList.remove("invisible");
-    }
+			}
+		};
+		request.send();
 
-    var request = new XMLHttpRequest();
-	request.open('GET', 'data/enhance-urban-plants.json', true);
-
-	request.onload = function() {
-	  if (request.status >= 200 && request.status < 400) {
-	    // Success!
-	    var data = JSON.parse(request.responseText);
-	    showPlants(data)
-	  } else {
-	    // We reached our target server, but it returned an error
-
-	  }
-	};
-	request.send();
-
-</script>
+	</script>
 </body>
+
+</html><!DOCTYPE html>
+<html>
+
+<head>
+	<title>Planter quoi ?</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+	<style type="text/css">
+		body,
+		html {
+			margin: 0px;
+			width: 100%;
+			height: 100%;
+			overflow-x: hidden;
+		}
+
+		.galery {
+			padding: 10px;
+			display: block;
+			min-height: 100%;
+			width: 100%;
+			background-color: #F3F3F3;
+			position: relative;
+			text-align: center;
+			box-sizing: border-box;
+		}
+
+		.galery__container {
+			width: 1860px;
+			text-align: left;
+			display: inline-block;
+		}
+
+		@media (max-width: 1860px) {
+			.galery__container {
+				width: 1240px;
+			}
+		}
+
+		@media (max-width: 1240px) {
+			.galery__container {
+				width: 620px;
+			}
+		}
+
+		.galery__card {
+			margin: 10px;
+			padding: 0px;
+			width: 600px;
+			height: 300px;
+			border-radius: 2px;
+			vertical-align: top;
+			background-color: white;
+			position: relative;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			font-family: "Helvetica", "Arial", sans-serif;
+			line-height: 1.5;
+			float: left;
+			overflow: hidden;
+		}
+
+		.galery__card--clickable {
+			cursor: pointer;
+		}
+
+		.galery__card__image {
+			position: relative;
+			background-repeat: no-repeat;
+			background-position: center top;
+			width: 300px;
+			height: 300px;
+			border-radius: 2px 2px 0px 0px;
+			float: left;
+			margin: 0px;
+			background-size: cover;
+		}
+
+		.galery__card__short-description,
+		.galery__card__long-description {
+			position: relative;
+			box-sizing: border-box;
+			float: left;
+			margin: 0px;
+			padding: 15px;
+			color: #555;
+			font-size: 15px;
+		}
+
+		.galery__card__short-description {
+			width: 300px;
+			height: 300px;
+		}
+
+		.galery__card__long-description {
+			position: absolute;
+			padding-top: 70px;
+			top: 0px;
+			left: 0px;
+			width: 300px;
+			height: 300px;
+			background-color: rgba(255, 255, 255, 0.9);
+		}
+
+
+		.galery__card__long-description {
+			visibility: hidden;
+		}
+
+		.galery__card:hover .galery__card__long-description {
+			visibility: visible;
+		}
+
+		@media (max-width: 600px) {
+			.galery__card {
+				width: 300px;
+				height: 600px;
+			}
+		}
+
+		.galery__card__bottom {
+			position: absolute;
+			bottom: 0px;
+			margin: 0px;
+			width: 100%;
+			font-weight: bold;
+			border-radius: 0px 0px 2px 2px;
+			left: 0px;
+			display: block;
+		}
+
+		.invisible {
+			display: none;
+		}
+
+		.tag {
+			background-color: grey;
+			padding: 6px;
+			color: white;
+			border-width: 0px;
+			margin: 3px;
+			line-height: 2.2;
+			width: 120px;
+		}
+
+		.tag-selected {
+			background-color: #22b573;
+		}
+
+		h1 {
+			font-size: 1.5em;
+			font-family: "Helvetica", "Arial", sans-serif;
+			margin: 0px;
+			color: white;
+		}
+
+		h2 {
+			font-size: 2em;
+			text-align: center;
+			font-family: "Helvetica", "Arial", sans-serif;
+			color: cadetblue;
+		}
+
+		h3 {
+			font-size: 1.5em;
+			margin-top: 0px;
+			margin-bottom: 14px;
+			line-height: 1.1;
+			max-width: 250px;
+			font-family: 'Open Sans', sans-serif;
+			text-align: center;
+		}
+
+		h4 {
+			font-size: 1em;
+			margin-top: 18px;
+			margin-bottom: 10px;
+			text-transform: uppercase;
+		}
+
+		.bee {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			background-color: #fbd53b;
+			width: 60px;
+			height: 60px;
+			margin: 10px;
+			-webkit-mask-image: url("img/icon_bee_transparent.svg");
+			-webkit-mask-repeat: no-repeat;
+		}
+
+		.seeding,
+		.flowering {
+			position: absolute;
+			bottom: 0px;
+			width: 50%;
+			height: 80px;
+			background-color: #e6e6e6;
+			padding: 12px;
+			box-sizing: border-box;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.seeding {
+			left: 0px;
+		}
+
+		.flowering {
+			right: 0px;
+		}
+
+		.seeding__text,
+		.flowering__text {
+			margin-left: 5px;
+		}
+
+		.header {
+			width: 100%;
+			background-color: #22b573;
+			margin: 0px;
+			padding: 20px;
+			box-sizing: border-box;
+			text-align: left;
+		}
+
+		.filters,
+		.types {
+			width: 100%;
+			background-color: #e4edd9;
+			box-sizing: border-box;
+		}
+
+		.filters {
+			padding: 20px;
+		}
+
+		.types {
+			min-height: 80%;
+			width: 100%;
+			margin: 0 auto;
+			padding: 10px;
+			text-align: center;
+		}
+
+		.save {
+			position: absolute;
+			top: 0px;
+			right: 0px;
+			color: black;
+			font-size: 30px;
+			margin: 10px;
+			text-align: center;
+			cursor: pointer;
+			vertical-align: middle;
+		}
+
+		.save i {
+			font-size: 30px;
+		}
+
+		.footer {
+			padding: 15px;
+			width: 100%;
+			background-color: grey;
+			color: #e6e6e6;
+			box-sizing: border-box;
+		}
+
+		.type {
+			height: 340px;
+			width: 270px;
+			display: inline-block;
+			padding: 0px;
+			margin: 10px;
+			text-align: center;
+			vertical-align: top;
+			text-align: left;
+			font-family: 'Open Sans', sans-serif;
+			color: #383838;
+			font-size: 0.9em;
+		}
+
+		.types__button {
+			height: 210px;
+			display: inline-block;
+			padding: 20px;
+			border-radius: 2px;
+			vertical-align: top;
+			background-color: cadetblue;
+			color: white;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			text-align: left;
+			cursor: pointer;
+		}
+
+		.types__button:hover {
+			background-color: #b2b2b2;
+		}
+
+		.types__button ul,
+		.types__button b {
+			visibility: hidden;
+		}
+
+		.types__button:hover ul,
+		.types__button:hover b {
+			visibility: visible;
+		}
+
+		.filter {
+			list-style-type: none;
+			display: inline-block;
+		}
+
+		.filter li {
+			display: block;
+			border: 1px solid black;
+			background-color: grey;
+			width: 100px;
+			margin: 0px;
+			text-align: center;
+			float: left;
+			color: white;
+			padding: 10px;
+			font-weight: bold;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			cursor: pointer;
+		}
+
+		.filter li:first-child {
+			border-radius: 10px 0px 0px 10px;
+		}
+
+		.filter li:last-child {
+			border-radius: 0px 10px 10px 0px;
+		}
+
+		.filter li:hover {
+			background-color: #b2b2b2;
+		}
+
+		.filter__selected {
+			background-color: black !important;
+		}
+
+		.selector {
+			width: 100%;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-flex-wrap: wrap;
+			flex-wrap: wrap;
+			margin-top: 5px;
+		}
+
+		.selector fieldset {
+			width: 100%;
+			padding: 20px;
+			padding-top: 0px;
+			margin-top: -1px;
+			padding: 1em;
+			border: 1px solid #ddd;
+			-webkit-order: 1;
+			order: 1;
+			background: #fff;
+		}
+
+		.selector>label {
+			background: #eee;
+			border: 1px solid #ddd;
+			padding: .7em 1em;
+			cursor: pointer;
+			z-index: 1;
+			margin-left: -1px;
+			font-weight: bold;
+			font-style: italic;
+		}
+
+		.selector>label:first-of-type {
+			margin-left: 2px;
+		}
+
+		.selector input[type=radio]:checked + label {
+			background: #fff;
+			border-bottom: 1px solid #fff;
+		}
+
+		.selector input[type=radio],
+		.selector fieldset {
+			display: none;
+		}
+
+		.selector input[type=radio]:checked + label + fieldset {
+			display: block;
+		}
+
+		.filter__color {
+			width: 15px;
+			height: 15px;
+			display: inline-block;
+			border-radius: 50%;
+		}
+
+		#tag_filter {
+			padding-left: 40px;
+		}
+	</style>
+
+</head>
+
+<body>
+	<div class="header">
+		<h1><i class="fa fa-leaf" aria-hidden="true"></i> Plante Et Moi</h1>
+	</div>
+	<div class="types" id="types">
+		<h2>Planter quoi avec mon permis de végétaliser à Paris ?</h2>
+		<div class="type">
+			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+				<h3>Trottoirs</h3>
+				<img src="http://demo.plante-et-moi.fr/arles/img/jardiniere.jpg" style="width: 100%;" />
+			</div>
+			<p style="display: inline-block;">Trottoir large et placette avec jardinières, bacs ou pots posés sur le sol.<br>
+			</p>
+		</div>
+		<div class="type">
+			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+				<h3>Mobilier urbain</h3>
+				<img src="http://demo.plante-et-moi.fr/arles/img/rue_vegetalisee_1.jpg" style="width: 100%;" />
+			</div>
+			<p>
+				Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.<br>
+			</p>
+		</div>
+		<div class="type">
+			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+				<h3>Façades et murets</h3>
+				<img src="http://demo.plante-et-moi.fr/dijon/img/pied%20de%20mur.JPG" style="width: 100%;" />
+			</div>
+			<p>
+				Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité).<br>
+			</p>
+		</div>
+		<div class="type">
+			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+				<h3>Pieds d'arbres</h3>
+				<img src="http://demo.plante-et-moi.fr/dijon/img/tour%20d'arbres.JPG" style="width: 100%;" />
+			</div>
+			<p>
+				Culture en pleine terre sur le pourtour existant d'un arbre de rue.<br>
+			</p>
+		</div>
+	</div>
+	<div class="filters invisible" id="filters">
+		<div id="tag_filter">
+			<b>Type de projet</b>
+			<button class="tag tag-selected" onclick="filterPlantsByTag(this.innerText)">Tous</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Façades et murets</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
+		</div>
+		<div class="selector">
+			<input id="tab1" type="radio" name="current-tab" checked="checked">
+			<label for="tab1">Environnement</label>
+			<fieldset>
+				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>wb_sunny</i> Ensoleillement</h4>
+				<label><input type="checkbox" value="soleil" name="exposition"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> soleil</label>
+				<label><input type="checkbox" value="mi-ombre" name="exposition"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> mi-ombre</label>
+				<label><input type="checkbox" value="ombre" name="exposition"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> ombre</label>
+			</fieldset>
+
+			<input id="tab2" type="radio" name="current-tab">
+			<label for="tab2">Aspect de la plante</label>
+			<fieldset>
+				<h4><i class="fa fa-asterisk" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Couleur des fleurs</h4>
+				<label><input type="checkbox" name="flowering-color" value="bleu"><div class="filter__color" style="background-color: blue"></div>Bleu</label>
+				<label><input type="checkbox" name="flowering-color" value="rouge"><div class="filter__color" style="background-color: red"></div>Rouge</label>
+				<label><input type="checkbox" name="flowering-color" value="blanc"><div class="filter__color" style="background-color: white"></div>Blanc</label>
+				<label><input type="checkbox" name="flowering-color" value="rose"><div class="filter__color" style="background-color: pink"></div>Rose</label>
+				<label><input type="checkbox" name="flowering-color" value="violet"><div class="filter__color" style="background-color: purple"></div>Violet</label>
+				<label><input type="checkbox" name="flowering-color" value="jaune"><div class="filter__color" style="background-color: yellow"></div>Jaune</label>
+				<label><input type="checkbox" name="flowering-color" value="orange"><div class="filter__color" style="background-color: orange"></div>Orange</label>
+
+				<h4><i class="fa fa-sort" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Taille de la plante</h4>
+				<label><input type="checkbox" name="size" value="Moins de 50 cm">Moins de 50 cm</label>
+				<label><input type="checkbox" name="size" value="Entre 50 cm et 80 cm">Entre 50 cm et 80 cm</label>
+				<label><input type="checkbox" name="size" value="Plus de 80 cm">Plus de 80 cm</label>
+
+				<h4><i class="fa fa-leaf" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Feuillage</h4>
+				<label><input type="checkbox" name="foliage" value="persistant">Persistant</label>
+				<label><input type="checkbox" name="foliage" value="semi-persistant">Semi-persistant</label>
+			</fieldset>
+			<input id="tab3" type="radio" name="current-tab">
+			<label for="tab3">Calendrier de la plante</label>
+			<fieldset>
+				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i> Période de plantation</h4>
+				<label><input type="checkbox" name="seeding-season" value="printemps">Printemps</label>
+				<label><input type="checkbox" name="seeding-season" value="été">Été</label>
+				<label><input type="checkbox" name="seeding-season" value="automne">Automne</label>
+				<label><input type="checkbox" name="seeding-season" value="hiver">Hiver</label>
+				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>nature</i> Période de floraison</h4>
+				<label><input type="checkbox" name="flowering-season" value="printemps">Printemps</label>
+				<label><input type="checkbox" name="flowering-season" value="été">Été</label>
+				<label><input type="checkbox" name="flowering-season" value="automne">Automne</label>
+				<label><input type="checkbox" name="flowering-season" value="hiver">Hiver</label>
+				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Périodicité</h4>
+				<label><input type="checkbox" name="periodicity" value="vivace">Vivace</label>
+				<label><input type="checkbox" name="periodicity" value="annuelle">Annuelle</label>
+				<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
+			</fieldset>
+			<input id="tab4" type="radio" name="current-tab">
+			<label for="tab4">Mellifère</label>
+			<fieldset>
+				<h4><i class="fa fa-bug" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Abeille-Friendly</h4>
+				<label><input type="checkbox" name="melliferous" value="oui">Bzzzz ! Bzzzz !</label>
+			</fieldset>
+		</div>
+	</div>
+	<div class="galery invisible" id="galery">
+		<h3 class="galery__title"><span class="result-count"></span> resultats</h3>
+		<hr>
+		<div class="galery__container" id="galery__container">
+			<div class="galery__card" id="item">
+				<div class="galery__card__image"></div>
+				<p class="galery__card__short-description"></p>
+				<p class="galery__card__long-description">Credit photo: Wikipedia</p>
+				<div class="bee"></div>
+				<p class="save" onclick="favorite(this);"><i class='material-icons'>star_border</i></p>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+		Crédit photos : wikipedia/wikimedia<br> Crédit icone d'abeille : bee par alican de the Noun Project<br> Donnée de plantes
+		fournit par la Mairie de Paris<br><br> Créé par Plante Et Moi : <a href="https://beta.gouv.fr/startup/biodiversite.html">https://beta.gouv.fr/startup/biodiversite.html</a><br>
+	</div>
+
+
+	<script src="https://cdn.rawgit.com/madmurphy/cookies.js/c2eba5d7/cookies.js"></script>
+	<script>
+		var favorites = [];
+		var data = docCookies.getItem("favorites");
+		if (data != "" && data != null) {
+			favorites = data.split(",")
+		}
+
+
+		Array.from(document.querySelectorAll(".filters input")).forEach(function (elem) {
+			elem.addEventListener("click", function (event) {
+				updateViewFromFilter();
+			});
+		});
+
+		function favorite(saveNode) {
+			var name = saveNode.parentNode.getElementsByTagName("h4")[0].innerText;
+			if (saveNode.firstElementChild.innerText == "star") {
+				saveNode.firstElementChild.innerText = "star_border";
+				favorites.splice(favorites.indexOf(name), 1);
+			} else {
+				saveNode.firstElementChild.innerText = "star";
+				favorites.push(name);
+			}
+			docCookies.setItem("favorites", favorites.join(), 86400);
+		}
+
+		function filterPlantsByTag(filter, type) {
+			Array.from(document.getElementById("tag_filter").getElementsByClassName("tag"))
+				.forEach(function (tag) {
+					if (tag.innerText == filter) {
+						tag.classList.add("tag-selected");
+					} else {
+						tag.classList.remove("tag-selected");
+					}
+				})
+			updateViewFromFilter();
+			document.getElementById("types").classList.add("invisible");
+			document.getElementById("galery").classList.remove("invisible");
+			document.getElementById("filters").classList.remove("invisible");
+		}
+
+		function updateViewFromFilter() {
+			var filters = ["exposition", "flowering-color", "size", "foliage", "seeding-season", "flowering-season", "periodicity", "melliferous"].map(function (name) {
+				return {
+					name: name,
+					values: Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function (e) { return e.value })
+				};
+			});
+			filters.push({
+				name: "tag",
+				values: [document.querySelector('#tag_filter .tag-selected').innerText]
+			});
+
+			var count = 0;
+			Array.from(document.getElementsByClassName("galery__card"))
+				.forEach(function (plant) {
+					if (filters.reduce(function (acc, filter) {
+						return acc && matchFilter(plant, filter);
+					}, true)) {
+						plant.classList.remove("invisible");
+						count++;
+					} else {
+						plant.classList.add("invisible");
+					}
+				})
+			Array.from(document.getElementsByClassName("result-count")).forEach(function (elem) {
+				elem.innerText = count;
+			});
+		}
+
+		function matchFilter(plant, filter) {
+			if (filter.values[0] == "Tous" ||  filter.values == false) {
+				return true;
+			}
+			return Array.from(plant.getElementsByClassName(filter.name)).reduce(function (acc, elem) {
+				return acc || filter.values.indexOf(elem.innerText) != -1;
+			}, false);
+		}
+
+		function showPlants(plants) {
+			var allGrounds = [];
+			var card = document.getElementById("item");
+			var newCards = plants.map(function (plant) {
+				var newCard = card.cloneNode(true);
+				Array.from(newCard.children).forEach(function (child) {
+					var name = plant["Genre"] + " " + plant["Espèce"];
+					if (child.className == "galery__card__image") {
+						child.style.backgroundImage = "url('" + plant["Wikipedia Thumb Url"] + "')";
+					} else if (child.className == "galery__card__short-description") {
+						var description = "<h3>" + plant["Nom vernaculaire"] + "</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
+
+						var groundsList = plant["Sol"].split(',');
+						allGrounds = allGrounds.concat(groundsList);
+						description += groundsList.map(function (ground) {
+							return "<span class='ground'>" + ground + "</span>";
+						}).join(', ');
+						description += "<br>";
+						plant["Exposition"].split(',').forEach(function (exposition) {
+							if (exposition == "soleil") {
+								description += "<i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i>";
+							} else if (exposition == "mi-ombre") {
+								description += "<i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i>";
+							} else if (exposition == "ombre") {
+								description += "<i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i>";
+							}
+							description += " <span class='exposition'>" + exposition + "</span> ";
+						})
+
+						if (plant["Périodicité"] != "") {
+							description += "<br><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i>Plante  <span class='periodicity'>" + plant["Périodicité"] + "</span>";
+
+						}
+						//description += "<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a>";
+						description += "<br>";
+						plant["Types de projet"].split(",").forEach(function (tag) {
+							description += "<span class='tag'>" + tag + "</span>";
+						})
+
+						description += "<div class='seeding'>";
+						if (plant["Saison de Plantation"] != "") {
+							description += "<i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i><span class='seeding__text'>" + plant["Saison de Plantation"].split(",").map(function (color) {
+								return "<span class='seeding-season'>" + color + "</span>";
+							}).join(', ') + "</span>";
+						}
+						description += "</div>";
+						description += "<div class='flowering'>";
+						if (plant["Saison de Floraison"] != "") {
+							description += "<i class='material-icons' style='color: #666666; vertical-align: middle;'>nature</i><span class='flowering__text'>" + plant["Saison de Floraison"].split(",").map(function (color) {
+								return "<span class='flowering-season'>" + color + "</span>";
+							}).join(', ') + "</span>";
+						}
+						description += "</div>";
+						description += "<br>";
+
+						child.innerHTML = description;
+					} else if (child.className == "galery__card__long-description") {
+						var description = "Nom latin: <span class='latin-name'>" + name + "</span>";
+
+						description += "<br>Famille: " + plant["Famille"];
+						if (plant["Floraison couleur"] != "") {
+							description += "<br>Couleur de floraison : " + plant["Floraison couleur"].split(",").map(function (color) {
+								return "<span>" + color + "</span>";
+							}).join(', ');
+						}
+						if (plant["Floraison Couleur Normalisé"] != "") {
+							description += plant["Floraison Couleur Normalisé"].split(",").map(function (color) {
+								return "<span class='flowering-color invisible'>" + color + "</span>";
+							}).join('');
+						}
+						if (plant["Feuillage"] != "") {
+							description += plant["Feuillage"].split(",").map(function (color) {
+								return "<span class='foliage invisible'>" + color + "</span>";
+							}).join('');
+						}
+						if (plant["Propriétés"].indexOf("mellifère") != -1) {
+							description += "<span class='melliferous invisible'>oui</span>";
+						}
+						if (plant["Hauteur Normalisé"] != "") {
+							description += plant["Hauteur Normalisé"].split(",").map(function (height) {
+								return "<span class='size invisible'>" + height + "</span>";
+							}).join('');
+						}
+
+						if (plant["Hauteur"] != "") {
+							description += "<br>Hauteur : " + plant["Hauteur"];
+						}
+						if (plant["Entretien"] != "") {
+							description += "<br>Entretien : " + plant["Entretien"];
+						}
+						if (plant["Multiplication"] != "") {
+							description += "<br>Multiplication : " + plant["Multiplication"];
+						}
+
+						description += "<br>Credit photo: <a href='" + plant["Wikipedia Page Url"] + "' target='_blank'>Wikipedia</a>"
+						child.innerHTML = description;
+					} else if (child.className == "bee") {
+						if (plant["Propriétés"].indexOf("mellifère") == -1) {
+							child.style.display = "None";
+						}
+					} else if (child.className == "save") {
+						if (favorites.indexOf(name) != -1) {
+							child.firstElementChild.innerText = "star";
+						}
+					}
+				});
+				return newCard;
+			});
+
+			/*
+			allGrounds = allGrounds.reduce((a, x) =>~a.indexOf(x) ? a : a.concat(x), []).sort();
+	
+	
+			var groundFilterHTML = "<b>Sol</b>: <label><input type='radio' name='ground' value='Tous' onclick='updateViewFromFilter()' checked='checked'>Pas de filtre</label>";
+			allGrounds.forEach(function(ground){
+				groundFilterHTML += "<label><input type='radio' name='ground' value='"+ground+"' onclick='updateViewFromFilter()'>"+ground+"</label>";
+			})
+			document.getElementById("filters__grounds").innerHTML = groundFilterHTML; */
+
+			var galery = document.getElementById("galery__container");
+			galery.removeChild(card);
+			newCards.forEach(function (plant) {
+				galery.appendChild(plant);
+			});
+			document.getElementById("tag_filter").classList.remove("invisible");
+		}
+
+		var request = new XMLHttpRequest();
+		request.open('GET', 'data/enhance-urban-plants.json', true);
+
+		request.onload = function () {
+			if (request.status >= 200 && request.status < 400) {
+				// Success!
+				var data = JSON.parse(request.responseText);
+				showPlants(data)
+			} else {
+				// We reached our target server, but it returned an error
+
+			}
+		};
+		request.send();
+
+	</script>
+</body>
+
 </html>
