@@ -1,0 +1,175 @@
+.autocomplete-suggestion {
+    font-size: 25px;
+    line-height: 40px;
+}
+
+.header__ribbon {
+    text-align: center;
+    text-transform: uppercase;
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    width: 100px;
+    background-color: #008cba;
+    color: #fff;
+    padding: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    z-index: 10;
+}
+
+.steps {
+    height: 52px;
+    width: 100%;
+    overflow: hidden;
+}
+.step {
+    box-sizing:border-box;
+    height: 100%;
+    position: relative;
+    float: left;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: default;
+}
+.steps--3-col .step {
+    width: 33.33%;
+}
+
+.steps--2-col .step {
+    width: 50%;
+}
+
+.step--arrow:after {
+    content: '';
+    position: absolute;
+    top: 0; 
+    right: -25px; /*half of square's length*/
+    width: 50px; 
+    height: 50px;
+    transform: scale(0.707) rotate(45deg);
+    /*we need to prevent the arrows from getting buried under the next link*/
+    z-index: 1;
+    /*background same as links but the gradient will be rotated to compensate with the transform applied*/
+    background: #666;
+        /*stylish arrow design using box shadow*/
+    box-shadow: 
+            2px -2px 0 2px rgba(0, 0, 0, 0.4), 
+            3px -3px 0 2px rgba(255, 255, 255, 0.1);
+        /*
+            5px - for rounded arrows and 
+            50px - to prevent hover glitches on the border created using shadows*/
+    border-radius: 0 5px 0 50px;
+}
+
+.step--previous, .step--previous.step--arrow:after {
+    background-color: #3FA435;
+}
+
+.step--previous .step__number {
+    color: #3FA435;
+}
+
+
+.step--previous:hover, .step--previous.step--arrow:hover:after {
+    background-color: #26831C;
+    cursor: pointer;
+}
+
+.step--previous:hover .step__number {
+    color: #26831C;
+}
+
+.step--current, .step--current.step--arrow:after {
+    background-color: #26831C;
+}
+
+.step--current .step__number {
+    color: #26831C;
+}
+
+.step--disable, .step--disable.step--arrow:after  {
+    background-color: #adadbb;
+}
+
+.step--disable .step__number {
+    color: #adadbb;
+}
+
+.step__number {
+    display: block;
+    background-color: white;
+    width: 30px;
+    height: 25px;
+    border-radius: 15px;
+    font-weight: bold;
+    margin: 0px 10px;
+    padding-top: 5px;
+    line-height: 1;
+}
+
+@media (max-width: 900px) {
+    .step {
+        font-size: 15px;
+        padding: 20px;
+     }
+    .step__number {
+        height: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .step__number {
+        display: none;
+    }
+}
+
+.button {
+    border-radius:3px;
+    border:1px solid black;
+    display:inline-block;
+    cursor:pointer;
+    color:#ffffff;
+    font-size:25px;
+    font-weight: bold;
+    padding: 5px 20px;
+    text-decoration:none;
+    letter-spacing: 0.2px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    transition: none 200ms ease-out;		
+    transition-property: color, background;
+}
+.button {
+    position:relative;
+    top:1px;
+}
+
+.button--shadow {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+}
+
+.button--green {
+    background-color: #3fa435;
+    color: rgb(255, 255, 255) !important;
+    border-color: rgba(247, 221, 92, 0);
+}
+
+.button--green:hover {
+    background-color: #008cba;
+}
+
+.button--card-bottom {
+    width: 100%;
+    padding: 10px;
+	box-sizing: border-box;
+    border-radius: 0px 0px 2px 2px !important;
+}

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Biodiversité citoyenne | Ville d'Amiens</title>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
+	<link rel="stylesheet" href="https://opensource.keycdn.com/fontawesome/4.7.0/font-awesome.min.css" integrity="sha384-dNpIIXE8U05kAbPhy3G1cz+yZmTzA6CY8Vg/u2L9xRnHjJiAK76m2BIEaSEV+/aU"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.css">
+	<link href="https://fonts.googleapis.com/css?family=Dosis:600|Raleway|Playfair+Display" rel="stylesheet">
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/main.css" />
+
+	<script src="https://cdn.rawgit.com/lvoogdt/Leaflet.awesome-markers/v2.0.2/dist/leaflet.awesome-markers.js"></script>
+
+	<style type="text/css">
+		html,
+		body {
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			height: 100%;
+			overflow-x: hidden;
+		}
+
+		.form {
+			padding: 1px 0px;
+			border: 1px solid #d8d8d8;
+		}
+
+		.form--invisible {
+			display: none;
+		}
+
+		.form__title {
+			padding: 1px 5%;
+			color: #0C518A;
+		}
+
+		.form__typeform {
+			width: 100%;
+			height: 600px;
+			display: inline-block;
+			border-width: 0px;
+		}
+
+		.main__title {
+			color: #0C518A;
+		}
+
+
+		.main__title--invisible {
+			display: none !important;
+		}
+
+		.map-container {
+			position: relative;
+			width: 100%;
+			height: 300px;
+			height: 80vh;
+			padding: 20px;
+			text-align: center;
+			box-sizing: border-box;
+			border: 1px solid #d8d8d8;
+		}
+
+		.map-container--invisible {
+			display: none;
+		}
+
+		.map__leaflet {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+
+		.map__protip {
+			position: absolute;
+			bottom: 20px;
+			left: 50%;
+		}
+
+		.map__protip__title {
+			position: relative;
+			padding: 0px 12px 0px 12px;
+			left: -50%;
+			display: block;
+			font-size: 25px;
+			border-radius: 25px;
+			color: white;
+			background: rgba(0, 0, 0, 0.5);
+		}
+
+		.map__input {
+			position: absolute;
+			width: 400px;
+			max-width: 75%;
+			padding: 4px 10px;
+			margin: 5px;
+			font-size: 25px;
+		}
+
+		.map__legend {
+			font-size: 18px;
+			font-weight: bold;
+		}
+
+		.address-search {
+			top: 5px;
+			left: 40px;
+		}
+
+		.popup--green .leaflet-popup-content-wrapper {
+			background-color: rgba(0, 0, 0, 0.55);
+		}
+
+		.popup--green .leaflet-popup-tip {
+			background-color: rgba(0, 0, 0, 0.55);
+		}
+
+		.galery {
+			margin: 0 auto;
+			padding-top: 10px;
+			padding-bottom: 15px;
+			display: block;
+			min-height: 100%;
+			width: 100%;
+			position: relative;
+			text-align: center;
+			border: 1px solid #d8d8d8;
+		}
+
+		.galery--invisible {
+			display: none;
+		}
+
+		.galery__card {
+			margin: 10px;
+			padding: 0px;
+			max-width: 90%;
+			width: 350px;
+			height: 525px;
+			border-radius: 2px;
+			display: inline-block;
+			vertical-align: top;
+			background-color: white;
+			position: relative;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+			cursor: pointer;
+		}
+
+		.galery__card:hover {
+			opacity: 0.8;
+		}
+
+		.galery__card__image {
+			position: relative;
+			display: inline-block;
+			width: 100%;
+			height: 300px;
+			border-radius: 2px 2px 0px 0px;
+		}
+
+		.galery__card__title {
+			position: relative;
+			display: block;
+			height: 70px;
+			width: 100%;
+			top: -74px;
+			margin: 0px;
+			text-align: center;
+			font-weight: bold;
+			color: white;
+			background: rgba(0, 0, 0, 0.55);
+			line-height: 1.3;
+			box-sizing: border-box;
+			padding-top: 3px;
+		}
+
+		.galery__card__description {
+			position: relative;
+			display: inline-block;
+			margin: 20px 10px 10px 10px;
+			padding: 0px;
+			text-align: center;
+			top: -80px;
+			color: #555;
+			font-size: 1.2em;
+		}
+
+		.galery__card__bottom {
+			position: absolute;
+			bottom: 0px;
+			margin: 0px;
+			width: 100%;
+			font-weight: bold;
+			border-radius: 0px 0px 2px 2px;
+			left: 0px;
+			display: block;
+		}
+
+		.galery__card__bottom--button {
+			letter-spacing: 0.2px;
+			font-weight: bold;
+			background-color: seagreen;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			padding: 16px 0px;
+			color: white;
+			border-color: black;
+		}
+
+		.galery__card__bottom--button:hover {
+			background-color: green;
+		}
+
+		.icon {
+			position: relative;
+			width: 26px;
+			height: 26px;
+			text-align: center;
+			display: inline-block;
+			margin: 0;
+			vertical-align: middle;
+		}
+
+		.icon--circle {
+			border-radius: 50%;
+		}
+
+		.icon--green {
+			background-color: #72af26;
+		}
+
+		.icon--blue {
+			background-color: #38aadd;
+		}
+
+		.icon__symbol {
+			color: #fff;
+			margin-top: 4px;
+			display: inline-block;
+			font-size: 12px;
+			position: absolute;
+			top: 7px;
+			left: 0px;
+			right: 0px;
+			margin: auto;
+		}
+
+		.leaflet-grab {
+			cursor: pointer;
+		}
+
+		.cube {
+			display: inline-block;
+			height: 160px;
+			min-width: 300px;
+			width: 42%;
+			text-align: center;
+			box-sizing: border-box;
+			margin: 30px;
+			vertical-align: top;
+		}
+
+		.cta {
+			text-align: center;
+			width: 100%;
+			background-color: #F8E273;
+			min-height: 60px;
+		}
+
+		.cta__link {
+			display: block;
+			font-size: 40px;
+			max-width: 950px;
+			margin: auto;
+			;
+			background-color: #F8E273;
+			color: #DF225A;
+		}
+
+		.cta__link:hover {
+			background-color: #DF225A;
+			color: #F8E273;
+		}
+
+		.cta__link:link {
+			text-decoration: none;
+		}
+
+		.search {
+			display: inline-block;
+			vertical-align: middle;
+			border-radius: 2px;
+			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+		}
+
+		.search__input {
+			margin: 0px;
+			padding: 10px;
+			width: 400px;
+			height: 50px;
+			font-size: 25px;
+			border-width: 0px;
+			border-radius: 2px 2px 0px 2px;
+			float: left;
+			box-sizing: border-box;
+		}
+
+		.search__button {
+			margin: 0px;
+			letter-spacing: 0.2px;
+			font-weight: bold;
+			background-color: green;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			padding: 16px 0px;
+			color: white;
+			font-weight: bold;
+			border-radius: 0px 2px 2px 0px;
+			width: 100px;
+			height: 50px;
+			border-width: 0px;
+			float: left;
+		}
+
+		.search__button:hover {
+			background-color: seagreen;
+		}
+
+		.header-application {
+			padding: 0px;
+			margin: 0 auto;
+			display: block;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.header__image {
+			height: auto;
+			width: 60px;
+			box-sizing: border-box;
+			margin: 10px;
+		}
+		.main {
+			position: relative;
+			margin-bottom: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="header-application">
+
+		<div class="centered">
+			<a href="."><img src="img/logo-nature-en-ville.jpg" class="header__image"></a>
+		</div>
+	</div>
+	<div class="main">
+		<div class="centered">
+			<div class="steps steps--3-col">
+				<div class="step step--current step--arrow" id="step-place" onclick="choosePlace()">
+					<span class="step__number">1</span> Choisir un lieu
+				</div>
+				<div class="step step--disable step--arrow" id="step-project" onclick="chooseProject()">
+					<span class="step__number">2</span> Choisir un projet
+				</div>
+				<div class="step step--disable" id="step-application">
+					<span class="step__number">3</span> Faire une demande
+				</div>
+			</div>
+			<div class="map-container" id="map-container">
+				<div class="map__leaflet" id="map">
+					<!-- <input type="text" id="address-search" name="address-search" placeholder="Rechercher une adresse" class="address-search map__input leaflet-bar leaflet-control">
+			-->
+					<div class="map__protip leaflet-control">
+						<h1 id="selectAddressProTip" class="map__protip__title">Déplacer le repère sur l'endroit à végétaliser</h1>
+					</div>
+				</div>
+			</div>
+			<div class="galery galery--invisible" id="projectList">
+				<div class="galery__card" onclick="launchForm('projet de jardinières existantes et pieds d\'arbres');">
+					<img class="galery__card__image" src="img/pied_arbre.jpg" />
+					<h2 class="galery__card__title">Jardinières existantes et pieds d'arbres</h2>
+					<p class="galery__card__description" style="top: -40px;">Adoptez une jardinière ou un pied d'arbre actuellement entretenus par la Ville '
+					</p>
+					<div class="galery__card__bottom">
+						<a class="button button--green button--card-bottom">Je demande mon permis</a>
+					</div>
+				</div>
+				<div class="galery__card" onclick="launchForm('projet de créer une jardinière');">
+					<img class="galery__card__image" src="img/creer_jardiniere.jpg" />
+					<h2 class="galery__card__title" style="padding-top: 18px;">Créer une jardinière</h2>
+					<p class="galery__card__description">En terre cuite, bois, contenants de récupération… Vous avez le choix mais n’oubliez pas que votre contenant sera installé
+						sur la voie publique. Il doit être stable et ne pas représenter de danger pour les passants.
+					</p>
+					<div class="galery__card__bottom">
+						<a class="button button--green button--card-bottom">Je demande mon permis</a>
+					</div>
+				</div>
+				<div class="galery__card" onclick="launchForm('projet de personnaliser un bout de nos espaces verts');">
+					<img class="galery__card__image" src="img/espace_verts.jpg" />
+					<h2 class="galery__card__title">Personnaliser un bout de nos espaces verts</h2>
+					<p class="galery__card__description" style="top: -30px;">Définissons ensemble l’espace pour votre projet
+					</p>
+					<div class="galery__card__bottom">
+						<a class="button button--green button--card-bottom">Je demande mon permis</a>
+					</div>
+				</div>
+				<div class="galery__card" onclick="launchForm('autre projet');">
+					<img class="galery__card__image" src="img/autre-projet.jpg" />
+					<h2 class="galery__card__title" style="padding-top: 18px;">Autre projet</h2>
+					<p class="galery__card__description" style="top: -30px;">Une autre idée ? Partagez-la avec nous …
+					</p>
+					<div class="galery__card__bottom">
+						<a class="button button--green button--card-bottom">Je demande mon permis</a>
+					</div>
+				</div>
+			</div>
+			<div class="form form--invisible" id="permit__form">
+				<iframe id="typeform" class="form__typeform"></iframe>
+			</div>
+		</div>
+	</div>
+
+	<div class="footer">
+		<div class="centered">
+			<h2 class="footer__title">Contactez-nous</h2>
+			<div class="footer__description">
+				Service des Espaces Verts<br> Amiens Métropole<br> BP 2720<br>80027 Amiens CEDEX<br>
+				<strong>Tél : </strong>03 22 97 40 40 / <strong><br>Fax : </strong>03 22 97 42 53<br>
+				<a href="mailto:biodiversite@beta.gouv.fr">Nous contacter par mail</a> <br>
+				<a href="http://www.amiens.fr"><b>www.amiens.fr</b></a>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/config.js"></script>
+	<script src="js/common.js"></script>
+	<script>
+		var selectedPoint;
+		var selectedPointPopup;
+		var selectedAddress;
+		var codePostaux = [];
+		var map = L.map('map', {
+			zoom: 13,
+			minZoom: 11
+		});
+
+		function onCityGeoDataLoaded() {
+			var polygon = L.geoJson(contour, {
+				color: '#0C518A',
+				fill: false
+			}).addTo(map)
+			var bounds = polygon.getBounds();
+			map.setMaxBounds(bounds.pad(0.05));
+			//map.flyTo(center, 12);
+		}
+
+		var photoLayer = L.tileLayer('https://wxs.ign.fr/aux4oyb491ew3s7eqahym3ps/wmts/?SERVICE=WMTS&REQUEST=GetTile&VERSION=1.0.0&LAYER=ORTHOIMAGERY.ORTHOPHOTOS&STYLE=normal&TILEMATRIXSET=PM&TILEMATRIX={z}&TILEROW={y}&TILECOL={x}&FORMAT=image%2Fjpeg', {
+			attribution: "&copy; <a href='http://www.ign.fr'>IGN</a>",
+			minZoom: 10,
+			maxZoom: 19
+		});
+		photoLayer.addTo(map);
+
+		var mapLayer = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoianVsaWVucGxhbnRlIiwiYSI6ImNpdzNiNzAwajAwMGUyem1vMXF5dDhraXQifQ.uARDuDENWMGtj67c36-qoQ', {
+			attribution: "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+			minZoom: 10,
+			maxZoom: 20
+		});
+
+		var baseMaps = {
+			'<span class="map__legend">Photo aérienne</span>': photoLayer,
+			'<span class="map__legend">Carte</span>': mapLayer
+		};
+		var layerControl = L.control.layers(baseMaps, null, ({ collapsed: false }));
+		layerControl.addTo(map);
+
+		var moveMarker = L.AwesomeMarkers.icon({
+			icon: 'circle',
+			markerColor: 'blue',
+			prefix: 'fa'
+		});
+
+
+		function show(itemID) {
+			var itemDom = document.getElementById(itemID);
+			itemDom.classList.remove(itemID + '--invisible');
+			itemDom.scrollIntoView();
+		}
+
+		function sendReverseGeocodeRequest(latlng, response) {
+			try { requestReverseGeocode.abort(); } catch (e) { }
+			requestReverseGeocode = new XMLHttpRequest();
+			requestReverseGeocode.open('GET', 'https://api-adresse.data.gouv.fr/reverse/?type=housenumber&lon=' + latlng.lng + '&lat=' + latlng.lat, true);
+			requestReverseGeocode.onload = function () {
+				if (requestReverseGeocode.status >= 200 && requestReverseGeocode.status < 400) {
+					// Success!
+					var data = JSON.parse(requestReverseGeocode.responseText);
+					var features = data["features"];
+					response(data["features"]);
+				} else {
+					response([]);
+				}
+			};
+			requestReverseGeocode.send();
+		}
+
+		var requestReverseGeocode;
+
+		function reverseGeocodeAdress(latlng, onCompleted) {
+			coord = latlng;
+			sendReverseGeocodeRequest(latlng, function (features) {
+				onCompleted(features[0]["properties"]["label"]);
+			})
+		}
+
+		function selectPoint(latlng, address) {
+			try { map.removeLayer(selectedPoint); } catch (e) { }
+			selectedPoint = L.marker(latlng, {
+				draggable: true,
+				clickable: false,
+				icon: moveMarker
+			})
+				.addTo(map)
+			function manageResult(address) {
+				selectedAddress = address;
+				selectedPoint.bindPopup('<div style="text-align: center; font-size: 16px; font-weight: bold; color: white;">' + selectedAddress + '<a href="javascript:chooseProject();" class="button button--green">Choisir mon projet</a></div>',
+					{ autoClose: false, closeButton: false, className: 'popup--green' })
+					.openPopup();
+			}
+			selectedPoint.on('move', function (e) {
+				selectedPoint.closePopup();
+				reverseGeocodeAdress(e.latlng, manageResult);
+			})
+
+			if (address == undefined) {
+				selectedAddress = 'adresse introuvable';
+				reverseGeocodeAdress(latlng, manageResult);
+			} else {
+				selectedAddress = address;
+				manageResult(address);
+			}
+
+		}
+
+
+		map.on('click', function (e) {
+			selectPoint(e.latlng);
+		});
+
+
+		var request = new XMLHttpRequest();
+		request.open('GET', 'https://geo.api.gouv.fr/communes?fields=code,nom,codesPostaux,centre,contour&nom=' + city, true);
+
+		request.onload = function () {
+			if (request.status >= 200 && request.status < 400) {
+				// Success!
+				var data = JSON.parse(request.responseText);
+				var polygon = L.geoJson(data[0]["contour"], {
+					color: '#0C518A',
+					fill: false
+				}).addTo(map)
+				var bounds = polygon.getBounds();
+				map.setMaxBounds(bounds.pad(0.05));
+				codePostaux = data[0]["codesPostaux"];
+			} else {
+				// We reached our target server, but it returned an error
+
+			}
+		};
+		request.send();
+
+		var projectType = '';
+
+		function choosePlace() {
+			document.getElementById('step-place').classList.remove('step--previous');
+			document.getElementById('step-place').classList.add('step--current');
+			document.getElementById('map-container').classList.remove('map-container--invisible');
+
+			document.getElementById('step-project').classList.remove('step--current');
+			document.getElementById('step-project').classList.remove('step--previous');
+			document.getElementById('step-project').classList.add('step--disable');
+			document.getElementById('projectList').classList.add('galery--invisible');
+
+			document.getElementById('step-application').classList.remove('step--current');
+			document.getElementById('step-application').classList.add('step--disable');
+			document.getElementById('permit__form').classList.add('form--invisible');
+		}
+
+		function chooseProject() {
+			document.getElementById('step-place').classList.remove('step--current');
+			document.getElementById('step-place').classList.add('step--previous');
+			document.getElementById('map-container').classList.add('map-container--invisible');
+
+			document.getElementById('step-project').classList.remove('step--disable');
+			document.getElementById('step-project').classList.add('step--current');
+			document.getElementById('projectList').classList.remove('galery--invisible');
+
+			document.getElementById('step-application').classList.remove('step--current');
+			document.getElementById('step-application').classList.add('step--disable');
+			document.getElementById('permit__form').classList.add('form--invisible');
+		}
+
+		function launchForm(type) {
+			projectType = type;
+			var typeform = document.getElementById('typeform');
+			var domain = window.location.hostname;
+			typeform.src = 'https://amazingcontent.typeform.com/to/' + typeformId + '?type=' + projectType + '&address=' + selectedAddress + '&city=' + city + '&lat=' + coord.lat + '&lon=' + coord.lng + '&domain=' + domain;
+
+			document.getElementById('step-project').classList.remove('step--current');
+			document.getElementById('step-project').classList.add('step--previous');
+			document.getElementById('projectList').classList.add('galery--invisible');
+
+			document.getElementById('step-application').classList.remove('step--disable');
+			document.getElementById('step-application').classList.add('step--current');
+			document.getElementById('permit__form').classList.remove('form--invisible');
+		}
+
+		var lng = getParameterByName('lng');
+		var lat = getParameterByName('lat');
+		selectedAddress = getParameterByName('address');
+		var coord = { lat: lat, lng: lng };
+		map.setView(coord, 19);
+		selectPoint(coord, selectedAddress);
+
+		var doc = document.getElementById('typeform').contentWindow.document;
+		doc.open();
+		doc.write('<style>body {  \
+ 				heigth: 100%; \
+  				weight: 100%; \
+  				text-align: center; \
+			 }</style> \
+				<img src="img/spin.gif">');
+		doc.close();
+
+		window.onbeforeunload = function (e) {
+			return 'Si vous quittez la page, vous perdrez toute demande en cours.';
+		};
+
+	</script>
+</body>
+
+</html>

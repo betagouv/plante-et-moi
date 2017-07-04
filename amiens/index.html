@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Permis de végétaliser | Ville d'Amiens </title>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Abril+Fatface" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.css" />
+	<link rel="stylesheet" href="css/common.css" />
+	<link rel="stylesheet" href="css/main.css" />
+    <style>
+        .header {
+            width: 100%;
+            position: relative;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .header__logo {
+            max-width: 100%;
+            height: 59px;
+        }
+        .header__logo--left {
+            margin-left: 20px;
+        }
+
+        .header__logo--right {
+            position: absolute;
+            right: 0px;
+        }
+        .gallery {
+            margin: 0 auto;
+			display: block;
+			text-align: center;
+            margin-bottom: 20px;
+        }
+        .cube {
+			display: inline-block;
+			width: 368px; 
+            height: 625px;
+			text-align: center;
+			margin: 20px;
+			vertical-align: top;
+            padding: 0px;
+            position: relative;
+		}
+
+        .cube__img {
+            width: 100%;
+            position: absolute;
+            bottom: 0px;
+            left: 0px;
+        }    
+
+        .cube__description {
+            padding: 0px 20px 20px 20px;
+            width: 100%;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            box-sizing: border-box;
+            font-size: 1.2em;
+        }  
+        .cube__description h3 {
+            font-size: 1.15em;
+        }
+
+        .cube:first-child {
+            margin-left: 0px;
+            
+        }
+        .cube:last-child {
+            margin-right: 0px;
+        }
+
+		@media (max-width: 950px) {
+            .cube {
+                margin-bottom: 20px;
+             }
+            .cube:last-child {
+                margin-bottom: 0px;
+            }
+		}	
+        .form__block {
+			display: inline-block;
+			vertical-align: middle;
+			border-radius: 2px;
+			margin-bottom: 20px;
+		}
+        .form__input {
+			margin: 0px;
+			padding: 10px;
+			width: 100%;
+			height: 50px;
+			font-size: 20px;
+			border-width: 0px;
+			border-radius: 2px 2px 0px 0px;
+			box-sizing:border-box;
+            border: 1px solid #3FA435;
+		}
+		.form__button {
+			margin: 0px;
+            font-size: 22px;
+			font-weight: bold;
+			background-color: #3FA435;
+			text-decoration: none;
+			transition: none 200ms ease-out;
+			transition-property: color, background;
+			color: white;
+			font-weight: bold;
+			width: 150px;
+			height: 50px;
+			border-width: 0px;
+		}
+		@media (min-width: 564px) {
+			.form__input {
+				float: left;
+				width: 400px;
+			    border-radius: 2px 0px 0px 2px;
+			}
+			.form__button {
+				float: left;
+				border-radius: 0px 2px 2px 0px;
+			}
+		}
+
+		.form__button:hover {
+			background-color: seagreen;
+		}
+  
+        .bandeau {
+            text-align: center;
+        }
+        .bandeau__image {
+            width: 100%;
+            height: 350px;
+            background-image: url('img/bandeau.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center top;
+            display: block;
+        }
+        .form {
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+        <div class="header">
+            <div class="centered">
+                <img class="header__logo header__logo--left" src="img/amiens.fr.png" alt="Ville d'Amiens" width="184" height="59">
+                <img class="header__logo header__logo--right" src="img/logo-nature-en-ville.jpg" alt="Nature en ville Amiens" height="59">
+            </div>
+        </div>
+         <div class="main">
+            <div class="bandeau">
+                <div class="bandeau__image"></div>
+                <h1 style="text-align: center; margin-left: 20px; margin-right: 20px;">​Jardinez en bas de chez vous<br>pour des rues plus belles, plus vivantes, plus naturelles</h1>
+                <div class="form">
+                    <h2 style="color: #282D33;">Vous voulez participer à l'opération « la nature en ville » ? <br> Demander votre permis de végétaliser</h2>
+                    <div class="form__block" style="margin-top: 10px;">
+                        <input type="text" id="address-search" name="address-search" placeholder="Cherchez une rue ici..." class="form__input">
+                        <button class="form__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
+                    </div>
+                </div>
+           </div>
+            <div class="gallery">
+                <div class="cube">
+                    <div class="cube__description">
+                        <h3>Besoin de nature en ville ?</h3>
+                        <br>Ça tombe bien : jardiner dans les rues, c’est permis à Amiens !
+                        <br>La Ville d'Amiens lance l’opération « la nature en ville » qui permet de planter dans l’espace public des fleurs, légumes, aromates...
+                    </div>
+                    <br><br><img class="cube__img" src="img/nature-ville.JPG" >
+                </div>
+                <div class="cube">
+                    <div class="cube__description">
+                        <h3>Envie de jardinage ?</h3>
+                        <br>Demander votre permis de végétaliser : il suffit d'un peu d'imagination, de vous munir de quelques graines ou plants, et de suivre quelques règles simples de respect du vivant. 
+                    </div>
+                    <img class="cube__img" src="img/envie.JPG">
+                </div>
+                <div class="cube">
+                    <div class="cube__description">
+                        <h3>Pas la main verte ?</h3>
+                        <br>L'entr'aide est de règle entre jardiniers des rues. N'hésitez pas à faire une petite visite à la ferme urbaine de Corsico'
+                    </div>
+                    <img class="cube__img" src="img/main-verte.JPG">
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="centered">
+                <h2 class="footer__title">Contactez-nous</h2>
+                <div class="footer__description">
+                   Service des Espaces Verts<br>
+                   Amiens Métropole<br>
+                   BP 2720<br>80027 Amiens CEDEX<br>
+                    <strong>Tél : </strong>03 22 97 40 40 / <strong><br>Fax : </strong>03 22 97 42 53<br>    
+                    <a href="mailto:biodiversite@beta.gouv.fr">Nous contacter par mail</a>  <br>         
+                    <a href="http://www.amiens.fr"><b>www.amiens.fr</b></a>
+                </div>
+            </div>
+        </div>
+    <script src="https://cdn.rawgit.com/Pixabay/JavaScript-autoComplete/1.0.4/auto-complete.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+
+        function showSearchSpin(){
+            Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+                button.innerHTML = '<img src="img/spin.gif" style="height: 20px;"/>';
+            })
+        }
+
+        function manualSearch(fieldId){
+            showSearchSpin();
+            
+            var term = document.getElementById(fieldId).value;
+            addressesDataSource(term, function(results){
+                var result = results[0];
+                if(result) {
+                    var coord = result["geometry"]["coordinates"]
+                    onAddressSelected(coord, result["properties"]["label"]);
+                    document.location = 'demande.html?c='+city+'&address='+result["properties"]["label"] +"&lat="+coord[1]+"&lng="+coord[0];
+                } else {
+                    Array.from(document.getElementsByClassName('search-button')).forEach(function(button){
+                        button.innerHTML = 'Rechercher';
+                    })
+                    alert('Nous n\'avons pas trouver votre adresse :(');
+                }
+            })
+        }
+
+        function onAddressSelected(coord, address) {
+            document.location = 'demande.html?c='+city+'&address='+address+"&lat="+coord[1]+"&lng="+coord[0];
+        }
+
+        new autoComplete({
+            selector: 'input[name=address-search]',
+            minChars: 2,
+            source: addressesDataSource,
+            renderItem: renderFeature,
+            onSelect: onSelectAddress(onAddressSelected),
+            cache: false,
+        });
+    </script>
+</body>
+</html>
+   
