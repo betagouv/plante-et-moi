@@ -600,14 +600,17 @@
 						return acc && matchFilter(plant, filter);
 					}, true)) {
 						plant.classList.remove("invisible");
+						plant.classList.add("visible");
 						count++;
 					} else {
 						plant.classList.add("invisible");
+						plant.classList.remove("visible");
 					}
 				})
 			Array.from(document.getElementsByClassName("result-count")).forEach(function (elem) {
 				elem.innerText = count;
 			});
+			updateCountForPlants();
 		}
 
 		function matchFilter(plant, filter) {
@@ -617,6 +620,32 @@
 			return Array.from(plant.getElementsByClassName(filter.name)).reduce(function (acc, elem) {
 				return acc || filter.values.indexOf(elem.innerText) != -1;
 			}, false);
+		}
+
+		function updateCountForPlants() {
+			var filteredPlants = Array.from(document.querySelectorAll(".galery__card.visible"));
+			var allPlants = Array.from(document.querySelectorAll(".galery__card"));
+			Array.from(document.querySelectorAll(".selector input[type=checkbox]"))
+				.forEach(function (input) {
+					var filter = {
+						"name": input.name,
+						"values": [input.value]
+					}
+					var filteredCount = filteredPlants.reduce(function (acc, plant) {
+						return acc + matchFilter(plant, filter);
+					}, 0)
+					var allCount = allPlants.reduce(function (acc, plant) {
+						return acc + matchFilter(plant, filter);
+					}, 0)
+					var countSpan = input.parentNode.getElementsByClassName("filter__result-count")[0];
+					if(!countSpan) {
+						countSpan = document.createElement("span");
+						countSpan.classList.add("filter__result-count");
+						input.parentNode.appendChild(countSpan);
+					}
+					countSpan.innerText = " ( "+filteredCount+" / "+allCount+" )";
+				})
+
 		}
 
 		function showPlants(plants) {
