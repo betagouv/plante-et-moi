@@ -464,16 +464,18 @@
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
 		</div>
 		<div class="selector">
-			<input id="tab1" type="radio" name="current-tab" checked="checked">
+			<input class="tab-selector" id="tab1" type="radio" name="current-tab" checked="checked">
 			<label for="tab1">Environnement</label>
 			<fieldset>
 				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>wb_sunny</i> Ensoleillement</h4>
 				<label><input type="checkbox" value="soleil" name="exposition"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> soleil</label>
 				<label><input type="checkbox" value="mi-ombre" name="exposition"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> mi-ombre</label>
 				<label><input type="checkbox" value="ombre" name="exposition"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> ombre</label>
+				<h4><i class="fa fa-bug" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Abeille-Friendly</h4>
+				<label><input type="checkbox" name="melliferous" value="oui">Bzzzz ! Bzzzz !</label>
 			</fieldset>
 
-			<input id="tab2" type="radio" name="current-tab">
+			<input class="tab-selector" id="tab2" type="radio" name="current-tab">
 			<label for="tab2">Aspect de la plante</label>
 			<fieldset>
 				<h4><i class="fa fa-asterisk" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Couleur des fleurs</h4>
@@ -494,7 +496,7 @@
 				<label><input type="checkbox" name="foliage" value="persistant">Persistant</label>
 				<label><input type="checkbox" name="foliage" value="semi-persistant">Semi-persistant</label>
 			</fieldset>
-			<input id="tab3" type="radio" name="current-tab">
+			<input class="tab-selector" id="tab3" type="radio" name="current-tab">
 			<label for="tab3">Calendrier de la plante</label>
 			<fieldset>
 				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i> Période de plantation</h4>
@@ -512,16 +514,15 @@
 				<label><input type="checkbox" name="periodicity" value="annuelle">Annuelle</label>
 				<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
 			</fieldset>
-			<input id="tab4" type="radio" name="current-tab">
-			<label for="tab4">Mellifère</label>
-			<fieldset>
-				<h4><i class="fa fa-bug" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Abeille-Friendly</h4>
-				<label><input type="checkbox" name="melliferous" value="oui">Bzzzz ! Bzzzz !</label>
-			</fieldset>
+		</div>
+		<div style="flex-wrap: wrap; padding: 15px; width: 100%; ">
+			<div id="selected-filter">
+				
+			</div>
 		</div>
 	</div>
 	<div class="galery invisible" id="galery">
-		<h3 class="galery__title"><span class="result-count"></span> resultats</h3>
+		<h3 class="galery__title">Résultats <span class="result-count"></span> plantes</h3>
 		<hr>
 		<div class="galery__container" id="galery__container">
 			<div class="galery__card" id="item">
@@ -582,10 +583,11 @@
 		}
 
 		function updateViewFromFilter() {
+			cleanFilter();
 			var filters = ["exposition", "flowering-color", "size", "foliage", "seeding-season", "flowering-season", "periodicity", "melliferous"].map(function (name) {
 				return {
 					name: name,
-					values: Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function (e) { return e.value })
+					values: Array.from(document.querySelectorAll('.selector input[name="' + name + '"]:checked')).map(function (e) { return e.value })
 				};
 			});
 			filters.push({
@@ -611,6 +613,7 @@
 				elem.innerText = count;
 			});
 			updateCountForPlants();
+			updateFilterResult();
 		}
 
 		function matchFilter(plant, filter) {
@@ -644,8 +647,33 @@
 						input.parentNode.appendChild(countSpan);
 					}
 					countSpan.innerText = " ( "+filteredCount+" / "+allCount+" )";
+					input.disabled = (filteredCount == 0);
 				})
 
+		}
+
+		function cleanFilter() {
+			var uncheckedFilter = Array.from(document.querySelectorAll('#selected-filter input[type=checkbox]')).filter(function(input){
+				return !input.checked;
+			}).forEach(function(oldCheckedInput){
+				Array.from(document.querySelectorAll(".selector input[name='"+oldCheckedInput.name+"'][value='"+oldCheckedInput.value+"']")).forEach(function(selectorInput){
+					selectorInput.checked = false;
+				});
+			});
+		}
+
+		function updateFilterResult() {
+			var selectedFilters =  Array.from(document.querySelectorAll(".selector input[type=checkbox]:checked"));
+			var div = document.getElementById("selected-filter");
+			div.innerHTML = "";
+			selectedFilters.forEach(function(input) {
+				var copiedItem = input.parentNode.cloneNode(true);
+				copiedItem.disabled = false;
+				copiedItem.firstElementChild.addEventListener("click", function (event) {
+					updateViewFromFilter();
+				});
+				div.appendChild(copiedItem);
+			})
 		}
 
 		function showPlants(plants) {
