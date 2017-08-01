@@ -484,84 +484,86 @@
 			</p>
 		</div>
 	</div>
-	<div class="filters invisible" id="filters">
-		<div id="tag_filter">
-			<b>Type de projet</b>
-			<button class="tag tag-selected" onclick="filterPlantsByTag(this.innerText)">Tous</button>
-			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
-			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
-			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Façades et murets</button>
-			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
-		</div>
-		<div class="selector">
-			<input class="tab-selector" id="tab1" type="radio" name="current-tab" checked="checked">
-			<label for="tab1">Environnement</label>
-			<fieldset>
-				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>wb_sunny</i> Ensoleillement</h4>
-				<label><input type="checkbox" value="soleil" name="exposition"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> soleil</label>
-				<label><input type="checkbox" value="mi-ombre" name="exposition"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> mi-ombre</label>
-				<label><input type="checkbox" value="ombre" name="exposition"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> ombre</label>
-				<h4><i class="fa fa-bug" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Abeille-Friendly</h4>
-				<label><input type="checkbox" name="melliferous" value="oui">Bzzzz ! Bzzzz !</label>
-			</fieldset>
+	<div class="invisible" id="page-results">
+		<div class="filters" id="filters">
+			<div id="tag_filter">
+				<b>Type de projet</b>
+				<button class="tag tag-selected" onclick="filterPlantsByTag(this.innerText)">Tous</button>
+				<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
+				<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
+				<button class="tag" onclick="filterPlantsByTag(this.innerText)">Façades et murets</button>
+				<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
+			</div>
+			<div class="selector">
+				<input class="tab-selector" id="tab1" type="radio" name="current-tab" checked="checked">
+				<label for="tab1">Environnement</label>
+				<fieldset>
+					<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>wb_sunny</i> Ensoleillement</h4>
+					<label><input type="checkbox" value="soleil" name="exposition"><i class='material-icons' style='color: #FDB913; vertical-align: middle;'>wb_sunny</i> soleil</label>
+					<label><input type="checkbox" value="mi-ombre" name="exposition"><i class='material-icons' style='color: grey; vertical-align: middle;'>brightness_medium</i> mi-ombre</label>
+					<label><input type="checkbox" value="ombre" name="exposition"><i class='material-icons' style='color: black; vertical-align: middle;'>cloud_queue</i> ombre</label>
+					<h4><i class="fa fa-bug" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Abeille-Friendly</h4>
+					<label><input type="checkbox" name="melliferous" value="oui">Bzzzz ! Bzzzz !</label>
+				</fieldset>
 
-			<input class="tab-selector" id="tab2" type="radio" name="current-tab">
-			<label for="tab2">Aspect de la plante</label>
-			<fieldset>
-				<h4><i class="fa fa-asterisk" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Couleur des fleurs</h4>
-				<label><input type="checkbox" name="flowering-color" value="bleu"><div class="filter__color" style="background-color: blue"></div>Bleu</label>
-				<label><input type="checkbox" name="flowering-color" value="rouge"><div class="filter__color" style="background-color: red"></div>Rouge</label>
-				<label><input type="checkbox" name="flowering-color" value="blanc"><div class="filter__color" style="background-color: white"></div>Blanc</label>
-				<label><input type="checkbox" name="flowering-color" value="rose"><div class="filter__color" style="background-color: pink"></div>Rose</label>
-				<label><input type="checkbox" name="flowering-color" value="violet"><div class="filter__color" style="background-color: purple"></div>Violet</label>
-				<label><input type="checkbox" name="flowering-color" value="jaune"><div class="filter__color" style="background-color: yellow"></div>Jaune</label>
-				<label><input type="checkbox" name="flowering-color" value="orange"><div class="filter__color" style="background-color: orange"></div>Orange</label>
+				<input class="tab-selector" id="tab2" type="radio" name="current-tab">
+				<label for="tab2">Aspect de la plante</label>
+				<fieldset>
+					<h4><i class="fa fa-asterisk" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Couleur des fleurs</h4>
+					<label><input type="checkbox" name="flowering-color" value="bleu"><div class="filter__color" style="background-color: blue"></div>Bleu</label>
+					<label><input type="checkbox" name="flowering-color" value="rouge"><div class="filter__color" style="background-color: red"></div>Rouge</label>
+					<label><input type="checkbox" name="flowering-color" value="blanc"><div class="filter__color" style="background-color: white"></div>Blanc</label>
+					<label><input type="checkbox" name="flowering-color" value="rose"><div class="filter__color" style="background-color: pink"></div>Rose</label>
+					<label><input type="checkbox" name="flowering-color" value="violet"><div class="filter__color" style="background-color: purple"></div>Violet</label>
+					<label><input type="checkbox" name="flowering-color" value="jaune"><div class="filter__color" style="background-color: yellow"></div>Jaune</label>
+					<label><input type="checkbox" name="flowering-color" value="orange"><div class="filter__color" style="background-color: orange"></div>Orange</label>
 
-				<h4><i class="fa fa-sort" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Taille de la plante</h4>
-				<label><input type="checkbox" name="size" value="Moins de 50 cm">Moins de 50 cm</label>
-				<label><input type="checkbox" name="size" value="Entre 50 cm et 80 cm">Entre 50 cm et 80 cm</label>
-				<label><input type="checkbox" name="size" value="Plus de 80 cm">Plus de 80 cm</label>
+					<h4><i class="fa fa-sort" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Taille de la plante</h4>
+					<label><input type="checkbox" name="size" value="Moins de 50 cm">Moins de 50 cm</label>
+					<label><input type="checkbox" name="size" value="Entre 50 cm et 80 cm">Entre 50 cm et 80 cm</label>
+					<label><input type="checkbox" name="size" value="Plus de 80 cm">Plus de 80 cm</label>
 
-				<h4><i class="fa fa-leaf" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Feuillage</h4>
-				<label><input type="checkbox" name="foliage" value="persistant">Persistant</label>
-				<label><input type="checkbox" name="foliage" value="semi-persistant">Semi-persistant</label>
-			</fieldset>
-			<input class="tab-selector" id="tab3" type="radio" name="current-tab">
-			<label for="tab3">Calendrier de la plante</label>
-			<fieldset>
-				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i> Période de plantation</h4>
-				<label><input type="checkbox" name="seeding-season" value="printemps">Printemps</label>
-				<label><input type="checkbox" name="seeding-season" value="été">Été</label>
-				<label><input type="checkbox" name="seeding-season" value="automne">Automne</label>
-				<label><input type="checkbox" name="seeding-season" value="hiver">Hiver</label>
-				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>nature</i> Période de floraison</h4>
-				<label><input type="checkbox" name="flowering-season" value="printemps">Printemps</label>
-				<label><input type="checkbox" name="flowering-season" value="été">Été</label>
-				<label><input type="checkbox" name="flowering-season" value="automne">Automne</label>
-				<label><input type="checkbox" name="flowering-season" value="hiver">Hiver</label>
-				<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Périodicité</h4>
-				<label><input type="checkbox" name="periodicity" value="vivace">Vivace</label>
-				<label><input type="checkbox" name="periodicity" value="annuelle">Annuelle</label>
-				<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
-			</fieldset>
-			<button class="selector__validation-button">Afficher <span class="result-count"></span> résultats</button>
-		</div>
-		<div style="flex-wrap: wrap; padding: 15px; width: 100%; ">
-			<div id="selected-filter">
-				
+					<h4><i class="fa fa-leaf" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Feuillage</h4>
+					<label><input type="checkbox" name="foliage" value="persistant">Persistant</label>
+					<label><input type="checkbox" name="foliage" value="semi-persistant">Semi-persistant</label>
+				</fieldset>
+				<input class="tab-selector" id="tab3" type="radio" name="current-tab">
+				<label for="tab3">Calendrier de la plante</label>
+				<fieldset>
+					<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>spa</i> Période de plantation</h4>
+					<label><input type="checkbox" name="seeding-season" value="printemps">Printemps</label>
+					<label><input type="checkbox" name="seeding-season" value="été">Été</label>
+					<label><input type="checkbox" name="seeding-season" value="automne">Automne</label>
+					<label><input type="checkbox" name="seeding-season" value="hiver">Hiver</label>
+					<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>nature</i> Période de floraison</h4>
+					<label><input type="checkbox" name="flowering-season" value="printemps">Printemps</label>
+					<label><input type="checkbox" name="flowering-season" value="été">Été</label>
+					<label><input type="checkbox" name="flowering-season" value="automne">Automne</label>
+					<label><input type="checkbox" name="flowering-season" value="hiver">Hiver</label>
+					<h4><i class='material-icons' style='color: #666666; vertical-align: middle;'>rotate_right</i> Périodicité</h4>
+					<label><input type="checkbox" name="periodicity" value="vivace">Vivace</label>
+					<label><input type="checkbox" name="periodicity" value="annuelle">Annuelle</label>
+					<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
+				</fieldset>
+				<button class="selector__validation-button">Afficher <span class="result-count"></span> résultats</button>
+			</div>
+			<div style="flex-wrap: wrap; padding: 15px; width: 100%; ">
+				<div id="selected-filter">
+					
+				</div>
 			</div>
 		</div>
-	</div>
-	<div class="galery invisible" id="galery">
-		<h3 class="galery__title">Résultats : <span class="result-count"></span> plantes</h3>
-		<hr>
-		<div class="galery__container" id="galery__container">
-			<div class="galery__card" id="item">
-				<div class="galery__card__image"></div>
-				<p class="galery__card__short-description"></p>
-				<p class="galery__card__long-description">Credit photo: Wikipedia</p>
-				<div class="bee"></div>
-				<p class="save" onclick="favorite(this);"><i class='material-icons'>star_border</i></p>
+		<div class="galery" id="galery">
+			<h3 class="galery__title">Résultats : <span class="result-count"></span> plantes</h3>
+			<hr>
+			<div class="galery__container" id="galery__container">
+				<div class="galery__card" id="item">
+					<div class="galery__card__image"></div>
+					<p class="galery__card__short-description"></p>
+					<p class="galery__card__long-description">Credit photo: Wikipedia</p>
+					<div class="bee"></div>
+					<p class="save" onclick="favorite(this);"><i class='material-icons'>star_border</i></p>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -626,8 +628,7 @@
 				})
 			updateViewFromFilter();
 			document.getElementById("types").classList.add("invisible");
-			document.getElementById("galery").classList.remove("invisible");
-			document.getElementById("filters").classList.remove("invisible");
+			document.getElementById("page-results").classList.remove("invisible");
 		}
 
 		function updateViewFromFilter() {
