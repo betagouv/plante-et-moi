@@ -237,6 +237,9 @@
 
 		.filters {
 			padding: 20px;
+			display: flex;
+			align-items: center;
+			flex-direction: column;
 		}
 
 		.types {
@@ -355,6 +358,8 @@
 			-webkit-flex-wrap: wrap;
 			flex-wrap: wrap;
 			margin-top: 5px;
+			position: relative;
+			max-width: 750px;
 		}
 
 		.selector fieldset {
@@ -364,9 +369,15 @@
 			margin-top: -1px;
 			padding: 1em;
 			border: 1px solid #ddd;
+			border-top: none;
 			-webkit-order: 1;
 			order: 1;
 			background: #fff;
+			position: absolute;
+			top: 42px;
+			z-index: 999;
+			box-sizing: border-box;
+			height: 260px;
 		}
 
 		.selector>label {
@@ -378,6 +389,24 @@
 			margin-left: -1px;
 			font-weight: bold;
 			font-style: italic;
+			width: 33.333%;
+			box-sizing: border-box;
+			text-align: center;
+		}
+
+		.selector__validation-button {
+			position: absolute;
+			top: 300px;
+			z-index: 999;
+			width: 100%;
+			box-sizing: border-box;
+			color: white;
+			background-color: mediumblue;
+			border: none;
+			font-weight: bold;
+			font-size: 20px;
+			padding: 10px;
+			cursor: pointer;
 		}
 
 		.selector>label:first-of-type {
@@ -390,11 +419,12 @@
 		}
 
 		.selector input[type=radio],
-		.selector fieldset {
+		.selector fieldset,
+		.selector .selector__validation-button {
 			display: none;
 		}
 
-		.selector input[type=radio]:checked + label + fieldset {
+		.selector input[type=radio]:checked + label + fieldset, .selector input[type=radio]:checked ~ .selector__validation-button {
 			display: block;
 		}
 
@@ -514,6 +544,7 @@
 				<label><input type="checkbox" name="periodicity" value="annuelle">Annuelle</label>
 				<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
 			</fieldset>
+			<button class="selector__validation-button">Afficher <span class="result-count"></span> résultats</button>
 		</div>
 		<div style="flex-wrap: wrap; padding: 15px; width: 100%; ">
 			<div id="selected-filter">
@@ -522,7 +553,7 @@
 		</div>
 	</div>
 	<div class="galery invisible" id="galery">
-		<h3 class="galery__title">Résultats <span class="result-count"></span> plantes</h3>
+		<h3 class="galery__title">Résultats : <span class="result-count"></span> plantes</h3>
 		<hr>
 		<div class="galery__container" id="galery__container">
 			<div class="galery__card" id="item">
@@ -535,8 +566,8 @@
 		</div>
 	</div>
 	<div class="footer">
-		Crédit photos : wikipedia/wikimedia<br> Crédit icone d'abeille : bee par alican de the Noun Project<br> Donnée de plantes
-		fournit par la Mairie de Paris<br><br> Créé par Plante Et Moi : <a href="https://beta.gouv.fr/startup/biodiversite.html">https://beta.gouv.fr/startup/biodiversite.html</a><br>
+		Crédit photos : wikipedia/wikimedia<br> Crédit icone d'abeille : bee par alican de the Noun Project<br> Données de plantes
+		fournis par la Mairie de Paris<br><br> Créé par Plante Et Moi : <a href="https://beta.gouv.fr/startup/biodiversite.html">https://beta.gouv.fr/startup/biodiversite.html</a><br>
 	</div>
 
 
@@ -552,6 +583,23 @@
 		Array.from(document.querySelectorAll(".filters input")).forEach(function (elem) {
 			elem.addEventListener("click", function (event) {
 				updateViewFromFilter();
+			});
+		});
+
+		/*
+		Array.from(document.querySelectorAll(".selector input[type=radio]")).forEach(function (elem) {
+			elem.addEventListener("click", function (event) {
+				if(event.currentTarget.checked == false) {
+					 event.currentTarget.checked = true;
+				}
+			});
+		});*/
+
+		Array.from(document.querySelectorAll(".selector__validation-button")).forEach(function (elem) {
+			elem.addEventListener("click", function (event) {
+				Array.from(document.querySelectorAll(".selector input[type=radio]")).forEach(function (radio) {
+					radio.checked = false;
+				});
 			});
 		});
 
