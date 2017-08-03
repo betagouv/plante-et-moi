@@ -122,18 +122,31 @@
 			display: none;
 		}
 
-		.tag {
+		.tag, .header__link {
+			background: none;
+			padding: 6px;
+			color: white;
+			border: none;
+			margin: 0px;
+			line-height: 2.2;
+			width: 120px;
+			height: 100%;
+		}
+		.tag:hover, .header__link:hover {
+			background-color: #b2b2b2;
+		}
+		.tag-selected {
 			background-color: grey;
+		}
+		
+		.type-tag-in-description {
+			 background-color: grey;
 			padding: 6px;
 			color: white;
 			border-width: 0px;
 			margin: 3px;
 			line-height: 2.2;
 			width: 120px;
-		}
-
-		.tag-selected {
-			background-color: #22b573;
 		}
 
 		h1 {
@@ -210,9 +223,42 @@
 			width: 100%;
 			background-color: #22b573;
 			margin: 0px;
-			padding: 20px;
 			box-sizing: border-box;
 			text-align: left;
+			height: 68px;
+			position: relative;
+		}
+		.header__title {
+			padding: 20px;
+			float: left;
+			height: 100%;
+			box-sizing: border-box;
+		}
+		/*
+		.header__link {
+			padding: 20px;
+			float: left;
+			height: 100%;
+			font-weight: bold;
+			box-sizing: border-box;
+		}
+		.header__link:hover {
+			background-color: #b2b2b2;
+		}*/
+		.header__menu {
+			position: absolute;
+			z-index: 999;
+			top: 68px;
+			width: 100%;
+			height: 68px;
+			background-color: #22b573;
+		}
+
+		#header__menu__project-type {
+			display: none;
+		}
+		#header__menu__project-type:hover, #header__link__project-type:hover + #header__menu__project-type {
+			display: block;
 		}
 
 		.filters,
@@ -423,9 +469,6 @@
 			border-radius: 50%;
 		}
 
-		#tag_filter {
-			padding-left: 40px;
-		}
 		.galery__title {
 			width: 100%;
 			text-align: left;
@@ -436,7 +479,15 @@
 
 <body>
 	<div class="header">
-		<h1><a href="."><i class="fa fa-leaf" aria-hidden="true"></i> Plante Et Moi</a></h1>
+		<h1 class="header__title"><a href="."><i class="fa fa-leaf" aria-hidden="true"></i> Plante Et Moi</a></h1>
+		<button class="header__link" id="header__link__project-type">Type de projet</button>
+		<div class="header__menu" id="header__menu__project-type">
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Façades et murets</button>
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
+		</div>
+		<button class="tag" onclick="filterPlantsByTag(this.innerText)">Toutes les plantes</button>
 	</div>
 	<div class="types" id="types">
 		<h2>Planter quoi avec mon permis de végétaliser à Paris ?</h2>
@@ -478,14 +529,6 @@
 	</div>
 	<div class="invisible" id="page-results">
 		<div class="filters" id="filters">
-			<div id="tag_filter">
-				<b>Type de projet</b>
-				<button class="tag tag-selected" onclick="filterPlantsByTag(this.innerText)">Tous</button>
-				<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
-				<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
-				<button class="tag" onclick="filterPlantsByTag(this.innerText)">Façades et murets</button>
-				<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
-			</div>
 			<div class="selector">
 				<input class="tab-selector" id="tab1" type="radio" name="current-tab">
 				<label for="tab1">Environnement</label>
@@ -610,7 +653,7 @@
 		}
 
 		function filterPlantsByTag(filter, type) {
-			Array.from(document.getElementById("tag_filter").getElementsByClassName("tag"))
+			Array.from(document.getElementsByClassName("tag"))
 				.forEach(function (tag) {
 					if (tag.innerText == filter) {
 						tag.classList.add("tag-selected");
@@ -632,8 +675,8 @@
 				};
 			});
 			filters.push({
-				name: "tag",
-				values: [document.querySelector('#tag_filter .tag-selected').innerText]
+				name: "type-tag-in-description",
+				values: [document.querySelector('.tag-selected').innerText]
 			});
 
 			var count = 0;
@@ -658,7 +701,7 @@
 		}
 
 		function matchFilter(plant, filter) {
-			if (filter.values[0] == "Tous" ||  filter.values == false) {
+			if (filter.values == false || filter.values[0] == "Tous" || filter.values[0].indexOf("Toutes") != -1) {
 				return true;
 			}
 			return Array.from(plant.getElementsByClassName(filter.name)).reduce(function (acc, elem) {
@@ -752,8 +795,8 @@
 						}
 						//description += "<br><a href='"+plant["Wikipedia Page Url"]+"'>Wikipedia "+plant["Wikipedia Lang"]+"</a>";
 						description += "<br>";
-						plant["Types de projet"].split(",").forEach(function (tag) {
-							description += "<span class='tag'>" + tag + "</span>";
+						plant["Types de projet"].split(",").forEach(function (type) {
+							description += "<span class='type-tag-in-description'>" + type + "</span>";
 						})
 
 						description += "<div class='seeding'>";
@@ -841,7 +884,6 @@
 			newCards.forEach(function (plant) {
 				galery.appendChild(plant);
 			});
-			document.getElementById("tag_filter").classList.remove("invisible");
 		}
 
 		var request = new XMLHttpRequest();
