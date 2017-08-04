@@ -95,12 +95,15 @@
 			color: white;
 		}
 
+		.page {
+			background-color: #F3F3F3;
+		}
+
 		.galery {
 			padding: 10px;
 			display: block;
 			min-height: 100%;
 			width: 100%;
-			background-color: #F3F3F3;
 			box-sizing: border-box;
 		}
 
@@ -229,7 +232,6 @@
 			margin-top: 0px;
 			margin-bottom: 14px;
 			line-height: 1.1;
-			max-width: 250px;
 			font-family: 'Open Sans', sans-serif;
 			text-align: center;
 		}
@@ -238,7 +240,7 @@
 			font-size: 1em;
 			margin-top: 18px;
 			margin-bottom: 10px;
-			text-transform: uppercase;
+			font-family: "Helvetica", "Arial", sans-serif;
 		}
 
 		.bee {
@@ -412,41 +414,42 @@
 			-webkit-order: 1;
 			order: 1;
 			background: #fff;
-			position: absolute;
-			top: 42px;
-			z-index: 999;
 			box-sizing: border-box;
-			height: 280px;
 		}
 
 		.selector>label {
 			background: #eee;
 			border: 1px solid #ddd;
-			padding: .7em 1em;
+			padding: 1em;
 			cursor: pointer;
 			z-index: 1;
 			margin-left: -1px;
 			font-weight: bold;
-			font-style: italic;
 			width: 33.333%;
 			box-sizing: border-box;
 			text-align: center;
+			height: 60px;
+			background-color: #0CB6A1;
+			color: white;
+			font-size: 1.2em;
+			font-family: "Helvetica", "Arial", sans-serif;
 		}
 
 		.selector__validation-button {
-			position: absolute;
-			top: 320px;
-			z-index: 999;
 			width: 100%;
 			box-sizing: border-box;
 			color: white;
-			background-color: #0CB6A1;
+			background-color: #0C518A;
 			border: none;
 			font-weight: bold;
 			font-size: 20px;
-			padding: 10px;
+			padding: 1em;;
 			cursor: pointer;
 			text-transform: uppercase;
+			height: 60px;
+			margin-left: 2px;
+		   -webkit-order: 100;
+    		order: 100;
 		}
 
 		.selector>label:first-of-type {
@@ -454,7 +457,7 @@
 		}
 
 		.selector input[type=radio]:checked + label {
-			background: #fff;
+			background: #0C518A;
 			border-bottom: 1px solid #fff;
 		}
 
@@ -476,14 +479,23 @@
 		}
 
 		.galery__title {
-			width: 100%;
 			text-align: left;
+			float: left;
+			margin-left: 60px;
+			font-size: 2em;
+		}
+		.galery__link {
+			float: right;
+			font-family: "Helvetica", "Arial", sans-serif;
 		}
 		.selector__selected {
 			flex-wrap: wrap; 
 			padding: 5px; 
 			width: 100%; 
 			height: 50px;
+			margin-left: 60px;
+			margin-right: 60px;
+			box-sizing: border-box;
 		}
 		.selector__selected input[type=checkbox] {
 			display: none;
@@ -506,6 +518,14 @@
 		}
 		.selector__selected label:hover::after {
 			content: " - X"
+		}
+		.ariane {
+			padding: 10px;
+			margin-left: 60px;
+		}
+		.ariane h4 {
+			margin-top: 30px;
+			text-align: left;
 		}
 	</style>
 
@@ -553,7 +573,9 @@
 			</p>
 		</div>
 	</div>
-	<div class="invisible" id="page-results">
+	<div class="page invisible" id="page-results">
+		<div class="ariane">
+			<h4><a href="."><span class="ariane__title">Planter quoi</span></a> > <span id="ariane__selected-type"></span></h4></div>
 		<div class="filters" id="filters">
 			<div class="selector">
 				<input class="tab-selector" id="tab1" type="radio" name="current-tab">
@@ -571,13 +593,13 @@
 				<label for="tab2">Aspect de la plante</label>
 				<fieldset>
 					<h4><i class="fa fa-asterisk" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Couleur des fleurs</h4>
-					<label><input type="checkbox" name="flowering-color" value="bleu"><div class="filter__color" style="background-color: blue"></div>Bleu</label>
-					<label><input type="checkbox" name="flowering-color" value="rouge"><div class="filter__color" style="background-color: red"></div>Rouge</label>
-					<label><input type="checkbox" name="flowering-color" value="blanc"><div class="filter__color" style="background-color: white"></div>Blanc</label>
-					<label><input type="checkbox" name="flowering-color" value="rose"><div class="filter__color" style="background-color: pink"></div>Rose</label>
-					<label><input type="checkbox" name="flowering-color" value="violet"><div class="filter__color" style="background-color: purple"></div>Violet</label>
-					<label><input type="checkbox" name="flowering-color" value="jaune"><div class="filter__color" style="background-color: yellow"></div>Jaune</label>
-					<label><input type="checkbox" name="flowering-color" value="orange"><div class="filter__color" style="background-color: orange"></div>Orange</label>
+					<label><input type="checkbox" name="flowering-color" value="bleu"><div class="filter__color" style="background-color: blue"></div> Bleu</label>
+					<label><input type="checkbox" name="flowering-color" value="rouge"><div class="filter__color" style="background-color: red"></div> Rouge</label>
+					<label><input type="checkbox" name="flowering-color" value="blanc"><div class="filter__color" style="background-color: white"></div> Blanc</label>
+					<label><input type="checkbox" name="flowering-color" value="rose"><div class="filter__color" style="background-color: pink"></div> Rose</label>
+					<label><input type="checkbox" name="flowering-color" value="violet"><div class="filter__color" style="background-color: purple"></div> Violet</label>
+					<label><input type="checkbox" name="flowering-color" value="jaune"><div class="filter__color" style="background-color: yellow"></div> Jaune</label>
+					<label><input type="checkbox" name="flowering-color" value="orange"><div class="filter__color" style="background-color: orange"></div> Orange</label>
 
 					<h4><i class="fa fa-sort" aria-hidden="true" style='color: #666666; vertical-align: middle;'></i> Taille de la plante</h4>
 					<label><input type="checkbox" name="size" value="Moins de 50 cm">Moins de 50 cm</label>
@@ -607,14 +629,17 @@
 					<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
 				</fieldset>
 				<button class="selector__validation-button">Afficher <span class="result-count"></span> résultats</button>
-				<div class="selector__selected" id="selected-filter">
-					
-				</div>
 			</div>
 		</div>
 		<div class="galery" id="galery">
 			<h3 class="galery__title">Résultats : <span class="result-count"></span> plantes</h3>
-			<hr>
+			<a class="galery__link" href="#" onclick="clearAllFilters()">Supprimer tous les filtres</a>
+			<hr style="width: 100%; 
+			margin-left: 60px; 
+			margin-right: 60px; box-sizing: border-box;">
+			<div class="selector__selected" id="selected-filter">
+					
+				</div>
 			<div class="galery__container" id="galery__container">
 				<div class="galery__card" id="item">
 					<div class="galery__card__image"></div>
@@ -686,7 +711,9 @@
 						tag.classList.remove("tag-selected");
 					}
 				})
+			clearAllFilters();
 			updateViewFromFilter();
+			document.getElementById("ariane__selected-type").innerText = filter;
 			document.getElementById("types").classList.add("invisible");
 			document.getElementById("page-results").classList.remove("invisible");
 		}
@@ -776,6 +803,13 @@
 			});
 		}
 
+		function clearAllFilters() {
+			Array.from(document.querySelectorAll('#selected-filter input[type=checkbox]')).forEach(function(input){
+			    input.checked = false;
+			});
+			updateViewFromFilter();
+		}
+
 		function updateFilterResult() {
 			var selectedFilters =  Array.from(document.querySelectorAll(".selector fieldset input[type=checkbox]:checked"));
 			var div = document.getElementById("selected-filter");
@@ -800,7 +834,7 @@
 					if (child.className == "galery__card__image") {
 						child.style.backgroundImage = "url('" + plant["Wikipedia Thumb Url"] + "')";
 					} else if (child.className == "galery__card__short-description") {
-						var description = "<h3>" + plant["Nom vernaculaire"] + "</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
+						var description = "<h3 style='max-width: 250px;'>" + plant["Nom vernaculaire"] + "</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
 
 						var groundsList = plant["Sol"].split(',');
 						allGrounds = allGrounds.concat(groundsList);
