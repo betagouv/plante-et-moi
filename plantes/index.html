@@ -17,6 +17,84 @@
 			overflow-x: hidden;
 		}
 
+		.header {
+			width: 100%;
+			background-color: white;
+			margin: 0px;
+			box-sizing: border-box;
+			text-align: left;
+			height: 68px;
+			position: relative;
+		}
+		.header__title {
+			padding: 15px;
+			float: left;
+			height: 100%;
+			box-sizing: border-box;
+			color: #0CB6A1;
+			text-decoration: none;
+						font-size: 1.5em;
+			font-family: "Helvetica", "Arial", sans-serif;
+			margin: 0px;
+			margin-right: 30px;
+		}
+		.header__logo {
+			height: 100%;
+			width: auto;
+		}
+		/*
+		.header__link {
+			padding: 20px;
+			float: left;
+			height: 100%;
+			font-weight: bold;
+			box-sizing: border-box;
+		}
+		.header__link:hover {
+			background-color: #b2b2b2;
+		}*/
+		.header__menu {
+			position: absolute;
+			z-index: 999;
+			top: 68px;
+			width: 100%;
+			height: 68px;
+			background-color: #E3CD37;
+		}
+
+		#header__menu__project-type {
+			display: none;
+		}
+		#header__menu__project-type:hover, #header__link__project-type:hover + #header__menu__project-type {
+			display: block;
+		}
+
+		.tag, .header__link {
+			background: none;
+			padding: 6px;
+			color: white;
+			border: none;
+			margin: 0px;
+			line-height: 2.2;
+			height: 100%;
+			color: #0CB6A1;
+			font-size: 1.2em;
+			font-weight: bold;
+			padding-left: 15px;
+			padding-right: 15px;
+		}
+		.header__menu .tag {
+			color: white;
+		}
+		.tag:hover, .header__link:hover {
+			background-color: #0CB6A1;
+			color: white;
+		}
+		.tag-selected {
+			background-color: #0CB6A1;
+			color: white;
+		}
+
 		.galery {
 			padding: 10px;
 			display: block;
@@ -121,23 +199,6 @@
 		.invisible {
 			display: none;
 		}
-
-		.tag, .header__link {
-			background: none;
-			padding: 6px;
-			color: white;
-			border: none;
-			margin: 0px;
-			line-height: 2.2;
-			width: 120px;
-			height: 100%;
-		}
-		.tag:hover, .header__link:hover {
-			background-color: #b2b2b2;
-		}
-		.tag-selected {
-			background-color: grey;
-		}
 		
 		.type-tag-in-description {
 			 background-color: grey;
@@ -160,7 +221,7 @@
 			font-size: 2em;
 			text-align: center;
 			font-family: "Helvetica", "Arial", sans-serif;
-			color: cadetblue;
+			color: #0CB6A1;
 		}
 
 		h3 {
@@ -219,52 +280,10 @@
 			margin-left: 5px;
 		}
 
-		.header {
-			width: 100%;
-			background-color: #22b573;
-			margin: 0px;
-			box-sizing: border-box;
-			text-align: left;
-			height: 68px;
-			position: relative;
-		}
-		.header__title {
-			padding: 20px;
-			float: left;
-			height: 100%;
-			box-sizing: border-box;
-		}
-		/*
-		.header__link {
-			padding: 20px;
-			float: left;
-			height: 100%;
-			font-weight: bold;
-			box-sizing: border-box;
-		}
-		.header__link:hover {
-			background-color: #b2b2b2;
-		}*/
-		.header__menu {
-			position: absolute;
-			z-index: 999;
-			top: 68px;
-			width: 100%;
-			height: 68px;
-			background-color: #22b573;
-		}
-
-		#header__menu__project-type {
-			display: none;
-		}
-		#header__menu__project-type:hover, #header__link__project-type:hover + #header__menu__project-type {
-			display: block;
-		}
 
 		.filters,
 		.types {
 			width: 100%;
-			background-color: #e4edd9;
 			box-sizing: border-box;
 		}
 
@@ -302,13 +321,13 @@
 		.footer {
 			padding: 15px;
 			width: 100%;
-			background-color: grey;
+			background-color: #0CB6A1;
 			color: #e6e6e6;
 			box-sizing: border-box;
 		}
 
 		.type {
-			height: 340px;
+			height: 310px;
 			width: 270px;
 			display: inline-block;
 			padding: 0px;
@@ -317,35 +336,22 @@
 			vertical-align: top;
 			text-align: left;
 			font-family: 'Open Sans', sans-serif;
-			color: #383838;
-			font-size: 0.9em;
-		}
-
-		.types__button {
-			height: 210px;
-			display: inline-block;
-			padding: 20px;
-			border-radius: 2px;
-			vertical-align: top;
-			background-color: cadetblue;
 			color: white;
+			font-size: 1em;
+			background-color: #0C518A;
 			box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-			text-align: left;
+			border-radius: 2px;
 			cursor: pointer;
+			padding: 20px;
 		}
-
-		.types__button:hover {
-			background-color: #b2b2b2;
+		.type p {
+			text-align: center;
 		}
-
-		.types__button ul,
-		.types__button b {
-			visibility: hidden;
+		.type:hover {
+			background-color: #E3CD37;
 		}
-
-		.types__button:hover ul,
-		.types__button:hover b {
-			visibility: visible;
+		.type:hover img {
+			opacity: 0.7;
 		}
 
 		.filter {
@@ -407,10 +413,10 @@
 			order: 1;
 			background: #fff;
 			position: absolute;
-			top: 92px;
+			top: 42px;
 			z-index: 999;
 			box-sizing: border-box;
-			height: 260px;
+			height: 280px;
 		}
 
 		.selector>label {
@@ -429,12 +435,12 @@
 
 		.selector__validation-button {
 			position: absolute;
-			top: 350px;
+			top: 320px;
 			z-index: 999;
 			width: 100%;
 			box-sizing: border-box;
 			color: white;
-			background-color: mediumblue;
+			background-color: #0CB6A1;
 			border: none;
 			font-weight: bold;
 			font-size: 20px;
@@ -507,8 +513,8 @@
 
 <body>
 	<div class="header">
-		<h1 class="header__title"><a href="."><i class="fa fa-leaf" aria-hidden="true"></i> Plante Et Moi</a></h1>
-		<button class="header__link" id="header__link__project-type">Type de projet</button>
+		<a href="." class="header__title"><img  class="header__logo" src="img/logo_planterquoi_vert.svg"></a>
+		<button class="header__link" id="header__link__project-type">Type de projet  <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
 		<div class="header__menu" id="header__menu__project-type">
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
@@ -518,38 +524,30 @@
 		<button class="tag" onclick="filterPlantsByTag(this.innerText)">Toutes les plantes</button>
 	</div>
 	<div class="types" id="types">
-		<h2>Planter quoi avec mon permis de végétaliser à Paris ?</h2>
-		<div class="type">
-			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+		<h2>Planter quoi <span style="color: #0C518A">avec mon permis de végétaliser à Paris ?</span></h2>
+		<div class="type" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Trottoirs</h3>
 				<img src="http://demo.plante-et-moi.fr/arles/img/jardiniere.jpg" style="width: 100%;" />
-			</div>
 			<p style="display: inline-block;">Trottoir large et placette avec jardinières, bacs ou pots posés sur le sol.<br>
 			</p>
 		</div>
-		<div class="type">
-			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+		<div class="type" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Mobilier urbain</h3>
 				<img src="http://demo.plante-et-moi.fr/arles/img/rue_vegetalisee_1.jpg" style="width: 100%;" />
-			</div>
 			<p>
 				Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.<br>
 			</p>
 		</div>
-		<div class="type">
-			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+		<div class="type" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Façades et murets</h3>
 				<img src="http://demo.plante-et-moi.fr/dijon/img/pied%20de%20mur.JPG" style="width: 100%;" />
-			</div>
 			<p>
 				Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité).<br>
 			</p>
 		</div>
-		<div class="type">
-			<div class="types__button" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+		<div class="type" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Pieds d'arbres</h3>
 				<img src="http://demo.plante-et-moi.fr/dijon/img/tour%20d'arbres.JPG" style="width: 100%;" />
-			</div>
 			<p>
 				Culture en pleine terre sur le pourtour existant d'un arbre de rue.<br>
 			</p>
@@ -630,7 +628,7 @@
 	</div>
 	<div class="footer">
 		Crédit photos : wikipedia/wikimedia<br> Crédit icone d'abeille : bee par alican de the Noun Project<br> Données de plantes
-		fournis par la Mairie de Paris<br><br> Créé par Plante Et Moi : <a href="https://beta.gouv.fr/startup/biodiversite.html">https://beta.gouv.fr/startup/biodiversite.html</a><br>
+		fournis par la Mairie de Paris<br><br> Créé par Plante Et Moi : <a href="https://beta.gouv.fr/startup/plante-et-moi.html">https://beta.gouv.fr/startup/plante-et-moi.html</a><br>
 	</div>
 
 
