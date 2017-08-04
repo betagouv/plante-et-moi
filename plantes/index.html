@@ -392,7 +392,7 @@
 			flex-wrap: wrap;
 			margin-top: 5px;
 			position: relative;
-			max-width: 750px;
+			max-width: 900px;
 		}
 
 		.selector fieldset {
@@ -407,7 +407,7 @@
 			order: 1;
 			background: #fff;
 			position: absolute;
-			top: 42px;
+			top: 92px;
 			z-index: 999;
 			box-sizing: border-box;
 			height: 260px;
@@ -429,7 +429,7 @@
 
 		.selector__validation-button {
 			position: absolute;
-			top: 300px;
+			top: 350px;
 			z-index: 999;
 			width: 100%;
 			box-sizing: border-box;
@@ -472,6 +472,34 @@
 		.galery__title {
 			width: 100%;
 			text-align: left;
+		}
+		.selector__selected {
+			flex-wrap: wrap; 
+			padding: 5px; 
+			width: 100%; 
+			height: 50px;
+		}
+		.selector__selected input[type=checkbox] {
+			display: none;
+		}
+
+		.selector__selected label {
+			background-color: grey;
+			border-radius: 10px;
+			padding: 7px;
+			margin: 5px;
+			color: white;
+		}
+		.selector__selected label:hover {
+			background-color: red;
+			text-align: center;
+			font-weight: bold;
+		}
+		.selector__selected label:hover > * {
+			visibility: hidden;
+		}
+		.selector__selected label:hover::after {
+			content: " - X"
 		}
 	</style>
 
@@ -581,9 +609,7 @@
 					<label><input type="checkbox" name="periodicity" value="bisannuelle">Bisannuelle</label>
 				</fieldset>
 				<button class="selector__validation-button">Afficher <span class="result-count"></span> résultats</button>
-			</div>
-			<div style="flex-wrap: wrap; padding: 15px; width: 100%; ">
-				<div id="selected-filter">
+				<div class="selector__selected" id="selected-filter">
 					
 				</div>
 			</div>
@@ -667,18 +693,23 @@
 			document.getElementById("page-results").classList.remove("invisible");
 		}
 
-		function updateViewFromFilter() {
-			cleanFilter();
+		function currentFilters() {
 			var filters = ["exposition", "flowering-color", "size", "foliage", "seeding-season", "flowering-season", "periodicity", "melliferous"].map(function (name) {
 				return {
 					name: name,
-					values: Array.from(document.querySelectorAll('.selector input[name="' + name + '"]:checked')).map(function (e) { return e.value })
+					values: Array.from(document.querySelectorAll('.selector fieldset input[name="' + name + '"]:checked')).map(function (e) { return e.value })
 				};
 			});
 			filters.push({
 				name: "type-tag-in-description",
 				values: [document.querySelector('.tag-selected').innerText]
 			});
+			return filters;
+		}
+
+		function updateViewFromFilter() {
+			cleanFilter();
+			var filters = currentFilters();
 
 			var count = 0;
 			Array.from(document.getElementsByClassName("galery__card"))
@@ -713,7 +744,7 @@
 		function updateCountForPlants() {
 			var filteredPlants = Array.from(document.querySelectorAll(".galery__card.visible"));
 			var allPlants = Array.from(document.querySelectorAll(".galery__card"));
-			Array.from(document.querySelectorAll(".selector input[type=checkbox]"))
+			Array.from(document.querySelectorAll(".selector fieldset input[type=checkbox]"))
 				.forEach(function (input) {
 					var filter = {
 						"name": input.name,
@@ -731,7 +762,7 @@
 						countSpan.classList.add("filter__result-count");
 						input.parentNode.appendChild(countSpan);
 					}
-					countSpan.innerText = " ( "+filteredCount+" / "+allCount+" )";
+					countSpan.innerText = " ( "+filteredCount+" )";
 					input.disabled = (filteredCount == 0);
 				})
 
@@ -741,14 +772,14 @@
 			var uncheckedFilter = Array.from(document.querySelectorAll('#selected-filter input[type=checkbox]')).filter(function(input){
 				return !input.checked;
 			}).forEach(function(oldCheckedInput){
-				Array.from(document.querySelectorAll(".selector input[name='"+oldCheckedInput.name+"'][value='"+oldCheckedInput.value+"']")).forEach(function(selectorInput){
+				Array.from(document.querySelectorAll(".selector fieldset input[name='"+oldCheckedInput.name+"'][value='"+oldCheckedInput.value+"']")).forEach(function(selectorInput){
 					selectorInput.checked = false;
 				});
 			});
 		}
 
 		function updateFilterResult() {
-			var selectedFilters =  Array.from(document.querySelectorAll(".selector input[type=checkbox]:checked"));
+			var selectedFilters =  Array.from(document.querySelectorAll(".selector fieldset input[type=checkbox]:checked"));
 			var div = document.getElementById("selected-filter");
 			div.innerHTML = "";
 			selectedFilters.forEach(function(input) {
