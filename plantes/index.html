@@ -486,6 +486,8 @@
 		}
 		.galery__link {
 			float: right;
+			margin-top: 20px;
+			margin-right: 60px;
 			font-family: "Helvetica", "Arial", sans-serif;
 		}
 		.selector__selected {
@@ -634,7 +636,7 @@
 		<div class="galery" id="galery">
 			<h3 class="galery__title">Résultats : <span class="result-count"></span> plantes</h3>
 			<a class="galery__link" href="#" onclick="clearAllFilters()">Supprimer tous les filtres</a>
-			<hr style="width: 100%; 
+			<hr style="width: calc(100% - 120px);
 			margin-left: 60px; 
 			margin-right: 60px; box-sizing: border-box;">
 			<div class="selector__selected" id="selected-filter">
