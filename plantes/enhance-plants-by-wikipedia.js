@@ -1,6 +1,8 @@
 var fs = require('fs');
 var Baby = require('babyparse');
 
+var imageFilters = [".svg", ".png", "Asteracea poster", ,"Sunflowers.JPG", "Fenugrec.jpg", "Akenes cosmos.JPG", "Arcimboldo Summer 1563.jpg", "Graines sauge.jpg", "Fenugreek seeds", "Blsanka Libesovice.jpg", "Achterkant lavendel-oliepers.jpg", "DSC 6546-MR.jpg", "Hommels op prei.jpg", "Laurustinus (Viburnum tinus) fruits close-up (15726127869).jpg"];
+
 const httpGetContent = function(url) {
   return new Promise((resolve, reject) => {
     const lib = url.startsWith('https') ? require('https') : require('http');
@@ -79,9 +81,10 @@ fs.readFile('data/urban-plants.csv', 'utf8', (err,data) => {
                 var page = Object.values(result.query.pages)[0];
                 if(page != undefined) {
                     plant["Wikipedia Page Url"] = page.fullurl;
-                    var image = page.images.filter(function(el) {
-                       return (el.title.indexOf(".svg") == -1) && (el.title.indexOf(".png") == -1) && (el.title.indexOf("Asteracea poster") == -1) && (el.title.indexOf("Sunflowers.JPG") == -1)
-                    })[0];
+                    var image = page.images.filter(function(el) { 
+                       return  imageFilters.reduce(function (acc, imageFilter) {
+						return acc && el.title.indexOf(imageFilter) == -1;
+					}, true)})[0];
                     if(image != undefined) {
                         plant["Wikipedia Image Title"] = image.title;
                     }
