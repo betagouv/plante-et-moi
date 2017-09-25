@@ -427,6 +427,7 @@
 			padding: 1em;
 			cursor: pointer;
 			z-index: 1;
+			 overflow: hidden;
 			margin-left: -1px;
 			font-weight: bold;
 			width: 33.333%;
@@ -447,12 +448,11 @@
 			border: none;
 			font-weight: bold;
 			font-size: 20px;
-			padding: 1em;;
+			padding: 1em;
 			cursor: pointer;
 			text-transform: uppercase;
-			height: 60px;
 			margin-left: 2px;
-		   -webkit-order: 100;
+		    -webkit-order: 100;
     		order: 100;
 		}
 
@@ -463,6 +463,9 @@
 		.selector input[type=radio]:checked + label {
 			background: #0C518A;
 			border-bottom: 1px solid #fff;
+		}
+		.selector input:disabled + * {
+			color: grey;
 		}
 
 		.selector input[type=radio],
@@ -651,7 +654,6 @@
 					<p class="galery__card__short-description"></p>
 					<p class="galery__card__long-description">Credit photo: Wikipedia</p>
 					<div class="bee"></div>
-					<p class="save" onclick="favorite(this);"><i class='material-icons'>star_border</i></p>
 				</div>
 			</div>
 		</div>
@@ -696,7 +698,7 @@
 		});
 
 		function favorite(saveNode) {
-			var name = saveNode.parentNode.getElementsByTagName("h4")[0].innerText;
+			var name = saveNode.parentNode.parentNode.getElementsByClassName("latin-name")[0].innerText;
 			if (saveNode.firstElementChild.innerText == "star") {
 				saveNode.firstElementChild.innerText = "star_border";
 				favorites.splice(favorites.indexOf(name), 1);
@@ -839,7 +841,12 @@
 					if (child.className == "galery__card__image") {
 						child.style.backgroundImage = "url('" + plant["Wikipedia Thumb Url"] + "')";
 					} else if (child.className == "galery__card__short-description") {
-						var description = "<h3 style='max-width: 250px;'>" + plant["Nom vernaculaire"] + "</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
+						var startIcon = "star_border"
+						if (favorites.indexOf(name) != -1) {
+							startIcon = "star";
+						}
+						var description = '<p class="save" onclick="favorite(this);"><i class="material-icons">'+startIcon+'</i></p>';
+						description += "<h3 style='max-width: 250px;'>" + plant["Nom vernaculaire"] + "</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
 
 						var groundsList = plant["Sol"].split(',');
 						allGrounds = allGrounds.concat(groundsList);
@@ -928,10 +935,6 @@
 					} else if (child.className == "bee") {
 						if (plant["Propriétés"].indexOf("mellifère") == -1) {
 							child.style.display = "None";
-						}
-					} else if (child.className == "save") {
-						if (favorites.indexOf(name) != -1) {
-							child.firstElementChild.innerText = "star";
 						}
 					}
 				});
