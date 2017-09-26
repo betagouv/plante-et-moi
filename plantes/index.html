@@ -725,7 +725,7 @@
 			document.getElementById("page-results").classList.remove("invisible");
 		}
 
-		function currentFilters() {
+		function getCurrentFilters() {
 			var filters = ["exposition", "flowering-color", "size", "foliage", "seeding-season", "flowering-season", "periodicity", "melliferous"].map(function (name) {
 				return {
 					name: name,
@@ -739,26 +739,36 @@
 			return filters;
 		}
 
-		function updateViewFromFilter() {
-			cleanFilter();
-			var filters = currentFilters();
 
-			var count = 0;
-			Array.from(document.getElementsByClassName("galery__card"))
-				.forEach(function (plant) {
+		function filterPlants(plants, filters) {
+			return plants.filter(function (plant) {
 					if (filters.reduce(function (acc, filter) {
 						return acc && matchFilter(plant, filter);
 					}, true)) {
-						plant.classList.remove("invisible");
-						plant.classList.add("visible");
-						count++;
+						return true;
 					} else {
-						plant.classList.add("invisible");
-						plant.classList.remove("visible");
+						return false;
 					}
 				})
+		}
+
+		function updateViewFromFilter() {
+			cleanFilter();
+			var filters = getCurrentFilters();
+
+			var allPlants = Array.from(document.getElementsByClassName("galery__card"));
+			var filteredPlants = filterPlants(allPlants, filters);
+			allPlants.forEach(function (plant) {
+				plant.classList.add("invisible");
+				plant.classList.remove("visible");
+			});
+			filteredPlants.forEach(function (plant) {
+				plant.classList.add("visible");
+				plant.classList.remove("invisible");
+			});
+
 			Array.from(document.getElementsByClassName("result-count")).forEach(function (elem) {
-				elem.innerText = count;
+				elem.innerText = filteredPlants.length;
 			});
 			updateCountForPlants();
 			updateFilterResult();
@@ -774,18 +784,24 @@
 		}
 
 		function updateCountForPlants() {
-			var filteredPlants = Array.from(document.querySelectorAll(".galery__card.visible"));
-			var allPlants = Array.from(document.querySelectorAll(".galery__card"));
+			var currentFilters = getCurrentFilters();
+			var allPlants = Array.from(document.getElementsByClassName("galery__card"));
 			Array.from(document.querySelectorAll(".selector fieldset input[type=checkbox]"))
 				.forEach(function (input) {
 					var filter = {
 						"name": input.name,
 						"values": [input.value]
-					}
+					};
+
+					var filters = currentFilters.map(function(currentFilter) {
+						if(currentFilter.name == input.name) {
+							return filter;
+						} 
+						return currentFilter;
+					});
+
+					var filteredPlants = filterPlants(allPlants, filters);
 					var filteredCount = filteredPlants.reduce(function (acc, plant) {
-						return acc + matchFilter(plant, filter);
-					}, 0)
-					var allCount = allPlants.reduce(function (acc, plant) {
 						return acc + matchFilter(plant, filter);
 					}, 0)
 					var countSpan = input.parentNode.getElementsByClassName("filter__result-count")[0];
