@@ -275,6 +275,10 @@
 			-webkit-mask-repeat: no-repeat;
 		}
 
+		.galery__card:hover .bee {
+			background-color: #f0ac08;
+		}
+
 		.seeding,
 		.flowering {
 			position: absolute;
@@ -572,15 +576,22 @@
 		<a href="." class="header__title"><img  class="header__logo" src="img/logo_planterquoi_vert.svg"></a>
 		<button class="header__link" id="header__link__project-type"><span id="header__link__type">Type</span> <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
 		<div class="header__menu" id="header__menu__project-type">
+			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Façades et murets</button>
-			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
 		</div>
 		<button class="tag" onclick="filterPlantsByTag(this.innerText)"><span id="header__link__all">Toutes</span></button>
 	</div>
 	<div class="types" id="types">
-		<h2>Planter quoi <span style="color: #0C518A">avec mon permis de végétaliser à Paris ?</span></h2>
+		<h2>Planter quoi <span style="color: #0C518A">par type de projet, avec mon permis de végétaliser à Paris ?</span></h2>
+		<div class="type" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
+				<h3>Pieds d'arbres</h3>
+				<img src="http://demo.plante-et-moi.fr/dijon/img/tour%20d'arbres.JPG" style="width: 100%;" />
+			<p>
+				Culture en pleine terre sur le pourtour existant d'un arbre de rue.<br>
+			</p>
+		</div>
 		<div class="type" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
 				<h3>Trottoirs</h3>
 				<img src="http://demo.plante-et-moi.fr/arles/img/jardiniere.jpg" style="width: 100%;" />
@@ -591,7 +602,7 @@
 				<h3>Mobilier urbain</h3>
 				<img src="http://demo.plante-et-moi.fr/arles/img/rue_vegetalisee_1.jpg" style="width: 100%;" />
 			<p>
-				Les garde-corps, les barrières dites "croix de Saint-André" ou" les potelets.<br>
+				Les garde-corps, les barrières dites "croix de Saint-André" ou les potelets.<br>
 			</p>
 		</div>
 		<div class="type" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
@@ -599,13 +610,6 @@
 				<img src="http://demo.plante-et-moi.fr/dijon/img/pied%20de%20mur.JPG" style="width: 100%;" />
 			<p>
 				Au sol: jardinière, bac, pot ou plantation directe à la base du mur (après un étude de faisabilité).<br>
-			</p>
-		</div>
-		<div class="type" onclick="filterPlantsByTag(this.getElementsByTagName('h3')[0].innerText)">
-				<h3>Pieds d'arbres</h3>
-				<img src="http://demo.plante-et-moi.fr/dijon/img/tour%20d'arbres.JPG" style="width: 100%;" />
-			<p>
-				Culture en pleine terre sur le pourtour existant d'un arbre de rue.<br>
 			</p>
 		</div>
 	</div>
