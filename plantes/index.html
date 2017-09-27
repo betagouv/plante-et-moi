@@ -19,18 +19,19 @@
 		}
 
 		.header {
+			display: flex;
+			flex-wrap: wrap;
 			width: 100%;
 			background-color: white;
 			margin: 0px;
 			box-sizing: border-box;
 			text-align: left;
-			height: 68px;
 			position: relative;
 		}
 		.header__title {
 			padding: 15px;
 			float: left;
-			height: 100%;
+			height: 68px;
 			box-sizing: border-box;
 			color: #0CB6A1;
 			text-decoration: none;
@@ -42,6 +43,15 @@
 		.header__logo {
 			height: 100%;
 			width: auto;
+		}
+
+		@media (min-width: 580px) {
+			#header__link__type::after {
+				content: " de projet"
+			}
+			#header__link__all::after {
+				content: " les plantes"
+			}
 		}
 		/*
 		.header__link {
@@ -59,7 +69,8 @@
 			z-index: 999;
 			top: 68px;
 			width: 100%;
-			height: 68px;
+			display: flex;
+			flex-wrap: wrap;
 			background-color: #E3CD37;
 		}
 
@@ -77,7 +88,7 @@
 			border: none;
 			margin: 0px;
 			line-height: 2.2;
-			height: 100%;
+			height: 68px;
 			color: #0CB6A1;
 			font-size: 1.2em;
 			font-weight: bold;
@@ -215,6 +226,7 @@
 			margin: 3px;
 			line-height: 2.2;
 			width: 120px;
+			white-space: nowrap;
 		}
 
 		h1 {
@@ -312,7 +324,7 @@
 			text-align: center;
 		}
 
-		@media (max-width: 1580px) {
+		@media (max-width: 1600px) {
 			.types {
 				max-width: 1180px;
 			}
@@ -496,23 +508,28 @@
 		}
 
 		.galery__title {
-			text-align: left;
 			float: left;
-			margin-left: 60px;
 			font-size: 2em;
+			margin-bottom: 0px;
+		}
+		.galery__header {
+			padding-left: 60px;
+			padding-right: 60px;
+			width: 100%;
+			box-sizing: border-box;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-between;
 		}
 		.galery__link {
-			float: right;
-			margin-top: 20px;
-			margin-right: 60px;
 			font-family: "Helvetica", "Arial", sans-serif;
+			margin-top: 10px;
 		}
 		.selector__selected {
+			display: flex;
 			flex-wrap: wrap; 
 			padding: 5px; 
-			width: calc(100% - 120px);
-			height: 50px;
-			margin-left: 60px;
+			width: 100%;
 			box-sizing: border-box;
 		}
 		.selector__selected input[type=checkbox] {
@@ -525,6 +542,7 @@
 			padding: 7px;
 			margin: 5px;
 			color: white;
+			white-space: nowrap;
 		}
 		.selector__selected label:hover {
 			background-color: red;
@@ -552,14 +570,14 @@
 <body>
 	<div class="header">
 		<a href="." class="header__title"><img  class="header__logo" src="img/logo_planterquoi_vert.svg"></a>
-		<button class="header__link" id="header__link__project-type">Type de projet  <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+		<button class="header__link" id="header__link__project-type"><span id="header__link__type">Type</span> <i class="fa fa-chevron-down" aria-hidden="true"></i></button>
 		<div class="header__menu" id="header__menu__project-type">
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Trottoirs</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Mobilier urbain</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Façades et murets</button>
 			<button class="tag" onclick="filterPlantsByTag(this.innerText)">Pieds d'arbres</button>
 		</div>
-		<button class="tag" onclick="filterPlantsByTag(this.innerText)">Toutes les plantes</button>
+		<button class="tag" onclick="filterPlantsByTag(this.innerText)"><span id="header__link__all">Toutes</span></button>
 	</div>
 	<div class="types" id="types">
 		<h2>Planter quoi <span style="color: #0C518A">avec mon permis de végétaliser à Paris ?</span></h2>
@@ -592,7 +610,7 @@
 		</div>
 	</div>
 	<div class="page invisible" id="page-results">
-		<div class="ariane invisible">
+		<div class="ariane">
 			<h4><a href="."><span class="ariane__title">Planter quoi</span></a> > <span id="ariane__selected-type"></span></h4>
 		</div>
 		<div class="filters" id="filters">
@@ -651,14 +669,14 @@
 			</div>
 		</div>
 		<div class="galery" id="galery">
-			<h3 class="galery__title">Résultats : <span class="result-count"></span> plantes</h3>
-			<a class="galery__link" href="#" onclick="clearAllFilters()">Supprimer tous les filtres</a>
-			<hr style="width: calc(100% - 120px);
-			margin-left: 60px; 
-			margin-right: 60px; box-sizing: border-box;">
-			<div class="selector__selected" id="selected-filter">
-					
+			<div class="galery__header">
+				<h3 class="galery__title">Résultats : <span class="result-count"></span> plantes</h3>
+				<a class="galery__link invisible" id="clear-all-filter-button" href="#" onclick="clearAllFilters()">Supprimer tous les filtres</a>
+				<hr class="galery__header__separator" style="width: 100%; box-sizing: border-box;">
+				<div class="selector__selected" id="selected-filter">
+						
 				</div>
+			</div>
 			<div class="galery__container" id="galery__container">
 				<div class="galery__card" id="item">
 					<div class="galery__card__image"></div>
@@ -841,12 +859,14 @@
 			Array.from(document.querySelectorAll('#selected-filter input[type=checkbox]')).forEach(function(input){
 			    input.checked = false;
 			});
+			document.getElementById("clear-all-filter-button").classList.add("invisible");
 			updateViewFromFilter();
 		}
 
 		function updateFilterResult() {
 			var selectedFilters =  Array.from(document.querySelectorAll(".selector fieldset input[type=checkbox]:checked"));
 			var div = document.getElementById("selected-filter");
+			var someFilterSelected = false;
 			div.innerHTML = "";
 			selectedFilters.forEach(function(input) {
 				var copiedItem = input.parentNode.cloneNode(true);
@@ -855,7 +875,11 @@
 					updateViewFromFilter();
 				});
 				div.appendChild(copiedItem);
+				someFilterSelected = true;
 			})
+			if(someFilterSelected) {
+				document.getElementById("clear-all-filter-button").classList.remove("invisible");
+			}
 		}
 
 		function showPlants(plants) {
