@@ -112,12 +112,12 @@
     "Entretien": "rabattre après floraison pour favoriser la repousse d'une belle touffe de feuillage",
     "Multiplication": "division au printemps et semis toute l'année",
     "Commentaire": "s'adapte lorsqu'il n'y a pas de profondeur",
-    "Wikipedia Page Title": "Alchemilla mollis",
-    "Wikipedia Lang": "en",
-    "Wikipedia Page Url": "https://en.wikipedia.org/wiki/Alchemilla_mollis",
-    "Wikipedia Image Title": "File:Aardbei-bloemcloseup.jpg",
-    "Wikipedia Thumb Url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Aardbei-bloemcloseup.jpg/300px-Aardbei-bloemcloseup.jpg",
-    "Wikipedia Url Url": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Aardbei-bloemcloseup.jpg"
+    "Wikipedia Page Title": "Alchémille",
+    "Wikipedia Lang": "fr",
+    "Wikipedia Page Url": "https://fr.wikipedia.org/wiki/Alch%C3%A9mille",
+    "Wikipedia Image Title": "Fichier:Alchemilla alpina.JPG",
+    "Wikipedia Thumb Url": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Alchemilla_alpina.JPG/300px-Alchemilla_alpina.JPG",
+    "Wikipedia Url Url": "https://upload.wikimedia.org/wikipedia/commons/7/79/Alchemilla_alpina.JPG"
   },
   {
     "Genre": "Allium",
@@ -1254,7 +1254,10 @@
     "Commentaire": "",
     "Wikipedia Page Title": "Houblon",
     "Wikipedia Lang": "fr",
-    "Wikipedia Page Url": "https://fr.wikipedia.org/wiki/Houblon"
+    "Wikipedia Page Url": "https://fr.wikipedia.org/wiki/Houblon",
+    "Wikipedia Image Title": "Fichier:Hop mannelijke bloeiwijze Humulus lupulus male plant.jpg",
+    "Wikipedia Thumb Url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Hop_mannelijke_bloeiwijze_Humulus_lupulus_male_plant.jpg/300px-Hop_mannelijke_bloeiwijze_Humulus_lupulus_male_plant.jpg",
+    "Wikipedia Url Url": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Hop_mannelijke_bloeiwijze_Humulus_lupulus_male_plant.jpg"
   },
   {
     "Genre": "Hyssopus",

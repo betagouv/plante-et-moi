@@ -29,7 +29,7 @@ function getSearchWikipedia(search, lang) {
 }
 
 function getWikipediaPage(page_name, lang) {
-    return httpGetContent("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(page_name)+"&prop=images|info&inprop=url&format=json")
+    return httpGetContent("https://"+lang+".wikipedia.org/w/api.php?action=query&titles="+encodeURIComponent(page_name)+"&prop=images|info&inprop=url&format=json&imlimit=50")
 }
 
 function getWikipediaFile(file_name, lang) {
