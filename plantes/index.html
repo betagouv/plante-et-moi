@@ -240,6 +240,10 @@
 			text-align: center;
 		}
 
+		.galery__card__title {
+			margin-right: 30px;
+		}
+
 		h4 {
 			font-size: 1em;
 			margin-top: 18px;
@@ -304,7 +308,7 @@
 			min-height: 80%;
 			width: 100%;
 			margin: 0 auto;
-			padding: 10px;
+			padding: 45px;
 			text-align: center;
 		}
 
@@ -333,7 +337,7 @@
 		}
 
 		.type {
-			height: 310px;
+			height: 325px;
 			width: 270px;
 			display: inline-block;
 			padding: 0px;
@@ -659,8 +663,8 @@
 		</div>
 	</div>
 	<div class="footer">
-		Crédit photos : wikipedia/wikimedia<br> Crédit icone d'abeille : bee par alican de the Noun Project<br> Données de plantes
-		fournis par la Mairie de Paris<br><br> Créé par Plante Et Moi : <a href="https://beta.gouv.fr/startup/plante-et-moi.html">https://beta.gouv.fr/startup/plante-et-moi.html</a><br>
+		Crédit photos : wikipedia/wikimedia<br> Crédit icône d'abeille : bee par alican de the Noun Project<br> Données de plantes
+		fournies par la Mairie de Paris<br><br> Créé par Plante Et Moi : <a href="https://beta.gouv.fr/startup/plante-et-moi.html">https://beta.gouv.fr/startup/plante-et-moi.html</a><br>
 	</div>
 
 
@@ -862,7 +866,7 @@
 							startIcon = "star";
 						}
 						var description = '<p class="save" onclick="favorite(this);"><i class="material-icons">'+startIcon+'</i></p>';
-						description += "<h3 style='max-width: 250px;'>" + plant["Nom vernaculaire"] + "</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
+						description += "<h3 class='galery__card__title' style='max-width: 250px;'>" + plant["Nom vernaculaire"] + "</h3><i class='material-icons' style='color: #666666; vertical-align: middle;'>line_style</i>Sol ";
 
 						var groundsList = plant["Sol"].split(',');
 						allGrounds = allGrounds.concat(groundsList);
