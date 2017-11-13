@@ -6,19 +6,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.1/dist/leaflet.css" />
+    <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 	<script src="https://unpkg.com/leaflet@1.0.1/dist/leaflet.js"></script>
     <style type="text/css">
-    	body,
 		html {
-			margin: 0px;
-			width: 100%;
 			min-height: 100%;
+            position: relative;
 			overflow-x: hidden;
 			font-family: "Helvetica", "Arial", sans-serif;
 		}
 
 		body {
 			background-color: #7c9e51;
+			min-height: 100%;
+            margin: 0 0 100px;
+			width: 100%;
+        }
+
+       .header {
+            display: flex;
+            justify-content: space-between;
         }
         
         .centered {
@@ -26,6 +33,9 @@
             width: 1200px;
             height: 100%;
             position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
         }
 
         @media (max-width: 1200px) {
@@ -35,38 +45,77 @@
         }
 
         .map {
-			width: 100%;
+			width: 60%;
 			height: 300px;
-            height: 80vh;
+            height: 60vh;
             margin: 20px;
             border: 1px solid #d8d8d8;
 			box-sizing: border-box;
+            align-self: center;
 		}
 
         .footer {
             width: 100%;
             background-color: #372f2d;
-            height: 150px;
+            height: 100px;
             text-align: center;
             color: white;
             display: flex;
             justify-content: center;
 			box-sizing: border-box;
             padding: 40px;
+            position: absolute;
+            left: 0;
+            bottom: 0;
         }
 
         .footer a, .footer a:hover, .footer a:active, .footer a:visited { 
             color: white; 
         }
+        h1 {
+            font-family: 'Indie Flower', cursive;
+        }
+        h1, h2, h3 {
+            color: white;
+        }
+        h3 {
+            text-transform: uppercase;
+        }
+        .cta {
+            color: white;
+            background-color: #eb6e00;
+            border-radius: 15px;
+            padding: 15px;
+            align-self: center;
+            font-weight: bold; 
+            font-size: 20px;
+        }
+        .section {
+            width: 100%;
+            margin: 0px;
+            padding-bottom: 20px;
+        }
     </style>
 </head>
 <body>
 <div class="centered">
-    <h1>Plante Et Moi</h1>
-
+    <div class="header">
+         <h1>Plante Et Moi</h1>
+        <a href="#contact"><div class="cta">Contactez-nous</div></a>
+    </div>
+    <h2 style="align-self: center">Augmenter la présence de la nature en ville</h2>
+    <h3 style="align-self: center">Nos villes partenaires</h2>
     <div class="map" id="map">
     </div>
 </div>
+<div class="section"  style="background-color: white" id="contact">
+<div class="centered" style="display: flex; justify-content: center">
+        <h2 style="color: #7c9e51">GARDONS CONTACT</h2>
+        <h3>Ensemble augmentons la présense de la nature en ville</h3>
+        <div class="cta">Contactez-nous: biodiversite<span>@</span>beta.gouv.fr</div>
+</div>
+</div>
+
 <div class="footer">
     <a href="https://twitter.com/PlanteEtMoi">Twitter</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a href="mailto:biodiversite@beta.gouv.fr">Contactez-nous par mail</a>
 </div> 
