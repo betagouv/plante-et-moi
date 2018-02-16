@@ -16,19 +16,24 @@ html, body {
 }
 
 .footer {
+    position: relative;
     width: 100%;
     min-height: 130px;
     height: auto;
     border-top: 1px solid #d8d8d8;
     border-bottom: 1px solid #d8d8d8;
-    background: url("../img/ville_de_malakoff.jpg") no-repeat right 0;
     margin: 23px 0px 22px 0px;
     padding: 15px;
     box-sizing: border-box;
 }
+.footer__logo {
+    position: absolute;
+    right: 0px;
+    top: calc( 50% - 50px);
+}
 @media (max-width: 950px) {
-    .footer {
-        background-image: none;
+    .footer__logo {
+        display: none;
     }
 }	
 .footer__title {
