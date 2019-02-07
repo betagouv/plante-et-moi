@@ -1,7 +1,0 @@
-setup:
-  config: {}
-build:
-  languages:
-    - 'https://github.com/heroku/heroku-buildpack-static.git'
-run:
-  web: bin/boot
