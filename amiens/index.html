@@ -37,7 +37,7 @@
         .cube {
 			display: inline-block;
 			width: 368px; 
-            height: 720px;
+            height: 750px;
 			text-align: center;
 			margin: 20px;
 			vertical-align: top;
@@ -133,16 +133,22 @@
         }
         .bandeau__image {
             width: 100%;
-            height: 350px;
-            background-image: url('img/bandeau.jpg');
-            background-size: cover;
+            height: 300px;
+            background-image: url('img/bandeau.png');
+            background-size: contain;
             background-repeat: no-repeat;
             background-position: center 20%;
             display: block;
         }
+
+        @media (max-width: 800px) {
+            .bandeau__image {
+                height: 200px;
+            }
+        }
         @media (min-resolution: 192dpi), (-webkit-min-device-pixel-ratio: 2), (min--moz-device-pixel-ratio: 2), (-o-min-device-pixel-ratio: 2/1), (min-device-pixel-ratio: 2), (min-resolution: 2dppx) {
             .bandeau__image {
-                background-image: url('img/bandeauX2.jpg');
+                background-image: url('img/bandeauX2.png');
             }
         }
         .form {
@@ -186,6 +192,7 @@
                 <div class="bandeau__image"></div>
                 <h1 style="text-align: center; margin-left: 20px; margin-right: 20px;">​Permis de fleurir la ville d'Amiens !</h1>
                 <div class="form">
+			<!--
                     <h2 style="color: #282D33;">Faites-vous plaisir et faites plaisir aux autres en favorisant le retour de la nature en ville.<br>
                         Soyez acteur de la ville avec le permis de fleurir, appropriez l’espace public et embellissez votre rue.<br>
                         <br>
@@ -201,13 +208,15 @@
                         <div class="form__block card card--invisible" id="card-email-success">
                             <p class="card__description">Nous avons bien enregistré votre adresse mail.<br> Nous vous recontacterons au printemps 2019.
                             </p>
-                        </div>
-                        <!--
+                        </div>-->
+			<h2 style="color: #282D33;">Faites-vous plaisir et faites plaisir aux autres en favorisant le retour de la nature en ville.<br>
+                        Soyez acteur de la ville avec le permis de fleurir, appropriez l’espace public et embellissez votre rue.<br><br>
+                        Nouveauté cette année, il est possible de planter dans les trottoirs ! 
+                        </h2>
                     <div class="form__block" style="margin-top: 10px;">
                         <input type="text" id="address-search" name="address-search" placeholder="Cherchez une rue ici..." class="form__input">
                         <button class="form__button" type="button" onclick="manualSearch('address-search');" id="search-button">Rechercher</button>
                     </div>
-                -->
                 </div>
            </div>
             <div class="gallery">
@@ -215,7 +224,6 @@
                     <div class="cube__description">
                         <h3>Besoin de nature en ville ?</h3>
                         <br>Ça tombe bien : fleurir les rues, c’est permis à Amiens !
-                        <br>En 2018, la Ville lance l’opération Permis de Fleurir qui permet de planter dans l’espace public des plantes et fleurs.
                         <br>Pour participer, il suffit de faire une demande à la mairie et de s’engager à respecter certaines règles (utiliser de la fumure organique, ne pas planter d’espèces invasives, etc.)
                     </div>
                     <br><br><img class="cube__img" src="img/nature-ville.JPG" >
